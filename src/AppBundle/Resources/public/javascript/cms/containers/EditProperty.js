@@ -5,15 +5,19 @@ import cn from "classnames";
 import moment from "moment/moment";
 import uniqBy from "lodash/uniqBy";
 import Loader from "@components/Loader";
+import ReactTooltip from "react-tooltip";
 import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import CmsStepSelector from "../components/CmsStepSelector";
+import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import RadioSelector from "../../main/components/RadioSelector";
-import { CMS_PROPERTY_TABS, EDIT_TYPE, ROUTE_PATHS } from "@constants";
+import {
+	CMS_PROPERTY_TABS, EDIT_TYPE, ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD,
+} from "@constants";
 import { updateProperty } from "../actions/propertyActions";
 import CmsCustomSeason from "../components/CmsCustomSeason";
-import { sortSeasons } from "../helpers/PropertyDetailsHelper";
+import { sortSeasons, getUnique } from "../helpers/PropertyDetailsHelper";
 import PropertyHeader from "../components/PropertyHeader";
 
 class EditProperty extends React.Component {
@@ -29,12 +33,127 @@ class EditProperty extends React.Component {
 			customSeasonsAdded: false,
 			showCustomSeason: false,
 			showAll: false,
+			seasons: [],
+			rights: [],
+			territories: [],
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 		};
 	}
 
 	componentDidMount() {
 		this.loadSeasons();
 	}
+
+	seasonsAreValid = () => {
+		const { seasons } = this.state;
+		return !!seasons.length;
+	};
+
+	rightsAreValid = () => {
+		const { rights } = this.state;
+		return !!rights.length && !rights.filter(element => element.dealExclusive === null).length;
+	};
+
+	territoriesAreValid = () => {
+		const { territories } = this.state;
+		return !!territories.length;
+	};
+
+	getTerritoriesFromRights = (rights) => {
+		const territory = {
+			territories: [],
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
+		};
+		const worldwideRights = rights.filter(right => right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE);
+		if (worldwideRights.length) {
+			territory.territories = this.props.countries;
+			territory.territoriesMode = BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
+		} else {
+			territory.territories = getUnique([].concat(...rights.map(right => right.territories)), "id");
+		}
+		return territory;
+	};
+
+	onSelectAllSeasons = () => {
+		const { property: { seasons } } = this.props;
+		this.setState({
+			seasons,
+			currentStep: 2,
+			rights: [],
+		});
+	};
+
+	onUnSelectAllSeasons = () => {
+		this.setState({
+			seasons: [],
+			currentStep: 2,
+			rights: [],
+		});
+	};
+
+	onChangeSeason = (value) => {
+		let { seasons } = this.state;
+		const selectedSeason = seasons.find(season => season.id === value.id);
+		if (selectedSeason) {
+			seasons = seasons.filter(season => season.id !== value.id);
+		} else {
+			seasons.push(value);
+		}
+		this.setState({
+			seasons,
+			currentStep: 2,
+			rights: [],
+		});
+	};
+
+	onSelectAllRights = () => {
+		const { property: { rights } } = this.props;
+		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
+		this.setState({
+			rights: newRights,
+			currentStep: 3,
+		});
+	};
+
+	onUnSelectAllRights = () => {
+		this.setState({
+			rights: [],
+			currentStep: 3,
+		});
+	};
+
+	onSelectRight = (value) => {
+		let { rights } = this.state;
+		const selectedRight = rights.find(element => element.id === value.id);
+		if (selectedRight) {
+			rights = rights.filter(element => element.id !== value.id);
+		} else {
+			const newValue = Object.assign({}, value, { dealExclusive: null });
+			rights.push(newValue);
+		}
+		this.setState({
+			rights,
+			currentStep: 3,
+		});
+	};
+
+	onExclusive = (right, dealExclusive) => {
+		let { rights } = this.state;
+		rights = rights.filter(element => element.id !== right.id);
+		const newValue = Object.assign({}, right, { dealExclusive });
+		rights.push(newValue);
+		this.setState({
+			rights,
+			currentStep: 3,
+		});
+	};
+
+	onSelectTerritories = (territories, territoriesMode) => {
+		this.setState({
+			territories,
+			territoriesMode,
+		});
+	};
 
 	cancel = () => {
 		const { history, property: { customId } } = this.props;
@@ -51,15 +170,14 @@ class EditProperty extends React.Component {
 		this.setState({
 			editSeason,
 		});
-		if (editSeason === EDIT_TYPE.create) {
-			this.onNext(2);
-		} else {
-			this.onNext(1);
-		}
+		this.onNext(2);
 	};
 
 	loadSeasons() {
 		const { property: { tournament } } = this.props;
+		if (!tournament.length) {
+			return;
+		}
 		const tournamentId = tournament[0].externalId;
 
 		this.setState({
@@ -198,8 +316,16 @@ class EditProperty extends React.Component {
 			customSeasonsAdded,
 			selectedSeason,
 			showCustomSeason,
+			seasons,
+			rights,
+			territories,
+			territoriesMode,
 		} = this.state;
-		const { property: { seasons, tournament }, loading } = this.props;
+		const { property: { seasons: allSeasons, tournament, rights: allRights }, loading } = this.props;
+		const seasonsValid = this.seasonsAreValid();
+		const rightsValid = this.rightsAreValid();
+		const territoriesValid = this.territoriesAreValid();
+		const territory = this.getTerritoriesFromRights(rights);
 		const seasonTypes = [
 			{
 				value: EDIT_TYPE.create,
@@ -212,12 +338,12 @@ class EditProperty extends React.Component {
 		];
 
 		const futureSeasons = this.getFutureSeasons();
-		let allSeasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
-		allSeasons = uniqBy(allSeasons.concat(seasons), "externalId");
-		allSeasons.sort(sortSeasons);
+		let selectableSeasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
+		selectableSeasons = uniqBy(selectableSeasons.concat(seasons), "externalId");
+		selectableSeasons.sort(sortSeasons);
 
 		return (
-			<div className="default-container no-title property edit-property">
+			<div className="default-container no-title property edit-property property-deal">
 				<DefaultBox>
 					<PropertyHeader edit={false} />
 					<CmsStepSelector
@@ -235,13 +361,13 @@ class EditProperty extends React.Component {
 						</div>
 					</CmsStepSelector>
 
-					{(currentStep > 1) && (
+					{(currentStep > 1 && editSeason === EDIT_TYPE.create) && (
 						<CmsStepSelector
-							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP2_TITLE" />}
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP2_TITLE_NEW" />}
 							enableNextStep
 						>
 							<div className="season-selector">
-								{allSeasons.map((season, index) => {
+								{selectableSeasons.map((season, index) => {
 									const {
 										externalId,
 										custom,
@@ -314,17 +440,17 @@ class EditProperty extends React.Component {
 							{ showCustomSeason && (
 								<>
 									<h4 style={{ marginTop: 20 }}>
-										<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_TITLE" />
+										<Translate i18nKey="CMS_EDIT_PROPERTY_ADD_SEASON_TITLE" />
 									</h4>
 									<h6>
-										<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_SUBTITLE" />
+										<Translate i18nKey="CMS_EDIT_PROPERTY_ADD_SEASON_SUBTITLE" />
 									</h6>
 									<CmsCustomSeason
 										onDelete={() => {
 											this.setState({ showCustomSeason: false });
 										}}
 										season={selectedSeason}
-										existingSeasons={allSeasons}
+										existingSeasons={selectableSeasons}
 										onConfirm={this.addCustomSeason}
 										tournament={tournament}
 									/>
@@ -333,12 +459,201 @@ class EditProperty extends React.Component {
 						</CmsStepSelector>
 					)}
 
+					{(currentStep > 1 && editSeason === EDIT_TYPE.edit) && (
+						<CmsStepSelector
+							style={{ marginTop: 20 }}
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP2_TITLE_EDIT" />}
+							button={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP2_BUTTON" />}
+							disabled={!allSeasons.length}
+							enableNextStep={seasonsValid || !allSeasons.length}
+							onNext={() => this.onNext(3)}
+						>
+							{!allSeasons.length && (
+								<div className="select-item">
+									<Translate i18nKey="CMS_SEASON_NOT_APPLICABLE" />
+								</div>
+							)}
+							{allSeasons.length > 1 && (
+								<div className="select-item">
+									<button
+										type="button"
+										onClick={this.onSelectAllSeasons}
+										className="ca-btn link-button"
+									>
+										Select All
+									</button>
+									<button
+										type="button"
+										onClick={this.onUnSelectAllSeasons}
+										className="ca-btn link-button"
+									>
+										UnSelect All
+									</button>
+								</div>
+							)}
+							<div className="d-flex">
+								{allSeasons.map((season) => {
+									const { endDate, startDate } = season;
+									let { year } = season;
+									if (year) {
+										if (year.split("/")[0].length === 2) {
+											year = startDate.substring(0, 2) + year;
+										}
+									} else {
+										const startY = moment(startDate).format("YYYY");
+										const endY = moment(endDate).format("YYYY");
+										year = startY === endY ? `${endY}` : `${startY}/${endY}`;
+									}
+									const selectedSeason = seasons.find(element => element.id === season.id);
+									return (
+										<div key={season.id} className="season-item">
+											<input
+												type="checkbox"
+												value={!!selectedSeason}
+												checked={!!selectedSeason}
+												onChange={() => this.onChangeSeason(season)}
+												className="ca-checkbox blue"
+											/>
+											<label>
+												{year}
+											</label>
+										</div>
+									);
+								})}
+							</div>
+						</CmsStepSelector>
+					)}
+
+					{(currentStep > 2) && (
+						<CmsStepSelector
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP3_TITLE" />}
+							button={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP3_BUTTON" />}
+							enableNextStep={rightsValid}
+							onNext={() => this.onNext(4)}
+						>
+							{allRights.length > 1 && (
+								<div className="select-item">
+									<button
+										type="button"
+										onClick={this.onSelectAllRights}
+										className="ca-btn link-button"
+									>
+										Select All
+									</button>
+									<button
+										type="button"
+										onClick={this.onUnSelectAllRights}
+										className="ca-btn link-button"
+									>
+										UnSelect All
+									</button>
+								</div>
+							)}
+							<div className="right-selector">
+								{allRights.map((right) => {
+									const {
+										name, code,
+									} = right;
+									const offers = {
+										EXCLUSIVE: "exclusive",
+										NON_EXCLUSIVE: "non-exclusive",
+									};
+									const idAttr = `checkbox-${code}`;
+									const exclusiveIdAttr = `exc-id-${code}`;
+									const nonExclusiveIdAttr = `non-exc-id-${code}`;
+									const selectedRight = rights.find(element => element.id === right.id);
+									const dealExclusive = selectedRight && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
+									const offerValue = dealExclusive === null ? null : (dealExclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
+									return (
+										<div className="right-selector-item" key={right.id}>
+											<div className="right-name">
+												<input
+													type="checkbox"
+													value={!!selectedRight}
+													checked={!!selectedRight}
+													className="ca-checkbox blue"
+													onChange={() => this.onSelectRight(right)}
+													id={idAttr}
+												/>
+												<label className={cn({ selected: !!selectedRight })} htmlFor={idAttr}>
+													{name}
+												</label>
+												<div className="tooltip-container">
+													<span className="" data-tip data-for={code}>
+														<i className="fa fa-question-circle-o" />
+													</span>
+													<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
+														<div className="body">
+															<Translate i18nKey={`CMS_DEALS_RIGHT_DEFINITIONS_${code}`} />
+														</div>
+													</ReactTooltip>
+												</div>
+											</div>
+											<div className="right-exclusivity">
+												<input
+													disabled={!selectedRight}
+													type="radio"
+													checked={offerValue === offers.EXCLUSIVE}
+													onChange={() => {
+														this.onExclusive(right, true);
+													}}
+													id={exclusiveIdAttr}
+													className="ca-radio ca-radio-exclusive"
+												/>
+												<label
+													className={cn({ selected: !!selectedRight && offerValue === offers.EXCLUSIVE })}
+													htmlFor={exclusiveIdAttr}
+												>
+													<Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />
+												</label>
+												<input
+													type="radio"
+													disabled={!selectedRight}
+													checked={offerValue === offers.NON_EXCLUSIVE}
+													onChange={() => {
+														this.onExclusive(right, false);
+													}}
+													id={nonExclusiveIdAttr}
+													className="ca-radio"
+												/>
+												<label
+													htmlFor={nonExclusiveIdAttr}
+													className={cn({ selected: !!selectedRight && offerValue === offers.NON_EXCLUSIVE })}
+												>
+													<Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />
+												</label>
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</CmsStepSelector>
+					)}
+
+					{(currentStep > 3) && (
+						<CmsStepSelector
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP4_TITLE" />}
+							button={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP4_BUTTON" />}
+							enableNextStep={territoriesValid}
+							onNext={() => this.onNext(5)}
+						>
+							<CmsTerritorySelector
+								className="small-select"
+								onChange={this.onSelectTerritories}
+								selectedCountries={territory.territories}
+								value={territories}
+								territoriesMode={territoriesMode}
+								multiple
+							/>
+						</CmsStepSelector>
+					)}
+
 					<HorizontalButtonBox>
 						<button
 							className="yellow-button"
 							onClick={this.cancel}
 						>
-							<Translate i18nKey="CMS_DEALS_CREATE_CANCEL_BUTTON" />
+							<Translate i18nKey="CMS_EDIT_PROPERTY_CANCEL_BUTTON" />
 						</button>
 						<button
 							className="yellow-button"
