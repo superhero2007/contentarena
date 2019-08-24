@@ -28,10 +28,13 @@ class AdminContentController extends BaseAdminController
         $this->dispatch(EasyAdminEvents::PRE_LIST);
         switch ($this->request->query->get('filters')['status']) {
             case 'draft':
-                $dqlFilter = "status.name = 'DRAFT'";
+                $dqlFilter = "status.name = 'DRAFT' OR status.name = 'AUTO_INACTIVE'";
+                break;
+            case 'pending':
+                $dqlFilter = "status.name = 'PENDING'";
                 break;
             case 'active':
-                $dqlFilter = "status.name = 'ACTIVE' OR status.name = 'EDITED'";
+                $dqlFilter = "status.name = 'APPROVED' OR status.name = 'EDITED'";
                 break;
             case 'inactive':
                 $dqlFilter = "status.name = 'ARCHIVED' OR status.name = 'EXPIRED' OR status.name = 'INACTIVE'";
@@ -152,6 +155,7 @@ class AdminContentController extends BaseAdminController
                 'data' => $requestFilters['status'] ? $requestFilters['status'] : null,
                 'choices' => [
                     'Draft' => 'draft',
+                    'Pending' => 'pending',
                     'Active' => 'active',
                     'Inactive' => 'inactive'
                 ],

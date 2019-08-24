@@ -40,13 +40,16 @@ class JobCommand extends ContainerAwareCommand
 
     private $jobService;
 
+    private $contentService;
 
     public function __construct(
-        JobService $jobService
+        JobService $jobService,
+        ContentService $contentService
     )
     {
         parent::__construct();
         $this->jobService = $jobService;
+        $this->contentService = $contentService;
     }
 
     /**
@@ -61,6 +64,7 @@ class JobCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $this->contentService->setExpiredStatus();
         $this->jobService->runJobs();
 
     }

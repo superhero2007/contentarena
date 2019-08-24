@@ -563,7 +563,7 @@ class EmailService
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function internalUserListingSubmit( User $user, Content $listing, User $admin ){
+    public function internalUserListingSubmit( User $user, Content $listing ){
 
         $subject = $this->translator->trans("email.internal.user.listing.submit.subject");
         $content = $this->translator->trans("email.internal.user.listing.submit.content");
@@ -571,11 +571,39 @@ class EmailService
             "content" => $content,
             "user" => $user,
             "listing" => $listing,
-            "admin" => $admin
         );
         $this->sendEmail("email/email.internal.user.listing.submit.twig", $subject, $this->alertsAddress, $parameters );
 
     }
+
+    public function internalUserListingAuto( User $user, Content $listing ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.auto.subject");
+        $content = $this->translator->trans("email.internal.user.listing.auto.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing,
+        );
+        $this->sendEmail("email/email.internal.user.listing.submit.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    public function internalListingApproved( User $user, Content $listing, User $admin ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.approved.subject");
+        $content = $this->translator->trans("email.internal.user.listing.approved.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing,
+            "admin" => $admin
+        );
+        $this->sendEmail("email/email.internal.listing.approved.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+
 
     /**
      * User deactivates listing
