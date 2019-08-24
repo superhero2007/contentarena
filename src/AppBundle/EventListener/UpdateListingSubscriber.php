@@ -140,13 +140,29 @@ class UpdateListingSubscriber implements EventSubscriber
                     $this->mailer->listingDeactivated($entity);
                 }
 
-                if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" ||  $changed["status"][0]->getName() === "PENDING" )
-                    && ( $changed["status"][1]->getName() === "APPROVED" || $changed["status"][1]->getName() === "PENDING" )){
+                // A listing was submitted for review
+                if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" )
+                    && $changed["status"][1]->getName() === "PENDING" ){
+
+                    // Notify admins
+                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity );
+                }
+
+                // A listing was submitted and auto published
+                if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" )
+                    && $changed["status"][1]->getName() === "APPROVED" ){
+
+                    // Notify admins
+                    $this->mailer->internalUserListingAuto($entity->getOwner(), $entity);
+                }
+
+                if ( $changed["status"][0]->getName() === "PENDING" && $changed["status"][1]->getName() === "APPROVED" ){
 
                     // Notify admins
                     $admin = $this->tokenStorage->getToken()->getUser();
-                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity, $admin);
+                    $this->mailer->internalListingApproved( $entity->getOwner(), $entity, $admin);
                 }
+
             }
         }
     }

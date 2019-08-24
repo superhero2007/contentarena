@@ -268,6 +268,23 @@ class ContentService
     }
 
     /**
+     * @return void
+     */
+    public function setExpiredStatus() {
+        $listings = $this->em->getRepository('AppBundle:Content')->getExpiredByDate();
+        $expiredStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'EXPIRED'));
+
+        foreach ( $listings as $listing ){
+            /* @var Content $listing*/
+            if ( $listing->getStatus()->getId() != $expiredStatus->getId() ) {
+                $listing->setStatus($expiredStatus);
+                $this->em->persist($listing);
+                $this->em->flush();
+            }
+        }
+    }
+
+    /**
      * @param Request $request
      * @return bool
      */

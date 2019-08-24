@@ -220,7 +220,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('content');
 
         $query
-            ->select('sports.name', 'sports.id', 'COUNT(sports.id) AS idCount')
+            ->select('sports.name', 'sports.id', 'COUNT(sports.name) AS idCount')
             ->leftJoin('content.sports', 'sports')
             ->leftJoin('content.status', 'status')
             ->andWhere('status.name = :approvedStatusName OR status.name = :editedStatusName')
