@@ -707,7 +707,7 @@ class Checkout extends React.Component {
 										value={bundle.fee}
 										onValueChange={values => this.handleChangeYourBid(values, bundle.id)}
 										min={bundle.minimumBid}
-										prefix={`${getCurrencySymbol(bundle.currency)} `}
+										prefix={`${getCurrencySymbol(bundle.currency.code)} `}
 										onBlur={this.clearInputFocus}
 									/>
 								)}

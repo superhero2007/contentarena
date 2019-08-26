@@ -527,7 +527,6 @@ class EditProperty extends React.Component {
 									const selected = selectedRight && selectedRight.id === right.id;
 									const dealExclusive = selected && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
 									const offerValue = dealExclusive === null ? null : (dealExclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
-									console.log(selected);
 									return (
 										<div className="right-selector-item" key={right.id}>
 											<div className="right-name">

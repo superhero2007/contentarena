@@ -16,9 +16,15 @@ email:
                 subject: User has logged in for the first time
                 content: User has logged in for the first time.
             listing:
-                submit:
+                approved:
                     subject: A listing was approved.
                     content: A listing was approved.
+                auto:
+                    subject: A listing was submitted (auto published).
+                    content: A listing was submitted (auto published).
+                submit:
+                    subject: A listing was submitted for review.
+                    content: A listing was submitted for review.
                 deactivate:
                     subject: A listing was deactivated
                     content: A listing was deactivated.
