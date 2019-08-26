@@ -17,7 +17,7 @@ import {
 } from "@constants";
 import { updateProperty } from "../actions/propertyActions";
 import CmsCustomSeason from "../components/CmsCustomSeason";
-import { sortSeasons, getUnique } from "../helpers/PropertyDetailsHelper";
+import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import PropertyHeader from "../components/PropertyHeader";
 
 class EditProperty extends React.Component {
@@ -42,6 +42,10 @@ class EditProperty extends React.Component {
 
 	componentDidMount() {
 		this.loadSeasons();
+		const { property: { seasons } } = this.props;
+		if (!seasons.length) {
+			this.handleSeasonType(EDIT_TYPE.create);
+		}
 	}
 
 	seasonsAreValid = () => {
@@ -321,20 +325,22 @@ class EditProperty extends React.Component {
 			<div className="default-container no-title property edit-property property-deal">
 				<DefaultBox>
 					<PropertyHeader edit={false} />
-					<CmsStepSelector
-						style={{ marginTop: 20 }}
-						title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_TITLE" />}
-						enableNextStep
-					>
-						<div className="season-selector">
-							<RadioSelector
-								value={editSeason}
-								onChange={this.handleSeasonType}
-								className="season-selector-item"
-								items={seasonTypes}
-							/>
-						</div>
-					</CmsStepSelector>
+					{(!!allSeasons.length) && (
+						<CmsStepSelector
+							style={{ marginTop: 20 }}
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_TITLE" />}
+							enableNextStep
+						>
+							<div className="season-selector">
+								<RadioSelector
+									value={editSeason}
+									onChange={this.handleSeasonType}
+									className="season-selector-item"
+									items={seasonTypes}
+								/>
+							</div>
+						</CmsStepSelector>
+					)}
 
 					{(currentStep > 1 && editSeason === EDIT_TYPE.create) && (
 						<CmsStepSelector
