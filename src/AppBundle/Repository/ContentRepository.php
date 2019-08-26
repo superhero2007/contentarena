@@ -431,7 +431,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             // ->where('c.expiresAt > :now')
             // ->andWhere('c.property = :property')
             // ->andWhere('status.name = :rejected OR status.name = :approved OR status.name = :edited OR status.name = :draft')
-            ->andWhere('status.name != :solid_copy')
+            ->andWhere('status.name != :sold_copy')
             ->andWhere('status.name != :archived')
             // ->setParameter('now',$now)
             // ->setParameter('rejected',"REJECTED")
@@ -439,7 +439,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             // ->setParameter('edited',"EDITED")
             // ->setParameter('draft',"DRAFT")
             // ->setParameter('property',$property)
-            ->setParameter('solid_copy',"SOLID_COPY")
+            ->setParameter('sold_copy',"SOLD_COPY")
             ->setParameter('archived',"ARCHIVED")
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
