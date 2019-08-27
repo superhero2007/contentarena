@@ -17,7 +17,7 @@ import {
 } from "@constants";
 import { updateProperty } from "../actions/propertyActions";
 import CmsCustomSeason from "../components/CmsCustomSeason";
-import { sortSeasons, getUnique } from "../helpers/PropertyDetailsHelper";
+import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import PropertyHeader from "../components/PropertyHeader";
 
 class EditProperty extends React.Component {
@@ -34,7 +34,7 @@ class EditProperty extends React.Component {
 			showCustomSeason: false,
 			showAll: false,
 			seasons: [],
-			rights: [],
+			selectedRight: null,
 			territories: [],
 			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 		};
@@ -42,6 +42,10 @@ class EditProperty extends React.Component {
 
 	componentDidMount() {
 		this.loadSeasons();
+		const { property: { seasons } } = this.props;
+		if (!seasons.length) {
+			this.handleSeasonType(EDIT_TYPE.create);
+		}
 	}
 
 	seasonsAreValid = () => {
@@ -49,9 +53,9 @@ class EditProperty extends React.Component {
 		return !!seasons.length;
 	};
 
-	rightsAreValid = () => {
-		const { rights } = this.state;
-		return !!rights.length && !rights.filter(element => element.dealExclusive === null).length;
+	rightAreValid = () => {
+		const { selectedRight } = this.state;
+		return !!selectedRight && selectedRight.dealExclusive !== null;
 	};
 
 	territoriesAreValid = () => {
@@ -59,17 +63,14 @@ class EditProperty extends React.Component {
 		return !!territories.length;
 	};
 
-	getTerritoriesFromRights = (rights) => {
+	getTerritoriesFromRight = (right) => {
 		const territory = {
 			territories: [],
 			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 		};
-		const worldwideRights = rights.filter(right => right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE);
-		if (worldwideRights.length) {
-			territory.territories = this.props.countries;
-			territory.territoriesMode = BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
-		} else {
-			territory.territories = getUnique([].concat(...rights.map(right => right.territories)), "id");
+		if (right) {
+			territory.territories = right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? this.props.countries : right.territories;
+			territory.territoriesMode = right.territoriesMode;
 		}
 		return territory;
 	};
@@ -79,7 +80,7 @@ class EditProperty extends React.Component {
 		this.setState({
 			seasons,
 			currentStep: 2,
-			rights: [],
+			selectedRight: null,
 		});
 	};
 
@@ -87,7 +88,7 @@ class EditProperty extends React.Component {
 		this.setState({
 			seasons: [],
 			currentStep: 2,
-			rights: [],
+			selectedRight: null,
 		});
 	};
 
@@ -102,48 +103,25 @@ class EditProperty extends React.Component {
 		this.setState({
 			seasons,
 			currentStep: 2,
-			rights: [],
-		});
-	};
-
-	onSelectAllRights = () => {
-		const { property: { rights } } = this.props;
-		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
-		this.setState({
-			rights: newRights,
-			currentStep: 3,
-		});
-	};
-
-	onUnSelectAllRights = () => {
-		this.setState({
-			rights: [],
-			currentStep: 3,
+			selectedRight: null,
 		});
 	};
 
 	onSelectRight = (value) => {
-		let { rights } = this.state;
-		const selectedRight = rights.find(element => element.id === value.id);
-		if (selectedRight) {
-			rights = rights.filter(element => element.id !== value.id);
-		} else {
+		const { selectedRight } = this.state;
+		if (!selectedRight || selectedRight && selectedRight.id !== value.id) {
 			const newValue = Object.assign({}, value, { dealExclusive: null });
-			rights.push(newValue);
+			this.setState({
+				currentStep: 3,
+				selectedRight: newValue,
+			});
 		}
-		this.setState({
-			rights,
-			currentStep: 3,
-		});
 	};
 
 	onExclusive = (right, dealExclusive) => {
-		let { rights } = this.state;
-		rights = rights.filter(element => element.id !== right.id);
 		const newValue = Object.assign({}, right, { dealExclusive });
-		rights.push(newValue);
 		this.setState({
-			rights,
+			selectedRight: newValue,
 			currentStep: 3,
 		});
 	};
@@ -317,15 +295,15 @@ class EditProperty extends React.Component {
 			selectedSeason,
 			showCustomSeason,
 			seasons,
-			rights,
+			selectedRight,
 			territories,
 			territoriesMode,
 		} = this.state;
 		const { property: { seasons: allSeasons, tournament, rights: allRights }, loading } = this.props;
 		const seasonsValid = this.seasonsAreValid();
-		const rightsValid = this.rightsAreValid();
+		const rightValid = this.rightAreValid();
 		const territoriesValid = this.territoriesAreValid();
-		const territory = this.getTerritoriesFromRights(rights);
+		const territory = this.getTerritoriesFromRight(selectedRight);
 		const seasonTypes = [
 			{
 				value: EDIT_TYPE.create,
@@ -339,27 +317,30 @@ class EditProperty extends React.Component {
 
 		const futureSeasons = this.getFutureSeasons();
 		let selectableSeasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
-		selectableSeasons = uniqBy(selectableSeasons.concat(seasons), "externalId");
+		selectableSeasons = uniqBy(selectableSeasons.concat(allSeasons), "externalId");
 		selectableSeasons.sort(sortSeasons);
+		const buttonDisabled = loading || (editSeason === EDIT_TYPE.create ? currentStep < 3 : currentStep < 5);
 
 		return (
 			<div className="default-container no-title property edit-property property-deal">
 				<DefaultBox>
 					<PropertyHeader edit={false} />
-					<CmsStepSelector
-						style={{ marginTop: 20 }}
-						title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_TITLE" />}
-						enableNextStep
-					>
-						<div className="season-selector">
-							<RadioSelector
-								value={editSeason}
-								onChange={this.handleSeasonType}
-								className="season-selector-item"
-								items={seasonTypes}
-							/>
-						</div>
-					</CmsStepSelector>
+					{(!!allSeasons.length) && (
+						<CmsStepSelector
+							style={{ marginTop: 20 }}
+							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_TITLE" />}
+							enableNextStep
+						>
+							<div className="season-selector">
+								<RadioSelector
+									value={editSeason}
+									onChange={this.handleSeasonType}
+									className="season-selector-item"
+									items={seasonTypes}
+								/>
+							</div>
+						</CmsStepSelector>
+					)}
 
 					{(currentStep > 1 && editSeason === EDIT_TYPE.create) && (
 						<CmsStepSelector
@@ -372,7 +353,7 @@ class EditProperty extends React.Component {
 										externalId,
 										custom,
 									} = season;
-									const selected = seasons.find(element => element.externalId === externalId);
+									const selected = allSeasons.find(element => element.externalId === externalId);
 
 									const idAttr = `checkbox-${externalId}`;
 									return (
@@ -524,31 +505,13 @@ class EditProperty extends React.Component {
 						</CmsStepSelector>
 					)}
 
-					{(currentStep > 2) && (
+					{(currentStep > 2 && editSeason === EDIT_TYPE.edit) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP3_TITLE" />}
 							button={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP3_BUTTON" />}
-							enableNextStep={rightsValid}
+							enableNextStep={rightValid}
 							onNext={() => this.onNext(4)}
 						>
-							{allRights.length > 1 && (
-								<div className="select-item">
-									<button
-										type="button"
-										onClick={this.onSelectAllRights}
-										className="ca-btn link-button"
-									>
-										Select All
-									</button>
-									<button
-										type="button"
-										onClick={this.onUnSelectAllRights}
-										className="ca-btn link-button"
-									>
-										UnSelect All
-									</button>
-								</div>
-							)}
 							<div className="right-selector">
 								{allRights.map((right) => {
 									const {
@@ -561,21 +524,20 @@ class EditProperty extends React.Component {
 									const idAttr = `checkbox-${code}`;
 									const exclusiveIdAttr = `exc-id-${code}`;
 									const nonExclusiveIdAttr = `non-exc-id-${code}`;
-									const selectedRight = rights.find(element => element.id === right.id);
-									const dealExclusive = selectedRight && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
+									const selected = selectedRight && selectedRight.id === right.id;
+									const dealExclusive = selected && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
 									const offerValue = dealExclusive === null ? null : (dealExclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
 									return (
 										<div className="right-selector-item" key={right.id}>
 											<div className="right-name">
 												<input
-													type="checkbox"
-													value={!!selectedRight}
-													checked={!!selectedRight}
-													className="ca-checkbox blue"
+													type="radio"
+													checked={selected}
+													className="ca-radio ca-radio-exclusive"
 													onChange={() => this.onSelectRight(right)}
 													id={idAttr}
 												/>
-												<label className={cn({ selected: !!selectedRight })} htmlFor={idAttr}>
+												<label className={cn({ selected })} htmlFor={idAttr}>
 													{name}
 												</label>
 												<div className="tooltip-container">
@@ -591,7 +553,7 @@ class EditProperty extends React.Component {
 											</div>
 											<div className="right-exclusivity">
 												<input
-													disabled={!selectedRight}
+													disabled={!selected}
 													type="radio"
 													checked={offerValue === offers.EXCLUSIVE}
 													onChange={() => {
@@ -601,14 +563,14 @@ class EditProperty extends React.Component {
 													className="ca-radio ca-radio-exclusive"
 												/>
 												<label
-													className={cn({ selected: !!selectedRight && offerValue === offers.EXCLUSIVE })}
+													className={cn({ selected: selected && offerValue === offers.EXCLUSIVE })}
 													htmlFor={exclusiveIdAttr}
 												>
 													<Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />
 												</label>
 												<input
 													type="radio"
-													disabled={!selectedRight}
+													disabled={!selected}
 													checked={offerValue === offers.NON_EXCLUSIVE}
 													onChange={() => {
 														this.onExclusive(right, false);
@@ -618,7 +580,7 @@ class EditProperty extends React.Component {
 												/>
 												<label
 													htmlFor={nonExclusiveIdAttr}
-													className={cn({ selected: !!selectedRight && offerValue === offers.NON_EXCLUSIVE })}
+													className={cn({ selected: selected && offerValue === offers.NON_EXCLUSIVE })}
 												>
 													<Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />
 												</label>
@@ -630,7 +592,7 @@ class EditProperty extends React.Component {
 						</CmsStepSelector>
 					)}
 
-					{(currentStep > 3) && (
+					{(currentStep > 3 && editSeason === EDIT_TYPE.edit) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP4_TITLE" />}
 							button={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP4_BUTTON" />}
@@ -657,7 +619,7 @@ class EditProperty extends React.Component {
 						</button>
 						<button
 							className="yellow-button"
-							disabled={currentStep < 3 || loading}
+							disabled={buttonDisabled}
 							onClick={this.handleSave}
 						>
 							{!loading && <Translate i18nKey="CMS_EDIT_PROPERTY_BUTTON" />}
