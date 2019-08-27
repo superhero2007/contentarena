@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { first, uniqBy } from "lodash";
+import { CMS_STATUS } from "@constants";
 import Translate from "@components/Translator/Translate";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
@@ -15,7 +16,13 @@ class CmsListingOverview extends React.Component {
 		super(props);
 		this.state = {
 			listings: [],
-			statuses: [],
+			statuses: [
+				CMS_STATUS.CMS_STATUS_REJECTED,
+				CMS_STATUS.CMS_STATUS_DRAFT,
+				CMS_STATUS.CMS_STATUS_SUBMITTED,
+				CMS_STATUS.CMS_STATUS_ACTIVE,
+				CMS_STATUS.CMS_STATUS_INACTIVE,
+			],
 			selectedStatus: null,
 			countries: [],
 			includeAllCountries: false,
@@ -24,17 +31,17 @@ class CmsListingOverview extends React.Component {
 	}
 
 	componentDidMount() {
-		const { property: { listings, seasons } } = this.props;
+		const { property: { seasons } } = this.props;
 		const { location: { search } } = this.props.history;
-		const statuses = uniqBy(listings.map(list => list.status.name));
-		this.setState({ statuses });
+		// const statuses = uniqBy(listings.map(list => list.status.name));
+		// this.setState({ statuses });
 		if (search) {
 			const params = search.replace("?", "").split("&");
 			for (let i = 0; i < params.length; i++) {
 				const key = params[i].split("=")[0];
 				const values = params[i].split("=")[1].split(",");
 				if (key === "status") {
-					this.setState({ selectedStatus: { value: values[0], label: values[0] } });
+					this.setState({ selectedStatus: { value: values[0], label: <Translate i18nKey={values[0]} key={values[0]} /> } });
 				}
 				if (key === "country") {
 					this.setState({ countries: values });
@@ -123,9 +130,32 @@ class CmsListingOverview extends React.Component {
 			);
 		}
 
+		let selectedStatusValue = [];
+		if (selectedStatus) {
+			switch (selectedStatus.value) {
+			case CMS_STATUS.CMS_STATUS_REJECTED:
+				selectedStatusValue = ["REJECTED"];
+				break;
+			case CMS_STATUS.CMS_STATUS_DRAFT:
+				selectedStatusValue = ["DRAFT", "AUTO_INACTIVE"];
+				break;
+			case CMS_STATUS.CMS_STATUS_SUBMITTED:
+				selectedStatusValue = ["PENDING"];
+				break;
+			case CMS_STATUS.CMS_STATUS_ACTIVE:
+				selectedStatusValue = ["APPROVED", "EDITED"];
+				break;
+			case CMS_STATUS.CMS_STATUS_INACTIVE:
+				selectedStatusValue = ["INACTIVE", "EXPIRED", "SOLD_OUT"];
+				break;
+			default:
+				selectedStatusValue = [];
+			}
+		}
+
 		let allListings = listings;
 		if (selectedStatus) {
-			allListings = allListings.filter(list => list.status.name === selectedStatus.value);
+			allListings = allListings.filter(list => selectedStatusValue.indexOf(list.status.name) !== -1);
 		}
 
 		if (seasons.length) {
@@ -165,7 +195,7 @@ class CmsListingOverview extends React.Component {
 										onChange={this.onSelectStatus}
 										multi={false}
 										value={selectedStatus}
-										options={statuses.map(b => ({ value: b, label: b }))}
+										options={statuses.map(b => ({ value: b, label: <Translate key={b} i18nKey={b} /> }))}
 									/>
 								</div>
 

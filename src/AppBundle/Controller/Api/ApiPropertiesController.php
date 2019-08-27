@@ -60,7 +60,7 @@ class ApiPropertiesController extends Controller
             "company" => $company
         ));
 
-        $property = $propertyService->getPropertyDetails($property, $user);
+        $property = $propertyService->getPropertyDetails($property);
 
         if ($property == null ) {
             $errorCode = PropertyErrors::PROPERTY_DOES_NOT_EXISTS;
@@ -115,7 +115,7 @@ class ApiPropertiesController extends Controller
             "company" => $company
         ));
         $property = $propertyService->updateProperty($property, $data, $user);
-        $property = $propertyService->getPropertyDetails($property, $user);
+        $property = $propertyService->getPropertyDetails($property);
 
         if ($property == null ) {
             $errorCode = PropertyErrors::PROPERTY_DOES_NOT_EXISTS;
