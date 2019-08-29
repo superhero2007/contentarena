@@ -125,7 +125,7 @@ class SellFormStep3 extends React.Component {
 				<div className="listing-summary">
 					<div>
 						<SummaryText {...this.props} />
-						<RightsList rightsPackage={rightsPackage} />
+						<RightsList rightsPackage={rightsPackage} name={PROGRAM_NAME} />
 					</div>
 					<div>
 						<RightsLegend />

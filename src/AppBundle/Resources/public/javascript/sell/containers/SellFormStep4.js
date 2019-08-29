@@ -116,6 +116,7 @@ class SellFormStep4 extends React.Component {
 			tournament,
 			seasons,
 			edited,
+			PROGRAM_NAME,
 		} = this.props;
 
 		if (step !== 4) return (null);
@@ -132,7 +133,7 @@ class SellFormStep4 extends React.Component {
 					<div className="listing-summary">
 						<div>
 							<SummaryText {...this.props} />
-							<RightsList rightsPackage={this.props.rightsPackage} />
+							<RightsList rightsPackage={this.props.rightsPackage} name={PROGRAM_NAME} />
 						</div>
 						<div>
 							<RightsLegend />
