@@ -1,7 +1,7 @@
 import React from "react";
 import { blueCheckIcon, yellowCheckIcon } from "./Icons";
 
-const RightsList = ({ rightsPackage }) => (
+const RightsList = ({ rightsPackage, name }) => (
 	<div className="rights-list">
 		{rightsPackage.map((sr, i) => (
 			<div key={i} className="rights-list-item">
@@ -13,9 +13,7 @@ const RightsList = ({ rightsPackage }) => (
 
 				<div style={{ display: "flex", flexDirection: "row" }}>
 					{sr.shortLabel !== "PR" && sr.name}
-					{sr.shortLabel === "PR" && content.PROGRAM_NAME
-					&& "Edited Program"
-					}
+					{sr.shortLabel === "PR" && name && "Edited Program"}
 				</div>
 			</div>
 		))}

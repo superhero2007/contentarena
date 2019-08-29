@@ -199,6 +199,7 @@ class ReviewAndSign extends React.Component {
 			customId,
 			status,
 			COMMENTS_RIGHTS,
+			PROGRAM_NAME,
 			edited,
 		} = this.props;
 
@@ -220,7 +221,7 @@ class ReviewAndSign extends React.Component {
 					<div className="listing-summary">
 						<div>
 							<SummaryText {...this.props} />
-							<RightsList rightsPackage={this.props.rightsPackage} />
+							<RightsList rightsPackage={this.props.rightsPackage} name={PROGRAM_NAME} />
 						</div>
 						<div>
 							<RightsLegend />
