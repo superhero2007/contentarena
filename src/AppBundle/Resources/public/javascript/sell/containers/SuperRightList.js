@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import RightDetailsDefault from "../../common/RightDetailsDefault";
-import { updateContentValue } from "../actions/contentActions";
+import { listingEdited, updateContentValue } from "../actions/contentActions";
 import { SuperRightDefinitions } from "../components/SuperRightDefinitions";
 import RightDefaultsBySuperRight from "../components/RightDefaultsBySuperRight";
 
