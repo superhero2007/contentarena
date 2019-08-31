@@ -156,3 +156,11 @@ jms_serializer:
             KnpPaginatorBundle:
                 namespace_prefix:  "Knp\\Bundle\\PaginatorBundle"
                 path: '%kernel.root_dir%/Resources/serializer/Knp'
+
+monolog:
+    channels: ['db']
+    handlers:
+        db:
+            channels: ['db']
+            type: service
+            id: monolog.db_handler

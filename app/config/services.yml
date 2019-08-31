@@ -161,3 +161,23 @@ services:
         public: true
         tags:
             - {name: jms_serializer.subscribing_handler}
+
+    monolog.db_handler:
+        class: AppBundle\Util\MonologDBHandler
+        arguments: ['@doctrine.orm.entity_manager']
+
+    monolog.processor.request:
+        class: AppBundle\Util\RequestProcessor
+        arguments: ['@request_stack', '@service_container']
+        tags:
+            - { name: monolog.processor, method: processRecord, handler: db }
+
+    appbundle.subscriber.abstract_subscriber:
+        class: AppBundle\EventSubscriber\AbstractSubscriber
+        arguments: ['@service_container']
+
+    appbundle.subscriber.list_subscriber:
+        class: AppBundle\EventSubscriber\ListSubscriber
+        parent: appbundle.subscriber.abstract_subscriber
+        tags:
+            - { name: kernel.event_subscriber }
