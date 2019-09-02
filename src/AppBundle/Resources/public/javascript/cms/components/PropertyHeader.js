@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import { Link } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import { PROPERTY_MAIN_TABS, ROUTE_PATHS } from "@constants";
-import { Link } from "react-router-dom";
 
 class PropertyHeader extends React.Component {
 	constructor(props) {
