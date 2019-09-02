@@ -20,7 +20,7 @@ class PropertyRight
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class PropertyRight
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $name;
 
@@ -36,7 +36,7 @@ class PropertyRight
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="code", type="string", length=2, nullable=false)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $code;
 
@@ -47,7 +47,7 @@ class PropertyRight
      *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="property_territory_id", referencedColumnName="id")}
      *      )
-     * @Groups({"property"})
+     * @Groups({"listing", "property"})
      */
     private $territories;
 
@@ -55,7 +55,7 @@ class PropertyRight
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="territories_mode", type="string", length=255, nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $territoriesMode;
 
@@ -63,7 +63,7 @@ class PropertyRight
      * @var boolean
      * @Serializer\Type("boolean")
      * @ORM\Column(name="exclusive", type="boolean")
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $exclusive;
 
@@ -71,7 +71,7 @@ class PropertyRight
      * @var object
      * @Serializer\Type("JsObject")
      * @ORM\Column(name="details", type="object", nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"listing", "property", "propertyList"})
      */
     private $details;
 

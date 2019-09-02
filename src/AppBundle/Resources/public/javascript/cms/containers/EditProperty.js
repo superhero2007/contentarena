@@ -9,6 +9,7 @@ import ReactTooltip from "react-tooltip";
 import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
+import { getTerritoriesFromRights } from "@utils/property";
 import CmsStepSelector from "../components/CmsStepSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import RadioSelector from "../../main/components/RadioSelector";
@@ -19,6 +20,7 @@ import { updateProperty } from "../actions/propertyActions";
 import CmsCustomSeason from "../components/CmsCustomSeason";
 import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import PropertyHeader from "../components/PropertyHeader";
+
 
 class EditProperty extends React.Component {
 	constructor(props) {
@@ -55,24 +57,12 @@ class EditProperty extends React.Component {
 
 	rightAreValid = () => {
 		const { selectedRight } = this.state;
-		return !!selectedRight && selectedRight.dealExclusive !== null;
+		return !!selectedRight && selectedRight.exclusive !== null;
 	};
 
 	territoriesAreValid = () => {
 		const { territories } = this.state;
 		return !!territories.length;
-	};
-
-	getTerritoriesFromRight = (right) => {
-		const territory = {
-			territories: [],
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-		};
-		if (right) {
-			territory.territories = right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? this.props.countries : right.territories;
-			territory.territoriesMode = right.territoriesMode;
-		}
-		return territory;
 	};
 
 	onSelectAllSeasons = () => {
@@ -110,7 +100,7 @@ class EditProperty extends React.Component {
 	onSelectRight = (value) => {
 		const { selectedRight } = this.state;
 		if (!selectedRight || selectedRight && selectedRight.id !== value.id) {
-			const newValue = Object.assign({}, value, { dealExclusive: null });
+			const newValue = Object.assign({}, value, { exclusive: null });
 			this.setState({
 				currentStep: 3,
 				selectedRight: newValue,
@@ -118,8 +108,8 @@ class EditProperty extends React.Component {
 		}
 	};
 
-	onExclusive = (right, dealExclusive) => {
-		const newValue = Object.assign({}, right, { dealExclusive });
+	onExclusive = (right, exclusive) => {
+		const newValue = Object.assign({}, right, { exclusive });
 		this.setState({
 			selectedRight: newValue,
 			currentStep: 3,
@@ -303,7 +293,7 @@ class EditProperty extends React.Component {
 		const seasonsValid = this.seasonsAreValid();
 		const rightValid = this.rightAreValid();
 		const territoriesValid = this.territoriesAreValid();
-		const territory = this.getTerritoriesFromRight(selectedRight);
+		const territory = getTerritoriesFromRights(allRights);
 		const seasonTypes = [
 			{
 				value: EDIT_TYPE.create,
@@ -525,8 +515,8 @@ class EditProperty extends React.Component {
 									const exclusiveIdAttr = `exc-id-${code}`;
 									const nonExclusiveIdAttr = `non-exc-id-${code}`;
 									const selected = selectedRight && selectedRight.id === right.id;
-									const dealExclusive = selected && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
-									const offerValue = dealExclusive === null ? null : (dealExclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
+									const exclusive = selected && selectedRight.exclusive !== null ? selectedRight.exclusive : null;
+									const offerValue = exclusive === null ? null : (exclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
 									return (
 										<div className="right-selector-item" key={right.id}>
 											<div className="right-name">

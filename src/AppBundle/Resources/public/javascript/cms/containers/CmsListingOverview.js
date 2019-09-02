@@ -125,7 +125,7 @@ class CmsListingOverview extends React.Component {
 		if (!listings.length) {
 			return (
 				<section className="listing-overview-tab">
-					<EmptyListingOverview />
+					<EmptyListingOverview customId={customId} />
 				</section>
 			);
 		}

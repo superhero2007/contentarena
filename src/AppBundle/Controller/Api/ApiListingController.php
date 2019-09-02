@@ -2,12 +2,18 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\Property;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\User;
 use AppBundle\Error\ListingErrors;
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\ListingService;
+use AppBundle\Service\WatchlistService;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +23,9 @@ use AppBundle\Service\BidService;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 
 class ApiListingController extends Controller
 {
@@ -24,11 +33,135 @@ class ApiListingController extends Controller
     use ControllerHelper;
 
     /**
-     * @Route("/api/listing/save", name="saveListingAsInactive")
+     * @Route("/api/listing/details", name="listingDetails")
+     * @param Request $request
+     * @param WatchlistService $watchlistService
+     * @param BidService $bidService
+     * @return JsonResponse|Response
+     */
+    public function listingDetails(Request $request, WatchlistService $watchlistService, BidService $bidService){
+
+        $customId = $request->get('customId');
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        //Take Repositories
+        $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
+        $statusesForbiddenForNonMembers = array(
+            'DRAFT',
+            'AUTO_INACTIVE',
+            'PENDING',
+            'REJECTED',
+            'ARCHIVED',
+            'SOLD_COPY'
+        );
+
+        $statusesAllowedForBuyers = array(
+            'SOLD_OUT',
+            "EXPIRED",
+            'INACTIVE',
+        );
+
+        /* @var Content $content */
+        $content = $repository->findOneBy(array("customId"=>$customId));
+
+        if (!$content) {
+            $response = new JsonResponse(
+                $data = [
+                    "success" => false,
+                    "code" => ListingErrors::LISTING_NOT_EXISTS,
+                    "message" => ListingErrors::getErrorMessage(ListingErrors::LISTING_NOT_EXISTS),
+                ],
+                $status = Response::HTTP_NOT_FOUND
+            );
+            return $response;
+        }
+
+        $isMember = $content->userIsCompanyMember($user);
+        $content->setUserCanNotBuy($isMember);
+        $content->setUserCanEdit($isMember);
+
+        $bids = $bidService->getAllBidsByContentAndUser($content, $company);
+        $bundlesWithActivity = array();
+        $customBundles = array();
+        $closedDeals = array();
+        if ($bids != null){
+            foreach ($bids as $bid){
+                /* @var Bid $bid*/
+                /* @var SalesPackage $bundle*/
+                $bundle = $bid->getSalesPackage();
+                $bundlesWithActivity[] = $bundle->getId();
+
+                if ( $bid->getStatus()->getName() == "APPROVED") $closedDeals[] = $bundle->getId();
+                if ( $bundle->isCustom() ) $customBundles[] = $bundle;
+            }
+
+            $content->setBundlesWithActivity($bundlesWithActivity);
+            $content->setBundlesSold($closedDeals);
+            $content->setCustomBundles($customBundles);
+        }
+
+        if (!$isMember
+            && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers)
+                || (in_array($content->getStatus()->getName(),$statusesAllowedForBuyers) && count($closedDeals) == 0) )) {
+            $response = new JsonResponse(
+                $data = array(
+                    "success" => false,
+                    "code" => ListingErrors::LISTING_NOT_OWNER,
+                    "message" => ListingErrors::getErrorMessage(ListingErrors::LISTING_NOT_OWNER),
+                ),
+                $status = Response::HTTP_NOT_FOUND
+            );
+            return $response;
+        }
+
+        foreach ($content->getSalesPackages() as $salesBundle){
+            /**
+             * @var SalesPackage $salesBundle
+             * @var Bid $bid
+             */
+            $bid = $this->getDoctrine()->getRepository("AppBundle:Bid")->findOneBy(array(
+                "salesPackage"=> $salesBundle,
+                "buyerCompany" => $user->getCompany()
+            ));
+
+            if ( $bid != null){
+                $salesBundle->setFee($bid->getAmount());
+            }
+
+        }
+
+        $watchlist = $watchlistService->isInWatchlist( $user, $content );
+        $content->setWatchlist($watchlist);
+
+        return $this->getSerializedResponse($content, array('listing', 'details'));
+    }
+
+    /**
+     * @Route("/api/listing/save", name="saveListing")
+     * @param Request $request
+     * @param ListingService $listingService
+     * @param EmailService $emailService
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function saveListing(Request $request, ListingService $listingService , EmailService $emailService )
+    {
+        /* @var Property $property */
+        $user = $this->getUser();
+        $id = $request->get("id");
+        $data = $request->request->all();
+        $listing = $this->deserialize( $data, "AppBundle\Entity\Content");
+        $listingService->createListing($listing);
+        if ( $id == null ) $emailService->internalUserListingDraft($user, $listing);
+        return $this->getSerializedResponse($listing, array('draft'));
+    }
+
+    /**
+     * @Route("/api/listing/inactive", name="saveListingAsInactive")
      * @param Request $request
      * @param ContentService $contentService
      * @return JsonResponse
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws Exception
      */
     public function saveListingAsInactive(Request $request, ContentService $contentService  )
     {
@@ -74,7 +207,7 @@ class ApiListingController extends Controller
 
             $data = array('success'=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId());
             return $this->getSerializedResponse($data);
-        } catch (\Exception $e){
+        } catch (Exception $e){
             $logger->info("USER SUBMITTED LISTING UNSUCCESSFULLY", array(
                 "user" => $username,
                 "listingId" => $listingId,
@@ -240,9 +373,9 @@ class ApiListingController extends Controller
      * @param ContentService $contentService
      * @param EmailService $emailService
      * @return mixed|string|Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
     public function apiListingsDeactivate(Request $request, ContentService $contentService, EmailService $emailService){
 
@@ -260,9 +393,9 @@ class ApiListingController extends Controller
      * @param ContentService $contentService
      * @param EmailService $emailService
      * @return mixed|string|Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
     public function apiListingsArchive(Request $request, ContentService $contentService, EmailService $emailService){
 

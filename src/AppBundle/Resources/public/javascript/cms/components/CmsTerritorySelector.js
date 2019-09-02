@@ -45,7 +45,7 @@ class CmsTerritorySelector extends React.Component {
 	}
 
 	countryHasRegions = (country, regions) => {
-		regions = regions.filter(r => country.regions.indexOf(r) !== -1);
+		regions = regions.filter(r => country.regions.map(r => r.id).indexOf(r) !== -1);
 		return regions.length > 0;
 	};
 
@@ -60,11 +60,11 @@ class CmsTerritorySelector extends React.Component {
 			territoryItems[country.territoryId].push(country.id);
 
 			country.regions.forEach((region) => {
-				if (regionItems[region] === undefined) {
-					regionItems[region] = [];
+				if (regionItems[region.id] === undefined) {
+					regionItems[region.id] = [];
 				}
-				if (regionItems[region].indexOf(country.id) === -1) {
-					regionItems[region].push(country.id);
+				if (regionItems[region.id].indexOf(country.id) === -1) {
+					regionItems[region.id].push(country.id);
 				}
 			});
 		});
@@ -132,16 +132,12 @@ class CmsTerritorySelector extends React.Component {
 				activeRegions.splice(index, 1);
 			}
 
-			if (index === -1) {
-				activeRegions.push(region.id);
-			} else {
-				activeRegions.splice(index, 1);
-			}
 			worldwideSelected = false;
 			selection = countries.filter(c => (this.countryHasRegions(c, activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1) && filter.indexOf(c.name) === -1);
 		} else {
 			selection = countries.filter(c => c.regions.indexOf(region.id) !== -1 && filter.indexOf(c.name) === -1);
 		}
+
 		selection = selection.map((item) => {
 			item.value = item.name;
 			item.label = item.name;
@@ -302,6 +298,8 @@ class CmsTerritorySelector extends React.Component {
 			radioSelectors.pop();
 		}
 
+		const totalRegionItems = regions.length;
+
 		return (
 			<div className="country-selector region-filter">
 
@@ -389,6 +387,7 @@ class CmsTerritorySelector extends React.Component {
 							placeholder={placeholder}
 							isInvalid={isInvalid}
 							available={countries}
+							silent
 						/>
 					</div>
 				)}

@@ -1,5 +1,7 @@
 import max from "lodash/max";
 import { allValue } from "../../main/components/LanguageSelector";
+import { propertyDetailsTypes } from "../../cms/reducers/propertyDetails";
+import { LISTING_STATUS } from "../../common/constants";
 
 export const contentType = {
 	CONTENT_INIT: "CONTENT_INIT",
@@ -17,8 +19,14 @@ export const contentType = {
 	UPDATE_ANNEX: "UPDATE_ANNEX",
 	ADD_SALES_PACKAGES: "ADD_SALES_PACKAGES",
 	RESET: "RESET",
+
+	UPDATE_LISTING: "UPDATE_LISTING",
 	LISTING_EDITED: "LISTING_EDITED",
 	LISTING_SAVED: "LISTING_SAVED",
+	SAVE_LISTING: "SAVE_LISTING",
+	LISTING_REQUEST: "LISTING_REQUEST",
+	LISTING_REQUEST_SUCCESS: "LISTING_REQUEST_SUCCESS",
+	LISTING_REQUEST_FAIL: "LISTING_REQUEST_FAIL",
 };
 
 export const EmptyListing = {
@@ -56,12 +64,24 @@ export const EmptyListing = {
 	imageBase64: null,
 	tempData: {},
 	edited: false,
+	loading: false,
+	// status: LISTING_STATUS.DRAFT
 };
 
 export const content = (state = EmptyListing, action) => {
 	let newState = {};
 
 	switch (action.type) {
+	case contentType.SAVE_LISTING:
+		return Object.assign({}, state, { saving: true });
+	case contentType.LISTING_REQUEST:
+		return Object.assign({}, state, { loading: true });
+	case contentType.LISTING_REQUEST_SUCCESS:
+		return Object.assign({}, state, { loading: false, saving: false, ...action.data });
+	case contentType.UPDATE_LISTING:
+		return Object.assign({}, state, { ...action.data });
+	case contentType.LISTING_REQUEST_FAIL:
+		return Object.assign({}, state, { error: action.error }, { loading: false, saving: false });
 	case contentType.RESET:
 		return Object.assign({}, state, EmptyListing);
 	case contentType.CONTENT_INIT:

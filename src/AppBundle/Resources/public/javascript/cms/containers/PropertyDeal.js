@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import moment from "moment";
-import cn from "classnames";
-import ReactTooltip from "react-tooltip";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
+import { getTerritoriesFromRights } from "@utils/property";
+import SeasonSelector from "@components/Season";
+import RightSelector from "@components/Right";
 import CmsStepSelector from "../components/CmsStepSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
@@ -14,6 +14,7 @@ import CmsDealTable from "../components/CmsDealTable";
 import { getUnique, sortSeasons } from "../helpers/PropertyDetailsHelper";
 import { addDealsProperty } from "../actions/propertyActions";
 import PropertyHeader from "../components/PropertyHeader";
+
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
@@ -39,7 +40,7 @@ class PropertyDeal extends React.Component {
 
 	rightsAreValid = () => {
 		const { rights } = this.state;
-		return !!rights.length && !rights.filter(element => element.dealExclusive === null).length;
+		return !!rights.length && !rights.filter(element => element.exclusive === null).length;
 	};
 
 	territoriesAreValid = () => {
@@ -84,24 +85,9 @@ class PropertyDeal extends React.Component {
 		});
 	};
 
-	getTerritoriesFromRights = (rights) => {
-		const territory = {
-			territories: [],
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-		};
-		const worldwideRights = rights.filter(right => right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE);
-		if (worldwideRights.length) {
-			territory.territories = this.props.countries;
-			territory.territoriesMode = BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
-		} else {
-			territory.territories = getUnique([].concat(...rights.map(right => right.territories)), "id");
-		}
-		return territory;
-	};
-
 	onSelectAllRights = () => {
 		const { property: { rights } } = this.props;
-		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
+		const newRights = rights.map(element => Object.assign({}, element, { exclusive: null }));
 		this.setState({
 			rights: newRights,
 			currentStep: 2,
@@ -115,10 +101,10 @@ class PropertyDeal extends React.Component {
 		});
 	};
 
-	onExclusive = (right, dealExclusive) => {
+	onExclusive = (right, exclusive) => {
 		let { rights } = this.state;
 		rights = rights.filter(element => element.id !== right.id);
-		const newValue = Object.assign({}, right, { dealExclusive });
+		const newValue = Object.assign({}, right, { exclusive });
 		rights.push(newValue);
 		this.setState({
 			rights,
@@ -132,7 +118,7 @@ class PropertyDeal extends React.Component {
 		if (selectedRight) {
 			rights = rights.filter(element => element.id !== value.id);
 		} else {
-			const newValue = Object.assign({}, value, { dealExclusive: null });
+			const newValue = Object.assign({}, value, { exclusive: null });
 			rights.push(newValue);
 		}
 		this.setState({
@@ -212,11 +198,11 @@ class PropertyDeal extends React.Component {
 			currentStep,
 			deals,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights }, loading } = this.props;
+		const { property: { seasons: allSeasons, rights: allRights, countries }, loading } = this.props;
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
-		const territory = this.getTerritoriesFromRights(rights);
+		const territory = getTerritoriesFromRights(rights, countries);
 		allSeasons.sort(sortSeasons);
 
 		return (
@@ -231,60 +217,13 @@ class PropertyDeal extends React.Component {
 						enableNextStep={seasonsValid || !allSeasons.length}
 						onNext={() => this.onNext(2)}
 					>
-						{!allSeasons.length && (
-							<div className="select-item">
-								<Translate i18nKey="CMS_SEASON_NOT_APPLICABLE" />
-							</div>
-						)}
-
-						{allSeasons.length > 1 && (
-							<div className="select-item">
-								<button
-									type="button"
-									onClick={this.onSelectAllSeasons}
-									className="ca-btn link-button"
-								>
-									Select All
-								</button>
-								<button
-									type="button"
-									onClick={this.onUnSelectAllSeasons}
-									className="ca-btn link-button"
-								>
-									UnSelect All
-								</button>
-							</div>
-						)}
-						<div className="d-flex">
-							{allSeasons.map((season) => {
-								const { endDate, startDate } = season;
-								let { year } = season;
-								if (year) {
-									if (year.split("/")[0].length === 2) {
-										year = startDate.substring(0, 2) + year;
-									}
-								} else {
-									const startY = moment(startDate).format("YYYY");
-									const endY = moment(endDate).format("YYYY");
-									year = startY === endY ? `${endY}` : `${startY}/${endY}`;
-								}
-								const selectedSeason = seasons.find(element => element.id === season.id);
-								return (
-									<div key={season.id} className="season-item">
-										<input
-											type="checkbox"
-											value={!!selectedSeason}
-											checked={!!selectedSeason}
-											onChange={() => this.onChangeSeason(season)}
-											className="ca-checkbox blue"
-										/>
-										<label>
-											{year}
-										</label>
-									</div>
-								);
-							})}
-						</div>
+						<SeasonSelector
+							availableSeasons={allSeasons}
+							selectedSeasons={seasons}
+							onSelectSeason={this.onChangeSeason}
+							onSelectAll={this.onSelectAllSeasons}
+							onUnselectAll={this.onUnSelectAllSeasons}
+						/>
 					</CmsStepSelector>
 
 					{(currentStep > 1) && (
@@ -294,99 +233,14 @@ class PropertyDeal extends React.Component {
 							enableNextStep={rightsValid}
 							onNext={() => this.onNext(3)}
 						>
-							{allRights.length > 1 && (
-								<div className="select-item">
-									<button
-										type="button"
-										onClick={this.onSelectAllRights}
-										className="ca-btn link-button"
-									>
-										Select All
-									</button>
-									<button
-										type="button"
-										onClick={this.onUnSelectAllRights}
-										className="ca-btn link-button"
-									>
-										UnSelect All
-									</button>
-								</div>
-							)}
-							<div className="right-selector">
-								{allRights.map((right) => {
-									const {
-										name, code,
-									} = right;
-									const { offers } = this.state;
-									const idAttr = `checkbox-${code}`;
-									const exclusiveIdAttr = `exc-id-${code}`;
-									const nonExclusiveIdAttr = `non-exc-id-${code}`;
-									const selectedRight = rights.find(element => element.id === right.id);
-									const dealExclusive = selectedRight && selectedRight.dealExclusive !== null ? selectedRight.dealExclusive : null;
-									const offerValue = dealExclusive === null ? null : (dealExclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
-									return (
-										<div className="right-selector-item" key={right.id}>
-											<div className="right-name">
-												<input
-													type="checkbox"
-													value={!!selectedRight}
-													checked={!!selectedRight}
-													className="ca-checkbox blue"
-													onChange={() => this.onSelectRight(right)}
-													id={idAttr}
-												/>
-												<label className={cn({ selected: !!selectedRight })} htmlFor={idAttr}>
-													{name}
-												</label>
-												<div className="tooltip-container">
-													<span className="" data-tip data-for={code}>
-														<i className="fa fa-question-circle-o" />
-													</span>
-													<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
-														<div className="body">
-															<Translate i18nKey={`CMS_DEALS_RIGHT_DEFINITIONS_${code}`} />
-														</div>
-													</ReactTooltip>
-												</div>
-											</div>
-											<div className="right-exclusivity">
-												<input
-													disabled={!selectedRight}
-													type="radio"
-													checked={offerValue === offers.EXCLUSIVE}
-													onChange={() => {
-														this.onExclusive(right, true);
-													}}
-													id={exclusiveIdAttr}
-													className="ca-radio ca-radio-exclusive"
-												/>
-												<label
-													className={cn({ selected: !!selectedRight && offerValue === offers.EXCLUSIVE })}
-													htmlFor={exclusiveIdAttr}
-												>
-													<Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />
-												</label>
-												<input
-													type="radio"
-													disabled={!selectedRight}
-													checked={offerValue === offers.NON_EXCLUSIVE}
-													onChange={() => {
-														this.onExclusive(right, false);
-													}}
-													id={nonExclusiveIdAttr}
-													className="ca-radio"
-												/>
-												<label
-													htmlFor={nonExclusiveIdAttr}
-													className={cn({ selected: !!selectedRight && offerValue === offers.NON_EXCLUSIVE })}
-												>
-													<Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />
-												</label>
-											</div>
-										</div>
-									);
-								})}
-							</div>
+							<RightSelector
+								availableRights={allRights}
+								selectedRights={rights}
+								onSelectAll={this.onSelectAllRights}
+								onUnselectAll={this.onUnSelectAllRights}
+								onSelectRight={this.onSelectRight}
+								onExclusive={this.onExclusive}
+							/>
 						</CmsStepSelector>
 					)}
 

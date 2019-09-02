@@ -135,22 +135,14 @@ export const startFetchingPropertyDetails = () => ({
 	type: propertyDetailsTypes.START_FETCHING,
 });
 
-export const fetchTerritories = () => async (dispatch) => {
-	if (ContentArena.Data.Territories.length === 0) {
-		try {
-			const territories = await ContentArena.Api.getTerritories();
-			ContentArena.Data.Territories = territories;
-			dispatch(fetchTerritoriesSuccess(territories));
-			return territories;
-		} catch (error) {
-			throw error.response;
-		}
-	} else {
-		Promise((resolve) => {
-			resolve(
-				dispatch(fetchRegionsSuccess(ContentArena.Data.Territories)),
-			);
-		});
+export const fetchTerritories = () => async (dispatch, getState) => {
+	if (getState().property.territories.length) return;
+	try {
+		const territories = await ContentArena.Api.getTerritories();
+		dispatch(fetchTerritoriesSuccess(territories));
+		return territories;
+	} catch (error) {
+		throw error.response;
 	}
 };
 
@@ -159,11 +151,12 @@ export const fetchCountriesSuccess = countries => ({
 	countries,
 });
 
-export const fetchCountries = () => async (dispatch) => {
+export const fetchCountries = () => async (dispatch, getState) => {
+	if (getState().property.countries.length) return;
 	try {
-		const countries = await ContentArena.Api.getCountries();
-		dispatch(fetchCountriesSuccess(countries));
-		return countries;
+		const { data } = await api.common.countriesAll();
+		dispatch(fetchCountriesSuccess(data));
+		return data;
 	} catch (error) {
 		throw error.response;
 	}
@@ -174,22 +167,14 @@ export const fetchRegionsSuccess = regions => ({
 	regions,
 });
 
-export const fetchRegions = () => async (dispatch) => {
-	if (ContentArena.Data.Regions.length === 0) {
-		try {
-			const regions = await ContentArena.Api.getRegions();
-			ContentArena.Data.Regions = regions;
-			dispatch(fetchRegionsSuccess(regions));
-			return regions;
-		} catch (error) {
-			throw error.response;
-		}
-	} else {
-		Promise((resolve) => {
-			resolve(
-				dispatch(fetchRegionsSuccess(ContentArena.Data.Regions)),
-			);
-		});
+export const fetchRegions = () => async (dispatch, getState) => {
+	if (getState().property.regions.length) return;
+	try {
+		const regions = await ContentArena.Api.getRegions();
+		dispatch(fetchRegionsSuccess(regions));
+		return regions;
+	} catch (error) {
+		throw error.response;
 	}
 };
 

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,29 +17,54 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Content implements NotifiableInterface
 {
+
+    public static $DRAFT = "DRAFT";
+
     /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "property"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "property", "draft"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board", "commercial", "home", "propertyList", "property"})
+     * @Groups({"listing", "board", "commercial", "home", "propertyList", "property", "draft"})
      */
     private $status;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "propertyList", "property"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "propertyList", "property", "draft"})
      */
     protected $customId;
+
+    /**
+     * @Serializer\Type("array<AppBundle\Entity\PropertyRight>")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PropertyRight",cascade={"persist"})
+     * @ORM\JoinTable(name="listing_rights",
+     *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="listing_right_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"listing", "property"})
+     */
+    private $rights;
+
+    /**
+     * @Serializer\Type("array<PropertyEventItem<AppBundle\Entity\Tournament>>")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tournament",cascade={"persist"})
+     * @ORM\JoinTable(name="listing_tournaments",
+     *      joinColumns={@ORM\JoinColumn(name="listing_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="listing_tournament_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"listing", "property"})
+     */
+    private $tournaments;
 
     /**
      * @var mixed
@@ -116,8 +142,8 @@ class Content implements NotifiableInterface
     protected $watchlist = false;
 
     /**
-     * @var object
-     *
+     * @var array
+     * @Serializer\Type("array")
      * @ORM\Column(name="website", type="object", nullable=true)
      * @Groups({"listing", "home"})
      */
@@ -226,6 +252,7 @@ class Content implements NotifiableInterface
 
     /**
      * @var object
+     * @Serializer\Type("array")
      * @ORM\Column(name="attachments", type="object", nullable=true)
      * @Groups({"details", "home"})
      */
@@ -233,6 +260,7 @@ class Content implements NotifiableInterface
 
     /**
      * @var object
+     * @Serializer\Type("array")
      * @ORM\Column(name="annex", type="object", nullable=true)
      * @Groups({"details", "home"})
      */
@@ -2027,5 +2055,41 @@ class Content implements NotifiableInterface
     {
         $this->bids = $bids;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * @param mixed $rights
+     */
+    public function setRights($rights)
+    {
+        $this->rights = $rights;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTournaments()
+    {
+        return $this->tournaments;
+    }
+
+    /**
+     * @param mixed $tournaments
+     */
+    public function setTournaments($tournaments)
+    {
+        $this->tournaments = $tournaments;
+    }
+
+
+
+
 
 }
