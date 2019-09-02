@@ -18,21 +18,21 @@ class LanguageSelector extends React.Component {
 
 	handleOnChange = (selection) => {
 		const { onChange } = this.props;
-		const hasAll = !!selection.find(item => item.value === "all");
-		const hasAllPrev = !!this.prevSelection.find(item => item.value === "all");
-		// const itemsChanged = selection.length !== this.prevSelection.length;
-
-		if (hasAll) {
-			if (hasAllPrev) {
-				// Remove All
-				selection = selection.filter(item => item.value !== "all");
-			} else {
-				// Add All and remove others
-				selection = [allValue];
-			}
-		}
-
-		this.prevSelection = selection;
+		// const hasAll = !!selection.find(item => item.value === "all");
+		// const hasAllPrev = !!this.prevSelection.find(item => item.value === "all");
+		// // const itemsChanged = selection.length !== this.prevSelection.length;
+		//
+		// if (hasAll) {
+		// 	if (hasAllPrev) {
+		// 		// Remove All
+		// 		selection = selection.filter(item => item.value !== "all");
+		// 	} else {
+		// 		// Add All and remove others
+		// 		selection = [allValue];
+		// 	}
+		// }
+		//
+		// this.prevSelection = selection;
 
 		onChange(selection);
 	};
