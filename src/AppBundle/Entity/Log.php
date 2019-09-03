@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="log")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LogRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Log
 {

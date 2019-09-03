@@ -954,12 +954,12 @@ class ContentService
 
             $packages = array();
             foreach ( $data->rightsPackage as $package ){
-                $packages[$package->id] = $this->em->getReference('AppBundle:RightsPackage', $package->id );
+                $packages[$package->getId()] = $this->em->getReference('AppBundle:RightsPackage', $package->getId() );
                 $selectedRightsItems = array("items"=> array(), "exclusive" => (isset($package->exclusive)) ? $package->exclusive : false  );
                 foreach ( $package->selectedRights as $key => $value ){
                     $selectedRightsItems["items"][$key] = $value;
                 }
-                $selectedRights[$package->id] = $selectedRightsItems;
+                $selectedRights[$package->getId()] = $selectedRightsItems;
             }
 
             $content->setSelectedRightsBySuperRight($selectedRights);

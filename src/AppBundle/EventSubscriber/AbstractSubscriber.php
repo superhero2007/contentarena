@@ -33,7 +33,7 @@ abstract class AbstractSubscriber
      * @param string $action
      * @param array $entityFields
      */
-    protected function logEntity($action = self::UNKNOWN_ACTION, array $entityFields)
+    protected function logEntity($action = self::UNKNOWN_ACTION, $entityFields)
     {
         $this->container->get('monolog.logger.db')->info($action, [
             'entity' => $entityFields

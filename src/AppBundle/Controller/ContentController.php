@@ -6,6 +6,7 @@ use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Error\ListingErrors;
+use AppBundle\Events\ListEvent;
 use AppBundle\Service\BidService;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
@@ -144,6 +145,9 @@ class ContentController extends Controller
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($content->getSalesPackages(), 'json',SerializationContext::create()->setGroups(array('listing', 'details')));
+
+        $event = new ListEvent($content);
+        $this->get("event_dispatcher")->dispatch(ListEvent::LIST_CREATED, $event);
 
         return new JsonResponse(array(
             "success"=>true,

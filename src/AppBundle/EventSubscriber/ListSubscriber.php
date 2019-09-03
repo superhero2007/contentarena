@@ -26,10 +26,10 @@ class ListSubscriber extends AbstractSubscriber implements EventSubscriberInterf
     /**
      * @param ListEvent $event
      */
-    public function onListAdded(ListEvent $event)
+    public function onListCreated(ListEvent $event)
     {
         $this->logEntity(ListEvent::LIST_CREATED, [
-            'product' => $event->getEntity()->getProduct()
+            'content' => $event->getEntity()->getCustomId()
         ]);
     }
 
@@ -39,7 +39,7 @@ class ListSubscriber extends AbstractSubscriber implements EventSubscriberInterf
     public function onListUpdated(ListEvent $event)
     {
         $this->logEntity(ListEvent::LIST_UPDATED, [
-            'product' => $event->getEntity()->getProduct()
+            'content' => $event->getEntity()->getCustomId()
         ]);
     }
 
@@ -49,7 +49,7 @@ class ListSubscriber extends AbstractSubscriber implements EventSubscriberInterf
     public function onListDeleted(ListEvent $event)
     {
         $this->logEntity(ListEvent::LIST_DELETED, [
-            'product' => $event->getEntity()->getProduct()
+            'content' => $event->getEntity()->getCustomId()
         ]);
     }
 }

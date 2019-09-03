@@ -172,12 +172,8 @@ services:
         tags:
             - { name: monolog.processor, method: processRecord, handler: db }
 
-    appbundle.subscriber.abstract_subscriber:
-        class: AppBundle\EventSubscriber\AbstractSubscriber
-        arguments: ['@service_container']
-
     appbundle.subscriber.list_subscriber:
         class: AppBundle\EventSubscriber\ListSubscriber
-        parent: appbundle.subscriber.abstract_subscriber
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
