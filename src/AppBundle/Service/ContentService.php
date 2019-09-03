@@ -761,6 +761,11 @@ class ContentService
             $content->setCustomId($customId);
         }
 
+        if ( $content->getProperty() == null && isset($data->property)){
+            $property = $this->em->find("AppBundle:Property", $data->property->id);
+            if ($property != null) $content->setProperty($property);
+        }
+
 
         if ( isset($data->step) && $data->step == 1 ){
 
@@ -816,7 +821,7 @@ class ContentService
                 $seasons = array();
                 $schedules = [];
                 foreach ($data->seasons as $key => $seasonData){
-                    $season = $this->getSeason($seasonData, $content->getTournament(), $key);
+                    $season = $this->getSeason($seasonData, $key, $content->getTournament());
                     $seasons[] = $season;
                     $schedules[] = $seasonData->selectedSchedules;
                     if ( isset($seasonData->fixtures) ) {
@@ -1169,7 +1174,14 @@ class ContentService
         return strpos($externalId, 'sr:') !== false;
     }
 
-    private function getSeason($seasonData, Tournament $tournament, $key){
+    /**
+     * @param $seasonData
+     * @param Tournament|null $tournament
+     * @param $key
+     * @return Season|object|null
+     * @throws \Exception
+     */
+    private function getSeason($seasonData, $key, Tournament $tournament = null ){
         if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
@@ -1180,7 +1192,7 @@ class ContentService
             $season = new Season();
             $time = new \DateTime();
 
-            if ( isset( $tournament) ) {
+            if ( isset( $tournament) && $tournament != null ) {
                 $season->setTournament($tournament);
             }
 

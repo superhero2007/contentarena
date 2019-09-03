@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { DefaultBox } from "../../common/components/Containers";
-import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "@constants";
+import {
+	CMS_PROPERTY_TABS, PROPERTY_MAIN_TABS, ROUTE_PATHS, SERVER_ERROR_CODES,
+} from "@constants";
 import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
 import CmsCommercialOverview from "./CmsCommercialOverview";
@@ -18,6 +19,7 @@ import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
 import PropertyHeader from "../components/PropertyHeader";
+import PropertyCreateListing from "./PropertyCreateListing";
 
 class Property extends React.Component {
 	constructor(props) {
@@ -40,6 +42,7 @@ class Property extends React.Component {
 		const {
 			propertyDetails: { property: { customId = "" } },
 			match: { params: { propertyId, tab } = {} },
+			property: { countries },
 		} = this.props;
 		if (!propertyId) return;
 
@@ -68,13 +71,14 @@ class Property extends React.Component {
 				error,
 			},
 			history,
-			match: {
-				params: {
-					propertyId,
-					tab,
-				} = {},
-			},
+			match,
 		} = this.props;
+
+		const {
+			propertyId,
+			tab,
+			listingId,
+		} = match.params;
 
 		if (this.isLoadingRegions()) {
 			return (
@@ -99,15 +103,24 @@ class Property extends React.Component {
 			);
 		}
 
-		if (tab === "deals") {
+		if (tab === PROPERTY_MAIN_TABS.ADD_DEALS) {
 			return (
 				<PropertyDeal history={history} />
 			);
 		}
 
-		if (tab === "edit") {
+		if (tab === PROPERTY_MAIN_TABS.EDIT) {
 			return (
 				<EditProperty history={history} />
+			);
+		}
+
+		if (tab === PROPERTY_MAIN_TABS.CREATE_LISTING) {
+			return (
+				<PropertyCreateListing
+					history={history}
+					match={match}
+				/>
 			);
 		}
 

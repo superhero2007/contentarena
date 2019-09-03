@@ -55,6 +55,12 @@ export const CMS_PROPERTY_DETAILS_TABS = {
 	LICENSE_DETAILS: "licensedetails",
 };
 
+export const PROPERTY_MAIN_TABS = {
+	EDIT: "edit",
+	CREATE_LISTING: "listing",
+	ADD_DEALS: "deals",
+};
+
 export const USER_PROFILES = {
 	SELLER: "SELLER",
 	BUYER: "BUYER",

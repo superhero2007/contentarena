@@ -32,7 +32,7 @@ ContentArena.ContentApi = {
 		const deferred = jQuery.Deferred();
 
 		$.ajax({
-			url: `${envhosturl}api/listing/save`,
+			url: `${envhosturl}api/listing/inactive`,
 			type: "POST",
 			data: JSON.stringify(content),
 			contentType: "application/json",
@@ -463,29 +463,6 @@ ContentArena.ContentApi = {
 
 		return deferred.promise();
 	},
-	getByCustomId(customId) {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}listing/details`,
-			type: "POST",
-			data: {
-				customId,
-			},
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
-
 	getDraftListings() {
 		const deferred = jQuery.Deferred();
 

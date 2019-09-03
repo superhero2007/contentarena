@@ -23,6 +23,13 @@ const API_ENDPOINTS = {
 	MARKETPLACE_LISTINGS: "api/marketplace/listings",
 	SHARE_LISTING: "api/share/listing",
 	AUTHENTICATION_PRE_REGISTER: "api/users/pre/register",
+
+	COMMON_COUNTRIES_ALL: "api/search/countries/all",
+
+	LISTING_SAVE: "api/listing/save",
+	LISTING_DETAILS: "api/listing/details",
+
+
 };
 
 export default API_ENDPOINTS;

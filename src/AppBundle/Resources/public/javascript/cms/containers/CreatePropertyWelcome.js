@@ -49,7 +49,6 @@ class CreatePropertyWelcome extends React.Component {
 				this.setState({ loading: false });
 			});
 
-		ContentArena.Api.getCountries();
 		scrollMainContainer();
 	}
 

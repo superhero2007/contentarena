@@ -226,6 +226,8 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
+
+	// TODO: deprecate this. Use commonApi instead
 	getCountries() {
 		const deferred = jQuery.Deferred();
 		const _this = this;

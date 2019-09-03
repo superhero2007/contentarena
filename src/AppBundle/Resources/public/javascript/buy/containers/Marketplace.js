@@ -120,15 +120,15 @@ class Marketplace extends Component {
 			showDetails: true,
 		});
 
-		ContentArena.ContentApi.getByCustomId(id)
-			.done((content) => {
+		api.listing.getListingDetails(id)
+			.then((response) => {
 				_this.setState({
-					content,
+					content: response.data,
 					loadingListingDetails: false,
 				});
 			})
-			.fail((error) => {
-				const data = error.data.responseJSON;
+			.catch((error) => {
+				const { data } = error.response;
 
 				if (data.code === 101) history.push("/marketplace");
 

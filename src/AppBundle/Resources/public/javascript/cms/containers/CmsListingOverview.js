@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { first, uniqBy } from "lodash";
-import { CMS_STATUS } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { CMS_STATUS } from "@constants";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
@@ -125,7 +125,7 @@ class CmsListingOverview extends React.Component {
 		if (!listings.length) {
 			return (
 				<section className="listing-overview-tab">
-					<EmptyListingOverview />
+					<EmptyListingOverview customId={customId} />
 				</section>
 			);
 		}

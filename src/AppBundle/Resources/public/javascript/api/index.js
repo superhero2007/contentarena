@@ -6,6 +6,8 @@ import messagesApi from "./messagesApi";
 import notificationsApi from "./notificationsApi";
 import authenticationApi from "./authenticationApi";
 import fixturesApi from "./fixturesApi";
+import commonApi from "./commonApi";
+import listingApi from "./listingApi";
 
 const api = {
 	properties: propertiesApi,
@@ -16,6 +18,8 @@ const api = {
 	notifications: notificationsApi,
 	authentication: authenticationApi,
 	fixtures: fixturesApi,
+	common: commonApi,
+	listing: listingApi,
 };
 
 export default api;
