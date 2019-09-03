@@ -70,6 +70,7 @@ class Checkout extends React.Component {
 			signaturePosition: props.user.title,
 			showSuccessScreen: false,
 			showConfirmScreen: false,
+			generalBid: 0,
 		};
 	}
 
@@ -601,6 +602,22 @@ class Checkout extends React.Component {
 		});
 	};
 
+	handleChangeAllBids = (values) => {
+		const { value } = values;
+		if (!value) return;
+		const { bundles } = this.state;
+
+		bundles.forEach((bundle) => {
+			if (bundle.salesMethod === BUNDLE_SALES_METHOD.BIDDING) bundle.fee = value;
+		});
+
+		this.setState({
+			// focusedInputId: id,
+			bundles,
+			generalBid: value,
+		});
+	};
+
 	removeBundle = (id) => {
 		const { bundles } = this.state;
 		const filtered = bundles.filter(item => item.id !== id);
@@ -764,6 +781,8 @@ class Checkout extends React.Component {
 			: [...tableStart, ...yourBid, ...tableEnd];
 	}
 
+	handleFocus = e => e.target.select();
+
 	render() {
 		ReactTooltip.rebuild();
 		const { listing, validation, common } = this.props;
@@ -774,6 +793,7 @@ class Checkout extends React.Component {
 			spinner,
 			terms,
 			bundles,
+			generalBid,
 		} = this.state;
 
 		const { ghostMode } = common;
@@ -818,6 +838,26 @@ class Checkout extends React.Component {
 								columns={this.getColumn(cloneDeep(biddingPackages), BUNDLE_SALES_METHOD.BIDDING)}
 							/>
 							<div className="total-fee">
+								{biddingPackages.length && (
+									<>
+										<span style={{ marginRight: 20 }}>
+											<Translate i18nKey="CHECKOUT_APPLY_GENERAL_BID" />
+										</span>
+										<NumberFormat
+											style={{
+												width: 150,
+												marginRight: "auto",
+											}}
+											thousandSeparator
+											value={generalBid}
+											onValueChange={values => this.handleChangeAllBids(values)}
+											min={biddingPackages[0].minimumBid}
+											prefix={`${getCurrencySymbol(biddingPackages[0].currency.code)} `}
+											onFocus={this.handleFocus}
+										/>
+									</>
+								)}
+
 								<span style={{ marginRight: 20 }}>TOTAL</span>
 								<NumberFormat
 									thousandSeparator

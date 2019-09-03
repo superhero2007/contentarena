@@ -8,9 +8,11 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\EmailContent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use AppBundle\Entity\Company;
+use Symfony\Component\Validator\Constraints\Email;
 
 /**
  * Listener responsible to change the redirection at the end of the password resetting
@@ -49,6 +51,7 @@ class AdminEditAction implements EventSubscriberInterface
 
             /**
              * Update user status
+             * @var EmailContent $emailContent
              */
             $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Active");
             $emailContent = $em->getRepository('AppBundle:EmailContent')->findBySlug("company_registered_owner");
@@ -69,7 +72,7 @@ class AdminEditAction implements EventSubscriberInterface
                     ->setBody(
                         $this->twig->render(
                             'Registration/company_registered_owner.txt.twig',
-                            array('company' => $company, 'content'=> $emailContent  )
+                            array('company' => $company, 'content'=> $emailContent->getContent()  )
                         )
                     )
                 ;
