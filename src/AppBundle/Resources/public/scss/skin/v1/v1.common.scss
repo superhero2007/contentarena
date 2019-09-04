@@ -1,0 +1,50 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    &.container {
+      background-color: $v1-background-grey;
+      height: 100%;
+    }
+
+    .default-box {
+      margin: 30px auto;
+      max-width: 980px;
+
+      &-header {
+        padding: 50px 0;
+        display: flex;
+
+        button {
+          margin-left: auto;
+        }
+      }
+    }
+
+    .default-tab {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      background-color: $v1-background-white;
+      align-items: center;
+      height: 58px;
+      justify-content: space-evenly;
+
+      .tab {
+        display: block;
+        padding: 16px 20px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: normal;
+        color: $v1-color-grey-3;
+        letter-spacing: 0.07px;
+
+        &.active {
+          font-weight: 600;
+          border-bottom: 2px solid $v1-color-blue-1;
+          color: $v1-color-blue-1;
+        }
+      }
+    }
+  }
+}

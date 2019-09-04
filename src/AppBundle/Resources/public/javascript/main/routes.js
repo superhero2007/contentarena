@@ -137,6 +137,7 @@ const routes = [
 		updateByPath: true,
 		profile: "SELLER",
 		title: "Properties",
+		skin: "v1",
 	},
 	{
 		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?/:listingId?`,
@@ -145,6 +146,7 @@ const routes = [
 		updateByPath: true,
 		profile: "SELLER",
 		title: "Properties",
+		skin: "v1",
 	},
 	{
 		path: `${ROUTE_PATHS.LISTING}/:customId/:tab?/:bundles?`,

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import cn from "classnames";
 import Translate from "@components/Translator/Translate";
 import { DefaultBox } from "../../common/components/Containers";
 import {
@@ -72,6 +73,7 @@ class Property extends React.Component {
 			},
 			history,
 			match,
+			skin,
 		} = this.props;
 
 		const {
@@ -82,7 +84,7 @@ class Property extends React.Component {
 
 		if (this.isLoadingRegions()) {
 			return (
-				<div className="default-container no-title property">
+				<div className={cn({ skin }, skin, "container")}>
 					<DefaultBox>
 						<Loader loading />
 					</DefaultBox>
@@ -92,7 +94,7 @@ class Property extends React.Component {
 
 		if (error) {
 			return (
-				<div className="default-container no-title property">
+				<div className={cn({ skin }, skin, "container")}>
 					<DefaultBox>
 						{
 							error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
@@ -127,16 +129,16 @@ class Property extends React.Component {
 		const translatedTabs = this.getTranslatedTabs();
 
 		return (
-			<div className="default-container no-title property">
+			<div className={cn({ skin }, skin, "container")}>
 				<DefaultBox>
 					<PropertyHeader />
 
-					<div className="ca-tabs">
+					<div className="default-tab">
 						{
 							Object.values(CMS_PROPERTY_TABS).map(t => (
 								<a
 									key={t}
-									className={`tab lg ${t === tab ? "active" : ""}`}
+									className={`tab ${t === tab ? "active" : ""}`}
 									onClick={() => {
 										history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${t}`);
 									}}

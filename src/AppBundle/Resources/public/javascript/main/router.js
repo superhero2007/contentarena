@@ -159,6 +159,7 @@ class AuthRouter extends React.Component {
 								component={route.main}
 								profile={user.profile}
 								routeProfile={route.profile}
+								skin={route.skin}
 								updateProfile={this.props.updateProfile}
 								{...this.props}
 							/>

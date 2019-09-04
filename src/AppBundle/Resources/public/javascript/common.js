@@ -28,3 +28,7 @@ require("../scss/pagination.scss");
 require("../scss/containers.scss");
 require("../scss/property.scss");
 require("../scss/search.competition.scss");
+
+require("../scss/skin/v1/v1.common.scss");
+require("../scss/skin/v1/v1.buttons.scss");
+require("../scss/skin/v1/v1.property.scss");

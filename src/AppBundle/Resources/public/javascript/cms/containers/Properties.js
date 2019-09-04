@@ -1,18 +1,17 @@
 import React from "react";
+import cn from "classnames";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader/Loader";
 import api from "../../api";
 import { DefaultBox } from "../../common/components/Containers";
 import PropertyList from "./PropertyList";
-import Property from "./Property";
-import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "../../common/constants";
+import { ROUTE_PATHS } from "../../common/constants";
 import { cmsFile } from "../../main/components/Icons";
 
-const CreatePropertyButton = ({ history }, context) => (
+const CreatePropertyButton = ({ history }) => (
 	<button
-		className="cms-button"
+		className="button"
 		onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
 	>
 		<Translate i18nKey="CMS_CREATE_PROPERTY_BUTTON" />
@@ -48,7 +47,7 @@ class Properties extends React.Component {
 	};
 
 	render() {
-		const { history } = this.props;
+		const { history, skin } = this.props;
 		const {
 			loadingProperties,
 			propertiesLoaded,
@@ -56,55 +55,71 @@ class Properties extends React.Component {
 		} = this.state;
 
 		return (
-			<div className="default-container no-title property">
+			<div className={cn({ skin }, skin, "container")}>
 				<DefaultBox>
-					{
-						propertiesLoaded
-						&& properties.length > 0
-						&& (
-							<div className="property-list-header">
-								<CreatePropertyButton history={history} />
+					{propertiesLoaded && (
+						<div className="default-box-header">
+							<div className="dashboard-header">
+								<i className="fa fa-home" />
+								<Translate i18nKey="CMS_PROPERTIES_DASHBOARD" />
 							</div>
-						)
-					}
-					{
-						loadingProperties
-						&& <Loader loading />
-					}
-					{
-						propertiesLoaded
-						&& properties.length > 0
-						&& <PropertyList properties={properties} history={history} />
-					}
-					{
-						propertiesLoaded
-						&& properties.length === 0
-						&& (
-							<div className="property-empty-list">
-								<img src={cmsFile} alt="" />
-								<span className="title">
-									<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_1" />
-								</span>
-								<span className="subtitle">
-									<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_2" />
-								</span>
-								<CreatePropertyButton history={history} />
-							</div>
-						)
-					}
+							<CreatePropertyButton history={history} />
+						</div>
+					)}
+
+					{propertiesLoaded && (
+						<div className="default-tab">
+							<a
+								key="tab-properties"
+								className="tab active"
+								onClick={() => {
+									history.push(`${ROUTE_PATHS.PROPERTIES}`);
+								}}
+							>
+								<Translate i18nKey="CMS_TAB_MY_PROPERTIES" />
+							</a>
+							<a
+								key="tab-commercial"
+								className="tab"
+								onClick={() => {
+								}}
+							>
+								<Translate i18nKey="CMS_TAB_COMMERCIAL" />
+							</a>
+							<a
+								key="tab-manage"
+								className="tab"
+								onClick={() => {
+								}}
+							>
+								<Translate i18nKey="CMS_TAB_LISTING" />
+							</a>
+						</div>
+					)}
+
+					{loadingProperties && <Loader loading />}
+
+					{propertiesLoaded && properties.length > 0 && (
+						<PropertyList properties={properties} history={history} />
+					)}
+
+					{propertiesLoaded && properties.length === 0 && (
+						<div className="property-empty-list">
+							<img src={cmsFile} alt="" />
+							<span className="title">
+								<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_1" />
+							</span>
+							<span className="subtitle">
+								<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_2" />
+							</span>
+							<CreatePropertyButton history={history} />
+						</div>
+					)}
 				</DefaultBox>
 			</div>
 		);
 	}
 }
-
-Properties.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
-
-CreatePropertyButton.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => state;
 

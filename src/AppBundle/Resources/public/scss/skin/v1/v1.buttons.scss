@@ -1,0 +1,26 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    .button {
+      width: 142px;
+      height: 32px;
+      border-radius: 2px;
+      border: solid 1px $v1-color-blue-1;
+      color: $v1-color-blue-1;
+      font-size: 12px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      background: transparent;
+      padding: 2px 7px 2px;
+
+      &-action {
+        // something here
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@ const inputStyle = {
 const editTranslationStyle = {
 	position: "relative",
 	cursor: "pointer",
-	width: "100%",
+	// width: "100%",
 };
 
 const fixedFormStyle = {
@@ -152,9 +152,9 @@ class Translate extends Component {
 		return (
 			<>
 				{!children && (
-					<span style={{ ...editTranslationStyle, ...style }} data-tip data-for={`${rnd}-${i18nKey}`}>
+					<section style={{ ...editTranslationStyle, ...style }} data-tip data-for={`${rnd}-${i18nKey}`}>
 						{value}
-					</span>
+					</section>
 				)}
 				{children && (
 					<section style={editTranslationStyle} data-tip data-for={`${rnd}-${i18nKey}`}>

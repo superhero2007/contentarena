@@ -17,45 +17,39 @@ class PropertyListItem extends React.Component {
 			name, customId, listings = [], history, closedBids, openBids = 0,
 		} = this.props;
 		return (
-			<section className="property-item-wrapper">
-				<div className="property-wrapper d-flex">
-					<div className="property-info">
-						<a
-							className="ca-title"
-							onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`)}
-						>
-							{name}
-						</a>
-						<div className="bids-wrapper">
-							<div className="open-bid">
-								<span className="bids-count">
-									{openBids}
-								</span>
-								<Translate i18nKey="CMS_PROPERTY_OPEN_BID" />
-							</div>
-							<div className="closed-bid">
-								<span className="bids-count">
-									{closedBids}
-								</span>
-								<Translate i18nKey="CMS_PROPERTY_CLOSED_BID" />
-							</div>
-							<button
-								onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.LISTING}`)}
-								className="link-button"
-							>
-								<Translate i18nKey="CMS_PROPERTY_VIEW_LISTING_OVERVIEW" />
-							</button>
-						</div>
-					</div>
+			<section
+				className="property-item-wrapper"
+			>
+				<div className="property-item-name">
+					{name}
 				</div>
-				{listings.length !== 0 && <PropertyListingTable listings={listings} />}
+				<div className="property-item-info">
+					<Translate i18nKey="CMS_PROPERTY_LISTINGS" />
+					<span className="property-item-count">
+						({listings.length})
+					</span>
+				</div>
+				<div className="property-item-info">
+					<Translate i18nKey="CMS_PROPERTY_OPEN_BID" />
+					<span className="property-item-count">
+						({openBids})
+					</span>
+				</div>
+				<div className="property-item-info">
+					<Translate i18nKey="CMS_PROPERTY_CLOSED_BID" />
+					<span className="property-item-closed">
+						({closedBids})
+					</span>
+				</div>
+				<div className="property-item-link">
+					<i className="fa fa-eye" />
+					<a onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`)}>
+						<Translate i18nKey="CMS_PROPERTY_VIEW_LISTING_OVERVIEW" />
+					</a>
+				</div>
 			</section>
 		);
 	}
 }
-
-PropertyListItem.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 export default PropertyListItem;

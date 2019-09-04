@@ -77,7 +77,7 @@
     "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
     "lint": ".\\node_modules\\.bin\\eslint src/AppBundle/Resources/public/javascript",
     "lint:fix": "npm run lint -- --fix",
-    "style-lint": ".\\node_modules\\.bin\\stylelint src/AppBundle/Resources/public/**/*.scss",
+    "style-lint": ".\\node_modules\\.bin\\stylelint src/AppBundle/Resources/public/scss/skin",
     "style-lint:fix": "npm run style-lint -- --fix"
   },
   "repository": {
