@@ -211,6 +211,45 @@ export const RIGHTS = [
 
 ];
 
+export const RIGHT_TYPE = {
+	all: "all",
+	sale: "sale",
+	exclusive: "exclusive",
+};
+
+export const SALE_TYPE = [
+	{
+		className: "green-background",
+		translationKey: "RIGHT_AVAILABLE_SALE_NAME",
+		type: RIGHT_TYPE.sale,
+	},
+	{
+		className: "green-light-background",
+		translationKey: "RIGHT_AVAILABLE_RESALE_NAME",
+		type: RIGHT_TYPE.sale,
+	},
+	{
+		className: "pink-light-background",
+		translationKey: "RIGHT_SOLD_NAME",
+		type: RIGHT_TYPE.sale,
+	},
+	{
+		className: "yellow-circle",
+		translationKey: "RIGHT_EXCLUSIVE_NAME",
+		type: RIGHT_TYPE.exclusive,
+	},
+	{
+		className: "blue-circle",
+		translationKey: "RIGHT_NON_EXCLUSIVE_NAME",
+		type: RIGHT_TYPE.exclusive,
+	},
+	{
+		className: "purple-triangle",
+		translationKey: "RIGHT_ACTIVE_LISTING_NAME",
+		type: RIGHT_TYPE.sale,
+	},
+];
+
 export const EDIT_TYPE = {
 	create: "CREATE",
 	edit: "EDIT",

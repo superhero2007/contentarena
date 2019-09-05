@@ -9,8 +9,8 @@ import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import { RIGHT_STATUS } from "../../common/constants";
-import RightsLegend from "../../main/components/RightsLegend";
 import CmsRightsLegend from "../components/CmsRightsLegend";
+import CmsFilterBox from "../components/CmsFilterBox";
 
 class RightsOverview extends React.Component {
 	constructor(props) {
@@ -127,15 +127,17 @@ class RightsOverview extends React.Component {
 			selectedTerritories,
 		} = this.state;
 
-		const { property, common: { totalCountries } } = this.props;
+		const { property } = this.props;
 
 		const territories = Array.from(selectedTerritories.values());
 
 		return (
 			<div className="region-filter">
-				<CmsSeasonsFilter property={property} />
-				<CmsRightsFilter property={property} />
-				<CmsTerritoriesFilter property={property} />
+				<CmsFilterBox>
+					<CmsSeasonsFilter property={property} />
+					<CmsRightsFilter property={property} />
+					<CmsTerritoriesFilter property={property} />
+				</CmsFilterBox>
 
 				<div className="d-flex">
 					<div className="split-filter">
@@ -191,7 +193,7 @@ class RightsOverview extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="d-flex" style={{ marginBottom: 40, marginTop: 40 }}>
+				<div style={{ marginBottom: 40, marginTop: 40 }}>
 					<CmsRightsLegend />
 				</div>
 
