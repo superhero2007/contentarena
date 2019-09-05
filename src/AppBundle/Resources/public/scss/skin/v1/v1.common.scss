@@ -46,5 +46,83 @@
         }
       }
     }
+
+    .collapsed-popup {
+      display: flex;
+      flex-direction: column;
+      background-color: $v1-background-white;
+      border: 1px solid $v1-background-white;
+      border-radius: 2px;
+
+      &-header {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $v1-background-white;
+        padding-left: 38px;
+        padding-right: 46px;
+        cursor: pointer;
+
+        &-icon {
+          width: 14px;
+          height: 14px;
+          color: $v1-color-grey-3;
+        }
+
+        &-title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .title {
+            font-family: $v1-font-family;
+            font-size: 16px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.06px;
+            text-align: right;
+            color: $v1-color-grey-3;
+            margin-right: 12px;
+          }
+
+          .icon {
+            i {
+              width: 9px;
+              height: 5px;
+              color: $v1-color-grey-3;
+            }
+          }
+        }
+      }
+
+      &-body {
+        height: 0;
+        opacity: 0;
+        border-radius: 2px;
+        margin-top: 1px;
+        background-color: $v1-background-grey;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        padding: 0 38px;
+      }
+
+      &.opened {
+        border: 1px solid $v1-border-grey-1;
+
+        .collapsed-popup-header {
+          background-color: $v1-background-grey;
+        }
+
+        .collapsed-popup-body {
+          opacity: 1;
+          height: initial;
+          padding: 21px 38px 38px;
+        }
+      }
+    }
   }
 }
