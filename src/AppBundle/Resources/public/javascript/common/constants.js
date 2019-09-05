@@ -213,25 +213,25 @@ export const RIGHTS = [
 
 export const RIGHT_TYPE = {
 	all: "all",
-	sell: "sell",
+	sale: "sale",
 	exclusive: "exclusive",
 };
 
-export const SELLS = [
+export const SALE_TYPE = [
 	{
 		className: "green-background",
 		translationKey: "RIGHT_AVAILABLE_SALE_NAME",
-		type: RIGHT_TYPE.sell,
+		type: RIGHT_TYPE.sale,
 	},
 	{
 		className: "green-light-background",
 		translationKey: "RIGHT_AVAILABLE_RESALE_NAME",
-		type: RIGHT_TYPE.sell,
+		type: RIGHT_TYPE.sale,
 	},
 	{
 		className: "pink-light-background",
 		translationKey: "RIGHT_SOLD_NAME",
-		type: RIGHT_TYPE.sell,
+		type: RIGHT_TYPE.sale,
 	},
 	{
 		className: "yellow-circle",
@@ -246,7 +246,7 @@ export const SELLS = [
 	{
 		className: "purple-triangle",
 		translationKey: "RIGHT_ACTIVE_LISTING_NAME",
-		type: RIGHT_TYPE.sell,
+		type: RIGHT_TYPE.sale,
 	},
 ];
 

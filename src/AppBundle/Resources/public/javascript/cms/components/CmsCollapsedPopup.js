@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const CmsCollapsedPopup = ({
 	toggle: defaultToggle, icon, title, children,
-}, context) => {
+}) => {
 	const [toggle, setToggle] = useState(defaultToggle);
 	const togglePopup = () => {
 		setToggle(!toggle);
@@ -33,10 +33,6 @@ const CmsCollapsedPopup = ({
 			</div>
 		</div>
 	);
-};
-
-CmsCollapsedPopup.contextTypes = {
-	t: PropTypes.func.isRequired,
 };
 
 CmsCollapsedPopup.propTypes = {

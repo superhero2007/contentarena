@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import CmsCollapsedPopup from "./CmsCollapsedPopup";
-import { RIGHTS, SELLS, RIGHT_TYPE } from "@constants";
+import { RIGHTS, SALE_TYPE, RIGHT_TYPE } from "@constants";
 
-const CmsRightsLegend = ({ type }, context) => {
+const CmsRightsLegend = ({ type }) => {
 	const rights = RIGHTS.map(item => ({
 		icon: <div className="gray-background">{item.code}</div>,
 		text: <Translate i18nKey={item.translationKey} />,
 	}));
-	const items = SELLS.map(item => ({
+	const items = SALE_TYPE.map(item => ({
 		icon: <div className={item.className} />,
 		text: <Translate i18nKey={item.translationKey} />,
 		type: item.type,
@@ -20,7 +20,7 @@ const CmsRightsLegend = ({ type }, context) => {
 	case RIGHT_TYPE.all:
 		selectedItems = [...rights, ...items];
 		break;
-	case RIGHT_TYPE.sell:
+	case RIGHT_TYPE.sale:
 		selectedItems = items;
 		break;
 	case RIGHT_TYPE.exclusive:
@@ -48,10 +48,6 @@ const CmsRightsLegend = ({ type }, context) => {
 			</CmsCollapsedPopup>
 		</div>
 	);
-};
-
-CmsRightsLegend.contextTypes = {
-	t: PropTypes.func.isRequired,
 };
 
 CmsRightsLegend.propTypes = {
