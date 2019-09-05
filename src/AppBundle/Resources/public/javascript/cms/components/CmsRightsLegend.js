@@ -40,8 +40,8 @@ const CmsRightsLegend = ({ type }, context) => {
 				<div className={`legend-box-body ${type}`}>
 					{selectedItems.map((item, index) => (
 						<div className="legend-box-item" key={index}>
-							<div className="legend-box-item-icon">{item.icon}</div>
-							<div className="legend-box-item-text">{item.text}</div>
+							<div className="icon">{item.icon}</div>
+							<div className="text">{item.text}</div>
 						</div>
 					))}
 				</div>

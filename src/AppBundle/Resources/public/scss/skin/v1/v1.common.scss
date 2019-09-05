@@ -77,7 +77,7 @@
       &-item {
         display: flex;
 
-        &-icon {
+        .icon {
           width: 20px;
           height: 20px;
           margin-right: 10px;
@@ -131,7 +131,7 @@
           }
         }
 
-        &-text {
+        .text {
           font-family: $v1-font-family;
           font-size: 11px;
           font-weight: 600;
