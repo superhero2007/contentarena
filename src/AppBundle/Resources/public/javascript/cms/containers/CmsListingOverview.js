@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { first, uniqBy } from "lodash";
 import Translate from "@components/Translator/Translate";
-import { CMS_STATUS } from "@constants";
+import { CMS_STATUS, RIGHT_TYPE } from "@constants";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
-import CmsRightsLegendSmall from "../components/CmsRightsLegendSmall";
+import CmsRightsLegend from "../components/CmsRightsLegend";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
@@ -219,9 +219,7 @@ class CmsListingOverview extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="d-flex">
-						<CmsRightsLegendSmall />
-					</div>
+					<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
 					<div className="region-filter-bids">
 						<div className="region-filter-content">
 							<CmsListingOverviewTable listings={allListings} propertyId={customId} />

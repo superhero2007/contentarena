@@ -1,53 +1,65 @@
-import React, { Fragment } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import {
-	ExclusiveRightAvailableIcon, ExclusiveRightOfferedIcon, ExclusiveRightSoldIcon, NonExclusiveRightAvailableIcon,
-	NonExclusiveRightOfferedIcon,
-	NonExclusiveRightSoldIcon,
-} from "@icons";
+import CmsCollapsedPopup from "./CmsCollapsedPopup";
+import { RIGHTS, SELLS, RIGHT_TYPE } from "@constants";
 
-const CmsRightsLegend = () => (
+const CmsRightsLegend = ({ type }, context) => {
+	const rights = RIGHTS.map(item => ({
+		icon: <div className="gray-background">{item.code}</div>,
+		text: <Translate i18nKey={item.translationKey} />,
+	}));
+	const items = SELLS.map(item => ({
+		icon: item.icon,
+		text: <Translate i18nKey={item.translationKey} />,
+		type: item.type,
+	}));
 
-	<div className="split-filter full-width">
-		<div className="rights-legend">
-			<div className="item">
-				<NonExclusiveRightAvailableIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />
-				</span>
-			</div>
-			<div className="item">
-				<NonExclusiveRightOfferedIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />
-				</span>
-			</div>
-			<div className="item">
-				<NonExclusiveRightSoldIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />
-				</span>
-			</div>
-			<div className="item">
-				<ExclusiveRightAvailableIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />
-				</span>
-			</div>
-			<div className="item">
-				<ExclusiveRightOfferedIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />
-				</span>
-			</div>
-			<div className="item">
-				<ExclusiveRightSoldIcon />
-				<span className="name">
-					<Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />
-				</span>
-			</div>
+	let selectedItems;
+	switch (type) {
+	case RIGHT_TYPE.all:
+		selectedItems = [...rights, ...items];
+		break;
+	case RIGHT_TYPE.sell:
+		selectedItems = items;
+		break;
+	case RIGHT_TYPE.exclusive:
+		selectedItems = items.filter(item => item.type === RIGHT_TYPE.exclusive);
+		break;
+	default:
+		selectedItems = [...rights, ...items];
+	}
+
+	return (
+		<div className="legend-box">
+			<CmsCollapsedPopup
+				title={<Translate i18nKey="CMS_LEGEND_TITLE" />}
+				icon={<i className="fa fa-tag" />}
+				toggle={false}
+			>
+				<div className={`legend-box-body ${type}`}>
+					{selectedItems.map((item, index) => (
+						<div className="legend-box-item" key={index}>
+							<div className="legend-box-item-icon">{item.icon}</div>
+							<div className="legend-box-item-text">{item.text}</div>
+						</div>
+					))}
+				</div>
+			</CmsCollapsedPopup>
 		</div>
-	</div>
-);
+	);
+};
+
+CmsRightsLegend.contextTypes = {
+	t: PropTypes.func.isRequired,
+};
+
+CmsRightsLegend.propTypes = {
+	type: PropTypes.string,
+};
+
+CmsRightsLegend.defaultProps = {
+	type: RIGHT_TYPE.all,
+};
 
 export default CmsRightsLegend;

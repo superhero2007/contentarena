@@ -4,12 +4,13 @@ import { PropTypes } from "prop-types";
 import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
+import { RIGHT_TYPE } from "@constants";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
 import { fetchPropertyDetails } from "../actions/propertyActions";
-import CmsRightsLegendSmall from "../components/CmsRightsLegendSmall";
+import CmsRightsLegend from "../components/CmsRightsLegend";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -265,9 +266,7 @@ class CmsCommercialOverview extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="d-flex">
-						<CmsRightsLegendSmall />
-					</div>
+					<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
 					<div className="region-filter-bids">
 						<div className="region-filter-title toggle" onClick={openBidsList.length ? this.toggleOpenBids : null}>
 							<div className="region-filter-title-text">

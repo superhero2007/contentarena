@@ -133,10 +133,7 @@ class RightsOverview extends React.Component {
 
 		return (
 			<div className="region-filter">
-				<CmsFilterBox
-					title="Filter"
-					icon={<i className="fa fa-filter" />}
-				>
+				<CmsFilterBox>
 					<CmsSeasonsFilter property={property} />
 					<CmsRightsFilter property={property} />
 					<CmsTerritoriesFilter property={property} />
@@ -196,7 +193,7 @@ class RightsOverview extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="d-flex" style={{ marginBottom: 40, marginTop: 40 }}>
+				<div style={{ marginBottom: 40, marginTop: 40 }}>
 					<CmsRightsLegend />
 				</div>
 

@@ -1,3 +1,5 @@
+import React from "react";
+
 export const DATE_FORMAT = "DD.MM.YYYY";
 export const SERVER_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss";
 export const SERVER_DATE_FORMAT = "YYYY-MM-DD";
@@ -209,6 +211,45 @@ export const RIGHTS = [
 		exclusive: null,
 	},
 
+];
+
+export const RIGHT_TYPE = {
+	all: "all",
+	sell: "sell",
+	exclusive: "exclusive",
+};
+
+export const SELLS = [
+	{
+		icon: <div className="green-background" />,
+		translationKey: "RIGHT_AVAILABLE_SALE_NAME",
+		type: RIGHT_TYPE.sell,
+	},
+	{
+		icon: <div className="green-light-background" />,
+		translationKey: "RIGHT_AVAILABLE_RESALE_NAME",
+		type: RIGHT_TYPE.sell,
+	},
+	{
+		icon: <div className="pink-light-background" />,
+		translationKey: "RIGHT_SOLD_NAME",
+		type: RIGHT_TYPE.sell,
+	},
+	{
+		icon: <div className="yellow-circle" />,
+		translationKey: "RIGHT_EXCLUSIVE_NAME",
+		type: RIGHT_TYPE.exclusive,
+	},
+	{
+		icon: <div className="blue-circle" />,
+		translationKey: "RIGHT_NON_EXCLUSIVE_NAME",
+		type: RIGHT_TYPE.exclusive,
+	},
+	{
+		icon: <div className="purple-triangle" />,
+		translationKey: "RIGHT_ACTIVE_LISTING_NAME",
+		type: RIGHT_TYPE.sell,
+	},
 ];
 
 export const EDIT_TYPE = {
