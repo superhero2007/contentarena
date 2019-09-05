@@ -10,7 +10,7 @@ const CmsRightsLegend = ({ type }, context) => {
 		text: <Translate i18nKey={item.translationKey} />,
 	}));
 	const items = SELLS.map(item => ({
-		icon: item.icon,
+		icon: <div className={item.className} />,
 		text: <Translate i18nKey={item.translationKey} />,
 		type: item.type,
 	}));

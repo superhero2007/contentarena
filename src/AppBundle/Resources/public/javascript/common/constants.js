@@ -221,32 +221,32 @@ export const RIGHT_TYPE = {
 
 export const SELLS = [
 	{
-		icon: <div className="green-background" />,
+		className: "green-background",
 		translationKey: "RIGHT_AVAILABLE_SALE_NAME",
 		type: RIGHT_TYPE.sell,
 	},
 	{
-		icon: <div className="green-light-background" />,
+		className: "green-light-background",
 		translationKey: "RIGHT_AVAILABLE_RESALE_NAME",
 		type: RIGHT_TYPE.sell,
 	},
 	{
-		icon: <div className="pink-light-background" />,
+		className: "pink-light-background",
 		translationKey: "RIGHT_SOLD_NAME",
 		type: RIGHT_TYPE.sell,
 	},
 	{
-		icon: <div className="yellow-circle" />,
+		className: "yellow-circle",
 		translationKey: "RIGHT_EXCLUSIVE_NAME",
 		type: RIGHT_TYPE.exclusive,
 	},
 	{
-		icon: <div className="blue-circle" />,
+		className: "blue-circle",
 		translationKey: "RIGHT_NON_EXCLUSIVE_NAME",
 		type: RIGHT_TYPE.exclusive,
 	},
 	{
-		icon: <div className="purple-triangle" />,
+		className: "purple-triangle",
 		translationKey: "RIGHT_ACTIVE_LISTING_NAME",
 		type: RIGHT_TYPE.sell,
 	},
