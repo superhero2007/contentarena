@@ -7,6 +7,7 @@ const CmsFilterBox = ({ children }, context) => (
 	<CmsCollapsedPopup
 		title={<Translate i18nKey="CMS_FILTER_BOX_TITLE" />}
 		icon={<i className="fa fa-filter" />}
+		toggle={false}
 	>
 		{children}
 	</CmsCollapsedPopup>

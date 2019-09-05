@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const CmsCollapsedPopup = ({
-	defaultToggle, icon, title, children,
+	toggle: defaultToggle, icon, title, children,
 }, context) => {
 	const [toggle, setToggle] = useState(defaultToggle);
 	const togglePopup = () => {
@@ -40,13 +40,9 @@ CmsCollapsedPopup.contextTypes = {
 };
 
 CmsCollapsedPopup.propTypes = {
-	defaultToggle: PropTypes.bool,
+	toggle: PropTypes.bool.isRequired,
 	icon: PropTypes.node.isRequired,
 	title: PropTypes.object.isRequired,
-};
-
-CmsCollapsedPopup.defaultProps = {
-	defaultToggle: false,
 };
 
 export default CmsCollapsedPopup;
