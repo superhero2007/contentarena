@@ -34,7 +34,7 @@ const CmsRightsLegend = ({ type }) => {
 		<div className="legend-box">
 			<CmsCollapsedPopup
 				title={<Translate i18nKey="CMS_LEGEND_TITLE" />}
-				icon={<i className="fa fa-tag" />}
+				icon={<i className="icon-legend" />}
 				toggle={false}
 			>
 				<div className={`legend-box-body ${type}`}>
