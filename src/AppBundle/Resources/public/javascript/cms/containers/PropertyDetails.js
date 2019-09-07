@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
 import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
-import PropertyDetailsEventTab from "../components/PropertyDetailsEventTab";
+import PropertyDetailsDescriptionTab from "../components/PropertyDetailsDescriptionTab";
 import PropertyDetailsLicenseTab from "../components/PropertyDetailsLicenseTab";
 import PropertyDetailsProductionTab from "../components/PropertyDetailsProductionTab";
 import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
@@ -19,8 +19,8 @@ class PropertyDetails extends Component {
 
 	getTabs = props => ({
 		[CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS]: {
-			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL" />,
-			component: <PropertyDetailsEventTab {...props} />,
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_DESCRIPTION_LABEL" />,
+			component: <PropertyDetailsDescriptionTab {...props} />,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM]: {
 			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL" />,

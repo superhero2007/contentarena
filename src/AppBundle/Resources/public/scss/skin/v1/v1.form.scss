@@ -1,0 +1,214 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      width: 100%;
+      border: solid 1px $v1-color-grey-1;
+      background-color: $v1-background-white;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
+      padding: 19px 37px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &-prepend {
+        margin-right: 8px;
+      }
+
+      &-append {
+        margin-right: 8px;
+      }
+
+      &-text {
+        font-family: $v1-font-family;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        color: $v1-color-info-1;
+        flex: 1 1 auto;
+        width: auto;
+
+        &::placeholder {
+          color: $v1-color-grey-1;
+        }
+      }
+
+      &:hover,
+      &:active {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+        .input-group-text {
+          &::placeholder {
+            color: $v1-color-grey-2;
+          }
+        }
+      }
+
+      &:disabled {
+        border: solid 1px $v1-color-grey-7;
+
+        .input-group-text {
+          &::placeholder {
+            color: $v1-color-grey-7;
+          }
+        }
+      }
+
+      &.invalid {
+        border: solid 1px $v1-color-red-1;
+
+        .input-group-text {
+          color: $v1-color-grey-3;
+
+          &::placeholder {
+            color: $v1-color-grey-3;
+          }
+        }
+      }
+    }
+
+    .input-checkbox {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &-selector {
+        height: 24px;
+        width: 24px;
+        background-color: $v1-background-white;
+        border: 1px solid $v1-color-grey-3;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          display: none;
+          left: 8px;
+          top: 3px;
+          width: 7px;
+          height: 13px;
+          border: solid $v1-color-grey-2;
+          border-width: 0 3px 3px 0;
+          transform: rotate(45deg);
+        }
+      }
+
+      input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      &-text {
+        margin-left: 12px;
+        font-family: $v1-font-family;
+        font-size: 16px;
+        color: $v1-color-grey-3;
+      }
+
+      &:hover {
+        .input-checkbox-text {
+          color: $v1-color-grey-2;
+        }
+
+        .input-checkbox-selector {
+          border: 1px solid $v1-color-grey-2;
+        }
+      }
+
+      input[type="checkbox"]:checked {
+        & ~ .input-checkbox-text {
+          color: $v1-color-grey-2;
+        }
+
+        & ~ .input-checkbox-selector {
+          border: 1px solid $v1-color-grey-2;
+
+          &::after {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .input-radio {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &-selector {
+        height: 24px;
+        width: 24px;
+        background-color: $v1-background-white;
+        border: 1px solid $v1-color-grey-3;
+        border-radius: 50%;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          display: none;
+          left: 3px;
+          top: 3px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background-color: $v1-color-grey-2;
+        }
+      }
+
+      input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      .input-radio-text {
+        margin-left: 12px;
+        font-family: $v1-font-family;
+        font-size: 16px;
+        color: $v1-color-grey-3;
+      }
+
+      &:hover {
+        .input-radio-text {
+          color: $v1-color-grey-2;
+        }
+
+        .input-radio-selector {
+          border: 1px solid $v1-color-grey-2;
+        }
+      }
+
+      input[type="radio"]:checked {
+        & ~ .input-radio-text {
+          color: $v1-color-grey-2;
+        }
+
+        & ~ .input-radio-selector {
+          border: 1px solid $v1-color-grey-2;
+
+          &::after {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

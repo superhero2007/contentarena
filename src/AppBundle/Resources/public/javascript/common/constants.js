@@ -229,7 +229,7 @@ export const SALE_TYPE = [
 		type: RIGHT_TYPE.sale,
 	},
 	{
-		className: "pink-light-background",
+		className: "red-light-background",
 		translationKey: "RIGHT_SOLD_NAME",
 		type: RIGHT_TYPE.sale,
 	},
