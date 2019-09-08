@@ -60,6 +60,7 @@
 
     .primary-button {
       background-color: $v1-color-blue-1;
+	    color: $v1-background-white;
       border: 0;
 
       &::after {
@@ -77,6 +78,7 @@
 
     .secondary-button {
       background-color: $v1-color-grey-2;
+	    color: $v1-background-white;
       border: 0;
 
       &::after {
@@ -142,6 +144,45 @@
         background-color: transparent;
       }
     }
+
+	  .link-button {
+		  cursor: pointer;
+		  display: flex;
+		  align-items: center;
+		  justify-content: flex-start;
+
+		  span {
+			  font-family: $v1-font-family;
+			  font-size: 12px;
+			  font-weight: bold;
+			  font-style: normal;
+			  font-stretch: normal;
+			  line-height: normal;
+			  letter-spacing: normal;
+			  text-decoration: underline;
+		  }
+
+		  i {
+			  width: 17px;
+			  height: 17px;
+			  margin-right: 8px;
+			  text-decoration: none;
+		  }
+
+		  &:hover {
+			  opacity: 0.7;
+		  }
+	  }
+
+	  .primary-link {
+		  @extend .link-button;
+		  color: $v1-color-blue-1;
+	  }
+
+	  .info-link {
+		  @extend .link-button;
+		  color: $v1-color-info-1;
+	  }
   }
 }
 
