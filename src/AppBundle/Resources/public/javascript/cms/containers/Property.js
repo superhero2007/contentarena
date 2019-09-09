@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import cn from "classnames";
 import Translate from "@components/Translator/Translate";
-import { DefaultBox } from "../../common/components/Containers";
+import { DefaultBox, SkinContainer } from "../../common/components/Containers";
 import {
 	CMS_PROPERTY_TABS, PROPERTY_MAIN_TABS, ROUTE_PATHS, SERVER_ERROR_CODES,
 } from "@constants";
@@ -84,36 +83,42 @@ class Property extends React.Component {
 
 		if (this.isLoadingRegions()) {
 			return (
-				<div className={cn({ skin }, skin, "container")}>
+				<SkinContainer skin={skin}>
 					<DefaultBox>
 						<Loader loading />
 					</DefaultBox>
-				</div>
+				</SkinContainer>
 			);
 		}
 
 		if (error) {
 			return (
-				<div className={cn({ skin }, skin, "container")}>
+				<SkinContainer skin={skin}>
 					<DefaultBox>
 						{
 							error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
 							&& <Translate i18nKey="CMS_PROPERTY_DOES_NOT_EXISTS" />
 						}
 					</DefaultBox>
-				</div>
+				</SkinContainer>
 			);
 		}
 
 		if (tab === PROPERTY_MAIN_TABS.ADD_DEALS) {
 			return (
-				<PropertyDeal history={history} />
+				<PropertyDeal
+					history={history}
+					skin={skin}
+				/>
 			);
 		}
 
 		if (tab === PROPERTY_MAIN_TABS.EDIT) {
 			return (
-				<EditProperty history={history} />
+				<EditProperty
+					history={history}
+					skin={skin}
+				/>
 			);
 		}
 
@@ -122,6 +127,7 @@ class Property extends React.Component {
 				<PropertyCreateListing
 					history={history}
 					match={match}
+					skin={skin}
 				/>
 			);
 		}
@@ -129,9 +135,9 @@ class Property extends React.Component {
 		const translatedTabs = this.getTranslatedTabs();
 
 		return (
-			<div className={cn({ skin }, skin, "container")}>
+			<SkinContainer skin={skin}>
 				<DefaultBox>
-					<PropertyHeader />
+					<PropertyHeader history={history} />
 
 					<div className="default-tab">
 						{
@@ -164,14 +170,10 @@ class Property extends React.Component {
 
 
 				</DefaultBox>
-			</div>
+			</SkinContainer>
 		);
 	}
 }
-
-Property.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => state;
 

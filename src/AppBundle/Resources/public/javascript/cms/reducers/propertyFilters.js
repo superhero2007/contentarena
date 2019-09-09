@@ -3,6 +3,7 @@ export const propertyFiltersTypes = {
 	SET_FILTER_RIGHTS: "SET_FILTER_RIGHTS",
 	SET_FILTER_SEASONS: "SET_FILTER_SEASONS",
 	SET_FILTER_REGIONS: "SET_FILTER_REGIONS",
+	SET_FILTER_STATUS: "SET_FILTER_STATUS",
 };
 
 const DEFAULT_STATE = {
@@ -11,6 +12,7 @@ const DEFAULT_STATE = {
 	seasons: [],
 	regions: [],
 	selectedTerritories: [],
+	statuses: [],
 };
 
 export const propertyFilters = (state = DEFAULT_STATE, action) => {
@@ -39,29 +41,15 @@ export const propertyFilters = (state = DEFAULT_STATE, action) => {
 
 		return Object.assign({}, state, {
 			rights: action.rights,
-			availableTerritories,
-			selectedTerritories,
 		});
 	case propertyFiltersTypes.SET_FILTER_SEASONS:
 		return Object.assign({}, state, { seasons: action.seasons });
 	case propertyFiltersTypes.SET_FILTER_REGIONS:
-
-		action.regions.forEach((r) => {
-			state.availableTerritories.forEach((t) => {
-				if (r.type === "region" && t.regions.map(r => r.id).indexOf(r.id) !== -1) {
-					if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
-				}
-				if (r.type === "territory" && t.territoryId === r.id) {
-					if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
-				}
-			});
-		});
-
-		return Object.assign({}, state, { regions: action.regions, selectedTerritories });
+		return Object.assign({}, state, { regions: action.regions });
+	case propertyFiltersTypes.SET_FILTER_STATUS:
+		return Object.assign({}, state, { status: action.statuses });
 
 	default:
 		return state;
 	}
 };
-
-export const hasCustomSeason = state => state.property.seasons.filter(season => season.custom).length > 0;

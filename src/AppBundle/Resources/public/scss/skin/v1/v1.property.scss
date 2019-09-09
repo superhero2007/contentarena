@@ -2,6 +2,22 @@
 
 .skin {
   &.v1 {
+    .property-header {
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 75px;
+
+      &-title {
+        color: $v1-color-grey-2;
+      }
+
+      &-name {
+        color: $v1-color-blue-4;
+      }
+    }
+
     .dashboard-header {
       font-size: 22px;
       font-weight: 500;
@@ -9,6 +25,7 @@
       color: #acacac;
       display: flex;
       align-items: center;
+      margin-right: auto;
 
       i {
         margin-right: 5px;

@@ -38,10 +38,26 @@ export const RIGHT_STATUS = {
 	CLOSED_DEALS: "CLOSED_DEALS",
 };
 
+export const RIGHTS_STATUS_FILTERS = [
+	{
+		key: "RIGHTS_STATUS_FILTER_UNSOLD",
+		id: "UNSOLD_TERRITORIES",
+	},
+	{
+		key: "RIGHTS_STATUS_FILTER_ACTIVE",
+		id: "ACTIVE_LISTINGS",
+	},
+	{
+		key: "RIGHTS_STATUS_FILTER_CLOSED",
+		id: "CLOSED_DEALS",
+	},
+
+];
+
 export const CMS_PROPERTY_TABS = {
 	RIGHTS: "rightsoverview",
 	// EDITED_PROGRAM: "editedprogram",
-	FIXTURES: "fixtures",
+	// FIXTURES: "fixtures",
 	COMMERCIAL: "commercialoverview",
 	LISTING: "listingoverview",
 	DETAILS: "propertydetails",

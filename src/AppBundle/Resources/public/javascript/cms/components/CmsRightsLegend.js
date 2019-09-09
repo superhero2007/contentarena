@@ -4,7 +4,7 @@ import Translate from "@components/Translator/Translate";
 import CmsCollapsedPopup from "./CmsCollapsedPopup";
 import { RIGHTS, SALE_TYPE, RIGHT_TYPE } from "@constants";
 
-const CmsRightsLegend = ({ type }) => {
+const CmsRightsLegend = ({ type, open = false }) => {
 	const rights = RIGHTS.map(item => ({
 		icon: <div className="gray-background">{item.code}</div>,
 		text: <Translate i18nKey={item.translationKey} />,
@@ -35,7 +35,7 @@ const CmsRightsLegend = ({ type }) => {
 			<CmsCollapsedPopup
 				title={<Translate i18nKey="CMS_LEGEND_TITLE" />}
 				icon={<i className="icon-legend" />}
-				toggle={false}
+				toggle={open}
 			>
 				<div className={`legend-box-body ${type}`}>
 					{selectedItems.map((item, index) => (

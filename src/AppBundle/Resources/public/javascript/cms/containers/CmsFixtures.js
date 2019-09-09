@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader/Loader";
-import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
+import CmsSeasonsFilter from "@components/Filters/CmsSeasonsFilter";
 import EmptyFixture from "../components/EmptyScreens/EmptyFixture";
 import FixtureList from "./FixturesList";
 import FixtureForm from "../components/FixtureForm";

@@ -34,6 +34,7 @@ const DEFAULT_STATE = {
 	property: {
 		customId: "",
 		rights: [],
+		seasons: [],
 		website: "",
 		attachments: [],
 		image: "",

@@ -1,11 +1,27 @@
 @import "v1.vars";
 
-.filter-box {
-  background-color: $v1-background-grey-1;
-  border: 1px solid $v1-color-grey-5;
+.skin {
+  &.v1 {
+    .filter-box {
+      background-color: $v1-background-grey-1;
+      border: 1px solid $v1-color-grey-5;
 
-  &-body {
-    border-top: 1px solid $v1-background-white;
-    padding: 21px 38px 38px;
+      &-body {
+        border-top: 1px solid $v1-background-white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .default-filter {
+      width: 200px;
+      height: 90px;
+
+      label {
+        margin-bottom: 5px;
+        display: flex;
+      }
+    }
   }
 }

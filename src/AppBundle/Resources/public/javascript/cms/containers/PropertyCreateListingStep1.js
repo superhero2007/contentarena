@@ -16,6 +16,7 @@ import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import PropertyListingButtons from "../components/PropertyListingButtons";
 import { updateListing } from "../../sell/actions/contentActions";
 import { getListingName } from "../helpers/PropertyListingHelper";
+import CmsListingStep from "../components/CmsListingStep";
 
 class PropertyCreateListingStep1 extends React.Component {
 	constructor(props) {
@@ -179,7 +180,7 @@ class PropertyCreateListingStep1 extends React.Component {
 
 		return (
 			<>
-				<CmsStepSelector
+				<CmsListingStep
 					style={{ marginTop: 20 }}
 					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_TITLE" />}
 					button={currentStep === 1 && <Translate i18nKey="CMS_CREATE_LISTING_STEP1_BUTTON" />}
@@ -194,7 +195,7 @@ class PropertyCreateListingStep1 extends React.Component {
 						onSelectAll={this.onSelectAllSeasons}
 						onUnselectAll={this.onUnSelectAllSeasons}
 					/>
-				</CmsStepSelector>
+				</CmsListingStep>
 
 				{(currentStep > 1) && (
 					<CmsStepSelector

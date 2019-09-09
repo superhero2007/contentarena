@@ -2,6 +2,86 @@
 
 .skin {
   &.v1 {
+    label {
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.05px;
+      color: #333333;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-left: 35px;
+      height: 30px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #666666;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      .check-mark {
+        position: absolute;
+        top: 3px;
+        left: 0;
+        height: 24px;
+        width: 24px;
+        background-color: #ffffff;
+        border: 1px solid #666666;
+
+        &::after {
+          content: "";
+          position: absolute;
+          display: none;
+          left: 8px;
+          top: 4px;
+          width: 7px;
+          height: 12px;
+          border: solid #333333;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+      }
+
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+
+        &:checked {
+          & ~ .checkbox-label {
+            font-weight: 600;
+            color: #333333;
+          }
+
+          & ~ .check-mark {
+            border: 1px solid #333333;
+
+            &::after {
+              display: block;
+            }
+          }
+        }
+      }
+
+      &:hover {
+        font-weight: 600;
+        color: #333333;
+
+        input ~ .check-mark {
+          border: 1px solid #333333;
+        }
+      }
+    }
+
     &.container {
       background-color: $v1-background-grey-1;
       height: 100%;
@@ -12,12 +92,10 @@
       max-width: 980px;
 
       &-header {
-        padding: 50px 0;
+        padding: 20px 0;
         display: flex;
-
-        button {
-          margin-left: auto;
-        }
+        height: 150px;
+        align-items: center;
       }
     }
 
@@ -39,6 +117,10 @@
         color: $v1-color-grey-3;
         letter-spacing: 0.07px;
 
+        &:hover {
+          color: $v1-color-blue-1;
+        }
+
         &.active {
           font-weight: 600;
           border-bottom: 2px solid $v1-color-blue-1;
@@ -50,6 +132,7 @@
     .collapsed-popup {
       display: flex;
       flex-direction: column;
+      position: relative;
 
       &-header {
         height: 50px;
@@ -62,8 +145,6 @@
         cursor: pointer;
 
         &-icon {
-          width: 14px;
-          height: 14px;
           color: $v1-color-grey-3;
         }
 

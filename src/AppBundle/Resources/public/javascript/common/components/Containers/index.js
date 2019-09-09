@@ -8,6 +8,12 @@ export const DefaultBox = props => (
 	</div>
 );
 
+export const SkinContainer = ({ skin, children }) => (
+	<div className={cn({ skin }, skin, "container", { mobile: isMobileOnly })}>
+		{children}
+	</div>
+);
+
 
 export const VerticalButtonBox = props => (
 	<div className={cn("vertical-button-box", { mobile: isMobileOnly })}>

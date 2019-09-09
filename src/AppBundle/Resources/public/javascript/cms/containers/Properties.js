@@ -1,10 +1,9 @@
 import React from "react";
-import cn from "classnames";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader/Loader";
 import api from "../../api";
-import { DefaultBox } from "../../common/components/Containers";
+import { DefaultBox, SkinContainer } from "../../common/components/Containers";
 import PropertyList from "./PropertyList";
 import { ROUTE_PATHS } from "../../common/constants";
 import { cmsFile } from "../../main/components/Icons";
@@ -55,7 +54,7 @@ class Properties extends React.Component {
 		} = this.state;
 
 		return (
-			<div className={cn({ skin }, skin, "container")}>
+			<SkinContainer skin={skin}>
 				<DefaultBox>
 					{propertiesLoaded && (
 						<div className="default-box-header">
@@ -116,7 +115,7 @@ class Properties extends React.Component {
 						</div>
 					)}
 				</DefaultBox>
-			</div>
+			</SkinContainer>
 		);
 	}
 }

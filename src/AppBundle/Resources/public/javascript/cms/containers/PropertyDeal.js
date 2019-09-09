@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
+import { DefaultBox, HorizontalButtonBox, SkinContainer } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
 import { getTerritoriesFromRights } from "@utils/property";
@@ -198,7 +198,7 @@ class PropertyDeal extends React.Component {
 			currentStep,
 			deals,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights, countries }, loading } = this.props;
+		const { property: { seasons: allSeasons, rights: allRights, countries }, loading, skin } = this.props;
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
@@ -206,7 +206,7 @@ class PropertyDeal extends React.Component {
 		allSeasons.sort(sortSeasons);
 
 		return (
-			<div className="default-container no-title property property-deal">
+			<SkinContainer skin={skin}>
 				<DefaultBox>
 					<PropertyHeader deals={false} />
 					<CmsStepSelector
@@ -293,14 +293,10 @@ class PropertyDeal extends React.Component {
 						</button>
 					</HorizontalButtonBox>
 				</DefaultBox>
-			</div>
+			</SkinContainer>
 		);
 	}
 }
-
-PropertyDeal.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
 	...state.propertyDetails,

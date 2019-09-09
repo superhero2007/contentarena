@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { Link } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import { PROPERTY_MAIN_TABS, ROUTE_PATHS } from "@constants";
 
@@ -14,37 +12,43 @@ class PropertyHeader extends React.Component {
 
 	render() {
 		const {
-			name, customId, deals = true, edit = true, listing = true,
+			history, name, customId, deals = true, edit = true, listing = true,
 		} = this.props;
 		return (
-			<h4 className="title title-property-wrapper">
-				<span>
-					{name}
-				</span>
-				<div className="title-action-wrapper">
-					<Link
-						to={`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}`}
-						className="ca-btn primary"
-						disabled={!listing}
-					>
-						<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
-					</Link>
-					<Link
-						to={`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.ADD_DEALS}`}
-						className="ca-btn primary"
-						disabled={!deals}
-					>
-						<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
-					</Link>
-					<Link
-						to={`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.EDIT}`}
-						className="ca-btn primary"
-						disabled={!edit}
-					>
-						<Translate i18nKey="CMS_PROPERTY_EDIT_PROPERTY" />
-					</Link>
+			<div className="default-box-header">
+				<div className="property-header">
+					<h4 className="property-header-title">
+						<Translate i18nKey="CMS_PROPERTY_HEADER_TITLE" />
+					</h4>
+					<h3 className="property-header-name">
+						{name}
+					</h3>
 				</div>
-			</h4>
+
+				<button
+					className="button info-outline-button"
+					disabled={!listing}
+					onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}`)}
+				>
+					<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
+				</button>
+				<button
+					className="button primary-outline-button"
+					disabled={!deals}
+					style={{ marginLeft: 10 }}
+					onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.ADD_DEALS}`)}
+				>
+					<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
+				</button>
+				<button
+					className="button primary-outline-button"
+					disabled={!edit}
+					style={{ marginLeft: 10 }}
+					onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.EDIT}`)}
+				>
+					<Translate i18nKey="CMS_PROPERTY_EDIT_PROPERTY" />
+				</button>
+			</div>
 		);
 	}
 }

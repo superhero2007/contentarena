@@ -25,6 +25,8 @@ export const getUnique = (arr, comp) => (
 
 export const sortSeasons = (a, b) => new Date(b.startDate) - new Date(a.startDate);
 
+export const sortByName = (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+
 const getLanguages = (rights, key) => {
 	let values = [];
 	const right = first(rights);

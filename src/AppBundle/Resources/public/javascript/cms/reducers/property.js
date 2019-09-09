@@ -1,3 +1,4 @@
+import { propertyFiltersTypes } from "./propertyFilters";
 
 export const propertyTypes = {
 	RESET_PROPERTY: "RESET_PROPERTY",
@@ -241,3 +242,56 @@ export const hasCustomSportCategory = state => state.property.sportCategory.filt
 export const hasExtendedSportCategory = state => state.property.sportCategory.filter(sportCategory => sportCategory.extended).length > 0;
 export const hasCustomTournament = state => state.property.tournament.filter(tournament => tournament.custom).length > 0;
 export const hasCustomSeason = state => state.property.seasons.filter(season => season.custom).length > 0;
+
+export const getFilteredTerritories = (state) => {
+	const property = state.propertyDetails.property;
+	const baseProperty = state.property;
+	const filters = state.propertyFilters;
+	const seasons = (filters.seasons.length) ? filters.seasons : property.seasons;
+	const rights = (filters.rights.length) ? filters.rights : property.rights;
+	const regions = (filters.regions.length) ? filters.regions : baseProperty.regions;
+	const selectedTerritories = new Map();
+	const availableTerritories = new Map();
+
+	rights.forEach((r) => {
+		r.territories.forEach((t) => {
+			if (!availableTerritories.get(t.id)) availableTerritories.set(t.id, t);
+		});
+	});
+
+	regions.forEach((r) => {
+		availableTerritories.forEach((t) => {
+			if (t.regions.map(r => r.id).indexOf(r.id) !== -1) {
+				if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
+			}
+		});
+	});
+
+	return Array.from(selectedTerritories.values());
+};
+
+export const getFilteredSeasons = (state) => {
+	const property = state.propertyDetails.property;
+	const filters = state.propertyFilters;
+	return (filters.seasons.length) ? filters.seasons : property.seasons;
+};
+
+export const getFilteredRights = (state) => {
+	const property = state.propertyDetails.property;
+	const filters = state.propertyFilters;
+	return (filters.rights.length) ? filters.rights : property.rights;
+};
+
+export const getFilteredListings = (state) => {
+	const property = state.propertyDetails.property;
+	const filters = state.propertyFilters;
+
+	if (filters.seasons.length) {
+		return property.listings.filter((list) => {
+			const selectedSeasons = list.seasons.filter(season => filters.seasons.find(b => b.id === season.id));
+			return selectedSeasons.length;
+		});
+	}
+
+	return property.listings;
+};

@@ -1,16 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import cn from "classnames";
 import ReactTable from "react-table";
 import Translate from "@components/Translator/Translate";
-import CmsRightsFilter from "../components/CmsRightsFilter";
-import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
-import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
+import CmsRightsFilter from "@components/Filters/CmsRightsFilter";
+import CmsSeasonsFilter from "@components/Filters/CmsSeasonsFilter";
+import CmsRegionFilter from "@components/Filters/CmsRegionFilter";
+import CmsRightStatusFilter from "@components/Filters/CmsRightStatusFilter";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
-import { RIGHT_STATUS } from "../../common/constants";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
+import {
+	setRegions, setRights, setSeasons, setStatus,
+} from "../actions/propertyFiltersActions";
+import { getFilteredRights, getFilteredSeasons, getFilteredTerritories } from "../reducers/property";
 
 class RightsOverview extends React.Component {
 	constructor(props) {
@@ -19,17 +21,6 @@ class RightsOverview extends React.Component {
 			loading: false,
 			selectedTerritories: props.propertyFilters.selectedTerritories,
 		};
-	}
-
-	componentDidMount() {
-		const { propertyFilters: { selectedTerritories } } = this.props;
-		this.setState({ selectedTerritories });
-	}
-
-	componentWillReceiveProps(nextProps) {
-		const { propertyFilters: { selectedTerritories, rights, regions } } = nextProps;
-		if (this.props.propertyFilters.rights.length !== rights.length
-			|| this.props.propertyFilters.regions.length !== regions.length) this.setState({ selectedTerritories });
 	}
 
 	renderSeasonRightHeader = (right, key, list, season) => (
@@ -69,7 +60,7 @@ class RightsOverview extends React.Component {
 	);
 
 	getColumns = () => {
-		const { propertyFilters: { seasons, rights } } = this.props;
+		const { seasons, rights } = this.props;
 
 		const columns = [];
 
@@ -124,117 +115,81 @@ class RightsOverview extends React.Component {
 
 	render() {
 		const {
-			selectedTerritories,
-		} = this.state;
-
-		const { property } = this.props;
-
-		const territories = Array.from(selectedTerritories.values());
+			property,
+			propertyFilters,
+			baseProperty,
+			territories,
+		} = this.props;
 
 		return (
-			<div className="region-filter">
-				<CmsFilterBox>
-					<CmsSeasonsFilter property={property} />
-					<CmsRightsFilter property={property} />
-					<CmsTerritoriesFilter property={property} />
+			<>
+				<CmsRightsLegend />
+
+				<CmsFilterBox open>
+					<CmsSeasonsFilter
+						options={property.seasons}
+						value={propertyFilters.seasons}
+						onChange={this.props.setSeasons}
+					/>
+
+					<CmsRightsFilter
+						options={property.rights}
+						value={propertyFilters.rights}
+						onChange={this.props.setRights}
+					/>
+
+					<CmsRegionFilter
+						options={baseProperty.regions}
+						value={propertyFilters.regions}
+						onChange={this.props.setRegions}
+					/>
+
+					<CmsRightStatusFilter
+						value={propertyFilters.statuses}
+						onChange={this.props.setStatus}
+					/>
 				</CmsFilterBox>
 
-				<div className="d-flex">
-					<div className="split-filter">
-						<div className="region-filter-title">
-							{ <Translate i18nKey="CMS_STATUS_TITLE" />}
-						</div>
-						<div className="right-status">
-							<div>
-								<input
-									type="checkbox"
-									checked={this.state[RIGHT_STATUS.AVAILABLE_RIGHTS]}
-									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({ [RIGHT_STATUS.AVAILABLE_RIGHTS]: e.target.checked }); }}
-									id={RIGHT_STATUS.AVAILABLE_RIGHTS}
-								/>
-								<label
-									className={cn({ selected: this.state[RIGHT_STATUS.AVAILABLE_RIGHTS] })}
-									htmlFor={RIGHT_STATUS.AVAILABLE_RIGHTS}
-								>
-									<Translate i18nKey="CMS_AVAILABLE_RIGHTS" />
-								</label>
-							</div>
-							<div>
-								<input
-									type="checkbox"
-									checked={this.state[RIGHT_STATUS.OFFERED_RIGHTS]}
-									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({ [RIGHT_STATUS.OFFERED_RIGHTS]: e.target.checked }); }}
-									id={RIGHT_STATUS.OFFERED_RIGHTS}
-								/>
-								<label
-									className={cn({ selected: this.state[RIGHT_STATUS.OFFERED_RIGHTS] })}
-									htmlFor={RIGHT_STATUS.OFFERED_RIGHTS}
-								>
-									<Translate i18nKey="CMS_OFFERED_RIGHTS" />
-								</label>
-							</div>
-							<div>
-								<input
-									type="checkbox"
-									checked={this.state[RIGHT_STATUS.CLOSED_DEALS]}
-									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({ [RIGHT_STATUS.CLOSED_DEALS]: e.target.checked }); }}
-									id={RIGHT_STATUS.CLOSED_DEALS}
-								/>
-								<label
-									className={cn({ selected: this.state[RIGHT_STATUS.CLOSED_DEALS] })}
-									htmlFor={RIGHT_STATUS.CLOSED_DEALS}
-								>
-									<Translate i18nKey="CMS_CLOSED_DEALS" />
-								</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div style={{ marginBottom: 40, marginTop: 40 }}>
-					<CmsRightsLegend />
-				</div>
-
-				{
-					territories.length > 0
-					&& (
-						<ReactTable
-							showPageSizeOptions={false}
-							showPagination
-							resizable={false}
-							collapseOnPageChange={false}
-							collapseOnDataChange={false}
-							minRows={0}
-							defaultPageSize={30}
-							data={territories}
-							select={this.props.select}
-							className="ca-table"
-							columns={this.getColumns()}
-							sorted={[{
-								id: "name",
-								desc: false,
-							}]}
-						/>
-					)
-				}
-			</div>
+				{territories.length > 0 && (
+					<ReactTable
+						showPageSizeOptions={false}
+						showPagination
+						resizable={false}
+						collapseOnPageChange={false}
+						collapseOnDataChange={false}
+						minRows={0}
+						defaultPageSize={30}
+						data={territories}
+						select={this.props.select}
+						className="ca-table"
+						columns={this.getColumns()}
+						sorted={[{
+							id: "name",
+							desc: false,
+						}]}
+					/>
+				)}
+			</>
 		);
 	}
 }
-
-RightsOverview.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
 	common: state.common,
 	propertyFilters: state.propertyFilters,
 	property: state.propertyDetails.property,
+	baseProperty: state.property,
+	territories: getFilteredTerritories(state),
+	seasons: getFilteredSeasons(state),
+	rights: getFilteredRights(state),
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	setSeasons: seasons => dispatch(setSeasons(seasons)),
+	setRights: rights => dispatch(setRights(rights)),
+	setRegions: regions => dispatch(setRegions(regions)),
+	setStatus: statuses => dispatch(setStatus(statuses)),
+});
 
 export default connect(
 	mapStateToProps,

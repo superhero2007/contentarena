@@ -15,3 +15,8 @@ export const setRegions = regions => ({
 	type: propertyFiltersTypes.SET_FILTER_REGIONS,
 	regions,
 });
+
+export const setStatus = statuses => ({
+	type: propertyFiltersTypes.SET_FILTER_STATUS,
+	statuses,
+});

@@ -1,13 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment/moment";
 import uniqBy from "lodash/uniqBy";
 import Loader from "@components/Loader";
 import ReactTooltip from "react-tooltip";
 import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
-import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
+import { DefaultBox, HorizontalButtonBox, SkinContainer } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import { getTerritoriesFromRights } from "@utils/property";
 import CmsStepSelector from "../components/CmsStepSelector";
@@ -289,7 +288,9 @@ class EditProperty extends React.Component {
 			territories,
 			territoriesMode,
 		} = this.state;
-		const { property: { seasons: allSeasons, tournament, rights: allRights }, loading } = this.props;
+		const {
+			property: { seasons: allSeasons, tournament, rights: allRights }, loading, history, skin,
+		} = this.props;
 		const seasonsValid = this.seasonsAreValid();
 		const rightValid = this.rightAreValid();
 		const territoriesValid = this.territoriesAreValid();
@@ -312,9 +313,9 @@ class EditProperty extends React.Component {
 		const buttonDisabled = loading || (editSeason === EDIT_TYPE.create ? currentStep < 3 : currentStep < 5);
 
 		return (
-			<div className="default-container no-title property edit-property property-deal">
+			<SkinContainer skin={skin}>
 				<DefaultBox>
-					<PropertyHeader edit={false} />
+					<PropertyHeader edit={false} history={history} />
 					{(!!allSeasons.length) && (
 						<CmsStepSelector
 							style={{ marginTop: 20 }}
@@ -617,14 +618,10 @@ class EditProperty extends React.Component {
 						</button>
 					</HorizontalButtonBox>
 				</DefaultBox>
-			</div>
+			</SkinContainer>
 		);
 	}
 }
-
-EditProperty.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
 	loading: state.propertyDetails.loading,

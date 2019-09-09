@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import queryString from "query-string";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
-import { DefaultBox } from "../../common/components/Containers";
+import { DefaultBox, SkinContainer } from "../../common/components/Containers";
 import { SERVER_ERROR_CODES } from "@constants";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
@@ -66,6 +64,7 @@ class PropertyCreateListing extends React.Component {
 			error,
 			history,
 			match,
+			skin,
 			listing,
 		} = this.props;
 
@@ -95,58 +94,15 @@ class PropertyCreateListing extends React.Component {
 		}
 
 		return (
-			<div className="default-container no-title property property-deal">
+			<SkinContainer skin={skin}>
 				<DefaultBox>
-					<PropertyHeader listing={false} />
-
-					<div className="ca-tabs">
-						<a
-							key="step-1-tab"
-							className={`tab lg ${step === 1 ? "active" : ""}`}
-							onClick={() => {
-								const stepRoute = getListingStepRoute(propertyId, listingId, 1);
-								history.push(stepRoute);
-							}}
-						>
-							<Translate i18nKey="PROPERTY_CREATE_LISTING_TAB_COMMERCIAL" />
-						</a>
-						<a
-							key="step-2-tab"
-							className={`tab lg ${step === 2 ? "active" : ""}`}
-							onClick={() => {
-								const stepRoute = getListingStepRoute(propertyId, listingId, 2);
-								history.push(stepRoute);
-							}}
-						>
-							<Translate i18nKey="PROPERTY_CREATE_LISTING_TAB_EVENT" />
-						</a>
-						<a
-							key="step-3-tab"
-							className={`tab lg ${step === 3 ? "active" : ""}`}
-							onClick={() => {
-								const stepRoute = getListingStepRoute(propertyId, listingId, 3);
-								history.push(stepRoute);
-							}}
-						>
-							<Translate i18nKey="PROPERTY_CREATE_LISTING_TAB_EVENT" />
-						</a>
-						<a
-							key="step-4-tab"
-							className={`tab lg ${step === 4 ? "active" : ""}`}
-							onClick={() => {
-								const stepRoute = getListingStepRoute(propertyId, listingId, 4);
-								history.push(stepRoute);
-							}}
-						>
-							<Translate i18nKey="PROPERTY_CREATE_LISTING_TAB_EVENT" />
-						</a>
-					</div>
+					<PropertyHeader listing={false} history={history} />
 
 					{step === 1 && !listing.loading && <PropertyCreateListingStep1 history={history} />}
 					{listing.loading && <Loader xSmall loading />}
 
 				</DefaultBox>
-			</div>
+			</SkinContainer>
 		);
 	}
 }

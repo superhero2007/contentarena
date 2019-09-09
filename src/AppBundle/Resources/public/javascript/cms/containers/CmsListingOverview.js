@@ -5,11 +5,15 @@ import Select from "react-select";
 import { first, uniqBy } from "lodash";
 import Translate from "@components/Translator/Translate";
 import { CMS_STATUS, RIGHT_TYPE } from "@constants";
+import CmsSeasonsFilter from "@components/Filters/CmsSeasonsFilter";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
-import TerritoryFilter from "../../main/components/TerritoryFilter";
-import SeasonFilter from "../../main/components/SeasonFilter";
 import CmsRightsLegend from "../components/CmsRightsLegend";
+import CmsFilterBox from "../components/CmsFilterBox";
+import { getFilteredListings } from "../reducers/property";
+import {
+	setRegions, setRights, setSeasons, setStatus,
+} from "../actions/propertyFiltersActions";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
@@ -114,7 +118,12 @@ class CmsListingOverview extends React.Component {
 	};
 
 	render() {
-		const { listings, seasons: allSeasons, customId } = this.props.property;
+		const {
+			listings,
+			property,
+			propertyFilters,
+		} = this.props;
+
 		const {
 			selectedStatus,
 			statuses,
@@ -122,10 +131,10 @@ class CmsListingOverview extends React.Component {
 			includeAllCountries,
 			seasons,
 		} = this.state;
-		if (!listings.length) {
+		if (!property.listings.length) {
 			return (
 				<section className="listing-overview-tab">
-					<EmptyListingOverview customId={customId} />
+					<EmptyListingOverview customId={property.customId} />
 				</section>
 			);
 		}
@@ -153,93 +162,36 @@ class CmsListingOverview extends React.Component {
 			}
 		}
 
-		let allListings = listings;
-		if (selectedStatus) {
-			allListings = allListings.filter(list => selectedStatusValue.indexOf(list.status.name) !== -1);
-		}
-
-		if (seasons.length) {
-			allListings = allListings.filter((list) => {
-				const selectedSeasons = list.seasons.filter(season => seasons.find(b => b.value === season.id));
-				return selectedSeasons.length;
-			});
-		}
-
-		if (countries.length) {
-			allListings = allListings.filter((b) => {
-				let totalTerritories = [].concat(...b.salesPackages.map(element => element.territories));
-				totalTerritories = uniqBy(totalTerritories, value => value.id);
-				const territories = totalTerritories.filter(territory => countries.indexOf(territory.name) !== -1);
-				return totalTerritories.length > 0 && (includeAllCountries && totalTerritories.length === territories.length || !includeAllCountries && territories.length);
-			});
-		}
-
 		return (
-			<section className="listing-overview-tab">
-				<div className="region-filter">
-					<h5>
-						<Translate i18nKey="CMS_PROPERTY_TAB_LISTING" />
-					</h5>
-					<h6>
-						<Translate i18nKey="CMS_LISTING_SUBTITLE" />
-					</h6>
-					<div className="d-flex">
-						<div className="split-filter" style={{ width: "100%" }}>
+			<>
+				<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
 
-							<div className="manager-filter-container">
-								<div className="listing-filter">
-									<Select
-										name="form-field-name"
-										placeholder={this.context.t("STATUS_FILTER_SEARCH_PLACEHOLDER")}
-										clearable
-										onChange={this.onSelectStatus}
-										multi={false}
-										value={selectedStatus}
-										options={statuses.map(b => ({ value: b, label: <Translate key={b} i18nKey={b} /> }))}
-									/>
-								</div>
-
-								<TerritoryFilter
-									className="listing-filter territories-filter"
-									countries={countries}
-									includeAllCountries={includeAllCountries}
-									selectTerritory={this.selectTerritory}
-									updateIncludedCountries={this.updateIncludedCountries}
-									placeholder="Filter By Territory"
-								/>
-
-								{allSeasons && allSeasons.length > 1 && (
-									<SeasonFilter
-										className="listing-filter territories-filter"
-										allSeasons={allSeasons}
-										seasons={seasons}
-										selectSeasons={this.selectSeasons}
-									/>
-								)}
-							</div>
-						</div>
-					</div>
-					<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
-					<div className="region-filter-bids">
-						<div className="region-filter-content">
-							<CmsListingOverviewTable listings={allListings} propertyId={customId} />
-						</div>
-					</div>
-				</div>
-			</section>
+				<CmsFilterBox open>
+					<CmsSeasonsFilter
+						options={property.seasons}
+						value={propertyFilters.seasons}
+						onChange={this.props.setSeasons}
+					/>
+				</CmsFilterBox>
+				<CmsListingOverviewTable listings={listings} propertyId={property.customId} />
+			</>
 		);
 	}
 }
 
-CmsListingOverview.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
+	propertyFilters: state.propertyFilters,
+	listings: getFilteredListings(state),
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	setSeasons: seasons => dispatch(setSeasons(seasons)),
+	setRights: rights => dispatch(setRights(rights)),
+	setRegions: regions => dispatch(setRegions(regions)),
+	setStatus: statuses => dispatch(setStatus(statuses)),
+});
 
 export default connect(
 	mapStateToProps,
