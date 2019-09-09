@@ -6,7 +6,7 @@ import Loader from "@components/Loader/Loader";
 import FileSelector from "../../main/components/FileSelector";
 import { updateProperty } from "../actions/propertyActions";
 
-class PropertyDetailsEventTab extends Component {
+class PropertyDetailsDescriptionTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -191,7 +191,7 @@ class PropertyDetailsEventTab extends Component {
 	}
 }
 
-PropertyDetailsEventTab.contextTypes = {
+PropertyDetailsDescriptionTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
@@ -206,4 +206,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(PropertyDetailsEventTab);
+)(PropertyDetailsDescriptionTab);
