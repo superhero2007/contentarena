@@ -212,111 +212,113 @@
       }
     }
 
-	  textarea {
-		  border: 1px solid $v1-color-grey-2;
-		  padding: 20px;
-		  color: $v1-color-grey-6;
-		  font-family: $v1-font-family;
-		  font-size: 12px;
-		  line-height: 18px;
+    textarea {
+      border: 1px solid $v1-color-grey-2;
+      padding: 20px;
+      color: $v1-color-grey-6;
+      font-family: $v1-font-family;
+      font-size: 12px;
+      line-height: 18px;
 
-		  &:hover,
-		  &:active {
-			  border-color: $v1-color-blue-1;
-		  }
+      &:hover,
+      &:active {
+        border-color: $v1-color-blue-1;
+      }
 
-		  &:focus {
-			  outline: 0;
-		  }
-	  }
+      &:focus {
+        outline: 0;
+      }
+    }
 
-	  .file-upload {
-		  display: flex;
-		  align-items: center;
-		  justify-content: space-between;
+    .file-upload {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid $v1-color-grey-2;
+      font-family: $v1-font-family;
+      font-size: 14px;
+      color: $v1-color-grey-6;
+      font-weight: 600;
 
-		  border: 1px solid $v1-color-grey-2;
-		  font-family: $v1-font-family;
-		  font-size: 14px;
-		  color: $v1-color-grey-6;
-		  font-weight: 600;
+      &-content {
+        padding: 10px;
+        display: flex;
 
-		  &-content {
-			  padding: 10px;
-			  display: flex;
-			  &-item {
-				  padding: 8px 18px;
-				  background-color: $v1-color-info-3;
-				  font-size: 12px;
-				  font-weight: 600;
-				  font-family: $v1-font-family;
-				  color: $v1-color-grey-2;
-				  border-radius: 18px;
+        &-item {
+          padding: 8px 18px;
+          background-color: $v1-color-info-3;
+          font-size: 12px;
+          font-weight: 600;
+          font-family: $v1-font-family;
+          color: $v1-color-grey-2;
+          border-radius: 18px;
 
-				  span {
-					  color: $v1-color-grey-6;
-				  }
+          span {
+            color: $v1-color-grey-6;
+          }
 
-				  i {
-					  margin-left: 10px;
-					  color: $v1-color-grey-2;
-					  cursor: pointer;
-				  }
-			  }
+          i {
+            margin-left: 10px;
+            color: $v1-color-grey-2;
+            cursor: pointer;
+          }
+        }
 
-			  &-item + div {
-				  margin-left: 10px;
-			  }
-		  }
+        &-item + div {
+          margin-left: 10px;
+        }
+      }
 
-		  &-button {
-			  @extend .secondary-button;
-			  width: 100px;
-			  height: 54px;
-			  border-radius: 2px;
-			  font-size: 14px;
-		  }
-	  }
+      &-button {
+        @extend .secondary-button;
 
-	  .input-stepper {
-		  display: flex;
-		  justify-content: space-between;
-		  align-items: center;
-		  border: 1px solid $v1-color-grey-1;
-		  font-family: $v1-font-family;
-		  font-weight: 600;
-		  font-size: 14px;
-		  color: $v1-color-grey-6;
+        width: 100px;
+        height: 54px;
+        border-radius: 2px;
+        font-size: 14px;
+      }
+    }
 
-		  &-content {
-			  padding: 20px;
-		  }
-		  &-control {
-			  display: flex;
-			  flex-direction: column;
+    .input-stepper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid $v1-color-grey-1;
+      font-family: $v1-font-family;
+      font-weight: 600;
+      font-size: 14px;
+      color: $v1-color-grey-6;
 
-			  &-item {
-				  background-color: $v1-color-grey-4;
-				  color: $v1-color-grey-3;
-				  display: flex;
-				  align-items: center;
-				  justify-content: center;
-				  cursor: pointer;
-				  width: 30px;
-				  height: 30px;
+      &-content {
+        padding: 20px;
+      }
 
-				  &:hover {
-					  background-color: $v1-color-grey-3;
-					  color: $v1-background-white;
-				  }
-			  }
-		  }
+      &-control {
+        display: flex;
+        flex-direction: column;
 
-		  &:hover,
-		  &:active {
-			  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-			  color: $v1-color-grey-3;
-		  }
-	  }
+        &-item {
+          background-color: $v1-color-grey-4;
+          color: $v1-color-grey-3;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
+
+          &:hover {
+            background-color: $v1-color-grey-3;
+            color: $v1-background-white;
+          }
+        }
+      }
+
+      &:hover,
+      &:active {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+        color: $v1-color-grey-3;
+      }
+    }
   }
 }
