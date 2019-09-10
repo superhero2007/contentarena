@@ -37,3 +37,4 @@ require("../scss/skin/v1/v1.legend.scss");
 require("../scss/skin/v1/v1.dropdown.scss");
 require("../scss/skin/v1/v1.typography.scss");
 require("../scss/skin/v1/v1.form.scss");
+require("../scss/skin/v1/v1.image.scss");

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { LICENSE_TAB } from "@constants";
 import Translate from "@components/Translator/Translate";
 import TermItem from "../../manage/components/TermItem";
 import DefinitionItem from "../../manage/components/DefinitionItem";
@@ -14,45 +15,31 @@ class PropertyDetailsLicenseTab extends Component {
 			loading: false,
 			terms: [],
 			definitions: [],
-			activeTab: 1,
+			activeTab: LICENSE_TAB.DEFINITIONS,
 		};
 	}
 
 	componentDidMount() {
 		const { property: { customId: propertyId } } = this.props;
-		this.setState({
-			loading: true,
-			loadingDefinitions: true,
-		});
+		this.setState({ loading: true });
 
-		ContentArena.Api.getPropertyTerms(propertyId).then(({ data }) => {
-			const terms = data.map((term) => {
-				const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
-				return Object.assign({}, term, { items });
-			});
-			this.setState({
-				terms,
-				loading: false,
-			});
-		})
+		Promise.all([ContentArena.Api.getPropertyTerms(propertyId), api.properties.getDefinitions({ propertyId })])
+			.then((data) => {
+				const terms = data[0].data.map((term) => {
+					const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
+					return Object.assign({}, term, { items });
+				});
+				const definitions = data[1].data.map(element => Object.assign({}, element, { restoreValue: element.content }));
+				this.setState({
+					terms,
+					definitions,
+					loading: false,
+				});
+			})
 			.catch(({ response }) => {
 				this.setState({
 					error: response.data.message,
 					loading: false,
-				});
-			});
-
-		api.properties.getDefinitions({ propertyId }).then(({ data }) => {
-			const definitions = data.map(element => Object.assign({}, element, { restoreValue: element.content }));
-			this.setState({
-				definitions,
-				loadingDefinitions: false,
-			});
-		})
-			.catch(({ response }) => {
-				this.setState({
-					error: response.data.message,
-					loadingDefinitions: false,
 				});
 			});
 	}
@@ -70,43 +57,27 @@ class PropertyDetailsLicenseTab extends Component {
 		this.setState({ terms });
 	};
 
-	restoreDefaultTerms = () => {
+	restoreDefault = () => {
 		const { property: { customId: propertyId } } = this.props;
 		this.setState({ restoring: true });
 
-		ContentArena.Api.restorePropertyTerms(propertyId).then(({ data }) => {
-			const terms = data.map((term) => {
-				const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
-				return Object.assign({}, terms, { items });
-			});
-			this.setState({
-				terms,
-				restoring: false,
-			});
-		})
+		Promise.all([ContentArena.Api.restorePropertyTerms(propertyId), ContentArena.Api.restorePropertyDefinitions(propertyId)])
+			.then((data) => {
+				const terms = data[0].data.map((term) => {
+					const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
+					return Object.assign({}, terms, { items });
+				});
+				const definitions = data[1].data.map(element => Object.assign({}, element, { restoreValue: element.content }));
+				this.setState({
+					definitions,
+					terms,
+					restoring: false,
+				});
+			})
 			.catch(({ response }) => {
 				this.setState({
 					error: response.data.message,
 					restoring: false,
-				});
-			});
-	};
-
-	restoreDefaultDefinitions = () => {
-		const { property: { customId: propertyId } } = this.props;
-		this.setState({ restoringDefinitions: true });
-
-		ContentArena.Api.restorePropertyDefinitions(propertyId).then(({ data }) => {
-			const definitions = data.map(element => Object.assign({}, element, { restoreValue: element.content }));
-			this.setState({
-				definitions,
-				restoringDefinitions: false,
-			});
-		})
-			.catch(({ response }) => {
-				this.setState({
-					error: response.data.message,
-					restoringDefinitions: false,
 				});
 			});
 	};
@@ -163,64 +134,47 @@ class PropertyDetailsLicenseTab extends Component {
 		this.setState({ terms });
 	};
 
+	onUpdateTab = (activeTab) => {
+		this.setState({ activeTab });
+	};
+
 	render() {
 		const {
 			loading,
 			terms,
-			restoring,
 			definitions,
-			restoringDefinitions,
+			restoring,
 			activeTab,
 		} = this.state;
 		const { property: { customId: propertyId } } = this.props;
 
 		if (loading) return <Loader loading />;
 		return (
-			<section className="property-license-tab terms-edit-container">
-				<div className="terms-edit-header-title">
-					<h6 className="subtitle">
-						<Translate i18nKey="TERMS_EDIT_HEADER_TWO" />
-					</h6>
+			<section className="property-license-tab">
+				<div className="header body2">
+					<Translate i18nKey="TERMS_EDIT_HEADER_TWO" />
 				</div>
-				<div className="d-flex justify-content-between align-items-baseline">
-					<div className="ca-tabs">
-						<div
-							className={`tab lg ${activeTab === 1 ? "active" : ""}`}
-							onClick={() => this.setState({ activeTab: 1 })}
-						>
+				<div className="tabs">
+					<div
+						className={`tab ${activeTab === LICENSE_TAB.DEFINITIONS ? "active" : ""}`}
+						onClick={() => this.onUpdateTab(LICENSE_TAB.DEFINITIONS)}
+					>
+						<div className="text">
 							<Translate i18nKey="TERMS_EDIT_TITLE_DEFINITIONS" />
 						</div>
-						<div
-							className={`tab lg ${activeTab === 2 ? "active" : ""}`}
-							onClick={() => this.setState({ activeTab: 2 })}
-						>
+					</div>
+					<div
+						className={`tab ${activeTab === LICENSE_TAB.TERMS ? "active" : ""}`}
+						onClick={() => this.onUpdateTab(LICENSE_TAB.TERMS)}
+					>
+						<div className="text">
 							<Translate i18nKey="TERMS_EDIT_TITLE_TERMS" />
 						</div>
 					</div>
-					<div className="terms-edit-header">
-						<button
-							onClick={this.restoreDefaultDefinitions}
-							disabled={restoringDefinitions}
-							className="standard-button license-agreement-button terms-restore-button"
-						>
-							<Translate i18nKey="TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS" />
-							{restoringDefinitions && <Loader loading xSmall />}
-							{!restoringDefinitions && <div><i className="fa fa-refresh" /></div>}
-						</button>
-						<button
-							onClick={this.restoreDefaultTerms}
-							disabled={restoring}
-							className="standard-button license-agreement-button terms-restore-button"
-						>
-							<Translate i18nKey="TERMS_EDIT_BUTTON_RESTORE" />
-							{restoring && <Loader loading xSmall />}
-							{!restoring && <div><i className="fa fa-refresh" /></div>}
-						</button>
-					</div>
 				</div>
-				{activeTab === 1 && (
-					<div className="terms-edit-box">
-						{!restoringDefinitions && definitions.map((definition, i) => (
+				{activeTab === LICENSE_TAB.DEFINITIONS && (
+					<div className="content">
+						{!restoring && definitions.map((definition, i) => (
 							<div key={i}>
 								{!definition.removed && (
 									<DefinitionItem
@@ -237,16 +191,10 @@ class PropertyDetailsLicenseTab extends Component {
 								)}
 							</div>
 						))}
-						<button
-							onClick={this.addDefinition}
-							className="standard-button terms-add-definition-button"
-						>
-							<Translate i18nKey="TERMS_EDIT_BUTTON_ADD_DEFINITIONS" />
-						</button>
 					</div>
 				)}
-				{activeTab === 2 && (
-					<div className="terms-edit-box">
+				{activeTab === LICENSE_TAB.TERMS && (
+					<div className="content">
 						{!restoring && terms.map((term, i) => (
 							<div key={i}>
 								{term.items.map((item, k) => {
@@ -269,6 +217,28 @@ class PropertyDetailsLicenseTab extends Component {
 						))}
 					</div>
 				)}
+
+				<div className="action">
+					<button
+						onClick={this.addDefinition}
+						className="primary-outline-button add-definition"
+					>
+						<div className="content">
+							+&nbsp;<Translate i18nKey="TERMS_EDIT_BUTTON_ADD_DEFINITIONS" />
+						</div>
+					</button>
+					<div
+						onClick={this.restoreDefault}
+						disabled={restoring}
+						className="secondary-link restore"
+					>
+						{restoring && <Loader loading xSmall />}
+						{!restoring && <i className="icon-reset" />}
+						<div className="restore-text">
+							<Translate i18nKey="TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS" />
+						</div>
+					</div>
+				</div>
 			</section>
 		);
 	}

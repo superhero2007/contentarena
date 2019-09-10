@@ -10,8 +10,8 @@
       width: 100%;
       border: solid 1px $v1-color-grey-1;
       background-color: $v1-background-white;
-      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
-      padding: 19px 37px;
+      // box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
+      padding: 19px 18px;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
       &-prepend {
@@ -37,6 +37,8 @@
 
         &::placeholder {
           color: $v1-color-grey-1;
+          font-style: normal;
+          font-weight: normal;
         }
       }
 
@@ -46,7 +48,7 @@
 
         .input-group-text {
           &::placeholder {
-            color: $v1-color-grey-2;
+            // color: $v1-color-grey-2;
           }
         }
       }
@@ -215,12 +217,13 @@
     }
 
     textarea {
-      border: 1px solid $v1-color-grey-2;
+      border: 1px solid $v1-color-grey-1;
       padding: 20px;
-      color: $v1-color-grey-6;
+      color: $v1-color-grey-2;
       font-family: $v1-font-family;
       font-size: 12px;
       line-height: 18px;
+      resize: none;
 
       &:hover,
       &:active {
@@ -236,11 +239,26 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid $v1-color-grey-2;
+      border: 1px solid $v1-color-grey-1;
       font-family: $v1-font-family;
       font-size: 14px;
       color: $v1-color-grey-6;
       font-weight: 600;
+
+      input[type="file"] {
+        display: none;
+      }
+
+      &-fullscreen {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: $v1-background-black;
+        opacity: 0.6;
+        z-index: 2;
+      }
 
       &-content {
         padding: 10px;
