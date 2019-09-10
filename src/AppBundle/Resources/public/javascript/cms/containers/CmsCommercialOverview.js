@@ -5,12 +5,14 @@ import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import { RIGHT_TYPE } from "@constants";
+import { SeasonFilter } from "@components/Filters";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
-import SeasonFilter from "../../main/components/SeasonFilter";
 import { fetchPropertyDetails } from "../actions/propertyActions";
 import CmsRightsLegend from "../components/CmsRightsLegend";
+import CmsFilterBox from "../components/CmsFilterBox";
+import { setSeasons } from "../actions/propertyFiltersActions";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -146,7 +148,12 @@ class CmsCommercialOverview extends React.Component {
 	};
 
 	render() {
-		const { history, propertyId } = this.props;
+		const {
+			history,
+			propertyId,
+			propertyFilters,
+			propertyDetails: { property },
+		} = this.props;
 		const {
 			listings,
 			allSeasons,
@@ -156,7 +163,7 @@ class CmsCommercialOverview extends React.Component {
 			declinedBids,
 		} = this.state;
 
-		if (!listings.length) {
+		if (!property.listings.length) {
 			return (
 				<section className="commercial-overview-tab">
 					<EmptyCommercialOverview history={history} propertyId={propertyId} />
@@ -225,13 +232,7 @@ class CmsCommercialOverview extends React.Component {
 		return (
 			<section className="commercial-overview-tab">
 				<div className="region-filter">
-					<h5>
-						<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />
-					</h5>
-					<h6>
-						<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL_SUBTITLE" />
-					</h6>
-					<div className="d-flex">
+					{/* <div className="d-flex">
 						<div className="split-filter" style={{ width: "100%" }}>
 							<div className="manager-filter-container">
 								<div className="listing-filter">
@@ -265,8 +266,20 @@ class CmsCommercialOverview extends React.Component {
 								)}
 							</div>
 						</div>
-					</div>
-					<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
+					</div> */}
+					<CmsRightsLegend
+						type={RIGHT_TYPE.exclusive}
+						open
+					/>
+
+					<CmsFilterBox open>
+						<SeasonFilter
+							options={property.seasons}
+							value={propertyFilters.seasons}
+							onChange={this.props.setSeasons}
+						/>
+					</CmsFilterBox>
+
 					<div className="region-filter-bids">
 						<div className="region-filter-title toggle" onClick={openBidsList.length ? this.toggleOpenBids : null}>
 							<div className="region-filter-title-text">
@@ -328,14 +341,11 @@ class CmsCommercialOverview extends React.Component {
 	}
 }
 
-CmsCommercialOverview.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
 	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),
+	setSeasons: seasons => dispatch(setSeasons(seasons)),
 });
 
 export default connect(

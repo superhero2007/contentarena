@@ -2,10 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import Translate from "@components/Translator/Translate";
-import CmsRightsFilter from "@components/Filters/CmsRightsFilter";
-import CmsSeasonsFilter from "@components/Filters/CmsSeasonsFilter";
-import CmsRegionFilter from "@components/Filters/CmsRegionFilter";
-import CmsRightStatusFilter from "@components/Filters/CmsRightStatusFilter";
+import {
+	SeasonFilter, RightFilter, RegionFilter, RightStatusFilter,
+} from "@components/Filters";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
@@ -13,6 +12,7 @@ import {
 	setRegions, setRights, setSeasons, setStatus,
 } from "../actions/propertyFiltersActions";
 import { getFilteredRights, getFilteredSeasons, getFilteredTerritories } from "../reducers/property";
+
 
 class RightsOverview extends React.Component {
 	constructor(props) {
@@ -123,28 +123,28 @@ class RightsOverview extends React.Component {
 
 		return (
 			<>
-				<CmsRightsLegend />
+				<CmsRightsLegend open />
 
 				<CmsFilterBox open>
-					<CmsSeasonsFilter
+					<SeasonFilter
 						options={property.seasons}
 						value={propertyFilters.seasons}
 						onChange={this.props.setSeasons}
 					/>
 
-					<CmsRightsFilter
+					<RightFilter
 						options={property.rights}
 						value={propertyFilters.rights}
 						onChange={this.props.setRights}
 					/>
 
-					<CmsRegionFilter
+					<RegionFilter
 						options={baseProperty.regions}
 						value={propertyFilters.regions}
 						onChange={this.props.setRegions}
 					/>
 
-					<CmsRightStatusFilter
+					<RightStatusFilter
 						value={propertyFilters.statuses}
 						onChange={this.props.setStatus}
 					/>

@@ -80,7 +80,6 @@
       user-select: none;
       display: flex;
       align-items: center;
-      justify-content: center;
 
       &-selector {
         height: 24px;
@@ -114,13 +113,15 @@
       &-text {
         margin-left: 12px;
         font-family: $v1-font-family;
-        font-size: 16px;
+        font-size: 14px;
+        font-weight: 400;
         color: $v1-color-grey-3;
       }
 
       &:hover {
         .input-checkbox-text {
           color: $v1-color-grey-2;
+          font-weight: 600;
         }
 
         .input-checkbox-selector {
@@ -131,6 +132,7 @@
       input[type="checkbox"]:checked {
         & ~ .input-checkbox-text {
           color: $v1-color-grey-2;
+          font-weight: 600;
         }
 
         & ~ .input-checkbox-selector {

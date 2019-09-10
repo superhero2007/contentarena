@@ -2,6 +2,10 @@ import React from "react";
 import cn from "classnames";
 import { isMobileOnly } from "react-device-detect";
 import Select, { components } from "react-select-last";
+import CmsSeasonsFilter from "./CmsSeasonsFilter";
+import CmsRightsFilter from "./CmsRightsFilter";
+import CmsRightStatusFilter from "./CmsRightStatusFilter";
+import CmsRegionFilter from "./CmsRegionFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
@@ -66,3 +70,11 @@ BaseFilter.defaultProps = {
 	multi: true,
 	MultiValueComponent: MultiValue,
 };
+
+export const SeasonFilter = CmsSeasonsFilter;
+
+export const RegionFilter = CmsRegionFilter;
+
+export const RightStatusFilter = CmsRightStatusFilter;
+
+export const RightFilter = CmsRightsFilter;

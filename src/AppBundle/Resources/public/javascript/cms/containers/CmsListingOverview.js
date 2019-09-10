@@ -5,7 +5,7 @@ import Select from "react-select";
 import { first, uniqBy } from "lodash";
 import Translate from "@components/Translator/Translate";
 import { CMS_STATUS, RIGHT_TYPE } from "@constants";
-import CmsSeasonsFilter from "@components/Filters/CmsSeasonsFilter";
+import { SeasonFilter } from "@components/Filters";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import CmsRightsLegend from "../components/CmsRightsLegend";
@@ -167,7 +167,7 @@ class CmsListingOverview extends React.Component {
 				<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
 
 				<CmsFilterBox open>
-					<CmsSeasonsFilter
+					<SeasonFilter
 						options={property.seasons}
 						value={propertyFilters.seasons}
 						onChange={this.props.setSeasons}

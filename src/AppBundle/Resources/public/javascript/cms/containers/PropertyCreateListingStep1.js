@@ -9,14 +9,13 @@ import Loader from "@components/Loader";
 import { getTerritoriesFromRights } from "@utils/property";
 import SeasonSelector from "@components/Season/SeasonSelector";
 import RightSelector from "@components/Right/RightSelector";
-import CmsStepSelector from "../components/CmsStepSelector";
+import AccordionContainer from "@components/Containers/AccordionContainer";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
 import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import PropertyListingButtons from "../components/PropertyListingButtons";
 import { updateListing } from "../../sell/actions/contentActions";
 import { getListingName } from "../helpers/PropertyListingHelper";
-import CmsListingStep from "../components/CmsListingStep";
 
 class PropertyCreateListingStep1 extends React.Component {
 	constructor(props) {
@@ -37,6 +36,10 @@ class PropertyCreateListingStep1 extends React.Component {
 			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 			currentStep,
 		};
+
+		this.seasonStep = React.createRef();
+		this.rightsStep = React.createRef();
+		this.territoriesStep = React.createRef();
 	}
 
 	componentWillReceiveProps(nextProps, nextContext) {
@@ -77,23 +80,6 @@ class PropertyCreateListingStep1 extends React.Component {
 		}
 		this.setState({
 			seasons,
-			currentStep: 1,
-			rights: [],
-		});
-	};
-
-	onSelectAllSeasons = () => {
-		const { property: { seasons } } = this.props;
-		this.setState({
-			seasons,
-			currentStep: 1,
-			rights: [],
-		});
-	};
-
-	onUnSelectAllSeasons = () => {
-		this.setState({
-			seasons: [],
 			currentStep: 1,
 			rights: [],
 		});
@@ -180,59 +166,66 @@ class PropertyCreateListingStep1 extends React.Component {
 
 		return (
 			<>
-				<CmsListingStep
-					style={{ marginTop: 20 }}
+				<AccordionContainer
 					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_TITLE" />}
-					button={currentStep === 1 && <Translate i18nKey="CMS_CREATE_LISTING_STEP1_BUTTON" />}
+					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_BUTTON" />}
 					disabled={!allSeasons.length}
 					enableNextStep={seasonsValid || !allSeasons.length}
-					onNext={() => this.onNext(2)}
+					onNext={() => {
+						this.onNext(2);
+						this.seasonStep.current.close();
+						this.rightsStep.current.open();
+					}}
+					opened={currentStep === 1}
+					ref={this.seasonStep}
 				>
 					<SeasonSelector
 						availableSeasons={allSeasons}
 						selectedSeasons={seasons}
 						onSelectSeason={this.onChangeSeason}
-						onSelectAll={this.onSelectAllSeasons}
-						onUnselectAll={this.onUnSelectAllSeasons}
 					/>
-				</CmsListingStep>
+				</AccordionContainer>
 
-				{(currentStep > 1) && (
-					<CmsStepSelector
-						title={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_TITLE" />}
-						button={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_BUTTON" />}
-						enableNextStep={rightsValid}
-						onNext={() => this.onNext(3)}
-					>
-						<RightSelector
-							availableRights={allRights}
-							selectedRights={rights}
-							onSelectAll={this.onSelectAllRights}
-							onUnselectAll={this.onUnSelectAllRights}
-							onSelectRight={this.onSelectRight}
-							onExclusive={this.onExclusive}
-							exclusivityDisabled
-						/>
-					</CmsStepSelector>
-				)}
+				<AccordionContainer
+					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_TITLE" />}
+					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_BUTTON" />}
+					disabled={currentStep < 2}
+					enableNextStep={rightsValid}
+					onNext={() => {
+						this.onNext(3);
+						this.rightsStep.current.close();
+						this.territoriesStep.current.open();
+					}}
+					ref={this.rightsStep}
+				>
+					<RightSelector
+						availableRights={allRights}
+						selectedRights={rights}
+						onSelectAll={this.onSelectAllRights}
+						onUnselectAll={this.onUnSelectAllRights}
+						onSelectRight={this.onSelectRight}
+						onExclusive={this.onExclusive}
+						exclusivityDisabled
+					/>
+				</AccordionContainer>
 
-				{currentStep > 2 && (
-					<CmsStepSelector
-						title={<Translate i18nKey="CMS_CREATE_LISTING_STEP3_TITLE" />}
-						button={<Translate i18nKey="CMS_CREATE_LISTING_STEP3_BUTTON" />}
-						enableNextStep={territoriesValid}
-						onNext={() => this.updateListing()}
-					>
-						<CmsTerritorySelector
-							className="small-select"
-							onChange={this.onSelectTerritories}
-							selectedCountries={territory.territories}
-							value={territories}
-							territoriesMode={territoriesMode}
-							multiple
-						/>
-					</CmsStepSelector>
-				)}
+				<AccordionContainer
+					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP3_TITLE" />}
+					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP3_BUTTON" />}
+					disabled={currentStep < 3}
+					enableNextStep={territoriesValid}
+					onNext={() => this.updateListing()}
+					ref={this.territoriesStep}
+				>
+					<CmsTerritorySelector
+						className="small-select"
+						onChange={this.onSelectTerritories}
+						selectedCountries={territory.territories}
+						value={territories}
+						territoriesMode={territoriesMode}
+						multiple
+					/>
+				</AccordionContainer>
 
 				{currentStep > 3 && (
 					<PropertyListingButtons history={history} />

@@ -17,6 +17,10 @@
       text-align: center;
       background: transparent;
       padding: 2px 7px 2px;
+
+      &:disabled {
+        background-color: $v1-color-grey-6 !important;
+      }
     }
 
     button {
