@@ -271,6 +271,12 @@ export const EDIT_TYPE = {
 	edit: "EDIT",
 };
 
+export const PROGRESS_STATUS = {
+	COMPLETED: "completed",
+	ACTIVE: "active",
+	DISABLED: "disabled",
+};
+
 export const REGIONS_ENUMS = {
 	Algeria: "DZA",
 	Angola: "AGO",
