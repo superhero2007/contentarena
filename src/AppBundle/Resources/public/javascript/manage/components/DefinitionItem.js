@@ -40,7 +40,6 @@ class DefinitionItem extends React.Component {
 		const {
 			content, name, id, custom, position,
 		} = this.state;
-		const { isProperty, propertyId, onSave } = this.props;
 
 		const definition = {
 			position,
@@ -50,47 +49,20 @@ class DefinitionItem extends React.Component {
 		};
 
 		this.setState({ updating: true, editing: false });
-		if (isProperty) {
-			ContentArena.Api.updatePropertyDefinition(propertyId, definition).then(({ data: response }) => {
-				this.setState({
-					updating: false,
-					edited: true,
-					content: response.success ? response.definition.content : content,
-					restoreValue: response.success ? response.definition.content : content,
-					name: response.success ? response.definition.name : name,
-					id: response.success ? response.definition.id : id,
-					custom: response.success ? response.definition.custom : custom,
-				});
-				if (response.success && onSave) {
-					onSave(response.definition);
-				}
-			})
-				.catch(({ response }) => {
-					this.setState({
-						updating: false,
-						edited: true,
-						content,
-						name,
-						id,
-						custom,
-					});
-				});
-		} else {
-			ContentArena.Api.updateDefinition(definition).done((response) => {
-				this.setState({
-					updating: false,
-					edited: true,
-					content: response.success ? response.definition.content : content,
-					name: response.success ? response.definition.name : name,
-					id: response.success ? response.definition.id : id,
-					custom: response.success ? response.definition.custom : custom,
-				});
+		ContentArena.Api.updateDefinition(definition).done((response) => {
+			this.setState({
+				updating: false,
+				edited: true,
+				content: response.success ? response.definition.content : content,
+				name: response.success ? response.definition.name : name,
+				id: response.success ? response.definition.id : id,
+				custom: response.success ? response.definition.custom : custom,
 			});
-		}
+		});
 	};
 
 	onRemove = () => {
-		const { onRemove, isProperty, propertyId } = this.props;
+		const { onRemove } = this.props;
 		const { id } = this.state;
 
 		const definition = {
@@ -99,15 +71,9 @@ class DefinitionItem extends React.Component {
 
 		this.setState({ updating: true, editing: false });
 
-		if (isProperty) {
-			ContentArena.Api.removePropertyDefinition(propertyId, definition).then(({ data }) => {
-				if (onRemove) onRemove();
-			});
-		} else {
-			ContentArena.Api.removeDefinition(definition).done((response) => {
-				if (response.success && onRemove) onRemove();
-			});
-		}
+		ContentArena.Api.removeDefinition(definition).done((response) => {
+			if (response.success && onRemove) onRemove();
+		});
 	};
 
 	restore = () => {
