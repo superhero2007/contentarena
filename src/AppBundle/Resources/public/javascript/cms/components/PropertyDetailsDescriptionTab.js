@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import Loader from "@components/Loader/Loader";
 import CmsUploadImage from "./CmsUploadImage";
 import { updateProperty } from "../actions/propertyActions";
 import CmsFileUpload from "./CmsFileUpload";
@@ -15,7 +14,7 @@ class PropertyDetailsDescriptionTab extends Component {
 			imageBase64: "",
 			description: props.description || "",
 			website: props.website || "",
-			attachments: props.attachments || [],
+			attachments: props.attachments ? props.attachments.slice(0) : [],
 			uploading: false,
 		};
 	}
@@ -37,12 +36,15 @@ class PropertyDetailsDescriptionTab extends Component {
 	};
 
 	handleReset = () => {
+		const {
+			image, description, website, attachments,
+		} = this.props;
 		this.setState({
-			image: this.props.image || "",
+			image: image || "",
 			imageBase64: "",
-			description: this.props.description || "",
-			website: this.props.website || "",
-			attachments: this.props.attachments || [],
+			description: description || "",
+			website: website || "",
+			attachments: attachments.slice(0) || [],
 			uploading: false,
 		});
 	};
@@ -67,10 +69,21 @@ class PropertyDetailsDescriptionTab extends Component {
 		updateProperty(updateObj);
 	};
 
-	addFile = (response) => {
+	addFile = (files) => {
 		const { attachments } = this.state;
-		attachments.push(response);
-		this.setState({ attachments });
+		this.isUploading(true);
+		ContentArena.ContentApi.saveTmpFile(files)
+			.then((response) => {
+				if (response.success) {
+					attachments.push({
+						file: response.file,
+						name: response.name,
+						size: response.size,
+					});
+					this.setState({ attachments });
+				}
+				this.isUploading(false);
+			});
 	};
 
 	removeFile = (index) => {
@@ -115,6 +128,7 @@ class PropertyDetailsDescriptionTab extends Component {
 							<Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" />
 						</label>
 						<textarea
+							className="input-textarea"
 							onChange={this.handleDescriptionChange}
 							value={description}
 						/>
@@ -127,7 +141,6 @@ class PropertyDetailsDescriptionTab extends Component {
 							attachments={attachments}
 							onUpload={this.addFile}
 							onRemove={this.removeFile}
-							isUploading={this.isUploading}
 						/>
 
 					</div>
@@ -151,14 +164,18 @@ class PropertyDetailsDescriptionTab extends Component {
 							disabled={loading || uploading}
 							onClick={this.handleReset}
 						>
-							RESET
+							<div className="button-content">
+								RESET
+							</div>
 						</button>
 						<button
 							className="secondary-button"
-							onClick={this.handleSave}
+							onAnimationEnd={this.handleSave}
 							disabled={loading || uploading}
 						>
-							<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
+							<div className="button-content">
+								<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
+							</div>
 						</button>
 					</div>
 				</div>

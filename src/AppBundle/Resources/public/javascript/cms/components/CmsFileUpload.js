@@ -2,13 +2,17 @@ import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 
 const CmsFileUpload = ({
-	attachments, onUpload, onRemove, isUploading,
+	attachments, onUpload, onRemove,
 }) => {
 	const [open, setOpen] = useState(false);
 	let fileRef;
 
+	const hideOpen = () => {
+		setOpen(false);
+	};
+
 	const onUploadFile = () => {
-		// setOpen(true);
+		setOpen(true);
 		fileRef.click();
 	};
 
@@ -17,24 +21,12 @@ const CmsFileUpload = ({
 	};
 
 	const onLoadingFile = (e) => {
-		setOpen(false);
 		const { files } = e.target;
 
 		if (!files.length) {
 			return;
 		}
-
-		const file = e.target.files[0];
-		// const reader = new FileReader();
-		//
-		// reader.onload = () => {
-		// 	onUpload(reader.result);
-		// 	isUploading(false);
-		// };
-
-		// isUploading(true);
-		// reader.readAsDataURL(file);
-		onUpload(file);
+		onUpload(files);
 		e.target.value = "";
 	};
 
@@ -56,8 +48,11 @@ const CmsFileUpload = ({
 			<button
 				className="file-upload-button"
 				onClick={onUploadFile}
+				onFocus={hideOpen}
 			>
-				Upload
+				<div className="button-content">
+					Upload
+				</div>
 			</button>
 
 			<input

@@ -216,22 +216,17 @@
       }
     }
 
-    textarea {
+    .input-textarea {
       border: 1px solid $v1-color-grey-1;
       padding: 20px;
       color: $v1-color-grey-2;
       font-family: $v1-font-family;
       font-size: 12px;
       line-height: 18px;
-      resize: none;
 
       &:hover,
       &:active {
         border-color: $v1-color-blue-1;
-      }
-
-      &:focus {
-        outline: 0;
       }
     }
 

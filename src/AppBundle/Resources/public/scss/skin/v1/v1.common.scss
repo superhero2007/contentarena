@@ -2,6 +2,18 @@
 
 .skin {
   &.v1 {
+    .w-25 {
+      width: 25% !important;
+    }
+
+    .w-50 {
+      width: 50% !important;
+    }
+
+    .w-75 {
+      width: 75% !important;
+    }
+
     label {
       font-size: 12px;
       font-weight: bold;
@@ -9,6 +21,14 @@
       color: $v1-color-grey-2;
       margin-bottom: 10px;
       display: inline-block;
+    }
+
+    textarea {
+      resize: none;
+
+      &:focus {
+        outline: 0;
+      }
     }
 
     .checkbox-container {

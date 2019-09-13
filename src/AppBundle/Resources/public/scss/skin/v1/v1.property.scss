@@ -126,11 +126,11 @@
     .property-license-tab {
       padding: 33px 39px;
 
-      .header {
+      &-header {
         white-space: pre-line;
       }
 
-      .tabs {
+      &-tabs {
         margin-top: 37px;
         margin-bottom: 20px;
         display: flex;
@@ -153,28 +153,7 @@
         }
       }
 
-      .content {
-        .item {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          .left {
-            width: 77px;
-          }
-
-          .right {
-            width: 100%;
-            padding: 20px 17px;
-          }
-
-          & + & {
-            margin-top: 10px;
-          }
-        }
-      }
-
-      .action {
+      &-action {
         display: flex;
         align-items: center;
         justify-content: space-between;

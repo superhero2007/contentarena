@@ -7,6 +7,10 @@ const CmsUploadImage = ({
 	const [open, setOpen] = useState(false);
 	let fileRef;
 
+	const hideOpen = () => {
+		setOpen(false);
+	};
+
 	const onUploadImage = () => {
 		setOpen(true);
 		fileRef.click();
@@ -17,8 +21,6 @@ const CmsUploadImage = ({
 	};
 
 	const onLoadingImage = (e) => {
-		setOpen(false);
-
 		if (!e.target.files.length) {
 			return;
 		}
@@ -57,20 +59,28 @@ const CmsUploadImage = ({
 			<div className="upload-image-buttons">
 				{image ? (
 					<Fragment>
-						<button className="primary-outline-button modify" onClick={onUploadImage}>
-							<div className="content">
+						<button
+							className="primary-outline-button modify"
+							onClick={onUploadImage}
+							onFocus={hideOpen}
+						>
+							<div className="button-content">
 								Modify
 							</div>
 						</button>
 						<button className="secondary-outline-button remove" onClick={onRemoveImage}>
-							<div className="content">
+							<div className="button-content">
 								Remove
 							</div>
 						</button>
 					</Fragment>
 				) : (
-					<button className="primary-outline-button upload" onClick={onUploadImage}>
-						<div className="content">
+					<button
+						className="primary-outline-button upload"
+						onClick={onUploadImage}
+						onFocus={hideOpen}
+					>
+						<div className="button-content">
 							Upload Image
 						</div>
 					</button>
