@@ -80,7 +80,7 @@ const CmsLicenseDefinitionItem = ({
 					)
 				) : (
 					<span>
-						This clause is not editable
+						<Translate i18nKey="CMS_LICENSE_ITEM_DISABLE" />
 					</span>
 				)}
 			</div>

@@ -17,22 +17,26 @@ const CmsPopup = ({
 				</div>
 			)}
 			<div className="popup-modal-footer">
-				<button
-					className="secondary-outline-button"
-					onClick={onClose}
-				>
-					<div className="button-content">
-						{close}
-					</div>
-				</button>
-				<button
-					className="primary-button"
-					onClick={onApply}
-				>
-					<div className="button-content">
-						{apply}
-					</div>
-				</button>
+				{close && (
+					<button
+						className="secondary-outline-button"
+						onClick={onClose}
+					>
+						<div className="button-content">
+							{close}
+						</div>
+					</button>
+				)}
+				{apply && (
+					<button
+						className="primary-button"
+						onClick={onApply}
+					>
+						<div className="button-content">
+							{apply}
+						</div>
+					</button>
+				)}
 			</div>
 		</div>
 	</div>

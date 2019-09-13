@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 const CmsUploadImage = ({
 	image, onUpload, onRemove, isUploading,
@@ -56,6 +57,7 @@ const CmsUploadImage = ({
 					<i className="icon-photo" />
 				)}
 			</div>
+
 			<div className="upload-image-buttons">
 				{image ? (
 					<Fragment>
@@ -65,12 +67,12 @@ const CmsUploadImage = ({
 							onFocus={hideOpen}
 						>
 							<div className="button-content">
-								Modify
+								<Translate i18nKey="CMS_UPLOAD_IMAGE_MODIFY" />
 							</div>
 						</button>
 						<button className="secondary-outline-button remove" onClick={onRemoveImage}>
 							<div className="button-content">
-								Remove
+								<Translate i18nKey="CMS_UPLOAD_IMAGE_REMOVE" />
 							</div>
 						</button>
 					</Fragment>
@@ -81,13 +83,14 @@ const CmsUploadImage = ({
 						onFocus={hideOpen}
 					>
 						<div className="button-content">
-							Upload Image
+							<Translate i18nKey="CMS_UPLOAD_IMAGE_UPLOAD" />
 						</div>
 					</button>
 				)}
 			</div>
+
 			<div className="upload-image-description">
-				400x400px min, PNG or JPEG file less than 250Kbps
+				<Translate i18nKey="CMS_UPLOAD_IMAGE_DESCRIPTION" />
 			</div>
 		</div>
 	);

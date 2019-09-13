@@ -221,7 +221,7 @@ class PropertyDetailsLicenseTab extends Component {
 							term.items.map((item, k) => (
 								!item.removed && (
 									<CmsLicenseTermItem
-										key={k}
+										key={`Term-${i}-${k}`}
 										onUpdate={value => this.onUpdateTerm(i, k, value)}
 										onRestore={() => this.onRestoreTerm(i, k)}
 										onSave={() => this.onSaveTerm(i, k)}

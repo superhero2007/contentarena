@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 const CmsFileUpload = ({
 	attachments, onUpload, onRemove,
@@ -51,7 +52,7 @@ const CmsFileUpload = ({
 				onFocus={hideOpen}
 			>
 				<div className="button-content">
-					Upload
+					<Translate i18nKey="CMS_FILE_UPLOAD_BUTTON" />
 				</div>
 			</button>
 

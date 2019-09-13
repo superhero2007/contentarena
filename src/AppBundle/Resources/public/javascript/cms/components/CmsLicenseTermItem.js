@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 
 const CmsLicenseTermItem = ({
 	item, termPosition, onUpdate, onRestore, onSave,
@@ -65,7 +66,7 @@ const CmsLicenseTermItem = ({
 					)
 				) : (
 					<span>
-						This clause is not editable
+						<Translate i18nKey="CMS_LICENSE_ITEM_DISABLE" />
 					</span>
 				)}
 			</div>

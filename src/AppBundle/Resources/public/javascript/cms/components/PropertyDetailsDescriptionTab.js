@@ -165,7 +165,7 @@ class PropertyDetailsDescriptionTab extends Component {
 							onClick={this.handleReset}
 						>
 							<div className="button-content">
-								RESET
+								<Translate i18nKey="PROPERTY_DETAILS_EVENT_RESET" />
 							</div>
 						</button>
 						<button
