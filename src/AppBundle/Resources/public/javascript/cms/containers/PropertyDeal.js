@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { DefaultBox, HorizontalButtonBox, SkinContainer } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
@@ -11,9 +10,10 @@ import CmsStepSelector from "../components/CmsStepSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
 import CmsDealTable from "../components/CmsDealTable";
-import { getUnique, sortSeasons } from "../helpers/PropertyDetailsHelper";
+import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 import { addDealsProperty } from "../actions/propertyActions";
 import PropertyHeader from "../components/PropertyHeader";
+import CmsProgress from "../components/CmsProgress";
 
 
 class PropertyDeal extends React.Component {
@@ -204,11 +204,22 @@ class PropertyDeal extends React.Component {
 		const territoriesValid = this.territoriesAreValid();
 		const territory = getTerritoriesFromRights(rights, countries);
 		allSeasons.sort(sortSeasons);
+		const progressList = [
+			"Choose Season",
+			"Define media rights",
+			"Add Territories",
+			"Additional Info",
+			"Review & Confirm",
+		];
 
 		return (
 			<SkinContainer skin={skin}>
 				<DefaultBox>
 					<PropertyHeader deals={false} />
+					<CmsProgress
+						currentStep={currentStep}
+						progressList={progressList}
+					/>
 					<CmsStepSelector
 						style={{ marginTop: 20 }}
 						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
