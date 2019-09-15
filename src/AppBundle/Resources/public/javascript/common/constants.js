@@ -65,10 +65,10 @@ export const CMS_PROPERTY_TABS = {
 
 export const CMS_PROPERTY_DETAILS_TABS = {
 	EVENT_DETAILS: "eventdetails",
+	LICENSE_DETAILS: "licensedetails",
 	EDIT_PROGRAM: "editprogram",
 	RIGHTS_DETAILS: "rightsdetails",
 	PRODUCTION_DETAILS: "productiondetails",
-	LICENSE_DETAILS: "licensedetails",
 };
 
 export const PROPERTY_MAIN_TABS = {
@@ -522,4 +522,9 @@ export const REGIONS_ENUMS = {
 	"Heard Island and McDonald Islands": "HMD",
 	"South Georgia and the South Sandwich Islands": "SGS",
 	"United States Minor Outlying Islands": "UMI",
+};
+
+export const LICENSE_TAB = {
+	DEFINITIONS: "Definitions",
+	TERMS: "Terms",
 };

@@ -87,5 +87,100 @@
         color: $v1-color-green-1;
       }
     }
+
+    .property-description-tab {
+      padding: 33px 38px 68px 38px;
+      display: flex;
+
+      .description {
+        margin-left: 60px;
+        width: 100%;
+
+        &-files {
+          margin-top: 38px;
+        }
+
+        &-website {
+          margin-top: 18px;
+        }
+
+        &-action {
+          margin-top: 37px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+
+          button {
+            width: 142px;
+            height: 54px;
+            font-size: 14px;
+            text-transform: uppercase;
+
+            & + button {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+
+    .property-license-tab {
+      padding: 33px 39px;
+
+      &-header {
+        white-space: pre-line;
+      }
+
+      &-tabs {
+        margin-top: 37px;
+        margin-bottom: 20px;
+        display: flex;
+
+        .tab {
+          .text {
+            margin-left: 20px;
+            margin-right: 25px;
+            color: $v1-color-info-4;
+          }
+
+          &.active .text {
+            font-weight: bold;
+            border-bottom: 1px solid $v1-color-info-4;
+          }
+        }
+
+        .tab + .tab {
+          border-left: 1px solid $v1-color-info-4;
+        }
+      }
+
+      &-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 38px;
+
+        .add-definition {
+          width: 142px;
+          height: 32px;
+        }
+
+        .restore {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &-text {
+            text-decoration: underline;
+            font-size: 12px;
+            font-weight: 600;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+          }
+        }
+      }
+    }
   }
 }

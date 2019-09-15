@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import Loader from "@components/Loader/Loader";
-import FileSelector from "../../main/components/FileSelector";
+import CmsUploadImage from "./CmsUploadImage";
 import { updateProperty } from "../actions/propertyActions";
+import CmsFileUpload from "./CmsFileUpload";
 
 class PropertyDetailsDescriptionTab extends Component {
 	constructor(props) {
@@ -14,7 +14,7 @@ class PropertyDetailsDescriptionTab extends Component {
 			imageBase64: "",
 			description: props.description || "",
 			website: props.website || "",
-			attachments: props.attachments || [],
+			attachments: props.attachments ? props.attachments.slice(0) : [],
 			uploading: false,
 		};
 	}
@@ -22,15 +22,7 @@ class PropertyDetailsDescriptionTab extends Component {
 	getImage = () => {
 		const { image, imageBase64 } = this.state;
 
-		if (!image && !imageBase64) {
-			return <i className="fa fa-4x fa-camera" />;
-		}
-
-		return <img src={imageBase64 || `/${image}`} alt="" />;
-	};
-
-	handleRemoveImage = () => {
-		this.setState({ image: "", imageBase64: "" });
+		return imageBase64 || image;
 	};
 
 	handleDescriptionChange = (e) => {
@@ -43,9 +35,22 @@ class PropertyDetailsDescriptionTab extends Component {
 		this.setState({ website: value });
 	};
 
+	handleReset = () => {
+		const {
+			image, description, website, attachments,
+		} = this.props;
+		this.setState({
+			image: image || "",
+			imageBase64: "",
+			description: description || "",
+			website: website || "",
+			attachments: attachments.slice(0) || [],
+			uploading: false,
+		});
+	};
+
 	handleSave = () => {
 		const {
-			image,
 			imageBase64,
 			description,
 			website,
@@ -58,19 +63,27 @@ class PropertyDetailsDescriptionTab extends Component {
 			website,
 			attachments,
 		};
-		if (!image) {
+		if (imageBase64) {
 			updateObj.imageBase64 = imageBase64;
 		}
 		updateProperty(updateObj);
 	};
 
-	addFile = (response) => {
+	addFile = (files) => {
 		const { attachments } = this.state;
-		attachments.push({
-			file: response.file,
-			name: response.name,
-		});
-		this.setState({ attachments });
+		this.isUploading(true);
+		ContentArena.ContentApi.saveTmpFile(files)
+			.then((response) => {
+				if (response.success) {
+					attachments.push({
+						file: response.file,
+						name: response.name,
+						size: response.size,
+					});
+					this.setState({ attachments });
+				}
+				this.isUploading(false);
+			});
 	};
 
 	removeFile = (index) => {
@@ -79,20 +92,20 @@ class PropertyDetailsDescriptionTab extends Component {
 		this.setState({ attachments });
 	};
 
-	handleSelectImage = (key, imageBase64) => {
-		if (key === "imageBase64") {
-			this.setState({ imageBase64 });
-		}
-	};
-
 	isUploading = (uploading) => {
 		this.setState({ uploading });
 	};
 
+	onUpload = (imageBase64) => {
+		this.setState({ imageBase64 });
+	};
+
+	onRemove = () => {
+		this.setState({ image: "", imageBase64: "" });
+	};
+
 	render() {
 		const {
-			image,
-			imageBase64,
 			description,
 			website,
 			attachments,
@@ -101,90 +114,70 @@ class PropertyDetailsDescriptionTab extends Component {
 		const { loading } = this.props;
 
 		return (
-			<section className="property-event-tab">
-				<section className="property-event-details-wrapper">
-					<div className="event-details-image">
-						<div className="image-wrapper">
-							{this.getImage()}
-						</div>
-						{!image && !imageBase64 ? (
-							<div className="image-upload-wrapper">
-								<span className="image-upload-wrapper__title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT" /></span>
+			<section className="property-description-tab">
+				<CmsUploadImage
+					image={this.getImage()}
+					onUpload={this.onUpload}
+					onRemove={this.onRemove}
+					isUploading={this.isUploading}
+				/>
 
-								<FileSelector
-									label=" "
-									isImage
-									accept={[".png", ".jpg", ".jpeg"]}
-									onSelect={this.handleSelectImage}
-									buttonClassName="ca-btn primary image-upload-wrapper__button"
-									imageBase64={imageBase64}
-									target="imageBase64"
-									hideRemoveButton
-									minWidth={300}
-								/>
-							</div>
-						) : (
-							<div className="image-actions">
-								<i className="fa fa-trash" onClick={this.handleRemoveImage} />
-							</div>
-						)}
+				<div className="description">
+					<div className="description-event">
+						<label>
+							<Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" />
+						</label>
+						<textarea
+							className="input-textarea"
+							onChange={this.handleDescriptionChange}
+							value={description}
+						/>
 					</div>
-					<div className="event-description">
-						<div className="description-block">
-							<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" /></div>
-							<div className="description-wrapper">
-								<textarea
-									onChange={e => this.handleDescriptionChange(e)}
-									value={description}
-								/>
-							</div>
-							<div className="files-and-website-wrapper">
-								<div className="website-wrapper">
-									<div className="title">
-										<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_TITLE" />
-									</div>
-									<div className="input-wrapper">
-										<input
-											placeholder={this.context.t("PROPERTY_DETAILS_EVENT_WEBSITE_PLACEHOLDER")}
-											value={website}
-											type="text"
-											onChange={e => this.handleChangeWebsite(e)}
-										/>
-									</div>
-								</div>
-								<div className="files-wrapper">
-									<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_TITLE" /></div>
-									<div className="input-wrapper">
-										<FileSelector
-											label=" "
-											target="attachments"
-											selected={attachments}
-											onSelect={this.addFile}
-											onRemove={this.removeFile}
-											accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
-											acceptType={[
-												"image/jpeg",
-												"image/png",
-												"application/pdf",
-											]}
-											tmp
-											buttonClassName="ca-btn primary input-wrapper__button"
-											isUploading={this.isUploading}
-										/>
-									</div>
-								</div>
-							</div>
+					<div className="description-files">
+						<label>
+							<Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_TITLE" />
+						</label>
+						<CmsFileUpload
+							attachments={attachments}
+							onUpload={this.addFile}
+							onRemove={this.removeFile}
+						/>
+
+					</div>
+					<div className="description-website">
+						<label>
+							<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_TITLE" />
+						</label>
+						<div className="input-group">
+							<input
+								type="text"
+								className="input-group-text"
+								placeholder={this.context.t("PROPERTY_DETAILS_EVENT_WEBSITE_PLACEHOLDER")}
+								value={website}
+								onChange={this.handleChangeWebsite}
+							/>
 						</div>
 					</div>
-				</section>
-				<div className="buttons">
-					<button
-						className="yellow-button centered-btn"
-						onClick={this.handleSave}
-						disabled={loading || uploading}
-					>
-						{(loading || uploading) ? <Loader loading xSmall /> : <Translate i18nKey="Apply" />}
-					</button>
+					<div className="description-action">
+						<button
+							className="secondary-outline-button"
+							disabled={loading || uploading}
+							onClick={this.handleReset}
+						>
+							<div className="button-content">
+								<Translate i18nKey="PROPERTY_DETAILS_EVENT_RESET" />
+							</div>
+						</button>
+						<button
+							className="secondary-button"
+							onAnimationEnd={this.handleSave}
+							disabled={loading || uploading}
+						>
+							<div className="button-content">
+								<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
+							</div>
+						</button>
+					</div>
 				</div>
 			</section>
 		);
