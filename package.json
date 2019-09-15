@@ -80,7 +80,8 @@
     "lint": ".\\node_modules\\.bin\\eslint src/AppBundle/Resources/public/javascript",
     "lint:fix": "npm run lint -- --fix",
     "style-lint": ".\\node_modules\\.bin\\stylelint src/AppBundle/Resources/public/scss/skin",
-    "style-lint:fix": "npm run style-lint -- --fix"
+    "style-lint:fix": "npm run style-lint -- --fix",
+    "cypress": ".\\node_modules\\.bin\\cypress run --record --key e57e1f2d-7e8f-4147-a3d3-fabdcd52d63c"
   },
   "repository": {
     "type": "git",

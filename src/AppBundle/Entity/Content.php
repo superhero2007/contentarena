@@ -416,7 +416,7 @@ class Content implements NotifiableInterface
 
     /**
      * Many Content have Many RightsPackage.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", fetch="LAZY")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
      * @ORM\JoinTable(name="content_rights_package",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}

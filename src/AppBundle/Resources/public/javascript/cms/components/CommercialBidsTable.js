@@ -91,28 +91,37 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-header",
 		accessor: "list.name",
+		// width: 155,
 		Cell: props => this.getCell(props),
+	}, {
+		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_SEASONS" />,
+		id: props => `seasons-${props.customId}-${props.index}`,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		accessor: "list.seasons",
+		width: 70,
+		Cell: props => props.value.map(season => <span>{season.year}</span>),
 	}];
 
 
-	getDetailColumns = type => [{
+	getDetailColumns = () => [{
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_TERRITORY" />,
 		id: props => `ter-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 130,
-		accessor: "salesPackage.name",
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 82,
+		accessor: "salesPackage.territories",
 		Cell: props => (
 			<span>
-				{props.value}
+				{props.value.length}
 			</span>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LICENSE" />,
 		id: props => `lic-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 150,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 112,
 		accessor: "list.company",
 		Cell: props => (
 			<span>
@@ -122,9 +131,9 @@ class CommercialBidsTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_FEE" />,
 		id: props => `fee-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 100,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 80,
 		accessor: "salesPackage",
 		Cell: props => (
 			<span>
@@ -134,9 +143,9 @@ class CommercialBidsTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_DATE" />,
 		id: props => `date-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 100,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 80,
 		accessor: "createdAt",
 		Cell: props => (
 			<span>
@@ -146,56 +155,111 @@ class CommercialBidsTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_USER" />,
 		id: props => `user-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 130,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 48,
 		accessor: "buyerUser",
 		Cell: props => (
 			<span>
 				{`${props.value.firstName} ${props.value.lastName}`}
 			</span>
 		),
-	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ACTION" />,
-		id: props => `action-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: type === "openBids" ? 150 : 100,
-		Cell: props => (
-			<div className="d-flex justify-content-around">
-				{type === "openBids" && (
-					<div
-						className="d-flex justify-content-center align-items-center"
-						onClick={() => this.acceptBid(props)}
-					>
-						<img src={checkIcon} alt="" />
+	}];
+
+	getActionColumns = (type) => {
+		let columns = [];
+
+		switch (type) {
+		case "openBids":
+			columns = [{
+				id: props => `action-${props.customId}-${props.index}`,
+				className: "rt-td-center rt-td-full",
+				width: 50,
+				Cell: props => (
+					<>
+						<div
+							className="action-box action-box-column"
+							onClick={() => this.acceptBid(props)}
+						>
+							<i className="icon-check" />
+						</div>
+						<div
+							className="action-box action-box-column"
+							onClick={() => this.declineBid(props)}
+						>
+							<i className="icon-remove" />
+						</div>
+					</>
+				),
+			}, {
+				id: props => `action-2-${props.customId}-${props.index}`,
+				className: "rt-td-center rt-td-full",
+				width: 50,
+				Cell: props => (
+					<>
+						<Link
+							className="action-box action-box-column"
+							to={`/license/bid/${props.original.customId}`}
+							target="_blank"
+						>
+							<i className="icon-agreement" />
+						</Link>
+						<Link
+							className="action-box action-box-column"
+							to={`/redirect-integration/messages-by-bid-seller/${props.original.id}`}
+							target="_blank"
+						>
+							<i className="icon-message" />
+						</Link>
+					</>
+				),
+			}];
+			break;
+		case "closedBids":
+			columns = [{
+				id: props => `action-${props.customId}-${props.index}`,
+				className: "rt-td-center rt-td-full",
+				width: 50,
+				Cell: () => (
+					<div className="action-box action-box-accepted">
+						<Translate i18nKey="COMMERCIAL_OVERVIEW_STATUS_ACCEPTED" />
 					</div>
-				)}
-				{type === "openBids" && (
+				),
+			}, {
+				id: props => `action-2-${props.customId}-${props.index}`,
+				headerClassName: "table-header",
+				className: "table-header justify-content-center",
+				width: 50,
+				Cell: props => (
 					<div
-						className="d-flex justify-content-center align-items-center"
+						className="action-box"
 						onClick={() => this.declineBid(props)}
 					>
-						<img src={cancelIcon} alt="" />
+						<i className="icon-settings" />
 					</div>
-				)}
-				<Link
-					className="d-flex justify-content-center align-items-center"
-					to={`/license/bid/${props.original.customId}`}
-					target="_blank"
-				>
-					<img src={pdfIcon} alt="" />
-				</Link>
-				<Link
-					className="d-flex justify-content-center align-items-center"
-					to={`/redirect-integration/messages-by-bid-seller/${props.original.id}`}
-					target="_blank"
-				>
-					<img src={blueEnvelopeIcon} alt="" />
-				</Link>
-			</div>
-		),
-	}];
+				),
+			}];
+			break;
+		case "declinedBids":
+			columns = [{
+				id: props => `action-${props.customId}-${props.index}`,
+				headerClassName: "table-header",
+				className: "table-header justify-content-center",
+				width: 150,
+				Cell: props => (
+					<div className="action-box action-box-rejected">
+						<Translate i18nKey="COMMERCIAL_OVERVIEW_STATUS_REJECTED" />
+					</div>
+				),
+			}];
+			break;
+		default:
+			break;
+		}
+
+		return columns;
+	};
+
 
 	render() {
 		const { listings, type, postAction } = this.props;
@@ -203,7 +267,12 @@ class CommercialBidsTable extends React.Component {
 			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
 		} = this.state;
 
-		const columns = [...this.getTitleColumns(), ...getRightTableColumns("list.rightsPackage"), ...this.getDetailColumns(type)];
+		const columns = [
+			...this.getTitleColumns(),
+			...getRightTableColumns("list.rightsPackage"),
+			...this.getDetailColumns(type),
+			...this.getActionColumns(type),
+		];
 
 		return (
 			<section className="property-listing-wrapper">

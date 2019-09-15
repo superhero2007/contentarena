@@ -1,3 +1,4 @@
 {
-  "baseUrl": "http://local.contentarena.com:8200"
+  "baseUrl": "https://contentarena.com",
+  "projectId": "wfvsic"
 }

@@ -10,9 +10,14 @@ import { getTerritoriesFromRights } from "@utils/property";
 import SeasonSelector from "@components/Season/SeasonSelector";
 import RightSelector from "@components/Right/RightSelector";
 import AccordionContainer from "@components/Containers/AccordionContainer";
-import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
-import { sortSeasons } from "../helpers/PropertyDetailsHelper";
+import TerritorySelector from "@components/Territories/TerritorySelector";
+import {
+	getRightsString,
+	getSeasonsYearString,
+	sortSeasons,
+	sortSeasonsOldToNew,
+} from "../helpers/PropertyDetailsHelper";
 import PropertyListingButtons from "../components/PropertyListingButtons";
 import { updateListing } from "../../sell/actions/contentActions";
 import { getListingName } from "../helpers/PropertyListingHelper";
@@ -57,7 +62,7 @@ class PropertyCreateListingStep1 extends React.Component {
 
 	rightsAreValid = () => {
 		const { rights } = this.state;
-		return !!rights.length;
+		return !!rights.length && !rights.filter(right => right.exclusive === null).length;
 	};
 
 	territoriesAreValid = () => {
@@ -82,22 +87,6 @@ class PropertyCreateListingStep1 extends React.Component {
 			seasons,
 			currentStep: 1,
 			rights: [],
-		});
-	};
-
-	onSelectAllRights = () => {
-		const { property: { rights } } = this.props;
-		const newRights = rights.map(element => Object.assign({}, element, { exclusive: null }));
-		this.setState({
-			rights: newRights,
-			currentStep: 2,
-		});
-	};
-
-	onUnSelectAllRights = () => {
-		this.setState({
-			rights: [],
-			currentStep: 2,
 		});
 	};
 
@@ -128,6 +117,7 @@ class PropertyCreateListingStep1 extends React.Component {
 	};
 
 	onSelectTerritories = (territories, territoriesMode) => {
+		console.log(territories);
 		this.setState({
 			territories,
 			territoriesMode,
@@ -157,30 +147,38 @@ class PropertyCreateListingStep1 extends React.Component {
 			territoriesMode,
 			currentStep,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights }, history } = this.props;
+		const {
+			property: { seasons: availableSeasons, rights: availableRights },
+			history,
+		} = this.props;
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
-		const territory = getTerritoriesFromRights(rights);
-		allSeasons.sort(sortSeasons);
+		const availableCountries = getTerritoriesFromRights(rights);
+
+		const selectedSeasonsValue = getSeasonsYearString(seasons.sort(sortSeasonsOldToNew));
+		const selectedRightsValue = getRightsString(rights);
+
+		availableSeasons.sort(sortSeasons);
 
 		return (
 			<>
 				<AccordionContainer
 					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_TITLE" />}
 					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_BUTTON" />}
-					disabled={!allSeasons.length}
-					enableNextStep={seasonsValid || !allSeasons.length}
+					disabled={!availableSeasons.length}
+					enableNextStep={seasonsValid || !availableSeasons.length}
 					onNext={() => {
 						this.onNext(2);
 						this.seasonStep.current.close();
 						this.rightsStep.current.open();
 					}}
+					value={`(${selectedSeasonsValue})`}
 					opened={currentStep === 1}
 					ref={this.seasonStep}
 				>
 					<SeasonSelector
-						availableSeasons={allSeasons}
+						availableSeasons={availableSeasons}
 						selectedSeasons={seasons}
 						onSelectSeason={this.onChangeSeason}
 					/>
@@ -191,6 +189,7 @@ class PropertyCreateListingStep1 extends React.Component {
 					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_BUTTON" />}
 					disabled={currentStep < 2}
 					enableNextStep={rightsValid}
+					value={`(${selectedRightsValue})`}
 					onNext={() => {
 						this.onNext(3);
 						this.rightsStep.current.close();
@@ -199,13 +198,10 @@ class PropertyCreateListingStep1 extends React.Component {
 					ref={this.rightsStep}
 				>
 					<RightSelector
-						availableRights={allRights}
+						availableRights={availableRights}
 						selectedRights={rights}
-						onSelectAll={this.onSelectAllRights}
-						onUnselectAll={this.onUnSelectAllRights}
 						onSelectRight={this.onSelectRight}
 						onExclusive={this.onExclusive}
-						exclusivityDisabled
 					/>
 				</AccordionContainer>
 
@@ -217,13 +213,10 @@ class PropertyCreateListingStep1 extends React.Component {
 					onNext={() => this.updateListing()}
 					ref={this.territoriesStep}
 				>
-					<CmsTerritorySelector
-						className="small-select"
-						onChange={this.onSelectTerritories}
-						selectedCountries={territory.territories}
-						value={territories}
-						territoriesMode={territoriesMode}
-						multiple
+					<TerritorySelector
+						availableCountries={availableCountries.territories}
+						selectedCountries={territories}
+						onSelect={this.onSelectTerritories}
 					/>
 				</AccordionContainer>
 

@@ -64,7 +64,7 @@ class PropertyActionListing extends React.Component {
 		goTo(`listing/${customId}`, true);
 	};
 
-	commericalOverview = () => {
+	commercialOverview = () => {
 		const { customId, propertyId } = this.props;
 		goTo(`properties/${propertyId}/commercialoverview/${customId}`);
 	};
@@ -74,7 +74,7 @@ class PropertyActionListing extends React.Component {
 			customId,
 			className,
 			showEdit,
-			showCommericalOverview,
+			showCommercialOverview,
 			showRemove,
 			showArchive,
 			showSubmit,
@@ -101,49 +101,48 @@ class PropertyActionListing extends React.Component {
 		return (
 			<div className={className} style={style}>
 				{showOptions && (
-					<div className="listing-menu-tooltip">
+					<div className="tools-menu">
 						{showSubmit && (
-							<div className="option" onClick={this.submit}>
+							<div className="tools-option" onClick={this.submit}>
 								<img src={this.submitIcon} alt="" />
 								{" "}
 								<Translate i18nKey="Submit" />
 							</div>
 						)}
 						{showEdit && (
-							<div className="option" onClick={this.edit}>
+							<div className="tools-option" onClick={this.edit}>
 								<img src={this.editIcon} alt="" />
 								{" "}
 								<Translate i18nKey="Edit" />
 							</div>
 						)}
-						{showCommericalOverview && (
-							<div className="option" onClick={this.commericalOverview}>
-								<img src={this.commercialIcon} alt="" />
-								{" "}
+						{showCommercialOverview && (
+							<div className="tools-option" onClick={this.commercialOverview}>
+								<i className="icon-commercial-overview" />
 								<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />
 							</div>
 						)}
 						{showDuplicate && (
 							<div
-								className="option"
+								className="tools-option"
 								onClick={() => {
 									this.setState({ showOptions: false });
 									onDuplicate(customId);
 								}}
 							>
-								<img src={this.duplicateIcon} alt="" />
+								<i className="icon-copy" />
 								<Translate i18nKey="Duplicate" />
 							</div>
 						)}
 						{showView && (
-							<div className="option" onClick={this.view}>
+							<div className="tools-option" onClick={this.view}>
 								<img src={this.viewIcon} alt="" />
 								<Translate i18nKey="View" />
 							</div>
 						)}
 						{showRemove && (
 							<div
-								className="option"
+								className="tools-option"
 								onClick={() => {
 									this.setState({ showRemoveConfirm: true });
 								}}
@@ -154,7 +153,7 @@ class PropertyActionListing extends React.Component {
 						)}
 						{showArchive && (
 							<div
-								className="option"
+								className="tools-option"
 								onClick={() => {
 									this.setState({ showArchiveConfirm: true });
 								}}
@@ -165,7 +164,7 @@ class PropertyActionListing extends React.Component {
 						)}
 						{showDeactivate && (
 							<div
-								className="option"
+								className="tools-option"
 								onClick={() => {
 									this.setState({ showDeactivateConfirm: true });
 								}}
@@ -176,7 +175,7 @@ class PropertyActionListing extends React.Component {
 						)}
 
 						{canShare && (
-							<div className="option">
+							<div className="tools-option">
 								<ShareListing
 									listingId={customId}
 								/>
@@ -301,8 +300,8 @@ class PropertyActionListing extends React.Component {
 					</div>
 				)}
 
-				<div className="menu-icon" onClick={this.toggleOptions}>
-					<i className="fa fa-bars" />
+				<div className="tools-icon" onClick={this.toggleOptions}>
+					<i className="icon-settings" />
 				</div>
 
 			</div>

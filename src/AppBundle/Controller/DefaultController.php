@@ -78,7 +78,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="properties|createproperty|manageproperties|terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     requirements={"reactRouting"="test|properties|createproperty|manageproperties|terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage",
      *     defaults={"reactRouting": null}
      *     )

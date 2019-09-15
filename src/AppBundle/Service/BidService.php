@@ -64,6 +64,10 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getAllBidsByContentAndUser($listing, $company);
     }
 
+    public function getAllBidsByCompany($company){
+        return $this->em->getRepository('AppBundle:Bid')->getAllBidsByCompany($company);
+    }
+
     public function getAllCustomBidsByContent($listing){
         return $this->em->getRepository('AppBundle:Bid')->getAllCustomBidsByContent($listing);
     }

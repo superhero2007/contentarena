@@ -6,6 +6,7 @@ import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import { RIGHT_TYPE } from "@constants";
 import { SeasonFilter } from "@components/Filters";
+import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
@@ -86,17 +87,6 @@ class CmsCommercialOverview extends React.Component {
 		this.onApplyFilter();
 	};
 
-	toggleOpenBids = () => {
-		this.setState(prevState => ({ openBids: !prevState.openBids }));
-	};
-
-	toggleClosedBids = () => {
-		this.setState(prevState => ({ closedBids: !prevState.closedBids }));
-	};
-
-	toggleDeclinedBids = () => {
-		this.setState(prevState => ({ declinedBids: !prevState.declinedBids }));
-	};
 
 	selectTerritory = (selectedCountry) => {
 		selectedCountry = first(selectedCountry) ? selectedCountry : [];
@@ -158,9 +148,9 @@ class CmsCommercialOverview extends React.Component {
 			listings,
 			allSeasons,
 			selectedListings,
-			openBids,
-			closedBids,
-			declinedBids,
+			countries,
+			includeAllCountries,
+			seasons,
 		} = this.state;
 
 		if (!property.listings.length) {
@@ -170,12 +160,6 @@ class CmsCommercialOverview extends React.Component {
 				</section>
 			);
 		}
-
-		const {
-			countries,
-			includeAllCountries,
-			seasons,
-		} = this.state;
 
 		let allListings = listings;
 		if (selectedListings) {
@@ -232,41 +216,7 @@ class CmsCommercialOverview extends React.Component {
 		return (
 			<section className="commercial-overview-tab">
 				<div className="region-filter">
-					{/* <div className="d-flex">
-						<div className="split-filter" style={{ width: "100%" }}>
-							<div className="manager-filter-container">
-								<div className="listing-filter">
-									<Select
-										name="form-field-name"
-										placeholder={this.context.t("CMS_LISTING_FILTER_PLACEHOLDER")}
-										clearable
-										onChange={this.onSelectListing}
-										multi={false}
-										value={selectedListings}
-										options={listings.map(b => ({ value: b.customId, label: b.name }))}
-									/>
-								</div>
 
-								<TerritoryFilter
-									className="listing-filter territories-filter"
-									countries={countries}
-									includeAllCountries={includeAllCountries}
-									selectTerritory={this.selectTerritory}
-									updateIncludedCountries={this.updateIncludedCountries}
-									placeholder="Filter By Territory"
-								/>
-
-								{allSeasons && allSeasons.length > 1 && (
-									<SeasonFilter
-										className="listing-filter territories-filter"
-										allSeasons={allSeasons}
-										seasons={seasons}
-										selectSeasons={this.selectSeasons}
-									/>
-								)}
-							</div>
-						</div>
-					</div> */}
 					<CmsRightsLegend
 						type={RIGHT_TYPE.exclusive}
 						open
@@ -280,61 +230,37 @@ class CmsCommercialOverview extends React.Component {
 						/>
 					</CmsFilterBox>
 
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={openBidsList.length ? this.toggleOpenBids : null}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />{ ` (${openBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${openBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{openBidsList.length > 0 && openBids && (
-								<CommercialBidsTable
-									listings={openBidsList}
-									type="openBids"
-									postAction={this.onPostAction}
-								/>
-							)}
-						</div>
-					</div>
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={closedBidsList.length ? this.toggleClosedBids : null}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />{ ` (${closedBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${closedBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{closedBidsList.length > 0 && closedBids && (
-								<CommercialBidsTable
-									listings={closedBidsList}
-									type="closedBids"
-								/>
-							)}
-						</div>
-					</div>
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={declinedBidsList.length ? this.toggleDeclinedBids : null}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />{ ` (${declinedBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${declinedBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{declinedBidsList.length > 0 && declinedBids && (
-								<CommercialBidsTable
-									listings={declinedBidsList}
-									type="declinedBids"
-								/>
-							)}
-						</div>
-					</div>
+					<FilterAccordionContainer
+						title={<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" params={{ n: openBidsList.length }} />}
+						disabled={openBidsList.length === 0}
+						opened
+					>
+						<CommercialBidsTable
+							listings={openBidsList}
+							type="openBids"
+							postAction={this.onPostAction}
+						/>
+					</FilterAccordionContainer>
+
+					<FilterAccordionContainer
+						title={<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" params={{ n: closedBidsList.length }} />}
+						disabled={closedBidsList.length === 0}
+					>
+						<CommercialBidsTable
+							listings={closedBidsList}
+							type="closedBids"
+						/>
+					</FilterAccordionContainer>
+
+					<FilterAccordionContainer
+						title={<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" params={{ n: declinedBidsList.length }} />}
+						disabled={declinedBidsList.length === 0}
+					>
+						<CommercialBidsTable
+							listings={declinedBidsList}
+							type="declinedBids"
+						/>
+					</FilterAccordionContainer>
 				</div>
 			</section>
 		);

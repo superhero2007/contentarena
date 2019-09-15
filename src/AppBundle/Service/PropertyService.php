@@ -132,6 +132,9 @@ class PropertyService
             $rights = $listing->getRightsPackage();
             $selectedRights = $listing->getSelectedRightsBySuperRight();
             $bids = $this->bidService->getAllBidsByContent($listing);
+            // TODO: Remove
+            $bids = $this->bidService->getAllBidsByCompany($property->getCompany());
+            $bids = array_slice($bids, 0, 15);
 
             /* @var RightsPackage $right*/
             foreach ($rights as $right){
