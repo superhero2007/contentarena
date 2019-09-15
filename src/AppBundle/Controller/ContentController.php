@@ -71,7 +71,8 @@ class ContentController extends Controller
         return new JsonResponse(array(
             "success" => $success,
             "file" => $file,
-            'name' => $request->files->get("file")->getClientOriginalName()
+            "name" => $request->files->get("file")->getClientOriginalName(),
+            "size" => $request->files->get("file")->getClientSize()
         ));
     }
 

@@ -22,13 +22,13 @@ class PropertyDetails extends Component {
 			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_DESCRIPTION_LABEL" />,
 			component: <PropertyDetailsDescriptionTab {...props} />,
 		},
-		[CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM]: {
-			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL" />,
-			component: <PropertyDetailsEditedProgramTab {...props} />,
-		},
 		[CMS_PROPERTY_DETAILS_TABS.LICENSE_DETAILS]: {
 			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_LICENSE_LABEL" />,
 			component: <PropertyDetailsLicenseTab {...props} />,
+		},
+		[CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM]: {
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL" />,
+			component: <PropertyDetailsEditedProgramTab {...props} />,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.PRODUCTION_DETAILS]: {
 			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_PRODUCTION_LABEL" />,

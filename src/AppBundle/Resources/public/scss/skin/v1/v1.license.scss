@@ -1,0 +1,89 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    .license-item {
+      display: flex;
+      background-color: $v1-background-grey-1;
+
+      &-name {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 28px 18px;
+        border-right: 1px solid $v1-background-white;
+        width: 9%;
+
+        * {
+          font-size: 14px;
+          font-weight: bold;
+          letter-spacing: 0.06px;
+          color: $v1-color-grey-2;
+        }
+      }
+
+      &-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 20px 18px;
+        width: 66%;
+
+        * {
+          font-size: 14px;
+          letter-spacing: 0.06px;
+          color: $v1-color-grey-3;
+        }
+      }
+
+      &-disabled {
+        * {
+          color: $v1-color-grey-6;
+        }
+      }
+
+      &-editing {
+        background: $v1-background-white;
+        border: 1px solid $v1-color-grey-4;
+      }
+
+      &-actions {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        width: 25%;
+        padding: 32px 38px;
+
+        i {
+          cursor: pointer;
+          font-size: 16px;
+          color: $v1-color-grey-2;
+
+          & + i {
+            margin-left: 38px;
+          }
+        }
+
+        span {
+          width: 77px;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 1.33;
+          letter-spacing: 0.05px;
+          color: $v1-color-red-1;
+          text-align: right;
+        }
+      }
+
+      textarea {
+        border: 0;
+        padding: 0;
+        min-height: 100px;
+      }
+
+      & + .license-item {
+        margin-top: 12px;
+      }
+    }
+  }
+}

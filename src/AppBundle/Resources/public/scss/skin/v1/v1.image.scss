@@ -1,0 +1,79 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    .upload-image {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 202px;
+
+      input[type="file"] {
+        display: none;
+      }
+
+      &-fullscreen {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: $v1-background-black;
+        opacity: 0.6;
+        z-index: 2;
+      }
+
+      &-wrapper {
+        width: 202px;
+        height: 202px;
+        border-radius: 50%;
+        background-color: $v1-color-grey-5;
+        border: 1px solid $v1-color-grey-1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        i {
+          color: $v1-color-grey-1;
+          font-size: 70px;
+          line-height: 60px;
+          display: flex;
+        }
+      }
+
+      &-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 28px;
+        padding-bottom: 20px;
+
+        .upload {
+          width: 142px;
+          height: 32px;
+        }
+
+        .modify {
+          width: 61px;
+          height: 32px;
+          margin-right: 20px;
+        }
+
+        .remove {
+          width: 61px;
+          height: 32px;
+        }
+      }
+
+      &-description {
+        font-family: $v1-font-family;
+        color: $v1-color-grey-1;
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+  }
+}

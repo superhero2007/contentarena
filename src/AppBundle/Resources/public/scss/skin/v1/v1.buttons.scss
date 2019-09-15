@@ -27,6 +27,10 @@
       position: relative;
       overflow: hidden;
       cursor: pointer;
+      font-family: $v1-font-family;
+      font-weight: 600;
+      font-size: 12px;
+      border-radius: 2px;
 
       &::after {
         content: '';
@@ -49,12 +53,8 @@
         }
       }
 
-      &-text {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+      .button-content {
+        position: relative;
         z-index: 1;
         display: flex;
         align-items: center;
@@ -101,6 +101,7 @@
     .primary-outline-button {
       color: $v1-color-blue-1;
       border: 1px solid $v1-color-blue-1;
+      background: transparent;
 
       &::after {
         background-color: $v1-color-blue-3;
@@ -118,6 +119,7 @@
     .secondary-outline-button {
       color: $v1-color-grey-2;
       border: 1px solid $v1-color-grey-2;
+      background: transparent;
 
       &::after {
         background-color: $v1-color-grey-5;
@@ -135,6 +137,7 @@
     .info-outline-button {
       color: $v1-color-info-4;
       border: 1px solid $v1-color-info-4;
+      background: transparent;
 
       &::after {
         background-color: $v1-color-info-3;
@@ -184,6 +187,12 @@
       color: $v1-color-blue-1;
     }
 
+    .secondary-link {
+      @extend .link-button;
+
+      color: $v1-color-grey-3;
+    }
+
     .info-link {
       @extend .link-button;
 
@@ -199,7 +208,7 @@
   }
 
   20% {
-    transform: scale(25, 25);
+    transform: scale(10, 10);
     opacity: 1;
   }
 

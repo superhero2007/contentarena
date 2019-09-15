@@ -216,7 +216,7 @@ class PropertyService
             } else {
                 $fileName = "property_image_" . md5(uniqid()) . '.jpg';
                 $savedImage = $this->fileUploader->saveImage($data['imageBase64'], $fileName);
-                $property->setImage($savedImage);
+                $property->setImage('/'.$savedImage);
             }
         }
         if (isset($data['website'])) {
