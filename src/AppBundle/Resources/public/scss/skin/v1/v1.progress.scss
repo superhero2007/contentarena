@@ -115,7 +115,8 @@
       .progress-line {
         position: relative;
 
-        &-content {
+        &::before {
+          content: '';
           position: absolute;
           top: -25px;
           left: 0;

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 /**
  * Country
  *
@@ -174,4 +176,17 @@ class Country
     {
         $this->territory = $territory;
     }
+
+    /**
+     * @return array
+     * @VirtualProperty()
+     * @Groups({"listing","countryList", "home", "settings", "property"})
+     * @SerializedName("territories");
+     */
+    public function getTerritories()
+    {
+        return [$this->territory];
+    }
+
+
 }

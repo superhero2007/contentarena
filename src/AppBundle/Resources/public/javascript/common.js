@@ -41,3 +41,6 @@ require("../scss/skin/v1/v1.progress.scss");
 require("../scss/skin/v1/v1.image.scss");
 require("../scss/skin/v1/v1.popup.scss");
 require("../scss/skin/v1/v1.license.scss");
+require("../scss/skin/v1/v1.selector.scss");
+require("../scss/skin/v1/v1.accordion.scss");
+require("../scss/skin/v1/v1.tables.scss");

@@ -1,0 +1,99 @@
+@import "v1.vars";
+@import "v1.buttons";
+
+.skin {
+  &.v1 {
+    .accordion-container {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06px;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      cursor: pointer;
+
+      &-header {
+        height: 56px;
+        background-color: $v1-color-blue-4;
+        display: flex;
+        align-items: center;
+        padding: 0 130px 0 35px;
+        position: relative;
+        justify-content: space-between;
+      }
+
+      &-icon {
+        font-size: 20px;
+        color: $v1-background-white;
+        position: absolute;
+        top: 20px;
+        right: 35px;
+      }
+
+      &-disabled {
+        background-color: $v1-color-grey-6;
+      }
+
+      &-title {
+        color: $v1-background-white;
+      }
+
+      &-value {
+        color: $v1-color-blue-1;
+      }
+
+      &-content {
+        background-color: $v1-background-white;
+      }
+
+      &-buttons {
+        padding: 40px;
+        display: flex;
+        justify-content: flex-end;
+        background-color: $v1-background-white;
+
+        .button {
+          min-width: 142px;
+          height: 54px;
+          border-radius: 2px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .filter-accordion {
+      border-bottom: 1px solid $v1-color-grey-4;
+
+      &-header {
+        height: 91px;
+        display: flex;
+        align-items: center;
+        padding: 0 45px;
+        font-size: 16px;
+        font-weight: 600;
+        color: $v1-color-grey-2;
+        background-color: white;
+        cursor: pointer;
+
+        i {
+          color: $v1-color-grey-2;
+          margin-right: 15px;
+          font-size: 23px;
+        }
+      }
+
+      &-title {
+
+      }
+
+      &-content {
+
+      }
+
+      &-disabled {
+
+      }
+    }
+  }
+}

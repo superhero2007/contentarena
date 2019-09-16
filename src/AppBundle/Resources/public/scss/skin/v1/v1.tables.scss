@@ -1,0 +1,161 @@
+@import "v1.vars";
+
+.skin {
+  &.v1 {
+    .ReactTable {
+      &.ca-table {
+        font-size: 12px;
+        font-weight: 400;
+        border-radius: 0;
+        padding: 1px;
+        border: 1px solid #ecedef;
+
+        .rt-thead {
+          .rt-th {
+            box-shadow: none;
+            padding: 12px 5px;
+            font-weight: bold;
+            border-right: 1px solid #ecedef;
+            border-bottom: 1px solid #ecedef;
+            color: #333;
+            font-size: 12px;
+            text-transform: none;
+            height: 59px;
+            display: flex;
+            align-items: center;
+
+            &.table-header {
+              padding-left: 17px !important;
+            }
+
+            &-center {
+              padding: 0 !important;
+              justify-content: center;
+            }
+          }
+        }
+
+        .rt-tbody {
+          .rt-tr {
+            &-group {
+              border-color: #ecedef;
+            }
+
+            &.-even {
+              background-color: white;
+            }
+          }
+
+          .rt-td {
+            font-size: 12px;
+            color: #333;
+            font-weight: normal;
+            border-right: 1px solid #ecedef;
+            height: 75px;
+            letter-spacing: 0.05px;
+            display: flex;
+            align-items: center;
+
+            &-center{
+              justify-content: center;
+              flex-direction: column;
+              white-space: normal;
+              text-align: center;
+            }
+
+            &-full {
+              padding: 0 !important;
+            }
+
+            .icon {
+              width: 12px;
+              height: 12px;
+              margin: 0;
+            }
+
+            .tools {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 100%;
+
+              .tools-icon {
+                width: 20px;
+                height: 20px;
+              }
+
+              .tools-menu {
+                position: absolute;
+                z-index: 20;
+                background: white;
+                border: 1px solid lightgray;
+                min-width: 200px;
+                right: -110px;
+                top: 30px;
+                border-radius: 2px;
+                box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.16);
+
+                .tools-option {
+                  display: flex;
+                  align-items: center;
+                  height: 50px;
+                  border-bottom: 1px solid lightgray;
+                  padding: 0 18px;
+                }
+              }
+            }
+          }
+
+          .action-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            &-column {
+              height: 37px;
+              width: 100%;
+
+              &:first-of-type {
+                border-bottom: 1px solid lightgray;
+              }
+            }
+
+            &-accepted {
+              font-size: 10px;
+              letter-spacing: 0.04px;
+              text-align: center;
+              color: $v1-color-green-1;
+            }
+
+            &-rejected {
+              font-size: 10px;
+              letter-spacing: 0.04px;
+              text-align: center;
+              color: $v1-color-red-3;
+            }
+          }
+
+          [class|="icon"], .fa {
+            font-size: 20px;
+            color: $v1-color-grey-3;
+            &[class$="-check"] {
+              color: $v1-color-green-1;
+            }
+            &[class$="-remove"] {
+              color: $v1-color-red-3;
+              font-size: 17px;
+            }
+            &[class$="-agreement"] {
+              color: $v1-color-grey-2;
+            }
+            &[class$="-message"] {
+              color: $v1-color-grey-2;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import { connect } from "react-redux";
+import { setTranslations } from "redux-i18n";
 import Loader from "../Loader";
 import Portal from "../Portal/Portal";
 
@@ -40,6 +41,7 @@ class Translate extends Component {
 			isEditEnabled: editTranslation,
 			saving: false,
 			value: "",
+			flatValue: "",
 			newValue: "",
 		};
 	}
@@ -61,16 +63,27 @@ class Translate extends Component {
 		} = this.props;
 
 		this.setState({
+			flatValue: this.context.t(i18nKey),
 			value: this.context.t(i18nKey, params),
 		});
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.params) {
+			this.setState({
+				flatValue: this.context.t(nextProps.i18nKey),
+				value: this.context.t(nextProps.i18nKey, nextProps.params),
+			});
+		}
 	}
 
 	openEdit = (e) => {
 		const {
 			value,
+			flatValue,
 		} = this.state;
 		e.stopPropagation();
-		this.setState({ isOpen: true, newValue: value });
+		this.setState({ isOpen: true, newValue: flatValue });
 		e.preventDefault();
 	};
 
@@ -89,6 +102,7 @@ class Translate extends Component {
 		} = this.state;
 		const {
 			i18nKey,
+			params,
 		} = this.props;
 
 		e.stopPropagation();
@@ -100,7 +114,7 @@ class Translate extends Component {
 			languageCode: "en",
 		}).then((response) => {
 			// handle success
-			this.setState({ value: newValue, success: true });
+			this.setState({ value: this.context.t(newValue, params), flatValue: newValue, success: true });
 		})
 			.catch((response) => {
 			// handle error
@@ -241,7 +255,11 @@ const mapStateToProps = state => ({
 	common: state.common,
 });
 
+const mapDispatchToProps = dispatch => ({
+	setTranslations: translations => dispatch(setTranslations(translations)),
+});
+
 export default connect(
 	mapStateToProps,
-	null,
+	mapDispatchToProps,
 )(Translate);

@@ -222,7 +222,7 @@ const routes = [
 	{
 		path: "/test",
 		exact: true,
-		header: HeaderBar,
+		header: PublicHeaderBar,
 		main: TestPage,
 	},
 ];

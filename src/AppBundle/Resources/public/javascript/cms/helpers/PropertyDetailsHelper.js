@@ -25,7 +25,43 @@ export const getUnique = (arr, comp) => (
 
 export const sortSeasons = (a, b) => new Date(b.startDate) - new Date(a.startDate);
 
+export const sortSeasonsOldToNew = (a, b) => new Date(a.startDate) - new Date(b.startDate);
+
 export const sortByName = (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+
+export const getSeasonsYearString = seasons => seasons.map(season => season.year).join(" - ");
+
+export const getRightsString = rights => rights.map(right => right.code).join(" - ");
+
+export const listHas = (array, el) => array.find(e => e.id === el.id);
+
+export const listRemove = (array, el) => array.filter(e => e.id !== el.id);
+
+export const getCountryData = (countries) => {
+	const regions = new Map();
+	const territories = new Map();
+
+	countries.forEach((country) => {
+		country.regions.forEach((region) => {
+			if (!regions.has(region.id)) {
+				regions.set(region.id, []);
+			}
+			regions.get(region.id).push(country);
+		});
+
+		country.territories.forEach((territory) => {
+			if (!territories.has(territory.id)) {
+				territories.set(territory.id, []);
+			}
+			territories.get(territory.id).push(country);
+		});
+	});
+
+	return {
+		regions,
+		territories,
+	};
+};
 
 const getLanguages = (rights, key) => {
 	let values = [];

@@ -39,9 +39,7 @@ const CmsProgress = ({ title, currentStep, progressList }) => (
 			})}
 		</div>
 
-		<div className="progress-line">
-			<div className="progress-line-content" />
-		</div>
+		<div className="progress-line" />
 	</div>
 );
 

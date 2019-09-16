@@ -120,7 +120,7 @@ class ApiSearchController extends BaseController
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
 
-        $response->setSharedMaxAge(3600);
+        //->setSharedMaxAge(3600);
 
         return $response;
 

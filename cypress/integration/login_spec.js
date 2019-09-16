@@ -1,5 +1,5 @@
-describe('My First Test', function() {
-	it('Does not do much! Hola', function() {
+describe('Login Tests', function() {
+	it('Reference test: should be true', function() {
 		expect(true).to.equal(true)
 	});
 
@@ -25,7 +25,7 @@ describe('My First Test', function() {
 
 	it('Login into the Content Arena', function() {
 		const email = "juancruztalco@gmail.com";
-		const password = "Q!w2e3r4";
+		const password = "asdasd";
 		cy.visit('/login');
 		cy.get('input[name=_username]').type(email);
 		cy.get('input[type=password]').type(`${password}{enter}`)

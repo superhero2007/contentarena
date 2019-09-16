@@ -26,7 +26,7 @@ class PropertyHeader extends React.Component {
 				</div>
 
 				<button
-					className="button info-outline-button"
+					className="button primary-outline-button"
 					disabled={!listing}
 					onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}`)}
 				>

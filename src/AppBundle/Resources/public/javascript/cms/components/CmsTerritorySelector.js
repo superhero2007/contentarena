@@ -301,7 +301,7 @@ class CmsTerritorySelector extends React.Component {
 		const totalRegionItems = regions.length;
 
 		return (
-			<div className="country-selector region-filter">
+			<div className="territory-selector">
 
 				{
 					selectedRights && selectedRights.length > 0
@@ -418,7 +418,6 @@ class CmsTerritorySelector extends React.Component {
 					&& (
 						<div>
 							<div className="region-filter-selection-box">
-								<img src={territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? cmsWorldActive : cmsWorldDisabled} alt="" />
 								<span className="region-filter-selection-word">
 									{
 										territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE

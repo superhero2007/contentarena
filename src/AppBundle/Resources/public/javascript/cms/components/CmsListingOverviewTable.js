@@ -3,11 +3,11 @@ import { PropTypes } from "prop-types";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
-import cn from "classnames";
 import ListingLink from "@components/Links/ListingLink";
-import { getListingBidsUrl } from "@utils/routing";
 import Translate from "@components/Translator/Translate";
-import { LISTING_STATUS, DATE_FORMAT } from "@constants";
+import { LISTING_STATUS, DATE_FORMAT, TIME_FORMAT } from "@constants";
+import ShareListing from "@components/ShareListing";
+import { UserName } from "@utils/listing";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 
@@ -48,19 +48,15 @@ class CmsListingOverviewTable extends React.Component {
 	};
 
 	getInfoColumns = () => [{
-		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_HEADER_STATUS" />,
-		id: props => `status-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-status",
-		accessor: "status.name",
-		width: 120,
-		Cell: ({ value }) => (
-			<span className={cn({
-				"status-active": value !== "REJECTED",
-				"status-rejected": value === "REJECTED",
-			})}
-			>
-				{value}
+		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_ID" />,
+		id: props => `custom-id-${props.customId}-${props.index}`,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		accessor: "customId",
+		width: 80,
+		Cell: props => (
+			<span>
+				{props.value}
 			</span>
 		),
 	}, {
@@ -71,24 +67,20 @@ class CmsListingOverviewTable extends React.Component {
 		accessor: "name",
 		Cell: props => this.getCell(props),
 	}, {
-		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_ID" />,
-		id: props => `custom-id-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		accessor: "customId",
-		width: 80,
-		Cell: props => (
-			<span>
-				{props.value}
-			</span>
-		),
+		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_SEASONS" />,
+		id: props => `seasons-${props.customId}-${props.index}`,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		accessor: "seasons",
+		width: 70,
+		Cell: props => props.value.map(season => <span>{season.year}</span>),
 	}];
 
 	getActionColumns = () => [{
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_EXPIRY" />,
 		id: props => `expiry-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
 		accessor: "expiresAt",
 		width: 100,
 		Cell: props => (
@@ -99,13 +91,32 @@ class CmsListingOverviewTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_TERRITORIES" />,
 		id: props => `ter-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
 		width: 130,
 		Cell: props => (
 			<span>
 				{props.original.territories}
 			</span>
+		),
+	}, {
+		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_USER" />,
+		id: props => `user-${props.customId}-${props.index}`,
+		headerClassName: "rt-th-center",
+		className: "rt-td-center",
+		width: 48,
+		accessor: "owner",
+		Cell: props => (
+			<div className="tools">
+				<PropertyActionListing
+					className="listing pointer"
+					style={{
+						position: "absolute",
+						zIndex: 100 - props.index,
+					}}
+					{...props.original}
+				/>
+			</div>
 		),
 	}, {
 		Header: () => this.getHeader("", ""),
@@ -122,7 +133,7 @@ class CmsListingOverviewTable extends React.Component {
 			const { listings } = this.state;
 			const { propertyId } = this.props;
 			return (
-				<div className="tooltip-container">
+				<div className="tools">
 					{
 						status.name === LISTING_STATUS.DRAFT
 						&& (
@@ -134,7 +145,7 @@ class CmsListingOverviewTable extends React.Component {
 								}}
 								defaultAction="EDIT"
 								showEdit
-								showCommericalOverview
+								showCommercialOverview
 								propertyId={propertyId}
 								showRemove
 								showDuplicate
@@ -159,7 +170,7 @@ class CmsListingOverviewTable extends React.Component {
 									zIndex: 100 - props.index,
 								}}
 								defaultAction="SUBMIT"
-								showCommericalOverview
+								showCommercialOverview
 								propertyId={propertyId}
 								showEdit
 								showArchive
@@ -191,7 +202,7 @@ class CmsListingOverviewTable extends React.Component {
 									zIndex: 100 - props.index,
 								}}
 								showEdit={!hasPendingBids}
-								showCommericalOverview
+								showCommercialOverview
 								propertyId={propertyId}
 								showDeactivate={!hasPendingBids}
 								showDuplicate
@@ -223,7 +234,7 @@ class CmsListingOverviewTable extends React.Component {
 									position: "absolute",
 									zIndex: 100 - props.index,
 								}}
-								showCommericalOverview
+								showCommercialOverview
 								propertyId={propertyId}
 								showDuplicate
 								showArchive
