@@ -44,7 +44,7 @@ class PropertyDetailsDescriptionTab extends Component {
 			imageBase64: "",
 			description: description || "",
 			website: website || "",
-			attachments: attachments.slice(0) || [],
+			attachments: attachments ? attachments.slice(0) : [],
 			uploading: false,
 		});
 	};
@@ -159,6 +159,11 @@ class PropertyDetailsDescriptionTab extends Component {
 						</div>
 					</div>
 					<div className="description-action">
+						{!attachments.length && (
+							<div className="description-max">
+								<Translate i18nKey="CMS_FILE_UPLOAD_MAX" />
+							</div>
+						)}
 						<button
 							className="secondary-outline-button"
 							disabled={loading || uploading}
