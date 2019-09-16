@@ -214,12 +214,13 @@ class PropertyDeal extends React.Component {
 
 		return (
 			<SkinContainer skin={skin}>
+				<PropertyHeader deals={false} />
+				<CmsProgress
+					title={<Translate i18nKey="CMS_DEALS_TITLE" />}
+					currentStep={currentStep}
+					progressList={progressList}
+				/>
 				<DefaultBox>
-					<PropertyHeader deals={false} />
-					<CmsProgress
-						currentStep={currentStep}
-						progressList={progressList}
-					/>
 					<CmsStepSelector
 						style={{ marginTop: 20 }}
 						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
