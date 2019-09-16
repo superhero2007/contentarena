@@ -7,6 +7,7 @@ const CmsLicenseTermItem = ({
 }) => {
 	const [editing, setEditing] = useState(false);
 	const [content, setContent] = useState("");
+	const [invalid, setInvalid] = useState(false);
 	const { editable, position } = item;
 
 	useEffect(() => {
@@ -14,15 +15,21 @@ const CmsLicenseTermItem = ({
 	});
 
 	const handleChange = (e) => {
+		setInvalid(false);
 		onUpdate({ content: e.target.value });
 	};
 
 	const onSaveItem = () => {
-		setEditing(false);
-		onSave();
+		if (content !== "") {
+			setEditing(false);
+			onSave();
+		} else {
+			setInvalid(true);
+		}
 	};
 
 	const onToggleItem = () => {
+		setInvalid(false);
 		setEditing(!editing);
 	};
 
@@ -42,6 +49,7 @@ const CmsLicenseTermItem = ({
 			<div className={cn("license-item-content", {
 				"license-item-disabled": !editable,
 				"license-item-editing": editing,
+				"license-item-invalid": invalid && !content,
 			})}
 			>
 				{!editing && <div>{content}</div>}
