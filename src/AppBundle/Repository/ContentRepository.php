@@ -428,22 +428,26 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
         return $this->createQueryBuilder('c')
             ->innerJoin("c.status", "status")
-            // ->where('c.expiresAt > :now')
             ->andWhere('c.property = :property')
-            // ->andWhere('status.name = :rejected OR status.name = :approved OR status.name = :edited OR status.name = :draft')
             ->andWhere('status.name != :sold_copy')
-            ->andWhere('status.name != :archived')
-            // ->setParameter('now',$now)
-            // ->setParameter('rejected',"REJECTED")
-            // ->setParameter('approved',"APPROVED")
-            // ->setParameter('edited',"EDITED")
-            // ->setParameter('draft',"DRAFT")
              ->setParameter('property',$property)
             ->setParameter('sold_copy',"SOLD_COPY")
-            ->setParameter('archived',"ARCHIVED")
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
     }
+
+    public function getPropertyListingsTest(Property $property){
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->andWhere('c.company = :company')
+            ->andWhere('status.name != :sold_copy')
+            ->setParameter('company',$property->getCompany())
+            ->setParameter('sold_copy',"SOLD_COPY")
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
 
     /**
      * @param User $user

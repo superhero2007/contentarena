@@ -1,5 +1,16 @@
 import React from "react";
-import { ExclusiveRightAvailableIcon, NonExclusiveRightAvailableIcon, yellowCheckIcon } from "@icons";
+
+
+export const getUnifiedRegions = (regions, territories) => [
+	...regions.map((region) => {
+		region.type = "region";
+		return region;
+	}),
+	...territories.map((region) => {
+		region.type = "territory";
+		return region;
+	}),
+];
 
 export const getPropertyName = (property) => {
 	const {
@@ -25,14 +36,18 @@ const getRightCell = (props, shortLabel) => {
 
 	if (right) {
 		const className = (right.exclusive) ? "yellow-circle" : "blue-circle";
-		return <div className={className} />;
+		return (
+			<div className="legend-box-item">
+				<div className="icon">
+					<div className={className} />
+				</div>
+			</div>
+		);
 	}
 
 	return (
 		<div className="legend-box-item">
-			<div className="icon">
-				<div className="yellow-circle" />
-			</div>
+			<div className="icon" />
 		</div>
 	);
 };

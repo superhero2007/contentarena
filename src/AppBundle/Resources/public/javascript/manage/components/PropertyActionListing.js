@@ -17,19 +17,10 @@ class PropertyActionListing extends React.Component {
 			showArchiveConfirm: false,
 			showDeactivateConfirm: false,
 		};
-
-		this.bucketIcon = `${assetsBaseDir}app/images/bucket_blue.png`;
-		this.commercialIcon = `${assetsBaseDir}app/images/dollar.png`;
-		this.editIcon = `${assetsBaseDir}app/images/edit.png`;
-		this.duplicateIcon = `${assetsBaseDir}app/images/duplicate.png`;
-		this.viewIcon = `${assetsBaseDir}app/images/search.png`;
-		this.submitIcon = `${assetsBaseDir}app/images/submit.png`;
-		this.deactivateIcon = `${assetsBaseDir}app/images/close_red.png`;
 	}
 
 	onSelect = () => {
 		const { onSelect, customId } = this.props;
-
 		if (onSelect) onSelect(customId);
 	};
 
@@ -85,11 +76,6 @@ class PropertyActionListing extends React.Component {
 			onArchive,
 			onDuplicate,
 			onDeactivate,
-			lastAction,
-			lastActionDate,
-			lastActionUser,
-			owner,
-			status,
 			style,
 			canShare,
 		} = this.props;
@@ -104,15 +90,13 @@ class PropertyActionListing extends React.Component {
 					<div className="tools-menu">
 						{showSubmit && (
 							<div className="tools-option" onClick={this.submit}>
-								<img src={this.submitIcon} alt="" />
-								{" "}
+								<i className="icon-activate" />
 								<Translate i18nKey="Submit" />
 							</div>
 						)}
 						{showEdit && (
 							<div className="tools-option" onClick={this.edit}>
-								<img src={this.editIcon} alt="" />
-								{" "}
+								<i className="icon-edit" />
 								<Translate i18nKey="Edit" />
 							</div>
 						)}
@@ -136,7 +120,7 @@ class PropertyActionListing extends React.Component {
 						)}
 						{showView && (
 							<div className="tools-option" onClick={this.view}>
-								<img src={this.viewIcon} alt="" />
+								<i className="icon-view" />
 								<Translate i18nKey="View" />
 							</div>
 						)}
@@ -147,7 +131,7 @@ class PropertyActionListing extends React.Component {
 									this.setState({ showRemoveConfirm: true });
 								}}
 							>
-								<img src={this.bucketIcon} alt="" />
+								<i className="icon-remove" />
 								<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM" />
 							</div>
 						)}
@@ -158,7 +142,7 @@ class PropertyActionListing extends React.Component {
 									this.setState({ showArchiveConfirm: true });
 								}}
 							>
-								<img src={this.bucketIcon} alt="" />
+								<i className="icon-archive" />
 								<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM" />
 							</div>
 						)}
@@ -169,7 +153,7 @@ class PropertyActionListing extends React.Component {
 									this.setState({ showDeactivateConfirm: true });
 								}}
 							>
-								<img src={this.deactivateIcon} style={{ width: 16 }} alt="" />
+								<i className="icon-desactivate" />
 								<Translate i18nKey="MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM" />
 							</div>
 						)}
@@ -179,29 +163,6 @@ class PropertyActionListing extends React.Component {
 								<ShareListing
 									listingId={customId}
 								/>
-							</div>
-						)}
-
-						{lastAction && (
-							<div className="last-action">
-								<div style={{ fontWeight: 500 }}>
-									<Translate i18nKey="MANAGE_LISTINGS_LAST_ACTION" />
-									{" "}
-									{`${lastAction.description} by `}
-								</div>
-								<UserName {...lastActionUser} />
-								{" "}
-								{lastActionDate && `- ${Moment(lastActionDate)
-									.format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}
-							</div>
-						)}
-
-						{owner && (
-							<div className="last-action">
-								<div style={{ fontWeight: 500 }}>
-									<Translate i18nKey="MANAGE_LISTINGS_LISTING_OWNER" />
-								</div>
-								{`${owner.firstName} ${owner.lastName}`}
 							</div>
 						)}
 					</div>
@@ -303,13 +264,9 @@ class PropertyActionListing extends React.Component {
 				<div className="tools-icon" onClick={this.toggleOptions}>
 					<i className="icon-settings" />
 				</div>
-
 			</div>
 		);
 	}
 }
 
-PropertyActionListing.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 export default PropertyActionListing;

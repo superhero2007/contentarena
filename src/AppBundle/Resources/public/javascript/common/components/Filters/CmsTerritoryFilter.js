@@ -3,7 +3,7 @@ import Translate from "@components/Translator/Translate";
 import { BaseFilter } from "@components/Filters/index";
 import { sortByName } from "../../../cms/helpers/PropertyDetailsHelper";
 
-class CmsRegionFilter extends React.Component {
+class CmsTerritoryFilter extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -20,16 +20,15 @@ class CmsRegionFilter extends React.Component {
 
 		return (
 			<BaseFilter
-				name={<Translate i18nKey="REGION_FILTER_NAME" />}
+				name={<Translate i18nKey="TERRITORY_FILTER_NAME" />}
 				options={options}
 				value={value}
-				placeholder={<Translate i18nKey="REGION_FILTER_PLACEHOLDER" />}
-				multiText={<Translate i18nKey="REGION_FILTER_MULTIPLE" />}
+				placeholder={<Translate i18nKey="TERRITORY_FILTER_PLACEHOLDER" />}
+				multiText={<Translate i18nKey="TERRITORY_FILTER_MULTIPLE" />}
 				onChange={onChange}
-				getOptionValue={option => option.name}
 			/>
 		);
 	}
 }
 
-export default CmsRegionFilter;
+export default CmsTerritoryFilter;

@@ -12,6 +12,7 @@ import {
 	setRegions, setRights, setSeasons, setStatus,
 } from "../actions/propertyFiltersActions";
 import { getFilteredRights, getFilteredSeasons, getFilteredTerritories } from "../reducers/property";
+import { getUnifiedRegions } from "../helpers/PropertyHelper";
 
 
 class RightsOverview extends React.Component {
@@ -121,6 +122,8 @@ class RightsOverview extends React.Component {
 			territories,
 		} = this.props;
 
+		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
+
 		return (
 			<>
 				<CmsRightsLegend open />
@@ -139,7 +142,7 @@ class RightsOverview extends React.Component {
 					/>
 
 					<RegionFilter
-						options={baseProperty.regions}
+						options={unifiedTerritories}
 						value={propertyFilters.regions}
 						onChange={this.props.setRegions}
 					/>

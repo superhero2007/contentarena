@@ -286,12 +286,21 @@ export const getFilteredListings = (state) => {
 	const property = state.propertyDetails.property;
 	const filters = state.propertyFilters;
 
+	let listings = property.listings;
+
+	if (filters.listings.length) {
+		listings = property.listings.filter((listing) => {
+			const selectedListings = filters.listings.filter(b => b.id === listing.id);
+			return selectedListings.length;
+		});
+	}
+
 	if (filters.seasons.length) {
-		return property.listings.filter((list) => {
+		listings = listings.filter((list) => {
 			const selectedSeasons = list.seasons.filter(season => filters.seasons.find(b => b.id === season.id));
 			return selectedSeasons.length;
 		});
 	}
 
-	return property.listings;
+	return listings;
 };

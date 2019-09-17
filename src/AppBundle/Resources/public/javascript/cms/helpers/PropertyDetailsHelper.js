@@ -1,4 +1,5 @@
 import first from "lodash/first";
+import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
 
 const multipleVabel = "Multiple values selected";
 
@@ -36,6 +37,60 @@ export const getRightsString = rights => rights.map(right => right.code).join(" 
 export const listHas = (array, el) => array.find(e => e.id === el.id);
 
 export const listRemove = (array, el) => array.filter(e => e.id !== el.id);
+
+export const groupListingsByStatus = (listings) => {
+	const rejected = []; const submitted = []; const active = []; const draft = []; const deactivated = []; const
+		archived = [];
+
+	listings.forEach((listing) => {
+		switch (listing.status.name) {
+		case "REJECTED":
+			rejected.push(listing);
+			break;
+		case "PENDING":
+			submitted.push(listing);
+			break;
+		case "DRAFT":
+			draft.push(listing);
+			break;
+		case "AUTO_INACTIVE":
+			draft.push(listing);
+			break;
+		case "APPROVED":
+			active.push(listing);
+			break;
+		case "EDITED":
+			active.push(listing);
+			break;
+		case "INACTIVE":
+			deactivated.push(listing);
+			break;
+		case "EXPIRED":
+			deactivated.push(listing);
+			break;
+		case "SOLD_OUT":
+			deactivated.push(listing);
+			break;
+		case "ARCHIVED":
+			archived.push(listing);
+			break;
+		default:
+			active.push(listing);
+			break;
+		}
+	});
+
+	return {
+		rejected,
+		submitted,
+		active,
+		draft,
+		deactivated,
+		archived,
+	};
+};
+
+export const getTerritoriesFromListing = listing => getUnique([].concat(...listing.salesPackages.map(bundle => bundle.territories)), "id");
 
 export const getCountryData = (countries) => {
 	const regions = new Map();

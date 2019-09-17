@@ -6,6 +6,8 @@ import CmsSeasonsFilter from "./CmsSeasonsFilter";
 import CmsRightsFilter from "./CmsRightsFilter";
 import CmsRightStatusFilter from "./CmsRightStatusFilter";
 import CmsRegionFilter from "./CmsRegionFilter";
+import CmsListingFilter from "./CmsListingFilter";
+import CmsTerritoryFilter from "./CmsTerritoryFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
@@ -32,7 +34,7 @@ const MultiValue = ({
 ) : null);
 
 export const BaseFilter = ({
-	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent,
+	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent, className,
 }) => (
 	<div className={cn("default-filter", { mobile: isMobileOnly })}>
 		<label>
@@ -57,7 +59,7 @@ export const BaseFilter = ({
 			closeMenuOnSelect={false}
 			hideSelectedOptions={false}
 			isSearchable
-			className="dropdown-container"
+			className={className}
 			classNamePrefix="dropdown"
 			// menuIsOpen={true}
 		/>
@@ -68,6 +70,7 @@ BaseFilter.defaultProps = {
 	getOptionLabel: option => option.name,
 	getOptionValue: option => option.id,
 	multi: true,
+	className: "dropdown-container",
 	MultiValueComponent: MultiValue,
 };
 
@@ -78,3 +81,7 @@ export const RegionFilter = CmsRegionFilter;
 export const RightStatusFilter = CmsRightStatusFilter;
 
 export const RightFilter = CmsRightsFilter;
+
+export const ListingFilter = CmsListingFilter;
+
+export const TerritoryFilter = CmsTerritoryFilter;

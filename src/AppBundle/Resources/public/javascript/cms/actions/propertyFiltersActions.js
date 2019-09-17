@@ -20,3 +20,13 @@ export const setStatus = statuses => ({
 	type: propertyFiltersTypes.SET_FILTER_STATUS,
 	statuses,
 });
+
+export const setListings = listings => ({
+	type: propertyFiltersTypes.SET_FILTER_LISTINGS,
+	listings,
+});
+
+export const setCountries = countries => ({
+	type: propertyFiltersTypes.SET_FILTER_COUNTRIES,
+	countries,
+});

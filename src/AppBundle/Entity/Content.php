@@ -456,13 +456,13 @@ class Content implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="law", referencedColumnName="id")
-     * @Groups({"listing", "commercial", "home", "property"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $law;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "property"})
      */
     private $createdAt;
 

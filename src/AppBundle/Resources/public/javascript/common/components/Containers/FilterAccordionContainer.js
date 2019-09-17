@@ -30,7 +30,7 @@ class FilterAccordionContainer extends React.Component {
 					className="filter-accordion-header"
 					onClick={() => !disabled && this.setState({ toggle: !toggle })}
 				>
-					<i className={`fa fa-angle-${toggle ? "down" : "right"}`} />
+					<i className={`fa fa-angle-${toggle && !disabled ? "down" : "right"}`} />
 					<span className="filter-accordion-title">
 						{title}
 					</span>

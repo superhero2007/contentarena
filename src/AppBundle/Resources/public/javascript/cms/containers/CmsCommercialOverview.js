@@ -5,15 +5,14 @@ import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import { RIGHT_TYPE } from "@constants";
-import { SeasonFilter } from "@components/Filters";
+import { ListingFilter, SeasonFilter, TerritoryFilter } from "@components/Filters";
 import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
 import CommercialBidsTable from "../components/CommercialBidsTable";
-import TerritoryFilter from "../../main/components/TerritoryFilter";
 import { fetchPropertyDetails } from "../actions/propertyActions";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
-import { setSeasons } from "../actions/propertyFiltersActions";
+import { setListings, setSeasons } from "../actions/propertyFiltersActions";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -223,9 +222,21 @@ class CmsCommercialOverview extends React.Component {
 					/>
 
 					<CmsFilterBox open>
+						<ListingFilter
+							options={property.listings}
+							value={propertyFilters.listings}
+							onChange={this.props.setListings}
+						/>
+
 						<SeasonFilter
 							options={property.seasons}
 							value={propertyFilters.seasons}
+							onChange={this.props.setSeasons}
+						/>
+
+						<TerritoryFilter
+							options={property.seasons}
+							value={propertyFilters.territories}
 							onChange={this.props.setSeasons}
 						/>
 					</CmsFilterBox>
@@ -272,6 +283,7 @@ const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
 	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),
 	setSeasons: seasons => dispatch(setSeasons(seasons)),
+	setListings: listings => dispatch(setListings(listings)),
 });
 
 export default connect(

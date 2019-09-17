@@ -8,6 +8,8 @@ import ListingLink from "@components/Links/ListingLink";
 import { getListingBidsUrl } from "@utils/routing";
 import Translate from "@components/Translator/Translate";
 import { LISTING_STATUS } from "@constants";
+import TableSeasonList from "@components/Table/TableSeasonList";
+import TableTerritoryList from "@components/Table/TableTerritoryList";
 import { DATE_FORMAT } from "../../common/constants";
 import {
 	// exclusiveRightAvailable,
@@ -91,7 +93,6 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-header",
 		accessor: "list.name",
-		// width: 155,
 		Cell: props => this.getCell(props),
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_SEASONS" />,
@@ -100,7 +101,7 @@ class CommercialBidsTable extends React.Component {
 		className: "rt-td-center",
 		accessor: "list.seasons",
 		width: 70,
-		Cell: props => props.value.map(season => <span>{season.year}</span>),
+		Cell: props => <TableSeasonList index={props.index} seasons={props.value} limit={3} />,
 	}];
 
 
@@ -111,11 +112,7 @@ class CommercialBidsTable extends React.Component {
 		className: "rt-td-center",
 		width: 82,
 		accessor: "salesPackage.territories",
-		Cell: props => (
-			<span>
-				{props.value.length}
-			</span>
-		),
+		Cell: props => <TableTerritoryList territories={props.value} index={props.index} />,
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LICENSE" />,
 		id: props => `lic-${props.customId}-${props.index}`,

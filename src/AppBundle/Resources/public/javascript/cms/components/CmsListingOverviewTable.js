@@ -5,11 +5,15 @@ import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
 import ListingLink from "@components/Links/ListingLink";
 import Translate from "@components/Translator/Translate";
-import { LISTING_STATUS, DATE_FORMAT, TIME_FORMAT } from "@constants";
-import ShareListing from "@components/ShareListing";
+import { LISTING_STATUS, DATE_FORMAT } from "@constants";
+import TableTooltip from "@components/Tooltips/TableTooltip";
 import { UserName } from "@utils/listing";
-import PropertyActionListing from "../../manage/components/PropertyActionListing";
+import TableSeasonList from "@components/Table/TableSeasonList";
+import TableTerritoryList from "@components/Table/TableTerritoryList";
+import { TIME_FORMAT } from "../../common/constants";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
+import PropertyActionListing from "../../manage/components/PropertyActionListing";
+import { getTerritoriesFromListing } from "../helpers/PropertyDetailsHelper";
 
 class CmsListingOverviewTable extends React.Component {
 	constructor(props) {
@@ -73,7 +77,7 @@ class CmsListingOverviewTable extends React.Component {
 		className: "rt-td-center",
 		accessor: "seasons",
 		width: 70,
-		Cell: props => props.value.map(season => <span>{season.year}</span>),
+		Cell: props => <TableSeasonList index={props.index} seasons={props.value} limit={3} />,
 	}];
 
 	getActionColumns = () => [{
@@ -94,11 +98,7 @@ class CmsListingOverviewTable extends React.Component {
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
 		width: 130,
-		Cell: props => (
-			<span>
-				{props.original.territories}
-			</span>
-		),
+		Cell: props => <TableTerritoryList index={props.index} territories={getTerritoriesFromListing(props.original)} />,
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_USER" />,
 		id: props => `user-${props.customId}-${props.index}`,
@@ -107,16 +107,41 @@ class CmsListingOverviewTable extends React.Component {
 		width: 48,
 		accessor: "owner",
 		Cell: props => (
-			<div className="tools">
-				<PropertyActionListing
-					className="listing pointer"
-					style={{
-						position: "absolute",
-						zIndex: 100 - props.index,
-					}}
-					{...props.original}
-				/>
-			</div>
+			<TableTooltip
+				icon={<i className="fa fa-user" />}
+				zIndex={9999 - props.index}
+			>
+				<>
+					<div className="tools-action">
+						<span className="tools-action-title">
+							<Translate i18nKey="MANAGE_LISTINGS_LISTING_OWNER" />
+						</span>
+						<span>
+							{props.original.owner && <UserName {...props.original.owner} />}
+							{!props.original.owner && "-"}
+						</span>
+						{props.original.createdAt && (
+							<span>
+								{`${Moment(props.original.createdAt).format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}
+							</span>
+						)}
+					</div>
+					<div className="tools-action">
+						<span className="tools-action-title">
+							{`${props.original.lastAction.description} by `}
+						</span>
+						<span>
+							<UserName {...props.original.lastActionUser} />
+						</span>
+						{props.original.lastActionDate && (
+							<span>
+								{`${Moment(props.original.lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}
+							</span>
+						)}
+					</div>
+				</>
+
+			</TableTooltip>
 		),
 	}, {
 		Header: () => this.getHeader("", ""),
@@ -141,7 +166,7 @@ class CmsListingOverviewTable extends React.Component {
 								className="listing pointer"
 								style={{
 									position: "absolute",
-									zIndex: 100 - props.index,
+									zIndex: 1000 - props.index,
 								}}
 								defaultAction="EDIT"
 								showEdit
@@ -167,7 +192,7 @@ class CmsListingOverviewTable extends React.Component {
 								className="listing pointer"
 								style={{
 									position: "absolute",
-									zIndex: 100 - props.index,
+									zIndex: 1000 - props.index,
 								}}
 								defaultAction="SUBMIT"
 								showCommercialOverview
@@ -199,7 +224,7 @@ class CmsListingOverviewTable extends React.Component {
 								className="listing pointer"
 								style={{
 									position: "absolute",
-									zIndex: 100 - props.index,
+									zIndex: 1000 - props.index,
 								}}
 								showEdit={!hasPendingBids}
 								showCommercialOverview
@@ -232,7 +257,7 @@ class CmsListingOverviewTable extends React.Component {
 								className="listing pointer"
 								style={{
 									position: "absolute",
-									zIndex: 100 - props.index,
+									zIndex: 1000 - props.index,
 								}}
 								showCommercialOverview
 								propertyId={propertyId}

@@ -1,32 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Select from "react-select";
-import { first, uniqBy } from "lodash";
+import { first } from "lodash";
 import Translate from "@components/Translator/Translate";
-import { CMS_STATUS, RIGHT_TYPE } from "@constants";
-import { SeasonFilter } from "@components/Filters";
+import { RIGHT_TYPE } from "@constants";
+import {
+	ListingFilter, RegionFilter, SeasonFilter, TerritoryFilter,
+} from "@components/Filters";
+import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
 import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
-import { getFilteredListings } from "../reducers/property";
+import { getFilteredListings, getFilteredTerritories } from "../reducers/property";
 import {
-	setRegions, setRights, setSeasons, setStatus,
+	setCountries,
+	setListings,
+	setRegions, setSeasons, setStatus,
 } from "../actions/propertyFiltersActions";
+import { groupListingsByStatus } from "../helpers/PropertyDetailsHelper";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			listings: [],
-			statuses: [
-				CMS_STATUS.CMS_STATUS_REJECTED,
-				CMS_STATUS.CMS_STATUS_DRAFT,
-				CMS_STATUS.CMS_STATUS_SUBMITTED,
-				CMS_STATUS.CMS_STATUS_ACTIVE,
-				CMS_STATUS.CMS_STATUS_INACTIVE,
-			],
+			statuses: [],
 			selectedStatus: null,
 			countries: [],
 			includeAllCountries: false,
@@ -37,8 +36,6 @@ class CmsListingOverview extends React.Component {
 	componentDidMount() {
 		const { property: { seasons } } = this.props;
 		const { location: { search } } = this.props.history;
-		// const statuses = uniqBy(listings.map(list => list.status.name));
-		// this.setState({ statuses });
 		if (search) {
 			const params = search.replace("?", "").split("&");
 			for (let i = 0; i < params.length; i++) {
@@ -121,16 +118,13 @@ class CmsListingOverview extends React.Component {
 		const {
 			listings,
 			property,
+			baseProperty,
+			territories,
 			propertyFilters,
 		} = this.props;
 
-		const {
-			selectedStatus,
-			statuses,
-			countries,
-			includeAllCountries,
-			seasons,
-		} = this.state;
+		const listingsByStatus = groupListingsByStatus(listings);
+
 		if (!property.listings.length) {
 			return (
 				<section className="listing-overview-tab">
@@ -139,41 +133,78 @@ class CmsListingOverview extends React.Component {
 			);
 		}
 
-		let selectedStatusValue = [];
-		if (selectedStatus) {
-			switch (selectedStatus.value) {
-			case CMS_STATUS.CMS_STATUS_REJECTED:
-				selectedStatusValue = ["REJECTED"];
-				break;
-			case CMS_STATUS.CMS_STATUS_DRAFT:
-				selectedStatusValue = ["DRAFT", "AUTO_INACTIVE"];
-				break;
-			case CMS_STATUS.CMS_STATUS_SUBMITTED:
-				selectedStatusValue = ["PENDING"];
-				break;
-			case CMS_STATUS.CMS_STATUS_ACTIVE:
-				selectedStatusValue = ["APPROVED", "EDITED"];
-				break;
-			case CMS_STATUS.CMS_STATUS_INACTIVE:
-				selectedStatusValue = ["INACTIVE", "EXPIRED", "SOLD_OUT"];
-				break;
-			default:
-				selectedStatusValue = [];
-			}
-		}
-
 		return (
 			<>
 				<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
 
 				<CmsFilterBox open>
+					<ListingFilter
+						options={property.listings}
+						value={propertyFilters.listings}
+						onChange={this.props.setListings}
+					/>
+
 					<SeasonFilter
 						options={property.seasons}
 						value={propertyFilters.seasons}
 						onChange={this.props.setSeasons}
 					/>
+
+					<RegionFilter
+						options={baseProperty.regions}
+						value={propertyFilters.regions}
+						onChange={this.props.setRegions}
+					/>
+
+					<TerritoryFilter
+						options={territories}
+						value={propertyFilters.countries}
+						onChange={this.props.setCountries}
+					/>
 				</CmsFilterBox>
-				<CmsListingOverviewTable listings={listings} propertyId={property.customId} />
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_REJECTED_WITH_AMOUNT" params={{ n: listingsByStatus.rejected.length }} />}
+					disabled={listingsByStatus.rejected.length === 0}
+					opened
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.rejected} propertyId={property.customId} />
+				</FilterAccordionContainer>
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_SUBMITTED_WITH_AMOUNT" params={{ n: listingsByStatus.submitted.length }} />}
+					disabled={listingsByStatus.submitted.length === 0}
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.submitted} propertyId={property.customId} />
+				</FilterAccordionContainer>
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_ACTIVE_WITH_AMOUNT" params={{ n: listingsByStatus.active.length }} />}
+					disabled={listingsByStatus.active.length === 0}
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.active} propertyId={property.customId} />
+				</FilterAccordionContainer>
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_DRAFT_WITH_AMOUNT" params={{ n: listingsByStatus.draft.length }} />}
+					disabled={listingsByStatus.draft.length === 0}
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.draft} propertyId={property.customId} />
+				</FilterAccordionContainer>
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_DEACTIVATED_WITH_AMOUNT" params={{ n: listingsByStatus.deactivated.length }} />}
+					disabled={listingsByStatus.deactivated.length === 0}
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.deactivated} propertyId={property.customId} />
+				</FilterAccordionContainer>
+
+				<FilterAccordionContainer
+					title={<Translate i18nKey="LISTING_STATUS_ARCHIVED_WITH_AMOUNT" params={{ n: listingsByStatus.archived.length }} />}
+					disabled={listingsByStatus.archived.length === 0}
+				>
+					<CmsListingOverviewTable listings={listingsByStatus.archived} propertyId={property.customId} />
+				</FilterAccordionContainer>
 			</>
 		);
 	}
@@ -183,14 +214,17 @@ class CmsListingOverview extends React.Component {
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
 	propertyFilters: state.propertyFilters,
+	baseProperty: state.property,
 	listings: getFilteredListings(state),
+	territories: getFilteredTerritories(state),
 });
 
 const mapDispatchToProps = dispatch => ({
 	setSeasons: seasons => dispatch(setSeasons(seasons)),
-	setRights: rights => dispatch(setRights(rights)),
 	setRegions: regions => dispatch(setRegions(regions)),
 	setStatus: statuses => dispatch(setStatus(statuses)),
+	setListings: listings => dispatch(setListings(listings)),
+	setCountries: countries => dispatch(setCountries(countries)),
 });
 
 export default connect(
