@@ -11,6 +11,7 @@ const CmsLicenseDefinitionItem = ({
 
 	const [content, setContent] = useState("");
 	const [name, setName] = useState("");
+	const [invalid, setInvalid] = useState(false);
 	const [custom, setCustom] = useState(false);
 
 	useEffect(() => {
@@ -22,23 +23,31 @@ const CmsLicenseDefinitionItem = ({
 	const { editable } = item;
 
 	const handleChange = (e) => {
+		setInvalid(false);
 		onUpdate({ content: e.target.value });
 	};
 
 	const handleName = (e) => {
+		setInvalid(false);
 		onUpdate({ name: e.target.value });
 	};
 
 	const onSaveItem = () => {
-		setEditing(false);
-		onSave();
+		if (name !== "" && content !== "") {
+			setEditing(false);
+			onSave();
+		} else {
+			setInvalid(true);
+		}
 	};
 
 	const onToggleItem = () => {
+		setInvalid(false);
 		setEditing(!editing);
 	};
 
 	const onToggleConfirm = () => {
+		setInvalid(false);
 		setShowRemoveConfirm(!showRemoveConfirm);
 	};
 
@@ -47,6 +56,7 @@ const CmsLicenseDefinitionItem = ({
 			<div className={cn("license-item-name w-25", {
 				"license-item-disabled": !editable,
 				"license-item-editing": editing,
+				"license-item-invalid": invalid && !name,
 			})}
 			>
 				{(!editing || !custom) && <div>{name}</div>}
@@ -55,6 +65,7 @@ const CmsLicenseDefinitionItem = ({
 			<div className={cn("license-item-content w-50", {
 				"license-item-disabled": !editable,
 				"license-item-editing": editing,
+				"license-item-invalid": invalid && !content,
 			})}
 			>
 				{!editing && <div>{content}</div>}

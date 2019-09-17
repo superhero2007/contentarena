@@ -121,6 +121,20 @@
             }
           }
         }
+
+        &-max {
+          margin-right: auto;
+          margin-left: 42px;
+          margin-top: -9px;
+          font-size: 14px;
+          font-weight: 600;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: 0.06px;
+          color: $v1-color-grey-6;
+          align-self: flex-start;
+        }
       }
     }
 

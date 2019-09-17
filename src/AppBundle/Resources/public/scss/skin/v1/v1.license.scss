@@ -47,6 +47,10 @@
         border: 1px solid $v1-color-grey-4;
       }
 
+      &-invalid {
+        border: 1px solid $v1-color-red-1;
+      }
+
       &-actions {
         display: flex;
         align-items: flex-start;

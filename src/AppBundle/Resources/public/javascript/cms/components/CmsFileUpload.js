@@ -35,16 +35,26 @@ const CmsFileUpload = ({
 		<div className="file-upload">
 			{open && <div className="file-upload-fullscreen" />}
 			<div className="file-upload-content">
-				{attachments.map((item, index) => (
-					<div className="file-upload-content-item" key={index}>
-						{item.name}...
-						<span>({(item.size / 1000).toFixed()}K)</span>
-						<i
-							className="icon-remove"
-							onClick={() => onRemoveFile(index)}
-						/>
-					</div>
-				))}
+				{attachments && attachments.length
+					? (
+						attachments.map((item, index) => (
+							<div className="file-upload-content-item" key={index}>
+								<div>
+									{item.name}...
+									<span>({(item.size / 1000).toFixed()}K)</span>
+								</div>
+								<i
+									className="icon-remove"
+									onClick={() => onRemoveFile(index)}
+								/>
+							</div>
+						))
+					) : (
+						<div className="file-upload-content-max">
+							<Translate i18nKey="CMS_FILE_UPLOAD_MAX" />
+						</div>
+					)
+				}
 			</div>
 			<button
 				className="file-upload-button"

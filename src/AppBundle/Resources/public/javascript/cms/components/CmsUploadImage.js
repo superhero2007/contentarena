@@ -67,12 +67,12 @@ const CmsUploadImage = ({
 							onFocus={hideOpen}
 						>
 							<div className="button-content">
-								<Translate i18nKey="CMS_UPLOAD_IMAGE_MODIFY" />
+								<Translate key="modify" i18nKey="CMS_UPLOAD_IMAGE_MODIFY" />
 							</div>
 						</button>
 						<button className="secondary-outline-button remove" onClick={onRemoveImage}>
 							<div className="button-content">
-								<Translate i18nKey="CMS_UPLOAD_IMAGE_REMOVE" />
+								<Translate key="remove" i18nKey="CMS_UPLOAD_IMAGE_REMOVE" />
 							</div>
 						</button>
 					</Fragment>
@@ -83,7 +83,7 @@ const CmsUploadImage = ({
 						onFocus={hideOpen}
 					>
 						<div className="button-content">
-							<Translate i18nKey="CMS_UPLOAD_IMAGE_UPLOAD" />
+							<Translate key="upload" i18nKey="CMS_UPLOAD_IMAGE_UPLOAD" />
 						</div>
 					</button>
 				)}
