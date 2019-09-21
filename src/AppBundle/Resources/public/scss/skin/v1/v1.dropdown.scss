@@ -78,11 +78,11 @@
           height: 33px;
         }
       }
-
     }
 
     .big-dropdown-container {
       @extend .dropdown-container;
+
       .dropdown {
         &__menu {
           width: 400px;

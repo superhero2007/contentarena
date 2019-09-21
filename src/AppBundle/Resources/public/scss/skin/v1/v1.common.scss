@@ -26,6 +26,13 @@
     textarea {
       resize: none;
 
+      &::placeholder {
+        font-family: $v1-font-family;
+        color: $v1-color-grey-6;
+        font-style: normal;
+        font-stretch: normal;
+      }
+
       &:focus {
         outline: 0;
       }

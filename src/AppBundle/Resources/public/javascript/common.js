@@ -31,16 +31,16 @@ require("../scss/search.competition.scss");
 
 require("../scss/skin/v1/v1.common.scss");
 require("../scss/skin/v1/v1.buttons.scss");
-require("../scss/skin/v1/v1.property.scss");
 require("../scss/skin/v1/v1.filter.scss");
 require("../scss/skin/v1/v1.legend.scss");
 require("../scss/skin/v1/v1.dropdown.scss");
 require("../scss/skin/v1/v1.typography.scss");
 require("../scss/skin/v1/v1.form.scss");
 require("../scss/skin/v1/v1.progress.scss");
-require("../scss/skin/v1/v1.image.scss");
 require("../scss/skin/v1/v1.popup.scss");
 require("../scss/skin/v1/v1.license.scss");
 require("../scss/skin/v1/v1.selector.scss");
 require("../scss/skin/v1/v1.accordion.scss");
 require("../scss/skin/v1/v1.tables.scss");
+require("../scss/skin/v1/v1.image.scss");
+require("../scss/skin/v1/v1.property.scss");

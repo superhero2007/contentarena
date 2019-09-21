@@ -1,56 +1,82 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import cloneDeep from "lodash/cloneDeep";
-import Loader from "@components/Loader/Loader";
-import first from "lodash/first";
+// import cloneDeep from "lodash/cloneDeep";
+// import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
-import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
-import {
-	SUBLICENSE,
-	BROADCASTING,
-	TRANSMISSION_MEANS,
-	EXPLOITATION_FORM,
-	LICENSED_LANGUAGES,
-	RESERVED_RIGHTS,
-} from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
-import { getRightsValue, hasRightComment } from "../helpers/PropertyDetailsHelper";
-import { updateRightDetails, updateSinglePropertyByKeyValue } from "../actions/propertyActions";
+import AccordionContainer from "@components/Containers/AccordionContainer";
+import { RIGHTS_TAB } from "@constants";
+import CmsRightsLayout from "./CmsRightsLayout";
+import CmsLanguageFilter from "./CmsLanguageFilter";
+// import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
+// import {
+// 	SUBLICENSE,
+// 	BROADCASTING,
+// 	TRANSMISSION_MEANS,
+// 	EXPLOITATION_FORM,
+// 	LICENSED_LANGUAGES,
+// 	RESERVED_RIGHTS,
+// } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
+// import { getRightsValue, hasRightComment } from "../helpers/PropertyDetailsHelper";
+// import { updateRightDetails, updateSinglePropertyByKeyValue } from "../actions/propertyActions";
 
 class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			disableEditRight: true,
-			isModalOpen: false,
+			// disableEditRight: true,
 			config: "",
-			rights: cloneDeep(props.property.rights),
+			// rights: cloneDeep(props.property.rights),
+			currentStep: 1,
 		};
+		this.tabRefs = {};
+		Object.values(RIGHTS_TAB).forEach(item => this.tabRefs[item] = React.createRef());
+
+		this.tabs = [{
+			title: "RIGHTS_RIGHT_TO_SUBLICENSE_TITLE",
+			type: RIGHTS_TAB.RIGHT_TO_SUBLICENSE,
+		}, {
+			title: "RIGHTS_TRANSMISSION_OBLIGATION_TITLE",
+			type: RIGHTS_TAB.TRANSMISSION_OBLIGATION,
+		}, {
+			title: "RIGHTS_TRANSMISSION_FORM_TITLE",
+			type: RIGHTS_TAB.TRANSMISSION_FORM,
+		}, {
+			title: "RIGHTS_TRANSMISSION_MEANS_TITLE",
+			type: RIGHTS_TAB.TRANSMISSION_MEANS,
+		}, {
+			title: "RIGHTS_LICENSED_LANGUAGES_TITLE",
+			type: RIGHTS_TAB.LICENSED_LANGUAGES,
+		}, {
+			title: "RIGHTS_RESERVED_RIGHTS_TITLE",
+			type: RIGHTS_TAB.RESERVED_RIGHTS,
+		}];
 	}
 
-	handleModal = (config = "") => {
-		this.setState(state => ({
-			isModalOpen: !state.isModalOpen,
-			config,
-		}));
-	};
+	handleSave = (type, config) => {
+		const { currentStep } = this.state;
+		if (currentStep === this.tabs.length) {
+			return;
+		}
+		this.tabRefs[this.tabs[currentStep - 1].type].current.close();
+		this.tabRefs[this.tabs[currentStep].type].current.open();
 
-	handleRightUpdate = (rights) => {
-		this.setState({ rights });
-		this.props.updateRights("rights", rights);
+		this.setState({
+			config,
+			currentStep: currentStep + 1,
+		});
+		// 	this.setState({ rights });
+		// 	this.props.updateRights("rights", rights);
 	};
 
 	render() {
-		const {
-			isModalOpen, config, rights,
-		} = this.state;
-
-		const {
-			loading,
-		} = this.props;
-
-		if (rights.length === 0) return null;
-		const firstRight = first(rights);
+		// const {
+		// 	config, rights,
+		// } = this.state;
+		//
+		// if (rights.length === 0) return null;
+		// const firstRight = first(rights);
+		const { currentStep } = this.state;
 
 		return (
 			<section className="property-rights-tab">
@@ -58,17 +84,33 @@ class PropertyDetailsRightsTab extends Component {
 					<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
 				</h6>
 
-				{isModalOpen && (
+				{/*
 					<PropertyRightsProductionModal
 						isOpen={isModalOpen}
-						onCloseModal={this.handleModal}
+						onCloseModal={this.handleSave}
 						config={config}
 						rights={rights}
-						onUpdate={this.handleRightUpdate}
+						onUpdate={this.handleUpdate}
 					/>
-				)}
+				*/}
 
-				<div className="row" style={{ marginTop: 20 }}>
+				{this.tabs.map((item, index) => (
+					<AccordionContainer
+						title={<Translate i18nKey={item.title} />}
+						disabled={currentStep < index + 1}
+						enableNextStep
+						value=""
+						opened={currentStep === index + 1}
+						ref={this.tabRefs[item.type]}
+						key={item.type}
+					>
+						<CmsRightsLayout
+							type={item.type}
+							onSave={this.handleSave}
+						/>
+					</AccordionContainer>
+				))}
+				{/*
 					<li className="item">
 						<label>
 							{SUBLICENSE.name}
@@ -78,7 +120,7 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(SUBLICENSE, rights, this.context)}
-								onClick={() => this.handleModal(SUBLICENSE)}
+								onClick={() => this.handleSave(SUBLICENSE)}
 							/>
 							{hasRightComment(firstRight, SUBLICENSE.key) && <i className="fa fa-commenting-o" />}
 						</div>
@@ -92,7 +134,7 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(BROADCASTING, rights, this.context)}
-								onClick={() => this.handleModal(BROADCASTING)}
+								onClick={() => this.handleSave(BROADCASTING)}
 							/>
 							{hasRightComment(firstRight, BROADCASTING.key) && <i className="fa fa-commenting-o" />}
 						</div>
@@ -106,14 +148,11 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(EXPLOITATION_FORM, rights, this.context)}
-								onClick={() => this.handleModal(EXPLOITATION_FORM)}
+								onClick={() => this.handleSave(EXPLOITATION_FORM)}
 							/>
 							{hasRightComment(firstRight, EXPLOITATION_FORM.key) && <i className="fa fa-commenting-o" />}
 						</div>
 					</li>
-				</div>
-
-				<div className="row">
 					<li className="item">
 						<label>
 							<Translate i18nKey="RIGHTS_TRANSMISSION_MEANS" />
@@ -123,7 +162,7 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(TRANSMISSION_MEANS, rights, this.context)}
-								onClick={() => this.handleModal(TRANSMISSION_MEANS)}
+								onClick={() => this.handleSave(TRANSMISSION_MEANS)}
 							/>
 							{hasRightComment(firstRight, TRANSMISSION_MEANS.key) && <i className="fa fa-commenting-o" />}
 						</div>
@@ -137,7 +176,7 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(LICENSED_LANGUAGES, rights, this.context)}
-								onClick={() => this.handleModal(LICENSED_LANGUAGES)}
+								onClick={() => this.handleSave(LICENSED_LANGUAGES)}
 							/>
 							{hasRightComment(firstRight, LICENSED_LANGUAGES.key) && <i className="fa fa-commenting-o" />}
 						</div>
@@ -151,14 +190,12 @@ class PropertyDetailsRightsTab extends Component {
 								readOnly
 								type="text"
 								value={getRightsValue(RESERVED_RIGHTS, rights, this.context)}
-								onClick={() => this.handleModal(RESERVED_RIGHTS)}
+								onClick={() => this.handleSave(RESERVED_RIGHTS)}
 							/>
 							{hasRightComment(firstRight, RESERVED_RIGHTS.key) && <i className="fa fa-commenting-o" />}
 						</div>
 					</li>
-				</div>
-
-				{loading && <Loader xSmall loading />}
+				*/}
 
 			</section>
 		);
@@ -171,11 +208,10 @@ PropertyDetailsRightsTab.contextTypes = {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
-	loading: state.propertyDetails.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
+	// updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
 });
 
 export default connect(

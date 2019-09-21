@@ -526,3 +526,21 @@ export const LICENSE_TAB = {
 	DEFINITIONS: "Definitions",
 	TERMS: "Terms",
 };
+
+export const PRODUCTION_TAB = {
+	CONTENT_DELIVERY: "Content Delivery",
+	DELIVERY_METHOD: "Delivery Method",
+	GRAPHICS: "Graphics",
+	ASPECT_RATIO: "Aspect Ratio",
+	COMMENTARY: "Commentary",
+	CAMERA_STANDARDS: "Camera Standards",
+};
+
+export const RIGHTS_TAB = {
+	RIGHT_TO_SUBLICENSE: "Right To Sublicense",
+	TRANSMISSION_OBLIGATION: "Transmission Obligation",
+	TRANSMISSION_FORM: "Transmission Form",
+	TRANSMISSION_MEANS: "Transmission Means",
+	LICENSED_LANGUAGES: "Licensed Languages",
+	RESERVED_RIGHTS: "Reserved Rights",
+};
