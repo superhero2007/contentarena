@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
 import AccordionContainer from "@components/Containers/AccordionContainer";
 import { PRODUCTION_TAB } from "@constants";
-import CmsProductionLayout from "./CmsProductionLayout";
+import CmsTabLayout from "./CmsTabLayout";
 // import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 // import {
 // 	CONTENT_DELIVERY,
@@ -32,22 +32,22 @@ class PropertyDetailsProductionTab extends Component {
 		Object.values(PRODUCTION_TAB).forEach(item => this.tabRefs[item] = React.createRef());
 
 		this.tabs = [{
-			title: "PRODUCTION_CONTENT_DELIVERY_TITLE",
+			title: "CONTENT_DELIVERY_TITLE",
 			type: PRODUCTION_TAB.CONTENT_DELIVERY,
 		}, {
-			title: "PRODUCTION_DELIVERY_METHOD_TITLE",
+			title: "DELIVERY_METHOD_TITLE",
 			type: PRODUCTION_TAB.DELIVERY_METHOD,
 		}, {
-			title: "PRODUCTION_GRAPHICS_TITLE",
+			title: "GRAPHICS_TITLE",
 			type: PRODUCTION_TAB.GRAPHICS,
 		}, {
-			title: "PRODUCTION_ASPECT_RATIO_TITLE",
+			title: "ASPECT_RATIO_TITLE",
 			type: PRODUCTION_TAB.ASPECT_RATIO,
 		}, {
-			title: "PRODUCTION_COMMENTARY_TITLE",
+			title: "COMMENTARY_TITLE",
 			type: PRODUCTION_TAB.COMMENTARY,
 		}, {
-			title: "PRODUCTION_CAMERA_STANDARDS_TITLE",
+			title: "CAMERA_STANDARDS_TITLE",
 			type: PRODUCTION_TAB.CAMERA_STANDARDS,
 		}];
 	}
@@ -80,9 +80,9 @@ class PropertyDetailsProductionTab extends Component {
 
 		return (
 			<section className="property-production-tab">
-				<h6>
+				<div className="property-tab-description body2">
 					<Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TEXT" />
-				</h6>
+				</div>
 
 				{/*
 					<PropertyRightsProductionModal
@@ -102,7 +102,7 @@ class PropertyDetailsProductionTab extends Component {
 						ref={this.tabRefs[item.type]}
 						key={item.type}
 					>
-						<CmsProductionLayout
+						<CmsTabLayout
 							type={item.type}
 							onSave={this.handleSave}
 						/>

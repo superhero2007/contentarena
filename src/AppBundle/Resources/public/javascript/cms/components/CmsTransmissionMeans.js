@@ -7,23 +7,17 @@ const CmsTransmissionMeans = ({ onUpdate }) => {
 	const heads = [{
 		value: "",
 	}, {
-		value: "All",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_ALL" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_ALL" />,
 	}, {
-		value: "Cable & IPTV",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_CABLE" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_CABLE" />,
 	}, {
-		value: "Satellite",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_SATELLITE" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_SATELLITE" />,
 	}, {
-		value: "Digital Terrestrial",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_DIGITAL" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_DIGITAL" />,
 	}, {
-		value: "Internet/OTT",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_INTERNET" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_INTERNET" />,
 	}, {
-		value: "Mobile",
-		// value: <Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_MOBILE" />,
+		value: <Translate i18nKey="TRANSMISSION_MEANS_MOBILE" />,
 	}];
 
 	const data = RIGHTS.map(right => [
@@ -59,11 +53,11 @@ const CmsTransmissionMeans = ({ onUpdate }) => {
 	]);
 
 	return (
-		<div className="production-transmission-means">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_TRANSMISSION_MEANS_DESCRIPTION" />
+		<div className="transmission-means">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="TRANSMISSION_MEANS_DESCRIPTION" />
 			</div>
-			<div className="production-transmission-means-content">
+			<div className="transmission-means-content">
 				<CmsPropertyDetailTable
 					heads={heads}
 					data={data}

@@ -11,15 +11,13 @@ const CmsAspectRatio = ({ onUpdate }) => {
 	}, {
 		value: "4:3",
 	}, {
-		value: "Other",
-		// value: <Translate i18nKey="PRODUCTION_ASPECT_RATIO_OTHER" />,
+		value: <Translate i18nKey="ASPECT_RATIO_OTHER" />,
 	}];
 
 	const data = [[
 		{
 			type: "text",
-			// text: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_LIVE_FEED" />,
-			text: "Live Feed",
+			text: <Translate i18nKey="ASPECT_RATIO_LIVE_FEED" />,
 			value: "",
 		}, {
 			type: "radio",
@@ -33,7 +31,7 @@ const CmsAspectRatio = ({ onUpdate }) => {
 			type: "radio",
 			text: (
 				<CmsInputBox
-					className="production-aspect-ratio-input"
+					className="property-details-input"
 					value=""
 					onChange={() => {}}
 				/>
@@ -42,11 +40,11 @@ const CmsAspectRatio = ({ onUpdate }) => {
 		},
 	]];
 	return (
-		<div className="production-aspect-ratio">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_ASPECT_RATIO_DESCRIPTION" />
+		<div className="aspect-ratio">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="ASPECT_RATIO_DESCRIPTION" />
 			</div>
-			<div className="production-aspect-ratio-content">
+			<div className="aspect-ratio-content">
 				<CmsPropertyDetailTable
 					heads={heads}
 					data={data}

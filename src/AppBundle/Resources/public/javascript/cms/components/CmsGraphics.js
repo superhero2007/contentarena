@@ -7,23 +7,22 @@ const CmsGraphics = ({ onUpdate }) => {
 	const data = [[
 		{
 			type: "text",
-			// text: <Translate i18nKey="PRODUCTION_GRAPHICS_LIVE_FEED" />,
-			text: "Live Feed",
+			text: <Translate i18nKey="GRAPHICS_LIVE_FEED" />,
 			value: "",
 		}, {
 			type: "radio",
-			text: "Yes",
+			text: <Translate i18nKey="GRAPHICS_YES" />,
 			value: false,
 		}, {
 			type: "radio",
-			text: "No",
+			text: <Translate i18nKey="GRAPHICS_NO" />,
 			value: false,
 		},
 	]];
 	return (
 		<div className="production-graphics">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_GRAPHICS_DESCRIPTION" />
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="GRAPHICS_DESCRIPTION" />
 			</div>
 			<div className="production-graphics-content">
 				<CmsPropertyDetailTable

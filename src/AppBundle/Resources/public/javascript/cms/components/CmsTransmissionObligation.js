@@ -21,11 +21,11 @@ const CmsTransmissionObligation = ({ onUpdate }) => {
 	]);
 
 	return (
-		<div className="production-transmission-obligation">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_TRANSMISSION_OBLIGATION_DESCRIPTION" />
+		<div className="transmission-obligation">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="TRANSMISSION_OBLIGATION_DESCRIPTION" />
 			</div>
-			<div className="production-transmission-obligation-content">
+			<div className="transmission-obligation-content">
 				<CmsPropertyDetailTable
 					heads={[]}
 					data={data}

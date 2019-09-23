@@ -8,24 +8,19 @@ const CmsDeliveryMethod = ({ onUpdate }) => {
 	const heads = [{
 		value: "",
 	}, {
-		value: "Satellite",
-		// value: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_SATELLITE" />,
+		value: <Translate i18nKey="DELIVERY_METHOD_SATELLITE" />,
 	}, {
-		value: "IP",
-		// value: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_IP" />,
+		value: <Translate i18nKey="DELIVERY_METHOD_IP" />,
 	}, {
-		value: "FTP-server",
-		// value: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_FTP" />,
+		value: <Translate i18nKey="DELIVERY_METHOD_FTP" />,
 	}, {
-		value: "Fiber",
-		// value: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_FIBER" />,
+		value: <Translate i18nKey="DELIVERY_METHOD_FIBER" />,
 	}];
 
 	const data = [[
 		{
 			type: "text",
-			// text: <Translate i18nKey="PRODUCTION_DELIVERY_METHOD_LIVE_FEED" />,
-			text: "Live Feed",
+			text: <Translate i18nKey="DELIVERY_METHOD_LIVE_FEED" />,
 			value: "",
 		}, {
 			type: "checkbox",
@@ -47,34 +42,33 @@ const CmsDeliveryMethod = ({ onUpdate }) => {
 	]];
 
 	return (
-		<div className="production-delivery-method">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_DELIVERY_METHOD_DESCRIPTION" />
+		<div className="delivery-method">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="DELIVERY_METHOD_DESCRIPTION" />
 			</div>
-			<div className="production-delivery-method-content">
+			<div className="delivery-method-content">
 				<CmsPropertyDetailTable
 					heads={heads}
 					data={data}
 				/>
 			</div>
-			<div className="production-delivery-method-fee">
-				<label className="production-delivery-method-fee-description">
-					<Translate i18nKey="PRODUCTION_DELIVERY_METHOD_FEE_LABEL" />
+			<div className="delivery-method-fee">
+				<label className="delivery-method-fee-description">
+					<Translate i18nKey="DELIVERY_METHOD_FEE_LABEL" />
 				</label>
-				<div className="production-delivery-method-fee-item">
+				<div className="delivery-method-fee-item">
 					<CmsRadioBox
 						value=""
-						text={<Translate i18nKey="PRODUCTION_DELIVERY_METHOD_FEE_INCLUDED" />}
+						text={<Translate i18nKey="DELIVERY_METHOD_FEE_INCLUDED" />}
 						onChange={() => {}}
 					/>
 				</div>
-				<div className="production-delivery-method-fee-item">
+				<div className="delivery-method-fee-item">
 					<CmsRadioBox
 						value=""
-						text={<Translate i18nKey="PRODUCTION_DELIVERY_METHOD_FEE_PERCENTAGE" />}
+						text={<Translate i18nKey="DELIVERY_METHOD_FEE_PERCENTAGE" />}
 						onChange={() => {}}
 					/>
-					<span className="split">:</span>
 					<CmsInputStepper
 						value="00%"
 						onAdd={() => {}}

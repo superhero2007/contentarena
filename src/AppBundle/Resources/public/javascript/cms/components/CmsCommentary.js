@@ -7,24 +7,23 @@ const CmsCommentary = ({ onUpdate }) => {
 	const data = [[
 		{
 			type: "text",
-			// text: <Translate i18nKey="PRODUCTION_GRAPHICS_LIVE_FEED" />,
-			text: "Live Feed",
+			text: <Translate i18nKey="COMMENTARY_LIVE_FEED" />,
 			value: "",
 		}, {
 			type: "radio",
-			text: "Yes",
+			text: <Translate i18nKey="COMMENTARY_YES" />,
 			value: false,
 		}, {
 			type: "radio",
-			text: "No",
+			text: <Translate i18nKey="COMMENTARY_NO" />,
 			value: false,
 		},
 	]];
 
 	return (
 		<div className="production-commentary">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_COMMENTARY_DESCRIPTION" />
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="COMMENTARY_DESCRIPTION" />
 			</div>
 			<div className="production-commentary-content">
 				<CmsPropertyDetailTable

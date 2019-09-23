@@ -7,14 +7,11 @@ const CmsContentDelivery = ({ onUpdate }) => {
 	const heads = [{
 		value: "",
 	}, {
-		value: "Delivered via live feed*",
-		// value: <Translate i18nKey="PRODUCTION_CONTENT_DELIVERY_HEAD1" />,
+		value: <Translate i18nKey="CONTENT_DELIVERY_LIVE" />,
 	}, {
-		value: "Dedicated content delivery*",
-		// value: <Translate i18nKey="PRODUCTION_CONTENT_DELIVERY_HEAD2" />,
+		value: <Translate i18nKey="CONTENT_DELIVERY_DEDICATED" />,
 	}, {
-		value: "Via Highlight & Clip Footage",
-		// value: <Translate i18nKey="PRODUCTION_CONTENT_DELIVERY_HEAD3" />,
+		value: <Translate i18nKey="CONTENT_DELIVERY_FOOTAGE" />,
 	}];
 
 	const data = RIGHTS.map(right => [
@@ -38,18 +35,18 @@ const CmsContentDelivery = ({ onUpdate }) => {
 	]);
 
 	return (
-		<div className="production-content-delivery">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_CONTENT_DELIVERY_DESCRIPTION" />
+		<div className="content-delivery">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="CONTENT_DELIVERY_DESCRIPTION" />
 			</div>
-			<div className="production-content-delivery-content">
+			<div className="content-delivery-content">
 				<CmsPropertyDetailTable
 					heads={heads}
 					data={data}
 				/>
 			</div>
-			<div className="production-content-delivery-footer body2">
-				<Translate i18nKey="PRODUCTION_CONTENT_DELIVERY_FOOTER" />
+			<div className="content-delivery-footer body2">
+				<Translate i18nKey="CONTENT_DELIVERY_FOOTER" />
 			</div>
 		</div>
 	);

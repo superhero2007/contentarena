@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Loader from "../../common/components/Loader";
+import React from "react";
+import Translate from "@components/Translator/Translate";
 
 const CmsLanguageFilter = ({ languages, items, onUpdate }) => {
 	// const [items, setItems] = useState(value || []);
@@ -55,7 +55,7 @@ const CmsLanguageFilter = ({ languages, items, onUpdate }) => {
 					className="secondary-link"
 				>
 					<span className="restore-text">
-						Clear All
+						<Translate i18nKey="LANGUAGE_FILTER_CLEAR" />
 					</span>
 				</div>
 			</div>

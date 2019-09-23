@@ -3,11 +3,11 @@ import Translate from "@components/Translator/Translate";
 import CmsLanguageFilter from "./CmsLanguageFilter";
 
 const CmsLicensedLanguages = ({ onUpdate }) => (
-	<div className="production-licensed-languages">
-		<div className="production-description subtitle2">
-			<Translate i18nKey="PRODUCTION_LICENSED_LANGUAGES_DESCRIPTION" />
+	<div className="licensed-languages">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="LICENSED_LANGUAGES_DESCRIPTION" />
 		</div>
-		<div className="production-licensed-languages-content">
+		<div className="licensed-languages-content">
 			<CmsLanguageFilter
 				languages={[{
 					id: 1,

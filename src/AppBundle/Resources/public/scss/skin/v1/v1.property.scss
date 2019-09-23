@@ -146,6 +146,77 @@
       }
     }
 
+    .property-details-input {
+      width: 80px;
+      height: 40px;
+
+      input {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.06px;
+        text-align: center;
+        color: $v1-color-grey-2;
+      }
+    }
+
+    .property-tab-description {
+      color: $v1-color-grey-3;
+      margin-top: 32px;
+      margin-bottom: 40px;
+    }
+
+    .tab-layout {
+      margin-bottom: 72px;
+
+      .tab-description {
+        margin: 38px 0;
+        letter-spacing: 0.06px;
+        color: $v1-color-grey-2;
+      }
+
+      &-container {
+        margin-bottom: 38px;
+      }
+
+      &-note {
+        margin-bottom: 38px;
+
+        textarea {
+          height: 170px;
+          padding: 18px;
+
+          &::placeholder {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.06px;
+          }
+        }
+      }
+
+      &-action {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-button {
+          width: 142px;
+          height: 54px;
+          font-size: 14px;
+          font-weight: 600;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          text-align: center;
+          text-transform: uppercase;
+
+          & + .tab-layout-action-button {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+
     .property-description-tab {
       padding: 33px 38px 68px 38px;
       display: flex;
@@ -256,65 +327,15 @@
     }
 
     .property-production-tab {
-      .production-layout {
-        margin-bottom: 72px;
-
-        .production-description {
-          margin: 38px 0;
-          letter-spacing: 0.06px;
-          color: $v1-color-grey-2;
-        }
-
-        &-container {
-          margin-bottom: 38px;
-        }
-
-        &-note {
-          margin-bottom: 38px;
-
-          textarea {
-            height: 170px;
-            padding: 18px;
-
-            &::placeholder {
-              font-size: 14px;
-              font-weight: 600;
-              letter-spacing: 0.06px;
-            }
-          }
-        }
-
-        &-action {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-
-          &-button {
-            width: 142px;
-            height: 54px;
-            font-size: 14px;
-            font-weight: 600;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            text-align: center;
-
-            & + .production-layout-action-button {
-              margin-left: 20px;
-            }
-          }
-        }
-      }
-
-      .production-content-delivery {
+      .content-delivery {
         &-footer {
           margin-top: 20px;
           color: $v1-color-grey-3;
+          white-space: pre;
         }
       }
 
-      .production-delivery-method {
+      .delivery-method {
         &-fee {
           margin-top: 33px;
 
@@ -327,91 +348,8 @@
             align-items: center;
             justify-content: flex-start;
 
-            .split {
-              margin-right: 18px;
-            }
-          }
-        }
-      }
-
-      .production-aspect-ratio {
-        &-input {
-          width: 80px;
-          height: 40px;
-
-          input {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.06px;
-            text-align: center;
-            color: $v1-color-grey-2;
-          }
-        }
-      }
-
-      .production-camera-standards {
-        &-input {
-          width: 80px;
-          height: 40px;
-
-          input {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.06px;
-            text-align: center;
-            color: $v1-color-grey-2;
-          }
-        }
-      }
-    }
-
-    .property-rights-tab {
-      .rights-layout {
-        margin-bottom: 72px;
-
-        .production-description {
-          margin: 38px 0;
-          letter-spacing: 0.06px;
-          color: $v1-color-grey-2;
-        }
-
-        &-container {
-          margin-bottom: 38px;
-        }
-
-        &-note {
-          margin-bottom: 38px;
-
-          textarea {
-            height: 170px;
-            padding: 18px;
-
-            &::placeholder {
-              font-size: 14px;
-              font-weight: 600;
-              letter-spacing: 0.06px;
-            }
-          }
-        }
-
-        &-action {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-
-          &-button {
-            width: 142px;
-            height: 54px;
-            font-size: 14px;
-            font-weight: 600;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            text-align: center;
-
-            & + .rights-layout-action-button {
-              margin-left: 20px;
+            .input-radio {
+              width: 445px;
             }
           }
         }

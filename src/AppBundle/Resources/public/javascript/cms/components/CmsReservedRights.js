@@ -21,11 +21,11 @@ const CmsReservedRights = ({ onUpdate }) => {
 	]);
 
 	return (
-		<div className="production-reserved-rights">
-			<div className="production-description subtitle2">
-				<Translate i18nKey="PRODUCTION_RESERVED_RIGHTS_DESCRIPTION" />
+		<div className="reserved-rights">
+			<div className="tab-description subtitle2">
+				<Translate i18nKey="RESERVED_RIGHTS_DESCRIPTION" />
 			</div>
-			<div className="production-reserved-rights-content">
+			<div className="reserved-rights-content">
 				<CmsPropertyDetailTable
 					heads={[]}
 					data={data}

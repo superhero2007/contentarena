@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import AccordionContainer from "@components/Containers/AccordionContainer";
 import { RIGHTS_TAB } from "@constants";
-import CmsRightsLayout from "./CmsRightsLayout";
+import CmsTabLayout from "./CmsTabLayout";
 import CmsLanguageFilter from "./CmsLanguageFilter";
 // import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 // import {
@@ -33,22 +33,22 @@ class PropertyDetailsRightsTab extends Component {
 		Object.values(RIGHTS_TAB).forEach(item => this.tabRefs[item] = React.createRef());
 
 		this.tabs = [{
-			title: "RIGHTS_RIGHT_TO_SUBLICENSE_TITLE",
+			title: "RIGHT_TO_SUBLICENSE_TITLE",
 			type: RIGHTS_TAB.RIGHT_TO_SUBLICENSE,
 		}, {
-			title: "RIGHTS_TRANSMISSION_OBLIGATION_TITLE",
+			title: "TRANSMISSION_OBLIGATION_TITLE",
 			type: RIGHTS_TAB.TRANSMISSION_OBLIGATION,
 		}, {
-			title: "RIGHTS_TRANSMISSION_FORM_TITLE",
+			title: "TRANSMISSION_FORM_TITLE",
 			type: RIGHTS_TAB.TRANSMISSION_FORM,
 		}, {
-			title: "RIGHTS_TRANSMISSION_MEANS_TITLE",
+			title: "TRANSMISSION_MEANS_TITLE",
 			type: RIGHTS_TAB.TRANSMISSION_MEANS,
 		}, {
-			title: "RIGHTS_LICENSED_LANGUAGES_TITLE",
+			title: "LICENSED_LANGUAGES_TITLE",
 			type: RIGHTS_TAB.LICENSED_LANGUAGES,
 		}, {
-			title: "RIGHTS_RESERVED_RIGHTS_TITLE",
+			title: "RESERVED_RIGHTS_TITLE",
 			type: RIGHTS_TAB.RESERVED_RIGHTS,
 		}];
 	}
@@ -80,9 +80,9 @@ class PropertyDetailsRightsTab extends Component {
 
 		return (
 			<section className="property-rights-tab">
-				<h6>
+				<div className="property-tab-description body2">
 					<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
-				</h6>
+				</div>
 
 				{/*
 					<PropertyRightsProductionModal
@@ -104,7 +104,7 @@ class PropertyDetailsRightsTab extends Component {
 						ref={this.tabRefs[item.type]}
 						key={item.type}
 					>
-						<CmsRightsLayout
+						<CmsTabLayout
 							type={item.type}
 							onSave={this.handleSave}
 						/>
