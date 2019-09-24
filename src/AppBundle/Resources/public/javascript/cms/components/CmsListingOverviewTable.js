@@ -67,7 +67,7 @@ class CmsListingOverviewTable extends React.Component {
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_NAME" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header",
+		className: "rt-td-name",
 		accessor: "name",
 		Cell: props => this.getCell(props),
 	}, {

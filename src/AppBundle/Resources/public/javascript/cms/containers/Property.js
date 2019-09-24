@@ -8,9 +8,7 @@ import {
 } from "@constants";
 import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
-import CmsCommercialOverview from "./CmsCommercialOverview";
-import CmsFixtures from "./CmsFixtures";
-// import CmsEditedProgram from "./CmsEditedProgram";
+import CommercialOverviewContainer from "../CommercialOverview/CommercialOverviewContainer";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
 import PropertyDeal from "./PropertyDeal";
@@ -32,7 +30,6 @@ class Property extends React.Component {
 	getTranslatedTabs = () => ({
 		[CMS_PROPERTY_TABS.COMMERCIAL]: <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />,
 		[CMS_PROPERTY_TABS.RIGHTS]: <Translate i18nKey="CMS_PROPERTY_TAB_RIGHTS" />,
-		/* [CMS_PROPERTY_TABS.EDITED_PROGRAM]: <Translate i18nKey="CMS_PROPERTY_TAB_EDITED_PROGRAM" />, */
 		[CMS_PROPERTY_TABS.FIXTURES]: <Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" />,
 		[CMS_PROPERTY_TABS.LISTING]: <Translate i18nKey="CMS_PROPERTY_TAB_LISTING" />,
 		[CMS_PROPERTY_TABS.DETAILS]: <Translate i18nKey="CMS_PROPERTY_TAB_DETAILS" />,
@@ -156,18 +153,14 @@ class Property extends React.Component {
 					</div>
 
 					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview />}
-					{/* {tab === CMS_PROPERTY_TABS.EDITED_PROGRAM && <CmsEditedProgram history={history} />} */}
-					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures />}
-					{tab === CMS_PROPERTY_TABS.COMMERCIAL
-						&& (
-							<CmsCommercialOverview
-								history={history}
-								propertyId={propertyId}
-							/>
-						)}
+					{tab === CMS_PROPERTY_TABS.COMMERCIAL && (
+						<CommercialOverviewContainer
+							history={history}
+							propertyId={propertyId}
+						/>
+					)}
 					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview history={history} />}
 					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails history={history} />}
-
 
 				</DefaultBox>
 			</SkinContainer>

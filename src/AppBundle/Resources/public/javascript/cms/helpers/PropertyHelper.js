@@ -37,7 +37,7 @@ const getRightCell = (props, shortLabel) => {
 	if (right) {
 		const className = (right.exclusive) ? "yellow-circle" : "blue-circle";
 		return (
-			<div className="legend-box-item">
+			<div className="table-right-icon">
 				<div className="icon">
 					<div className={className} />
 				</div>
@@ -46,7 +46,7 @@ const getRightCell = (props, shortLabel) => {
 	}
 
 	return (
-		<div className="legend-box-item">
+		<div className="table-right-icon">
 			<div className="icon" />
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { propertyFiltersTypes } from "./propertyFilters";
+import { getTerritoriesFromRights } from "@utils/property";
 
 export const propertyTypes = {
 	RESET_PROPERTY: "RESET_PROPERTY",
@@ -242,6 +242,11 @@ export const hasCustomSportCategory = state => state.property.sportCategory.filt
 export const hasExtendedSportCategory = state => state.property.sportCategory.filter(sportCategory => sportCategory.extended).length > 0;
 export const hasCustomTournament = state => state.property.tournament.filter(tournament => tournament.custom).length > 0;
 export const hasCustomSeason = state => state.property.seasons.filter(season => season.custom).length > 0;
+
+export const getAvailableTerritories = (state) => {
+	const property = state.propertyDetails.property;
+	return getTerritoriesFromRights(property.rights);
+};
 
 export const getFilteredTerritories = (state) => {
 	const property = state.propertyDetails.property;

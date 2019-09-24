@@ -1,20 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import { RIGHT_TYPE } from "@constants";
 import { ListingFilter, SeasonFilter, TerritoryFilter } from "@components/Filters";
 import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
-import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
-import CommercialBidsTable from "../components/CommercialBidsTable";
+import EmptyCommercialOverview from "./EmptyCommercialOverview";
+import CommercialBidsTable from "./CommercialBidsTable";
 import { fetchPropertyDetails } from "../actions/propertyActions";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
 import { setListings, setSeasons } from "../actions/propertyFiltersActions";
 
-class CmsCommercialOverview extends React.Component {
+class CommercialOverviewContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -153,11 +151,7 @@ class CmsCommercialOverview extends React.Component {
 		} = this.state;
 
 		if (!property.listings.length) {
-			return (
-				<section className="commercial-overview-tab">
-					<EmptyCommercialOverview history={history} propertyId={propertyId} />
-				</section>
-			);
+			return <EmptyCommercialOverview history={history} propertyId={propertyId} />;
 		}
 
 		let allListings = listings;
@@ -289,4 +283,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(CmsCommercialOverview);
+)(CommercialOverviewContainer);

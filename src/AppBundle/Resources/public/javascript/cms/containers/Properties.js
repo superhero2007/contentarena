@@ -59,7 +59,7 @@ class Properties extends React.Component {
 					{propertiesLoaded && (
 						<div className="default-box-header">
 							<div className="dashboard-header">
-								<i className="fa fa-home" />
+								<i className="icon-dashboard" />
 								<Translate i18nKey="CMS_PROPERTIES_DASHBOARD" />
 							</div>
 							<CreatePropertyButton history={history} />

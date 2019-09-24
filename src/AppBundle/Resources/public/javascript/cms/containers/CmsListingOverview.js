@@ -118,6 +118,7 @@ class CmsListingOverview extends React.Component {
 		const {
 			listings,
 			property,
+			history,
 			baseProperty,
 			territories,
 			propertyFilters,
@@ -126,11 +127,7 @@ class CmsListingOverview extends React.Component {
 		const listingsByStatus = groupListingsByStatus(listings);
 
 		if (!property.listings.length) {
-			return (
-				<section className="listing-overview-tab">
-					<EmptyListingOverview customId={property.customId} />
-				</section>
-			);
+			return <EmptyListingOverview customId={property.customId} history={history} />;
 		}
 
 		return (

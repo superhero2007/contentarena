@@ -1,24 +1,22 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import { Link } from "react-router-dom";
 import { PROPERTY_MAIN_TABS, ROUTE_PATHS } from "@constants";
 
-const EmptyListingOverview = ({ customId }) => (
-	<div className="empty-property-tab">
-		<h3> <Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TITLE" /> </h3>
-		<h4> <Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TEXT" /> </h4>
-		<Link
-			to={`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}`}
-			className="ca-btn primary"
+const EmptyListingOverview = ({ history, customId }) => (
+	<div className="property-empty-tab">
+		<h3>
+			<Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TITLE" />
+		</h3>
+		<div className="body1">
+			<Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TEXT" />
+		</div>
+		<button
+			className="primary-button"
+			onClick={() => { history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}`); }}
 		>
 			<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
-		</Link>
+		</button>
 	</div>
 );
-
-EmptyListingOverview.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 export default EmptyListingOverview;

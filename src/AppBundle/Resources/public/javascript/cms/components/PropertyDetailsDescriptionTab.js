@@ -123,7 +123,7 @@ class PropertyDetailsDescriptionTab extends Component {
 				/>
 
 				<div className="description">
-					<div className="description-event">
+					<div className="description-event form-group">
 						<label>
 							<Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" />
 						</label>
@@ -133,7 +133,7 @@ class PropertyDetailsDescriptionTab extends Component {
 							value={description}
 						/>
 					</div>
-					<div className="description-files">
+					<div className="description-files form-group">
 						<label>
 							<Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_TITLE" />
 						</label>
@@ -144,7 +144,7 @@ class PropertyDetailsDescriptionTab extends Component {
 						/>
 
 					</div>
-					<div className="description-website">
+					<div className="description-website form-group">
 						<label>
 							<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_TITLE" />
 						</label>

@@ -12,6 +12,7 @@ import PropertyHeader from "../components/PropertyHeader";
 import PropertyCreateListingStep1 from "./PropertyCreateListingStep1";
 import { getListingDetails, updateListing } from "../../sell/actions/contentActions";
 import { getListingStepRoute } from "../helpers/PropertyListingHelper";
+import CmsProgress from "../components/CmsProgress";
 
 class PropertyCreateListing extends React.Component {
 	constructor(props) {
@@ -73,6 +74,15 @@ class PropertyCreateListing extends React.Component {
 			propertyId,
 		} = match.params;
 
+		const progressList = [
+			"Commercial Details",
+			"Event Details",
+			"Right Details",
+			"Production Details",
+			"Additional Info",
+			"Review & Sign",
+		];
+
 		const params = this.getQueryString();
 		let {
 			step = 1,
@@ -95,12 +105,16 @@ class PropertyCreateListing extends React.Component {
 
 		return (
 			<SkinContainer skin={skin}>
-				<DefaultBox>
-					<PropertyHeader listing={false} history={history} />
 
+				<CmsProgress
+					title={<Translate i18nKey="CMS_CREATE_LISTING_TITLE" />}
+					currentStep={step}
+					progressList={progressList}
+				/>
+
+				<DefaultBox>
 					{step === 1 && !listing.loading && <PropertyCreateListingStep1 history={history} />}
 					{listing.loading && <Loader xSmall loading />}
-
 				</DefaultBox>
 			</SkinContainer>
 		);

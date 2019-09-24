@@ -46,6 +46,31 @@ export const RIGHTS_STATUS_FILTERS = [
 
 ];
 
+
+export const EDITED_PROGRAM_TYPES = [
+	{
+		id: "HIGHLIGHT_SHOW",
+		name: "Highlight show",
+	},
+	{
+		id: "DOCUMENTARY",
+		name: "Documentary",
+	},
+	{
+		id: "PREVIEW",
+		name: "Preview",
+	},
+	{
+		id: "TALK_SHOW",
+		name: "Talk show",
+	},
+	{
+		id: "OTHER",
+		name: "Other",
+	},
+
+];
+
 export const CMS_PROPERTY_TABS = {
 	RIGHTS: "rightsoverview",
 	// EDITED_PROGRAM: "editedprogram",

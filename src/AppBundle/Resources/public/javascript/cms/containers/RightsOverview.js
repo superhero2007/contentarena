@@ -13,6 +13,7 @@ import {
 } from "../actions/propertyFiltersActions";
 import { getFilteredRights, getFilteredSeasons, getFilteredTerritories } from "../reducers/property";
 import { getUnifiedRegions } from "../helpers/PropertyHelper";
+import CmsRightsOverviewTable from "../components/CmsRightsOverviewTable";
 
 
 class RightsOverview extends React.Component {
@@ -24,102 +25,14 @@ class RightsOverview extends React.Component {
 		};
 	}
 
-	renderSeasonRightHeader = (right, key, list, season) => (
-		<div className="d-flex justify-content-center">
-			{
-				key === 0
-					&& (
-						<div className="season-header" style={{ width: 40 * list.length }}>
-							{season.year}
-						</div>
-					)
-			}
-			<span>
-				{right.code}
-			</span>
-		</div>
-	);
-
-	renderSeasonRightCell = (right, key, list) => (
-		<div className="d-flex justify-content-center">
-			<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} alt="" />
-		</div>
-	);
-
-	renderRightHeader = right => (
-		<div className="d-flex justify-content-center">
-			<span>
-				{right.code}
-			</span>
-		</div>
-	);
-
-	renderRightCell = right => (
-		<div className="d-flex justify-content-center">
-			<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} alt="" />
-		</div>
-	);
-
-	getColumns = () => {
-		const { seasons, rights } = this.props;
-
-		const columns = [];
-
-		columns.push({
-			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY" />,
-			accessor: "name",
-		});
-
-		if (seasons.length > 0) {
-			seasons.forEach((season) => {
-				rights.forEach((right, key, list) => {
-					columns.push({
-						headerClassName: "season-header-column",
-						Header: props => this.renderSeasonRightHeader(right, key, list, season),
-						Cell: () => this.renderSeasonRightCell(right, key, list),
-						maxWidth: 40,
-					});
-				});
-			});
-		} else {
-			rights.forEach((right, key, list) => {
-				columns.push({
-					headerClassName: "season-header-column",
-					Header: () => this.renderRightHeader(right),
-					Cell: () => this.renderRightCell(right),
-					maxWidth: 40,
-				});
-			});
-		}
-
-		columns.push({
-			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING" />,
-			Cell: props => (
-				<div className="d-flex justify-content-center">
-					1
-				</div>
-
-			),
-		});
-
-		columns.push({
-			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_DEALS" />,
-			Cell: props => (
-				<div className="d-flex justify-content-center">
-					1
-				</div>
-			),
-		});
-
-		return columns;
-	};
-
 	render() {
 		const {
 			property,
 			propertyFilters,
 			baseProperty,
 			territories,
+			seasons,
+			rights,
 		} = this.props;
 
 		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
@@ -153,25 +66,11 @@ class RightsOverview extends React.Component {
 					/>
 				</CmsFilterBox>
 
-				{territories.length > 0 && (
-					<ReactTable
-						showPageSizeOptions={false}
-						showPagination
-						resizable={false}
-						collapseOnPageChange={false}
-						collapseOnDataChange={false}
-						minRows={0}
-						defaultPageSize={30}
-						data={territories}
-						select={this.props.select}
-						className="ca-table"
-						columns={this.getColumns()}
-						sorted={[{
-							id: "name",
-							desc: false,
-						}]}
-					/>
-				)}
+				<CmsRightsOverviewTable
+					territories={territories}
+					seasons={seasons}
+					rights={rights}
+				/>
 			</>
 		);
 	}

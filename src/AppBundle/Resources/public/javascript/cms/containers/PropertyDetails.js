@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
+import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
 import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
 import PropertyDetailsDescriptionTab from "../components/PropertyDetailsDescriptionTab";
 import PropertyDetailsLicenseTab from "../components/PropertyDetailsLicenseTab";
 import PropertyDetailsProductionTab from "../components/PropertyDetailsProductionTab";
 import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
-import CmsTabElement from "../components/CmsTabElement";
 
 class PropertyDetails extends Component {
 	constructor(props) {
@@ -45,23 +44,19 @@ class PropertyDetails extends Component {
 		const tabs = this.getTabs({ history });
 		return (
 			<section className="property-details-tab">
-				<div className="details-tab">
+				<div className="details-tab property-details-tab">
 					{Object.values(CMS_PROPERTY_DETAILS_TABS).map((tab, index) => (
-						<CmsTabElement
+						<FilterAccordionContainer
 							key={index}
-							label={tabs[tab].label}
+							title={tabs[tab].label}
 						>
 							{tabs[tab].component}
-						</CmsTabElement>
+						</FilterAccordionContainer>
 					))}
 				</div>
 			</section>
 		);
 	}
 }
-
-PropertyDetails.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 export default PropertyDetails;
