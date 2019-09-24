@@ -445,7 +445,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('company',$property->getCompany())
             ->setParameter('sold_copy',"SOLD_COPY")
             ->orderBy('c.createdAt','DESC')
-            ->setMaxResults(30)
+            ->setMaxResults(10)
             ->getQuery()->getResult();
     }
 

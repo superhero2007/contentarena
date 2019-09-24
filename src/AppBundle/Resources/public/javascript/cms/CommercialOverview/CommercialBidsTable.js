@@ -78,7 +78,7 @@ class CommercialBidsTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
+		headerClassName: "rt-th-name",
 		className: "rt-td-name",
 		accessor: "list.name",
 		Cell: props => this.getCell(props),

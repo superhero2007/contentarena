@@ -43,6 +43,7 @@ class CmsRightsOverviewTable extends React.Component {
 		width: 230,
 		columns: [{
 			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY" />,
+			headerClassName: "rt-th-name",
 			accessor: "name",
 			className: "rt-td-name",
 		}],
