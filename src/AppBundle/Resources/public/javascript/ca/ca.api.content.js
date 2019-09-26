@@ -388,14 +388,15 @@ ContentArena.ContentApi = {
 		return deferred.promise();
 	},
 
-	saveTmpFile(files) {
+	saveTmpFile(files, testPdf = true) {
 		const deferred = jQuery.Deferred();
-
 		const data = new FormData();
+		const url = (testPdf) ? `${envhosturl}content/save/file` : `${envhosturl}content/save/attachment`;
+
 		data.append("file", files[0]);
 
 		$.ajax({
-			url: `${envhosturl}content/save/file`,
+			url,
 			type: "POST",
 			data,
 			processData: false,
