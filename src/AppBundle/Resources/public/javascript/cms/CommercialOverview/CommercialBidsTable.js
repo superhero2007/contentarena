@@ -11,18 +11,6 @@ import { LISTING_STATUS } from "@constants";
 import TableSeasonList from "@components/Table/TableSeasonList";
 import TableTerritoryList from "@components/Table/TableTerritoryList";
 import { DATE_FORMAT } from "../../common/constants";
-import {
-	// exclusiveRightAvailable,
-	// nonExclusiveRightAvailable,
-	// exclusiveRightOffered,
-	// nonExclusiveRightOffered,
-	// exclusiveRightSold,
-	// nonExclusiveRightSold,
-	checkIcon,
-	cancelIcon,
-	pdfIcon,
-	blueEnvelopeIcon,
-} from "../../main/components/Icons";
 import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
@@ -90,8 +78,8 @@ class CommercialBidsTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header",
+		headerClassName: "rt-th-name",
+		className: "rt-td-name",
 		accessor: "list.name",
 		Cell: props => this.getCell(props),
 	}, {

@@ -232,7 +232,7 @@ class ContentService
 
     public function getPropertyListings(Property $property) {
         $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListings($property);
-        //$listings = $this->em->getRepository('AppBundle:Content')->getPropertyListingsTest($property);
+        $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListingsTest($property);
 
         foreach ($listings as $listing){
             /* @var Content $listing  */

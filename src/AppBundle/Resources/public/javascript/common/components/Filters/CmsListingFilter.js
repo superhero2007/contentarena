@@ -1,8 +1,7 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { components } from "react-select-last";
 import { BaseFilter } from "@components/Filters/index";
-import { sortByName, sortSeasons } from "../../../cms/helpers/PropertyDetailsHelper";
+import { sortByName } from "../../../cms/helpers/PropertyDetailsHelper";
 
 class CmsListingFilter extends React.Component {
 	constructor(props) {

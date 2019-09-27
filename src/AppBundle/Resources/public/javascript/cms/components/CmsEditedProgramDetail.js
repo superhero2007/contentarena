@@ -5,9 +5,12 @@ import ReactTooltip from "react-tooltip";
 
 import Translate from "@components/Translator/Translate";
 
+import CmsProgramTypeFilter from "@components/Filters/CmsProgramTypeFilter";
+import TerritorySelector from "@components/Territories/TerritorySelector";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
 import CmsTerritorySelector from "./CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD } from "@constants";
+import { getAvailableTerritories, getFilteredTerritories } from "../reducers/property";
 
 class CmsEditedProgramDetail extends Component {
 	constructor(props) {
@@ -96,7 +99,7 @@ class CmsEditedProgramDetail extends Component {
 			message += "<br/>-  Enter program type.";
 		}
 		if (!episodes) {
-			message += "<br/>-  Enter program type.";
+			message += "<br/>-  Enter program episodes.";
 		}
 		if (!episodeDuration) {
 			message += "<br/>-  Enter program duration.";
@@ -127,232 +130,215 @@ class CmsEditedProgramDetail extends Component {
 			territoriesMode,
 			territories,
 		} = this.state;
-		const { onCancel } = this.props;
+
+		const { onCancel, availableCountries } = this.props;
 		return (
-			<section>
-				<div className="property-edited-program-tab__container">
-					<div className="row">
-						<div className="w-50">
-							<div className="modal-input">
-								<label>
-									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_NAME" />
-								</label>
-								<input
-									type="text"
-									value={name}
-									onChange={(e) => {
-										this.updateContentValue("name", e.target.value);
-									}}
-								/>
-							</div>
-
-							<div className="row">
-								<div className="modal-input w-66">
-									<label>
-										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_TYPE" />
-									</label>
-									<select
-										value={type}
-										onChange={(e) => {
-											this.updateContentValue("type", e.target.value);
-										}}
-									>
-										<option value="">Select</option>
-										<option value="HIGHLIGHT_SHOW">Highlight show</option>
-										<option value="DOCUMENTARY">Documentary</option>
-										<option value="PREVIEW">Preview</option>
-										<option value="TALK_SHOW">Talk show</option>
-										<option value="OTHER">Other</option>
-									</select>
-								</div>
-
-								<div className="modal-input w-33">
-									<label>
-										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_YEAR" />
-									</label>
-									<select
-										value={releaseYear}
-										onChange={(e) => {
-											this.updateContentValue("releaseYear", e.target.value);
-										}}
-									>
-										<option value="Year">Year</option>
-										{this.state.years.map((year, i) => (<option key={i} value={year}>{year}</option>))}
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<div className="w-50">
-							<div className="modal-input">
-								<label>
-									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION" />
-								</label>
-								<textarea
-									value={description}
-									onChange={(e) => {
-										this.updateContentValue("description", e.target.value);
-									}}
-									placeholder={this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION_PLACEHOLDER")}
-								/>
-							</div>
+			<>
+				<div className="d-flex">
+					<div className="form-group">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_NAME" />
+						</label>
+						<div className="input-group">
+							<input
+								type="text"
+								className="input-group-text"
+								value={name}
+								onChange={(e) => {
+									this.updateContentValue("name", e.target.value);
+								}}
+							/>
 						</div>
 					</div>
 
-					<div className="row" style={{ marginBottom: 30 }}>
-						<div className="row w-50">
-							<div className="w-33">
-								<div className="modal-input">
-									<label>
-										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_EPISODES" />
-									</label>
-									<input
-										type="number"
-										value={episodes}
-										onChange={(e) => {
-											this.updateContentValue("episodes", Number(e.target.value));
-										}}
-									/>
-								</div>
-							</div>
-							<div className="w-33">
-								<div className="modal-input">
-									<label>
-										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DURATION" />
-									</label>
-									<input
-										type="number"
-										value={episodeDuration}
-										onChange={(e) => {
-											this.updateContentValue("episodeDuration", Number(e.target.value));
-										}}
-									/>
-								</div>
-							</div>
-							<div className="w-33">
-								<div className="modal-input">
-									<label>
-										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_DESC" />
-									</label>
-
-									<div className="radio-box">
-										<input
-											type="radio"
-											checked={similarEpisodesLength}
-											onChange={() => {
-												this.updateContentValue("similarEpisodesLength", true);
-											}}
-											id="edit-program-optional"
-											className="ca-radio package-selector"
-										/>
-										<label htmlFor="edit-program-optional"><Translate i18nKey="Yes" /></label>
-										<input
-											type="radio"
-											checked={!similarEpisodesLength}
-											onChange={() => {
-												this.updateContentValue("similarEpisodesLength", false);
-											}}
-											id="edit-program"
-											className="ca-radio package-selector"
-										/>
-										<label htmlFor="edit-program"><Translate i18nKey="No" /></label>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className="row">
-						<div className="modal-input w-33">
-							<label>
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LANGUAGE" />
-							</label>
-							<div className="select">
-								<LanguageSelector
-									value={languages}
-									onChange={(value) => {
-										this.updateContentValue("languages", value);
-									}}
-								/>
-							</div>
-						</div>
-
-						<div className="modal-input w-33">
-							<label>
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_SUBTITLES" />
-							</label>
-							<div className="select">
-								<LanguageSelector
-									value={subtitles}
-									onChange={(value) => {
-										this.updateContentValue("subtitles", value);
-									}}
-								/>
-							</div>
-						</div>
-
-						<div className="modal-input w-33">
-							<label>
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_SCRIPT" />
-							</label>
-							<div className="select">
-								<LanguageSelector
-									value={scripts}
-									onChange={(value) => {
-										this.updateContentValue("scripts", value);
-									}}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="modal-input w-50">
-							<div className="region-filter-title">
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_EXCLUSIVELY" />
-							</div>
-
-							<div className="radio-box">
-								<input
-									type="radio"
-									checked={exclusive}
-									onChange={() => {
-										this.updateContentValue("exclusive", true);
-									}}
-									id="exclusive"
-									className="ca-radio package-selector"
-								/>
-								<label htmlFor="exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE" /></label>
-								<input
-									type="radio"
-									checked={!exclusive}
-									onChange={() => {
-										this.updateContentValue("exclusive", false);
-									}}
-									id="non-exclusive"
-									className="ca-radio package-selector"
-								/>
-								<label htmlFor="non-exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
-							</div>
-						</div>
-					</div>
-
-					<div className="row">
-						<div className="modal-input w-50">
-							<div className="region-filter-title">
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_TERRITORIES" />
-							</div>
-						</div>
-					</div>
-					<CmsTerritorySelector
-						className="small-select"
-						onChange={this.handleTerritories}
-						onSelectRegion={() => { }}
-						value={territories}
-						territoriesMode={territoriesMode}
-						multiple
+					<CmsProgramTypeFilter
+						value={type}
+						onChange={type => this.updateContentValue("type", type.id)}
 					/>
+
+					<div className="form-group w-33">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_YEAR" />
+						</label>
+						<select
+							value={releaseYear}
+							onChange={(e) => {
+								this.updateContentValue("releaseYear", e.target.value);
+							}}
+						>
+							<option value="Year">Year</option>
+							{this.state.years.map((year, i) => (<option key={i} value={year}>{year}</option>))}
+						</select>
+					</div>
 				</div>
+
+				<div className="w-50">
+					<div className="form-group">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION" />
+						</label>
+						<textarea
+							value={description}
+							onChange={(e) => {
+								this.updateContentValue("description", e.target.value);
+							}}
+							placeholder={this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION_PLACEHOLDER")}
+						/>
+					</div>
+				</div>
+
+				<div className="row" style={{ marginBottom: 30 }}>
+					<div className="row w-50">
+						<div className="w-33">
+							<div className="modal-input">
+								<label>
+									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_EPISODES" />
+								</label>
+								<input
+									type="number"
+									value={episodes}
+									onChange={(e) => {
+										this.updateContentValue("episodes", Number(e.target.value));
+									}}
+								/>
+							</div>
+						</div>
+						<div className="w-33">
+							<div className="modal-input">
+								<label>
+									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DURATION" />
+								</label>
+								<input
+									type="number"
+									value={episodeDuration}
+									onChange={(e) => {
+										this.updateContentValue("episodeDuration", Number(e.target.value));
+									}}
+								/>
+							</div>
+						</div>
+						<div className="w-33">
+							<div className="modal-input">
+								<label>
+									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_DESC" />
+								</label>
+
+								<div className="radio-box">
+									<input
+										type="radio"
+										checked={similarEpisodesLength}
+										onChange={() => {
+											this.updateContentValue("similarEpisodesLength", true);
+										}}
+										id="edit-program-optional"
+										className="ca-radio package-selector"
+									/>
+									<label htmlFor="edit-program-optional"><Translate i18nKey="Yes" /></label>
+									<input
+										type="radio"
+										checked={!similarEpisodesLength}
+										onChange={() => {
+											this.updateContentValue("similarEpisodesLength", false);
+										}}
+										id="edit-program"
+										className="ca-radio package-selector"
+									/>
+									<label htmlFor="edit-program"><Translate i18nKey="No" /></label>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="modal-input w-33">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LANGUAGE" />
+						</label>
+						<div className="select">
+							<LanguageSelector
+								value={languages}
+								onChange={(value) => {
+									this.updateContentValue("languages", value);
+								}}
+							/>
+						</div>
+					</div>
+
+					<div className="modal-input w-33">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_SUBTITLES" />
+						</label>
+						<div className="select">
+							<LanguageSelector
+								value={subtitles}
+								onChange={(value) => {
+									this.updateContentValue("subtitles", value);
+								}}
+							/>
+						</div>
+					</div>
+
+					<div className="modal-input w-33">
+						<label>
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_SCRIPT" />
+						</label>
+						<div className="select">
+							<LanguageSelector
+								value={scripts}
+								onChange={(value) => {
+									this.updateContentValue("scripts", value);
+								}}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="modal-input w-50">
+						<div className="region-filter-title">
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_EXCLUSIVELY" />
+						</div>
+
+						<div className="radio-box">
+							<input
+								type="radio"
+								checked={exclusive}
+								onChange={() => {
+									this.updateContentValue("exclusive", true);
+								}}
+								id="exclusive"
+								className="ca-radio package-selector"
+							/>
+							<label htmlFor="exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE" /></label>
+							<input
+								type="radio"
+								checked={!exclusive}
+								onChange={() => {
+									this.updateContentValue("exclusive", false);
+								}}
+								id="non-exclusive"
+								className="ca-radio package-selector"
+							/>
+							<label htmlFor="non-exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
+						</div>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="modal-input w-50">
+						<div className="region-filter-title">
+							<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_TERRITORIES" />
+						</div>
+					</div>
+				</div>
+
+				<TerritorySelector
+					availableCountries={availableCountries.territories}
+					selectedCountries={territories}
+					onSelect={this.handleTerritories}
+				/>
+
 				<div className="buttons">
 					<div className="centered-btn">
 						<button
@@ -377,7 +363,7 @@ class CmsEditedProgramDetail extends Component {
 					</div>
 				</div>
 
-			</section>
+			</>
 		);
 	}
 }
@@ -388,6 +374,7 @@ CmsEditedProgramDetail.contextTypes = {
 
 const mapStateToProps = state => ({
 	countries: state.property.countries,
+	availableCountries: getAvailableTerritories(state),
 });
 
 export default connect(

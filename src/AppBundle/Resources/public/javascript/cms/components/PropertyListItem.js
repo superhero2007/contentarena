@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import { getListingImage } from "../../common/utils/listing";
-import PropertyListingTable from "./PropertyListingTable";
+import cn from "classnames";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
 
 class PropertyListItem extends React.Component {
@@ -37,12 +35,12 @@ class PropertyListItem extends React.Component {
 				</div>
 				<div className="property-item-info">
 					<Translate i18nKey="CMS_PROPERTY_CLOSED_BID" />
-					<span className="property-item-closed">
+					<span className={cn("property-item-count", { "property-item-closed": closedBids > 0 })}>
 						({closedBids})
 					</span>
 				</div>
 				<div className="property-item-link">
-					<i className="fa fa-eye" />
+					<i className="icon-view" />
 					<a onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`)}>
 						<Translate i18nKey="CMS_PROPERTY_VIEW_LISTING_OVERVIEW" />
 					</a>

@@ -4,6 +4,8 @@
 html {
   font-family: $font-stack;
   height: 100%;
+  display:flex;
+  flex-direction:column;
 }
 
 body {
@@ -11,7 +13,13 @@ body {
   text-transform: none;
   font-family: 'Open Sans', sans-serif;
   height: 100%;
+  display:flex;
+  flex-direction:column;
   color: #333333;
+}
+
+body > * {
+  flex-shrink: 0;
 }
 
 body {

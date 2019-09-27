@@ -55,7 +55,7 @@ class PropertyService
      */
     public function getAllCompanyProperties(User $user){
         $company = $user->getCompany();
-        $properties = $this->repo->findBy(array("company"=>$company));
+        $properties = $this->repo->findBy(array("company"=>$company), array("createdAt" => "DESC"));
 
         foreach ($properties as $property){
             $listings = $this->contentService->getPropertyListings($property);
@@ -272,14 +272,6 @@ class PropertyService
 
         if (!empty($tournaments)){
             $name = array_values($tournaments)[0]->getName();
-
-            if (!empty($seasons)) {
-
-                foreach ($seasons as $season){
-                    $name = $name." - ".$season->getYear();
-                }
-            }
-
         } else {
             $name = array_values($sports)[0]->getName();
 

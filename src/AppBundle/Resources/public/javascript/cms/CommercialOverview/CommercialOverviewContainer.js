@@ -1,20 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import { RIGHT_TYPE } from "@constants";
-import { ListingFilter, SeasonFilter, TerritoryFilter } from "@components/Filters";
+import {
+	ListingFilter, RegionFilter, SeasonFilter, TerritoryFilter,
+} from "@components/Filters";
 import FilterAccordionContainer from "@components/Containers/FilterAccordionContainer";
-import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
-import CommercialBidsTable from "../components/CommercialBidsTable";
+import EmptyCommercialOverview from "./EmptyCommercialOverview";
+import CommercialBidsTable from "./CommercialBidsTable";
 import { fetchPropertyDetails } from "../actions/propertyActions";
 import CmsRightsLegend from "../components/CmsRightsLegend";
 import CmsFilterBox from "../components/CmsFilterBox";
-import { setListings, setSeasons } from "../actions/propertyFiltersActions";
+import {
+	setCountries, setListings, setRegions, setSeasons, setStatus,
+} from "../actions/propertyFiltersActions";
+import {
+	getFilteredListings,
+	getFilteredRights,
+	getFilteredSeasons,
+	getFilteredTerritories,
+} from "../reducers/property";
+import { getUnifiedRegions } from "../helpers/PropertyHelper";
 
-class CmsCommercialOverview extends React.Component {
+class CommercialOverviewContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -41,7 +50,7 @@ class CmsCommercialOverview extends React.Component {
 
 	updateData = (newProps) => {
 		const props = newProps || this.props;
-		const { property: { listings, seasons } } = props.propertyDetails;
+		const { property: { listings, seasons } } = props;
 		this.setState({ listings, allSeasons: seasons });
 		const { location: { search } } = props.history;
 		if (search) {
@@ -141,23 +150,22 @@ class CmsCommercialOverview extends React.Component {
 			history,
 			propertyId,
 			propertyFilters,
-			propertyDetails: { property },
+			property,
+			baseProperty,
+			territories,
+			listings,
 		} = this.props;
 		const {
-			listings,
-			allSeasons,
 			selectedListings,
 			countries,
 			includeAllCountries,
 			seasons,
 		} = this.state;
 
+		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
+
 		if (!property.listings.length) {
-			return (
-				<section className="commercial-overview-tab">
-					<EmptyCommercialOverview history={history} propertyId={propertyId} />
-				</section>
-			);
+			return <EmptyCommercialOverview history={history} propertyId={propertyId} />;
 		}
 
 		let allListings = listings;
@@ -234,10 +242,16 @@ class CmsCommercialOverview extends React.Component {
 							onChange={this.props.setSeasons}
 						/>
 
+						<RegionFilter
+							options={unifiedTerritories}
+							value={propertyFilters.regions}
+							onChange={this.props.setRegions}
+						/>
+
 						<TerritoryFilter
-							options={property.seasons}
-							value={propertyFilters.territories}
-							onChange={this.props.setSeasons}
+							options={territories}
+							value={propertyFilters.countries}
+							onChange={this.props.setCountries}
 						/>
 					</CmsFilterBox>
 
@@ -278,15 +292,24 @@ class CmsCommercialOverview extends React.Component {
 	}
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+	common: state.common,
+	propertyFilters: state.propertyFilters,
+	property: state.propertyDetails.property,
+	baseProperty: state.property,
+	listings: getFilteredListings(state),
+	territories: getFilteredTerritories(state),
+});
 
 const mapDispatchToProps = dispatch => ({
 	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),
 	setSeasons: seasons => dispatch(setSeasons(seasons)),
 	setListings: listings => dispatch(setListings(listings)),
+	setRegions: regions => dispatch(setRegions(regions)),
+	setCountries: countries => dispatch(setCountries(countries)),
 });
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(CmsCommercialOverview);
+)(CommercialOverviewContainer);

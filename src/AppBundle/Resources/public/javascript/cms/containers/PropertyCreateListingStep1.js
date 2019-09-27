@@ -162,7 +162,7 @@ class PropertyCreateListingStep1 extends React.Component {
 		availableSeasons.sort(sortSeasons);
 
 		return (
-			<>
+			<div className="property-create-tab">
 				<AccordionContainer
 					title={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_TITLE" />}
 					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP1_BUTTON" />}
@@ -224,7 +224,7 @@ class PropertyCreateListingStep1 extends React.Component {
 					<PropertyListingButtons history={history} />
 				)}
 
-			</>
+			</div>
 		);
 	}
 }

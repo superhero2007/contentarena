@@ -3,6 +3,15 @@
 
 .skin {
   &.v1 {
+    .form-group {
+      margin-bottom: 30px;
+      position: relative;
+
+      label {
+        margin-bottom: 10px;
+      }
+    }
+
     .input-group {
       display: flex;
       flex-wrap: wrap;

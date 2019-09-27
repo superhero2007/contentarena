@@ -19,6 +19,7 @@ import {
 	setRegions, setSeasons, setStatus,
 } from "../actions/propertyFiltersActions";
 import { groupListingsByStatus } from "../helpers/PropertyDetailsHelper";
+import { getUnifiedRegions } from "../helpers/PropertyHelper";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
@@ -118,19 +119,17 @@ class CmsListingOverview extends React.Component {
 		const {
 			listings,
 			property,
+			history,
 			baseProperty,
 			territories,
 			propertyFilters,
 		} = this.props;
 
 		const listingsByStatus = groupListingsByStatus(listings);
+		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
 
 		if (!property.listings.length) {
-			return (
-				<section className="listing-overview-tab">
-					<EmptyListingOverview customId={property.customId} />
-				</section>
-			);
+			return <EmptyListingOverview customId={property.customId} history={history} />;
 		}
 
 		return (
@@ -151,7 +150,7 @@ class CmsListingOverview extends React.Component {
 					/>
 
 					<RegionFilter
-						options={baseProperty.regions}
+						options={unifiedTerritories}
 						value={propertyFilters.regions}
 						onChange={this.props.setRegions}
 					/>

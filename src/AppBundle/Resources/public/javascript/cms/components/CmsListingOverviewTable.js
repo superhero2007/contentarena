@@ -66,8 +66,8 @@ class CmsListingOverviewTable extends React.Component {
 	}, {
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_NAME" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header",
+		headerClassName: "rt-th-name",
+		className: "rt-td-name",
 		accessor: "name",
 		Cell: props => this.getCell(props),
 	}, {
@@ -127,12 +127,17 @@ class CmsListingOverviewTable extends React.Component {
 						)}
 					</div>
 					<div className="tools-action">
-						<span className="tools-action-title">
-							{`${props.original.lastAction.description} by `}
-						</span>
-						<span>
-							<UserName {...props.original.lastActionUser} />
-						</span>
+						{props.original.lastAction && (
+							<span className="tools-action-title">
+								{`${props.original.lastAction.description} by `}
+							</span>
+						)}
+						{props.original.lastActionUser && (
+							<span>
+								<UserName {...props.original.lastActionUser} />
+							</span>
+						)}
+
 						{props.original.lastActionDate && (
 							<span>
 								{`${Moment(props.original.lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}

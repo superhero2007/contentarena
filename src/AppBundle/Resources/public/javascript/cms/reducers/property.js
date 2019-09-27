@@ -1,4 +1,5 @@
-import { propertyFiltersTypes } from "./propertyFilters";
+import { getTerritoriesFromRights } from "@utils/property";
+import { getUnifiedRegions } from "../helpers/PropertyHelper";
 
 export const propertyTypes = {
 	RESET_PROPERTY: "RESET_PROPERTY",
@@ -243,14 +244,36 @@ export const hasExtendedSportCategory = state => state.property.sportCategory.fi
 export const hasCustomTournament = state => state.property.tournament.filter(tournament => tournament.custom).length > 0;
 export const hasCustomSeason = state => state.property.seasons.filter(season => season.custom).length > 0;
 
+export const getAvailableTerritories = (state) => {
+	const property = state.propertyDetails.property;
+	return getTerritoriesFromRights(property.rights);
+};
+
+const getFilteredTerritoriesByRegion = (regions, availableTerritories) => {
+	const selectedTerritories = new Map();
+
+	regions.forEach((r) => {
+		availableTerritories.forEach((t) => {
+			if (r.type === "region") {
+				if (t.regions.map(r => r.id).indexOf(r.id) !== -1) {
+					if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
+				}
+			} else if (t.territories.map(r => r.id).indexOf(r.id) !== -1) {
+				if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
+			}
+		});
+	});
+
+	return Array.from(selectedTerritories.values());
+};
+
 export const getFilteredTerritories = (state) => {
 	const property = state.propertyDetails.property;
 	const baseProperty = state.property;
 	const filters = state.propertyFilters;
 	const seasons = (filters.seasons.length) ? filters.seasons : property.seasons;
 	const rights = (filters.rights.length) ? filters.rights : property.rights;
-	const regions = (filters.regions.length) ? filters.regions : baseProperty.regions;
-	const selectedTerritories = new Map();
+	const regions = (filters.regions.length) ? filters.regions : getUnifiedRegions(baseProperty.regions, baseProperty.territories);
 	const availableTerritories = new Map();
 
 	rights.forEach((r) => {
@@ -259,15 +282,7 @@ export const getFilteredTerritories = (state) => {
 		});
 	});
 
-	regions.forEach((r) => {
-		availableTerritories.forEach((t) => {
-			if (t.regions.map(r => r.id).indexOf(r.id) !== -1) {
-				if (!selectedTerritories.get(t.id)) selectedTerritories.set(t.id, t);
-			}
-		});
-	});
-
-	return Array.from(selectedTerritories.values());
+	return getFilteredTerritoriesByRegion(regions, availableTerritories);
 };
 
 export const getFilteredSeasons = (state) => {
@@ -285,7 +300,8 @@ export const getFilteredRights = (state) => {
 export const getFilteredListings = (state) => {
 	const property = state.propertyDetails.property;
 	const filters = state.propertyFilters;
-
+	const baseProperty = state.property;
+	let availableCountries = filters.countries;
 	let listings = property.listings;
 
 	if (filters.listings.length) {
@@ -299,6 +315,18 @@ export const getFilteredListings = (state) => {
 		listings = listings.filter((list) => {
 			const selectedSeasons = list.seasons.filter(season => filters.seasons.find(b => b.id === season.id));
 			return selectedSeasons.length;
+		});
+	}
+
+	if (filters.regions.length) {
+		availableCountries = getFilteredTerritoriesByRegion(filters.regions, baseProperty.countries);
+	}
+
+	if (filters.regions.length || filters.countries.length) {
+		const countryIds = availableCountries.map(t => t.id);
+		listings = listings.filter((list) => {
+			const bundles = list.salesPackages.filter(bundle => bundle.territories.find(t => countryIds.indexOf(t.id) !== -1));
+			return bundles.length;
 		});
 	}
 

@@ -68,6 +68,17 @@
           padding: 0 0 0 13px;
           height: 41px;
 
+          .right-value {
+            width: 20px;
+            height: 20px;
+            font-size: 11px;
+            background: $v1-color-grey-4;
+            margin-right: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
           span {
             display: flex;
             white-space: pre;
