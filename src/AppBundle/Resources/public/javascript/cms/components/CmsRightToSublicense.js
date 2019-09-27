@@ -1,48 +1,46 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { RIGHTS } from "@constants";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
-const CmsRightToSublicense = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: <Translate i18nKey="RIGHT_TO_SUBLICENSE_YES" />,
-	}, {
-		value: <Translate i18nKey="RIGHT_TO_SUBLICENSE_APPROVAL" />,
-	}, {
-		value: <Translate i18nKey="RIGHT_TO_SUBLICENSE_NO" />,
-	}];
+// export const SUBLICENSE = {
+// 	name: "Right to sublicense",
+// 	key: "SUBLICENSE",
+// 	headers: [
+// 		"SUBLICENSE_YES",
+// 		"SUBLICENSE_YES_APPROVAL",
+// 		"SUBLICENSE_NO",
+// 	],
+// 	multiple: false,
+// 	descriptionKey: "RIGHTS_SUBLICENSE_DESCRIPTION",
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// };
 
-	const data = RIGHTS.map(right => [
-		{
-			type: "text",
-			text: right.name,
-			value: "",
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		},
-	]);
+const CmsRightToSublicense = ({ type, rights, onUpdate }) => {
+	const columns = [{
+		value: "SUBLICENSE_YES",
+		type: "radio",
+		text: "",
+	}, {
+		value: "SUBLICENSE_YES_APPROVAL",
+		type: "radio",
+		text: "",
+	}, {
+		value: "SUBLICENSE_NO",
+		type: "radio",
+		text: "",
+	}];
 
 	return (
 		<div className="right-to-sublicense">
 			<div className="tab-description subtitle2">
-				<Translate i18nKey="RIGHT_TO_SUBLICENSE_DESCRIPTION" />
+				<Translate i18nKey="SUBLICENSE_DESCRIPTION" />
 			</div>
 			<div className="right-to-sublicense-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
 				/>
 			</div>
 		</div>

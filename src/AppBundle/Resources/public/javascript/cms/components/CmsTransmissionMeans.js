@@ -1,56 +1,50 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { RIGHTS } from "@constants";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
-const CmsTransmissionMeans = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_ALL" />,
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_CABLE" />,
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_SATELLITE" />,
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_DIGITAL" />,
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_INTERNET" />,
-	}, {
-		value: <Translate i18nKey="TRANSMISSION_MEANS_MOBILE" />,
-	}];
+// export const TRANSMISSION_MEANS = {
+// 	name: "Transmission means",
+// 	key: "TRANSMISSION_MEANS",
+// 	headers: [
+// 		"TRANSMISSION_MEANS_ALL",
+// 		"TRANSMISSION_MEANS_CABLE",
+// 		"TRANSMISSION_MEANS_SATELLITE",
+// 		"TRANSMISSION_MEANS_DIGITAL",
+// 		"TRANSMISSION_MEANS_OTT/INTERNET",
+// 		"TRANSMISSION_MEANS_MOBILE",
+// 	],
+// 	multiple: true,
+// 	descriptionKey: "RIGHTS_TRANSMISSION_MEANS_DESCRIPTION",
+// 	selectAllCheckbox: "TRANSMISSION_MEANS_ALL",
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// };
 
-	const data = RIGHTS.map(right => [
-		{
-			type: "text",
-			text: right.name,
-			value: "",
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		},
-	]);
+const CmsTransmissionMeans = ({ type, rights, onUpdate }) => {
+	const columns = [{
+		value: "TRANSMISSION_MEANS_ALL",
+		type: "radio",
+		text: "",
+	}, {
+		value: "TRANSMISSION_MEANS_CABLE",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TRANSMISSION_MEANS_SATELLITE",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TRANSMISSION_MEANS_DIGITAL",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TRANSMISSION_MEANS_INTERNET",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TRANSMISSION_MEANS_MOBILE",
+		type: "checkbox",
+		text: "",
+	}];
 
 	return (
 		<div className="transmission-means">
@@ -59,8 +53,11 @@ const CmsTransmissionMeans = ({ onUpdate }) => {
 			</div>
 			<div className="transmission-means-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					selectAllCheckbox
 				/>
 			</div>
 		</div>

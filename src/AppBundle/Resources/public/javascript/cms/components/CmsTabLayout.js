@@ -1,21 +1,30 @@
 import React, { useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
 import Translate from "@components/Translator/Translate";
 
 import CmsTabContent from "./CmsTabContent";
 
-const CmsTabLayout = ({ type, onSave, defaultValue = "" }) => {
-	const [value, setValue] = useState(defaultValue);
+const CmsTabLayout = ({ type, onSave, rights = "" }) => {
+	const [value, setValue] = useState(cloneDeep(rights));
+	const [isDisabled, setDisable] = useState(false);
 
 	const handleReset = () => {
-		setValue(defaultValue);
+		setValue(cloneDeep(rights));
 	};
 
 	const handleSave = () => {
-		onSave(type, value);
+		onSave(value);
 	};
 
 	const handleUpdate = (content) => {
-		setValue(content);
+		setValue(cloneDeep(content));
+	};
+
+	const handleTextarea = (e) => {
+		for (const right of value) {
+			right.details[`${type}_TEXTAREA`] = e.target.value;
+		}
+		setValue(cloneDeep(value));
 	};
 
 	return (
@@ -23,6 +32,7 @@ const CmsTabLayout = ({ type, onSave, defaultValue = "" }) => {
 			<div className="tab-layout-container">
 				<CmsTabContent
 					type={type}
+					rights={value}
 					onUpdate={handleUpdate}
 				/>
 			</div>
@@ -33,6 +43,8 @@ const CmsTabLayout = ({ type, onSave, defaultValue = "" }) => {
 				<textarea
 					className="input-textarea"
 					placeholder={<Translate i18nKey="TAB_LAYOUT_DESCRIPTION_PLACEHOLDER" />}
+					onChange={handleTextarea}
+					value={value[0].details[`${type}_TEXTAREA`] || ""}
 				/>
 			</div>
 			<div className="tab-layout-action">
@@ -47,6 +59,7 @@ const CmsTabLayout = ({ type, onSave, defaultValue = "" }) => {
 				<button
 					className="secondary-button tab-layout-action-button"
 					onClick={handleSave}
+					disabled={isDisabled}
 				>
 					<div className="button-content">
 						<Translate i18nKey="TAB_LAYOUT_SAVE_BUTTON" />

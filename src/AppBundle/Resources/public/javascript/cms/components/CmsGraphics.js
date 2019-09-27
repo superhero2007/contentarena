@@ -3,22 +3,41 @@ import Translate from "@components/Translator/Translate";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 import CmsLanguageFilter from "./CmsLanguageFilter";
 
-const CmsGraphics = ({ onUpdate }) => {
-	const data = [[
+// export const GRAPHICS = {
+// 	name: "Graphics",
+// 	descriptionKey: "RIGHTS_GRAPHICS_DESCRIPTION",
+// 	key: "GRAPHICS",
+// 	productionLabel: true,
+// 	checkDelivery: true,
+// 	headers: [
+// 		"GRAPHICS_NO",
+// 		"GRAPHICS_YES",
+// 	],
+// 	multiple: false,
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// 	validations: [  - ?
+// 		{
+// 			key: "GRAPHICS",
+// 			value: "GRAPHICS_YES",
+// 			keyToCheck: "GRAPHICS_LANGUAGES",
+// 			type: VALIDATION_KEYS.NO_EMPTY_ARR,
+// 		},
+// 	],
+// };
+
+const CmsGraphics = ({ type, rights, onUpdate }) => {
+	// <Translate i18nKey="GRAPHICS_LIVE_FEED" />
+	const columns = [
 		{
-			type: "text",
-			text: <Translate i18nKey="GRAPHICS_LIVE_FEED" />,
-			value: "",
+			type: "radio",
+			text: "GRAPHICS_YES",
+			value: "GRAPHICS_YES",
 		}, {
 			type: "radio",
-			text: <Translate i18nKey="GRAPHICS_YES" />,
-			value: false,
-		}, {
-			type: "radio",
-			text: <Translate i18nKey="GRAPHICS_NO" />,
-			value: false,
+			text: "GRAPHICS_NO",
+			value: "GRAPHICS_NO",
 		},
-	]];
+	];
 	return (
 		<div className="production-graphics">
 			<div className="tab-description subtitle2">
@@ -26,8 +45,12 @@ const CmsGraphics = ({ onUpdate }) => {
 			</div>
 			<div className="production-graphics-content">
 				<CmsPropertyDetailTable
-					heads={[]}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					header={false}
+					checkDelivery
 				/>
 				<CmsLanguageFilter
 					languages={[{

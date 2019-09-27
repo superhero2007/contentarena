@@ -1,34 +1,53 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { RIGHTS } from "@constants";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
-const CmsTransmissionObligation = ({ onUpdate }) => {
-	const data = RIGHTS.map(right => [
+// export const BROADCASTING = {
+// 	name: "Transmission Obligation",
+// 	key: "BROADCASTING",
+// 	headers: [
+// 		"BROADCASTING_NO",
+// 		"BROADCASTING_YES",
+// 	],
+// 	textAreaLabelKey: "CL3_COMMENTS_TRANSMISSION_PLACEHOLDER",
+// 	multiple: false,
+// 	descriptionKey: "RIGHTS_BROADCASTING_DESCRIPTION",
+// 	validateTextarea: true,
+// 	validations: [
+// 		{
+// 			key: "BROADCASTING",
+// 			value: "BROADCASTING_YES",
+// 			keyToCheck: "BROADCASTING_TEXTAREA",
+// 			type: VALIDATION_KEYS.NO_EMPTY_STRING,
+// 		},
+// 	],
+// };
+
+const CmsTransmissionObligation = ({ type, rights, onUpdate }) => {
+	const columns = [
 		{
-			type: "text",
-			text: right.name,
-			value: "",
+			type: "radio",
+			text: "BROADCASTING_YES",
+			value: "BROADCASTING_YES",
 		}, {
 			type: "radio",
-			text: "Yes",
-			value: false,
-		}, {
-			type: "radio",
-			text: "No",
-			value: false,
+			text: "BROADCASTING_NO",
+			value: "BROADCASTING_NO",
 		},
-	]);
+	];
 
 	return (
 		<div className="transmission-obligation">
 			<div className="tab-description subtitle2">
-				<Translate i18nKey="TRANSMISSION_OBLIGATION_DESCRIPTION" />
+				<Translate i18nKey="BROADCASTING_DESCRIPTION" />
 			</div>
 			<div className="transmission-obligation-content">
 				<CmsPropertyDetailTable
-					heads={[]}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					header={false}
 				/>
 			</div>
 		</div>

@@ -1,7 +1,9 @@
 import React from "react";
 
-const CmsCheckBox = ({ text, value, onChange }) => (
-	<div className="input-checkbox">
+const CmsCheckBox = ({
+	text, value, onChange,
+}) => (
+	<div className="input-checkbox" onClick={onChange}>
 		<input
 			type="checkbox"
 			checked={value}

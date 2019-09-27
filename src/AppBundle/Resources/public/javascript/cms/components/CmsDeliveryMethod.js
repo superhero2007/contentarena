@@ -4,69 +4,72 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 import CmsRadioBox from "./CmsRadioBox";
 import CmsInputStepper from "./CmsInputStepper";
 
-const CmsDeliveryMethod = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: <Translate i18nKey="DELIVERY_METHOD_SATELLITE" />,
-	}, {
-		value: <Translate i18nKey="DELIVERY_METHOD_IP" />,
-	}, {
-		value: <Translate i18nKey="DELIVERY_METHOD_FTP" />,
-	}, {
-		value: <Translate i18nKey="DELIVERY_METHOD_FIBER" />,
-	}];
+// export const TECHNICAL_DELIVERY = {
+// 	name: "Delivery Method",
+// 	descriptionKey: "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION",
+// 	key: "TECHNICAL_DELIVERY",
+// 	productionLabel: true,
+// 	checkDelivery: true,
+// 	headers: [
+// 		"TECHNICAL_DELIVERY_SATELLITE",
+// 		"TECHNICAL_DELIVERY_IP",
+// 		"TECHNICAL_DELIVERY_FTP",
+// 		"TECHNICAL_DELIVERY_FIBER",
+// 	],
+// 	multiple: true,
+// 	technicalFee: "TECHNICAL_DELIVERY_SATELLITE", - ?
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// };
 
-	const data = [[
-		{
-			type: "text",
-			text: <Translate i18nKey="DELIVERY_METHOD_LIVE_FEED" />,
-			value: "",
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		}, {
-			type: "checkbox",
-			text: "",
-			value: false,
-		},
-	]];
+const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
+	// <Translate i18nKey="TECHNICAL_DELIVERY_LIVE_FEED" />,
+	const columns = [{
+		value: "TECHNICAL_DELIVERY_SATELLITE",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TECHNICAL_DELIVERY_IP",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TECHNICAL_DELIVERY_FTP",
+		type: "checkbox",
+		text: "",
+	}, {
+		value: "TECHNICAL_DELIVERY_FIBER",
+		type: "checkbox",
+		text: "",
+	}];
 
 	return (
 		<div className="delivery-method">
 			<div className="tab-description subtitle2">
-				<Translate i18nKey="DELIVERY_METHOD_DESCRIPTION" />
+				<Translate i18nKey="TECHNICAL_DELIVERY_DESCRIPTION" />
 			</div>
 			<div className="delivery-method-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					checkDelivery
 				/>
 			</div>
 			<div className="delivery-method-fee">
 				<label className="delivery-method-fee-description">
-					<Translate i18nKey="DELIVERY_METHOD_FEE_LABEL" />
+					<Translate i18nKey="TECHNICAL_DELIVERY_FEE_LABEL" />
 				</label>
 				<div className="delivery-method-fee-item">
 					<CmsRadioBox
 						value=""
-						text={<Translate i18nKey="DELIVERY_METHOD_FEE_INCLUDED" />}
+						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_INCLUDED" />}
 						onChange={() => {}}
 					/>
 				</div>
 				<div className="delivery-method-fee-item">
 					<CmsRadioBox
 						value=""
-						text={<Translate i18nKey="DELIVERY_METHOD_FEE_PERCENTAGE" />}
+						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_PERCENTAGE" />}
 						onChange={() => {}}
 					/>
 					<CmsInputStepper

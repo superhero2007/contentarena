@@ -3,42 +3,50 @@ import Translate from "@components/Translator/Translate";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 import CmsInputBox from "./CmsInputBox";
 
-const CmsAspectRatio = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: "16:9",
-	}, {
-		value: "4:3",
-	}, {
-		value: <Translate i18nKey="ASPECT_RATIO_OTHER" />,
-	}];
+// export const ASPECT_RATIO = {
+// 	name: "Aspect ratio",
+// 	descriptionKey: "RIGHTS_ASPECT_RATIO_DESCRIPTION",
+// 	key: "ASPECT_RATIO",
+// 	productionLabel: true,
+// 	checkDelivery: true,
+// 	headers: [
+// 		"ASPECT_RATIO_16_9",
+// 		"ASPECT_RATIO_4_3",
+// 		"ASPECT_RATIO_CUSTOM",
+// 	],
+// 	multiple: false,
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// 	validations: [ - ?
+// 		{
+// 			key: "ASPECT_RATIO",
+// 			value: "ASPECT_RATIO_CUSTOM",
+// 			keyToCheck: "ASPECT_RATIO_TEXT",
+// 			type: VALIDATION_KEYS.NO_EMPTY_STRING,
+// 		},
+// 	],
+// };
 
-	const data = [[
-		{
-			type: "text",
-			text: <Translate i18nKey="ASPECT_RATIO_LIVE_FEED" />,
-			value: "",
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		}, {
-			type: "radio",
-			text: (
-				<CmsInputBox
-					className="property-details-input"
-					value=""
-					onChange={() => {}}
-				/>
-			),
-			value: false,
-		},
-	]];
+const CmsAspectRatio = ({ type, rights, onUpdate }) => {
+	// <Translate i18nKey="ASPECT_RATIO_LIVE_FEED" />
+	const columns = [{
+		type: "radio",
+		text: "",
+		value: "ASPECT_RATIO_16_9",
+	}, {
+		type: "radio",
+		text: "",
+		value: "ASPECT_RATIO_4_3",
+	}, {
+		type: "radio",
+		text: (
+			<CmsInputBox
+				className="property-details-input"
+				value=""
+				onChange={() => {}}
+			/>
+		),
+		value: "ASPECT_RATIO_OTHER",
+	}];
 	return (
 		<div className="aspect-ratio">
 			<div className="tab-description subtitle2">
@@ -46,8 +54,11 @@ const CmsAspectRatio = ({ onUpdate }) => {
 			</div>
 			<div className="aspect-ratio-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					checkDelivery
 				/>
 			</div>
 		</div>

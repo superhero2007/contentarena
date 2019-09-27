@@ -15,32 +15,104 @@ import CmsTransmissionMeans from "./CmsTransmissionMeans";
 import CmsLicensedLanguages from "./CmsLicensedLanguages";
 import CmsReservedRights from "./CmsReservedRights";
 
-const CmsTabContent = ({ type, onUpdate }) => {
+const CmsTabContent = ({ type, rights, onUpdate }) => {
 	switch (type) {
 	case PRODUCTION_TAB.CONTENT_DELIVERY:
-		return <CmsContentDelivery onUpdate={onUpdate} />;
-	case PRODUCTION_TAB.DELIVERY_METHOD:
-		return <CmsDeliveryMethod onUpdate={onUpdate} />;
+		return (
+			<CmsContentDelivery
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
+	case PRODUCTION_TAB.TECHNICAL_DELIVERY:
+		return (
+			<CmsDeliveryMethod
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case PRODUCTION_TAB.GRAPHICS:
-		return <CmsGraphics onUpdate={onUpdate} />;
+		return (
+			<CmsGraphics
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case PRODUCTION_TAB.ASPECT_RATIO:
-		return <CmsAspectRatio onUpdate={onUpdate} />;
+		return (
+			<CmsAspectRatio
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case PRODUCTION_TAB.COMMENTARY:
-		return <CmsCommentary onUpdate={onUpdate} />;
-	case PRODUCTION_TAB.CAMERA_STANDARDS:
-		return <CmsCameraStandards onUpdate={onUpdate} />;
-	case RIGHTS_TAB.RIGHT_TO_SUBLICENSE:
-		return <CmsRightToSublicense onUpdate={onUpdate} />;
-	case RIGHTS_TAB.TRANSMISSION_OBLIGATION:
-		return <CmsTransmissionObligation onUpdate={onUpdate} />;
-	case RIGHTS_TAB.TRANSMISSION_FORM:
-		return <CmsTransmissionForm onUpdate={onUpdate} />;
+		return (
+			<CmsCommentary
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
+	case PRODUCTION_TAB.CAMERA:
+		return (
+			<CmsCameraStandards
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
+	case RIGHTS_TAB.SUBLICENSE:
+		return (
+			<CmsRightToSublicense
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
+	case RIGHTS_TAB.BROADCASTING:
+		return (
+			<CmsTransmissionObligation
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
+	case RIGHTS_TAB.EXPLOITATION_FORM:
+		return (
+			<CmsTransmissionForm
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case RIGHTS_TAB.TRANSMISSION_MEANS:
-		return <CmsTransmissionMeans onUpdate={onUpdate} />;
+		return (
+			<CmsTransmissionMeans
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case RIGHTS_TAB.LICENSED_LANGUAGES:
-		return <CmsLicensedLanguages onUpdate={onUpdate} />;
+		return (
+			<CmsLicensedLanguages
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	case RIGHTS_TAB.RESERVED_RIGHTS:
-		return <CmsReservedRights onUpdate={onUpdate} />;
+		return (
+			<CmsReservedRights
+				onUpdate={onUpdate}
+				rights={rights}
+				type={type}
+			/>
+		);
 	default:
 		return <div />;
 	}

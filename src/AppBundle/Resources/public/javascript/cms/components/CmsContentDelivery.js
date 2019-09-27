@@ -1,38 +1,42 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { RIGHTS } from "@constants";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
-const CmsContentDelivery = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: <Translate i18nKey="CONTENT_DELIVERY_LIVE" />,
-	}, {
-		value: <Translate i18nKey="CONTENT_DELIVERY_DEDICATED" />,
-	}, {
-		value: <Translate i18nKey="CONTENT_DELIVERY_FOOTAGE" />,
-	}];
+// export const CONTENT_DELIVERY = {
+// 	name: "Content Delivery",
+// 	descriptionKey: "RIGHTS_CONTENT_DELIVERY_DESCRIPTION",
+// 	key: "CONTENT_DELIVERY",
+// 	headers: [
+// 		"CONTENT_DELIVERY_LIVE",
+// 		"CONTENT_DELIVERY_DEDICATED",
+// 	],
+// 	multiple: false,
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// 	disabled: {
+// 		CONTENT_DELIVERY_DEDICATED: ["LT", "PR"],
+// 		CONTENT_DELIVERY_LIVE: ["LT", "PR"],
+// 	},
+// };
 
-	const data = RIGHTS.map(right => [
-		{
-			type: "text",
-			text: right.name,
-			value: "",
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		}, {
-			type: "radio",
-			text: "",
-			value: false,
-		},
-	]);
+const CmsContentDelivery = ({ type, rights, onUpdate }) => {
+	const disabled = {
+		CONTENT_DELIVERY_DEDICATED: ["LT", "PR"],
+		CONTENT_DELIVERY_LIVE: ["LT", "PR"],
+	};
+
+	const columns = [{
+		value: "CONTENT_DELIVERY_LIVE",
+		type: "radio",
+		text: "",
+	}, {
+		value: "CONTENT_DELIVERY_DEDICATED",
+		type: "radio",
+		text: "",
+	}, {
+		value: "CONTENT_DELIVERY_FOOTAGE",
+		type: "radio",
+		text: "",
+	}];
 
 	return (
 		<div className="content-delivery">
@@ -41,8 +45,11 @@ const CmsContentDelivery = ({ onUpdate }) => {
 			</div>
 			<div className="content-delivery-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					disabled={disabled}
+					onUpdate={onUpdate}
 				/>
 			</div>
 			<div className="content-delivery-footer body2">

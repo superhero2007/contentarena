@@ -1,24 +1,40 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import { RIGHTS } from "@constants";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
-const CmsReservedRights = ({ onUpdate }) => {
-	const data = RIGHTS.map(right => [
+// export const RESERVED_RIGHTS = {
+// 	name: "Reserved rights",
+// 	key: "RESERVED_RIGHTS",
+// 	headers: [
+// 		"RESERVED_RIGHTS_NO",
+// 		"RESERVED_RIGHTS_YES",
+// 	],
+// 	multiple: false,
+// 	descriptionKey: "RIGHTS_RESERVED_RIGHTS_DESCRIPTION",
+// 	textAreaLabelKey: "CL3_COMMENTS_RESERVED_PLACEHOLDER",
+// 	validateTextarea: true,
+// 	validations: [
+// 		{
+// 			key: "RESERVED_RIGHTS",
+// 			value: "RESERVED_RIGHTS_YES",
+// 			keyToCheck: "RESERVED_RIGHTS_TEXTAREA",
+// 			type: VALIDATION_KEYS.NO_EMPTY_STRING,
+// 		},
+// 	],
+// };
+
+const CmsReservedRights = ({ type, rights, onUpdate }) => {
+	const columns = [
 		{
-			type: "text",
-			text: right.name,
-			value: "",
+			type: "radio",
+			text: "RESERVED_RIGHTS_YES",
+			value: "RESERVED_RIGHTS_YES",
 		}, {
 			type: "radio",
-			text: "Yes",
-			value: false,
-		}, {
-			type: "radio",
-			text: "No",
-			value: false,
+			text: "RESERVED_RIGHTS_NO",
+			value: "RESERVED_RIGHTS_NO",
 		},
-	]);
+	];
 
 	return (
 		<div className="reserved-rights">
@@ -27,8 +43,10 @@ const CmsReservedRights = ({ onUpdate }) => {
 			</div>
 			<div className="reserved-rights-content">
 				<CmsPropertyDetailTable
-					heads={[]}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
 				/>
 			</div>
 		</div>

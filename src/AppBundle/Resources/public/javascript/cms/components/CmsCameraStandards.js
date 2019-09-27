@@ -1,35 +1,58 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
+import CmsInputBox from "./CmsInputBox";
 
-const CmsCameraStandards = ({ onUpdate }) => {
-	const heads = [{
-		value: "",
-	}, {
-		value: <Translate i18nKey="CAMERA_STANDARDS_MINIMUM" />,
-	}];
+// export const CAMERA = {
+// 	name: "Camera standards",
+// 	descriptionKey: "RIGHTS_CAMERA_DESCRIPTION",
+// 	minimumDefault: 4, - ?
+// 	key: "CAMERA",
+// 	productionLabel: true,
+// 	checkDelivery: true,
+// 	headers: [
+// 		"CAMERA_MINIMUM",
+// 	],
+// 	multiple: false,
+// 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+// 	validations: [ - ?
+// 		{
+// 			key: "CAMERA",
+// 			value: "CAMERA_MINIMUM",
+// 			keyToCheck: "CAMERAS",
+// 			type: VALIDATION_KEYS.NO_ZERO,
+// 		},
+// 	],
+// };
 
-	const data = [[
+const CmsCameraStandards = ({ type, rights, onUpdate }) => {
+	// <Translate i18nKey="CAMERA_LIVE_FEED" />
+	const columns = [
 		{
-			type: "text",
-			text: <Translate i18nKey="CAMERA_STANDARDS_LIVE_FEED" />,
-			value: "",
-		}, {
-			type: "inputbox",
-			value: "",
-			className: "property-details-input",
+			type: "",
+			text: (
+				<CmsInputBox
+					className="property-details-input"
+					value=""
+					onChange={() => {}}
+				/>
+			),
+			value: "CAMERA_MINIMUM",
 		},
-	]];
+	];
 
 	return (
 		<div className="camera-standards">
 			<div className="tab-description subtitle2">
-				<Translate i18nKey="CAMERA_STANDARDS_DESCRIPTION" />
+				<Translate i18nKey="CAMERA_DESCRIPTION" />
 			</div>
 			<div className="camera-standards-content">
 				<CmsPropertyDetailTable
-					heads={heads}
-					data={data}
+					rights={rights}
+					type={type}
+					columns={columns}
+					onUpdate={onUpdate}
+					checkDelivery
 				/>
 			</div>
 		</div>

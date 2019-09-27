@@ -1,31 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-// import cloneDeep from "lodash/cloneDeep";
-// import first from "lodash/first";
+import cloneDeep from "lodash/cloneDeep";
 import Translate from "@components/Translator/Translate";
 import AccordionContainer from "@components/Containers/AccordionContainer";
 import { PRODUCTION_TAB } from "@constants";
 import CmsTabLayout from "./CmsTabLayout";
-// import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
-// import {
-// 	CONTENT_DELIVERY,
-// 	TECHNICAL_DELIVERY,
-// 	GRAPHICS,
-// 	ASPECT_RATIO,
-// 	COMMENTARY,
-// 	CAMERA,
-// } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
-// import { updateRightDetails } from "../actions/propertyActions";
-// import { getRightsValue, hasRightComment, getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
+import { updateRightDetails } from "../actions/propertyActions";
+import { getRightsValue } from "../helpers/PropertyDetailsHelper";
 
 class PropertyDetailsProductionTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// disableEditRight: true,
-			config: "",
-			// rights: cloneDeep(props.property.rights),
+			rights: cloneDeep(props.property.rights),
 			currentStep: 1,
 		};
 		this.tabRefs = {};
@@ -35,8 +23,8 @@ class PropertyDetailsProductionTab extends Component {
 			title: "CONTENT_DELIVERY_TITLE",
 			type: PRODUCTION_TAB.CONTENT_DELIVERY,
 		}, {
-			title: "DELIVERY_METHOD_TITLE",
-			type: PRODUCTION_TAB.DELIVERY_METHOD,
+			title: "TECHNICAL_DELIVERY_TITLE",
+			type: PRODUCTION_TAB.TECHNICAL_DELIVERY,
 		}, {
 			title: "GRAPHICS_TITLE",
 			type: PRODUCTION_TAB.GRAPHICS,
@@ -47,12 +35,12 @@ class PropertyDetailsProductionTab extends Component {
 			title: "COMMENTARY_TITLE",
 			type: PRODUCTION_TAB.COMMENTARY,
 		}, {
-			title: "CAMERA_STANDARDS_TITLE",
-			type: PRODUCTION_TAB.CAMERA_STANDARDS,
+			title: "CAMERA_TITLE",
+			type: PRODUCTION_TAB.CAMERA,
 		}];
 	}
 
-	handleSave = (type, config) => {
+	handleSave = (rights) => {
 		const { currentStep } = this.state;
 		if (currentStep === this.tabs.length) {
 			return;
@@ -61,21 +49,15 @@ class PropertyDetailsProductionTab extends Component {
 		this.tabRefs[this.tabs[currentStep].type].current.open();
 
 		this.setState({
-			config,
+			rights,
 			currentStep: currentStep + 1,
 		});
-		// 	this.setState({ rights });
 		// 	this.props.updateRights("rights", rights);
 	};
 
 	render() {
-		// const {
-		// 	disableEditRight, config, rights,
-		// } = this.state;
-		//
-		// if (rights.length === 0) return null;
-		// const firstRight = first(rights);
-		// const dedicatedRights = getDedicatedRigths(rights);
+		const { rights } = this.state;
+		if (rights.length === 0) return null;
 		const { currentStep } = this.state;
 
 		return (
@@ -84,104 +66,23 @@ class PropertyDetailsProductionTab extends Component {
 					<Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TEXT" />
 				</div>
 
-				{/*
-					<PropertyRightsProductionModal
-						onCloseModal={this.handleSave}
-						config={config}
-						rights={rights}
-						onUpdate={this.handleUpdate}
-					/>
-				*/}
 				{this.tabs.map((item, index) => (
 					<AccordionContainer
 						title={<Translate i18nKey={item.title} />}
 						disabled={currentStep < index + 1}
 						enableNextStep
-						value=""
+						value={getRightsValue(item.type, rights, this.context)}
 						opened={currentStep === index + 1}
 						ref={this.tabRefs[item.type]}
 						key={item.type}
 					>
 						<CmsTabLayout
 							type={item.type}
+							rights={rights}
 							onSave={this.handleSave}
 						/>
 					</AccordionContainer>
 				))}
-				{/*
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_CONTENT_DELIVERY" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(CONTENT_DELIVERY, rights, this.context)}
-								onClick={() => this.handleSave(CONTENT_DELIVERY)}
-							/>
-							{hasRightComment(firstRight, CONTENT_DELIVERY.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_TECHNICAL_DELIVERY" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(TECHNICAL_DELIVERY, dedicatedRights, this.context)}
-								onClick={() => this.handleSave(TECHNICAL_DELIVERY)}
-							/>
-							{hasRightComment(firstRight, TECHNICAL_DELIVERY.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_GRAPHICS" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(GRAPHICS, dedicatedRights, this.context)}
-								onClick={() => this.handleSave(GRAPHICS)}
-							/>
-							{hasRightComment(firstRight, GRAPHICS.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_ASPECT_RATIO" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(ASPECT_RATIO, dedicatedRights, this.context)}
-								onClick={() => this.handleSave(ASPECT_RATIO)}
-							/>
-							{hasRightComment(firstRight, ASPECT_RATIO.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_COMMENTARY" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(COMMENTARY, dedicatedRights, this.context)}
-								onClick={() => this.handleSave(COMMENTARY)}
-							/>
-							{hasRightComment(firstRight, COMMENTARY.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-					<li className="item">
-						<label><Translate i18nKey="RIGHTS_CAMERA" /></label>
-						<div className="input-wrapper">
-							<input
-								readOnly
-								type="text"
-								value={getRightsValue(CAMERA, dedicatedRights, this.context)}
-								onClick={() => this.handleSave(CAMERA)}
-							/>
-							{hasRightComment(firstRight, CAMERA.key) && <i className="fa fa-commenting-o" />}
-						</div>
-					</li>
-				*/}
 			</section>
 		);
 	}
@@ -196,7 +97,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	// updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
+	updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
 });
 
 export default connect(
