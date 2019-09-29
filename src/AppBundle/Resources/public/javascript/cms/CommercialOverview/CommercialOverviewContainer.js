@@ -180,7 +180,7 @@ class CommercialOverviewContainer extends React.Component {
 			});
 		}
 
-		let openBidsList = [].concat.apply(
+		const openBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
@@ -188,7 +188,7 @@ class CommercialOverviewContainer extends React.Component {
 					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
-		let closedBidsList = [].concat.apply(
+		const closedBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
@@ -196,7 +196,7 @@ class CommercialOverviewContainer extends React.Component {
 					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
-		let declinedBidsList = [].concat.apply(
+		const declinedBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
@@ -205,7 +205,7 @@ class CommercialOverviewContainer extends React.Component {
 			)),
 		);
 
-		if (countries.length) {
+		/* if (countries.length) {
 			openBidsList = openBidsList.filter((b) => {
 				const territories = b.salesPackage.territories.filter(territory => countries.indexOf(territory.name) !== -1);
 				return includeAllCountries && b.salesPackage.territories.length === territories.length || !includeAllCountries && territories.length;
@@ -218,7 +218,7 @@ class CommercialOverviewContainer extends React.Component {
 				const territories = b.salesPackage.territories.filter(territory => countries.indexOf(territory.name) !== -1);
 				return includeAllCountries && b.salesPackage.territories.length === territories.length || !includeAllCountries && territories.length;
 			});
-		}
+		} */
 
 		return (
 			<section className="commercial-overview-tab">

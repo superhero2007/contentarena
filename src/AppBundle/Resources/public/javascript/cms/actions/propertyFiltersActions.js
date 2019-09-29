@@ -30,3 +30,13 @@ export const setCountries = countries => ({
 	type: propertyFiltersTypes.SET_FILTER_COUNTRIES,
 	countries,
 });
+
+export const setPrograms = programs => ({
+	type: propertyFiltersTypes.SET_FILTER_PROGRAMS,
+	programs,
+});
+
+export const setProgramYears = programYears => ({
+	type: propertyFiltersTypes.SET_FILTER_PROGRAM_YEARS,
+	programYears,
+});

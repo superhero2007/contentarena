@@ -93,7 +93,7 @@ class FileSelector extends Component {
 
 	handleUploadFile = (event) => {
 		const {
-			isImage, onSelect, target, tmp, isUploading,
+			isImage, onSelect, target, tmp, isUploading, testPdf = true,
 		} = this.props;
 		const _this = this;
 
@@ -108,7 +108,7 @@ class FileSelector extends Component {
 				isUploading(true);
 			}
 
-			ContentArena.ContentApi.saveTmpFile(event.target.files)
+			ContentArena.ContentApi.saveTmpFile(event.target.files, testPdf)
 				.then((response) => {
 					if (response.success) {
 						if (onSelect) onSelect(response);

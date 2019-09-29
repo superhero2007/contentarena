@@ -159,11 +159,6 @@ class PropertyDetailsDescriptionTab extends Component {
 						</div>
 					</div>
 					<div className="description-action">
-						{!attachments.length && (
-							<div className="description-max">
-								<Translate i18nKey="CMS_FILE_UPLOAD_MAX" />
-							</div>
-						)}
 						<button
 							className="secondary-outline-button"
 							disabled={loading || uploading}
