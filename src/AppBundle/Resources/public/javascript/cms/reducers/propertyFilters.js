@@ -6,6 +6,8 @@ export const propertyFiltersTypes = {
 	SET_FILTER_STATUS: "SET_FILTER_STATUS",
 	SET_FILTER_LISTINGS: "SET_FILTER_LISTINGS",
 	SET_FILTER_COUNTRIES: "SET_FILTER_COUNTRIES",
+	SET_FILTER_PROGRAMS: "SET_FILTER_PROGRAMS",
+	SET_FILTER_PROGRAM_YEARS: "SET_FILTER_PROGRAM_YEARS",
 };
 
 const DEFAULT_STATE = {
@@ -17,6 +19,8 @@ const DEFAULT_STATE = {
 	statuses: [],
 	listings: [],
 	countries: [],
+	programs: [],
+	programYears: [],
 };
 
 export const propertyFilters = (state = DEFAULT_STATE, action) => {
@@ -56,6 +60,10 @@ export const propertyFilters = (state = DEFAULT_STATE, action) => {
 		return Object.assign({}, state, { listings: action.listings });
 	case propertyFiltersTypes.SET_FILTER_COUNTRIES:
 		return Object.assign({}, state, { countries: action.countries });
+	case propertyFiltersTypes.SET_FILTER_PROGRAMS:
+		return Object.assign({}, state, { programs: action.programs });
+	case propertyFiltersTypes.SET_FILTER_PROGRAM_YEARS:
+		return Object.assign({}, state, { programYears: action.programYears });
 
 	default:
 		return state;

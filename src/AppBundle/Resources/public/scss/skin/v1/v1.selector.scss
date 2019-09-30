@@ -38,6 +38,16 @@
 
       .input-radio {
         min-width: 175px;
+
+        &-selector {
+          height: 24px;
+          width: 24px;
+
+          &::after {
+            width: 16px;
+            height: 16px;
+          }
+        }
       }
     }
 

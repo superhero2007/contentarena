@@ -42,10 +42,7 @@ class PropertyDetailsEditedProgramTab extends Component {
 		this.setState({ mode: "edit", selected: program });
 	};
 
-	onDelete = (program) => {
-		const { deleteProgram } = this.props;
-		deleteProgram(program.customId);
-	};
+	onDelete = program => this.props.deleteProgram(program.id);
 
 	onCreate = () => {
 		this.setState({ mode: "create", selected: {} });
@@ -82,18 +79,16 @@ class PropertyDetailsEditedProgramTab extends Component {
 		return (
 			<section className="property-edited-program-tab">
 				<button
-					className="ca-btn primary property-edited-program-tab__button"
+					className="button primary-outline-button"
 					onClick={this.onCreate}
 				>
 					<Translate i18nKey="CMS_EMPTY_EDIT_RIGHTS_BUTTON" />
 				</button>
-				<div className="property-edited-program-tab__list">
-					<CmsEditedProgramList
-						programs={programs}
-						onSelect={this.onSelect}
-						onDelete={this.onDelete}
-					/>
-				</div>
+				<CmsEditedProgramList
+					programs={programs}
+					onSelect={this.onSelect}
+					onDelete={this.onDelete}
+				/>
 			</section>
 		);
 	}
@@ -111,7 +106,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	createProgram: program => dispatch(createProgram(program)),
 	updateProgram: program => dispatch(updateProgram(program)),
-	deleteProgram: customId => dispatch(deleteProgram(customId)),
+	deleteProgram: id => dispatch(deleteProgram(id)),
 });
 
 export default connect(

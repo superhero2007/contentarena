@@ -12,7 +12,7 @@ const EmptyCommercialOverview = ({ history, propertyId }) => (
 			<Translate i18nKey="CMS_EMPTY_COMMERCIAL_OVERVIEW_TEXT" />
 		</div>
 
-		<h3>
+		{/* <h3>
 			<Translate i18nKey="CMS_EMPTY_COMMERCIAL_OVERVIEW_PROMOTE_TITLE" />
 		</h3>
 
@@ -25,7 +25,7 @@ const EmptyCommercialOverview = ({ history, propertyId }) => (
 			onClick={() => { history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.LISTING}`); }}
 		>
 			<Translate i18nKey="CMS_EMPTY_COMMERCIAL_PROMOTE" />
-		</button>
+		</button> */}
 	</div>
 );
 

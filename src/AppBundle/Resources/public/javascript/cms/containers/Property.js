@@ -7,7 +7,7 @@ import {
 	CMS_PROPERTY_TABS, PROPERTY_MAIN_TABS, ROUTE_PATHS, SERVER_ERROR_CODES,
 } from "@constants";
 import Loader from "../../common/components/Loader/Loader";
-import RightsOverview from "./RightsOverview";
+import RightsOverview from "../RightsOverview/CmsRightsOverview";
 import CommercialOverviewContainer from "../CommercialOverview/CommercialOverviewContainer";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";

@@ -108,7 +108,7 @@ export const propertyDetails = (state = DEFAULT_STATE, action) => {
 	case propertyDetailsTypes.UPDATE_PROGRAM:
 		return Object.assign({}, state, { loading: true, errorCode: "", success: false });
 	case propertyDetailsTypes.UPDATE_PROGRAM_SUCCESS:
-		const programs = state.property.programs.filter(program => program.customId !== action.program.customId);
+		const programs = state.property.programs.filter(program => program.id !== action.program.id);
 		return Object.assign({}, state, {
 			loading: false,
 			errorCode: "",
@@ -128,7 +128,7 @@ export const propertyDetails = (state = DEFAULT_STATE, action) => {
 			errorCode: "",
 			property: {
 				...state.property,
-				programs: state.property.programs.filter(program => program.customId !== action.customId),
+				programs: state.property.programs.filter(program => program.id !== action.id),
 			},
 		});
 	case propertyDetailsTypes.DELETE_PROGRAM_FAIL:

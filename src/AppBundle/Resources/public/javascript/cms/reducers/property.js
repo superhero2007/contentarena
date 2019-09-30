@@ -285,6 +285,25 @@ export const getFilteredTerritories = (state) => {
 	return getFilteredTerritoriesByRegion(regions, availableTerritories);
 };
 
+export const getFilteredProgramTerritories = (state) => {
+	const property = state.propertyDetails.property;
+	const baseProperty = state.property;
+	const filters = state.propertyFilters;
+	const regions = (filters.regions.length) ? filters.regions : getUnifiedRegions(baseProperty.regions, baseProperty.territories);
+	const programs = (filters.programs.length) ? filters.programs : property.programs;
+	const availableTerritories = new Map();
+
+	programs.forEach((program) => {
+		if (program.releaseYear && filters.programYears.length && filters.programYears.indexOf(program.releaseYear) === -1) return;
+
+		program.territories.forEach((t) => {
+			if (!availableTerritories.get(t.id)) availableTerritories.set(t.id, t);
+		});
+	});
+
+	return getFilteredTerritoriesByRegion(regions, availableTerritories);
+};
+
 export const getFilteredSeasons = (state) => {
 	const property = state.propertyDetails.property;
 	const filters = state.propertyFilters;
@@ -295,6 +314,19 @@ export const getFilteredRights = (state) => {
 	const property = state.propertyDetails.property;
 	const filters = state.propertyFilters;
 	return (filters.rights.length) ? filters.rights : property.rights;
+};
+
+export const getFilteredPrograms = (state) => {
+	const property = state.propertyDetails.property;
+	const filters = state.propertyFilters;
+	return (filters.programs.length) ? filters.programs : property.programs;
+};
+
+export const getFilteredProgramYears = (state) => {
+	const property = state.propertyDetails.property;
+	const filters = state.propertyFilters;
+	const programs = (filters.programs.length) ? filters.programs : property.programs;
+	return programs.filter(program => program.releaseYear).map(program => program.releaseYear);
 };
 
 export const getFilteredListings = (state) => {

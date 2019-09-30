@@ -1,51 +1,33 @@
 import React, { useState } from "react";
 
 import Translate from "@components/Translator/Translate";
-import { cmsWorldActive } from "../../main/components/Icons";
 import ConfirmationTooltip from "../../common/components/Tooltips/ConfirmationTooltip";
-
-const watchlistIcon = `${assetsBaseDir}app/images/watchlist.png`;
-const bucketicon = `${assetsBaseDir}app/images/bucket.png`;
 
 const CmsEditedProgramList = ({
 	programs, onSelect, onDelete,
 }) => {
 	const [showConfirmationTooltip, setShowConfirmationTooltip] = useState(false);
 	return (
-		<div>
+		<div className="program-list">
 			{programs.map((program, index) => (
-				<div className="element" key={index}>
-					<h3>{program.name}</h3>
-					<h6>{program.description}</h6>
+				<div className="program-list-item" key={index}>
+					<h4>{program.name}</h4>
 					<div className="d-flex">
-						<button className="ca-btn link-button action">
-							<img src={cmsWorldActive} alt="" />
-							{program.territories.length}&nbsp;
-							<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_TERRITORIES_BUTTON" />
-						</button>
 						<button
-							className="ca-btn link-button action"
-							onClick={() => {
-								if (onSelect) {
-									onSelect(program);
-								}
-							}}
+							className="link-button "
+							onClick={() => onSelect && onSelect(program)}
 						>
-							<img src={watchlistIcon} alt="" />
 							<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_VIEW_BUTTON" />
 						</button>
 						<div className="action">
 							<button
-								className="ca-btn text-danger"
-								onClick={() => {
-									setShowConfirmationTooltip(true);
-								}}
+								className="link-button"
+								onClick={() => setShowConfirmationTooltip(program.id)}
 							>
-								<img src={bucketicon} alt="" />
 								<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_REMOVE_BUTTON" />
 							</button>
 							<ConfirmationTooltip
-								isOpen={showConfirmationTooltip}
+								isOpen={showConfirmationTooltip === program.id}
 								onConfirm={(confirmed) => {
 									setShowConfirmationTooltip(false);
 									if (confirmed && onDelete) {

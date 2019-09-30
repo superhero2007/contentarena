@@ -162,20 +162,24 @@ class CmsListingOverview extends React.Component {
 					/>
 				</CmsFilterBox>
 
-				<FilterAccordionContainer
-					title={<Translate i18nKey="LISTING_STATUS_REJECTED_WITH_AMOUNT" params={{ n: listingsByStatus.rejected.length }} />}
-					disabled={listingsByStatus.rejected.length === 0}
-					opened
-				>
-					<CmsListingOverviewTable listings={listingsByStatus.rejected} propertyId={property.customId} />
-				</FilterAccordionContainer>
+				{listingsByStatus.rejected.length !== 0 && (
+					<FilterAccordionContainer
+						title={<Translate i18nKey="LISTING_STATUS_REJECTED_WITH_AMOUNT" params={{ n: listingsByStatus.rejected.length }} />}
+						disabled={listingsByStatus.rejected.length === 0}
+						opened
+					>
+						<CmsListingOverviewTable listings={listingsByStatus.rejected} propertyId={property.customId} />
+					</FilterAccordionContainer>
+				)}
 
-				<FilterAccordionContainer
-					title={<Translate i18nKey="LISTING_STATUS_SUBMITTED_WITH_AMOUNT" params={{ n: listingsByStatus.submitted.length }} />}
-					disabled={listingsByStatus.submitted.length === 0}
-				>
-					<CmsListingOverviewTable listings={listingsByStatus.submitted} propertyId={property.customId} />
-				</FilterAccordionContainer>
+				{listingsByStatus.submitted.length !== 0 && (
+					<FilterAccordionContainer
+						title={<Translate i18nKey="LISTING_STATUS_SUBMITTED_WITH_AMOUNT" params={{ n: listingsByStatus.submitted.length }} />}
+						disabled={listingsByStatus.submitted.length === 0}
+					>
+						<CmsListingOverviewTable listings={listingsByStatus.submitted} propertyId={property.customId} />
+					</FilterAccordionContainer>
+				)}
 
 				<FilterAccordionContainer
 					title={<Translate i18nKey="LISTING_STATUS_ACTIVE_WITH_AMOUNT" params={{ n: listingsByStatus.active.length }} />}
