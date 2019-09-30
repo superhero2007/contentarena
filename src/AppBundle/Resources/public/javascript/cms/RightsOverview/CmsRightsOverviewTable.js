@@ -181,7 +181,7 @@ class CmsRightsOverviewTable extends React.Component {
 				showPagination={false}
 				resizable={false}
 				style={{
-					height: "400px", // This will force the table body to overflow and scroll, since there is not enough room
+					maxHeight: "580px",
 				}}
 				maxWidth={980}
 				collapseOnPageChange={false}

@@ -16,10 +16,12 @@ class TerritorySelector extends React.Component {
 			selectedRegions: [],
 			selectedTerritories: [],
 			selectedCountries: props.selectedCountries || [],
+			worldwide: true,
 		};
 	}
 
 	onSelectRegion = (region) => {
+		const { selectedTerritories } = this.state;
 		let { selectedRegions } = this.state;
 
 		if (listHas(selectedRegions, region)) {
@@ -28,12 +30,14 @@ class TerritorySelector extends React.Component {
 			selectedRegions.push(region);
 		}
 
-		this.setState({ selectedRegions }, () => {
-			// this.props.onSelect(this.getCountriesFromSelectedRegions());
+		this.setState({
+			selectedRegions,
+			worldwide: !selectedTerritories.length && !selectedRegions.length,
 		});
 	};
 
 	onSelectTerritory = (territory) => {
+		const { selectedRegions } = this.state;
 		let { selectedTerritories } = this.state;
 
 		if (listHas(selectedTerritories, territory)) {
@@ -42,8 +46,9 @@ class TerritorySelector extends React.Component {
 			selectedTerritories.push(territory);
 		}
 
-		this.setState({ selectedTerritories }, () => {
-			// this.props.onSelect(this.getCountriesFromSelectedRegions());
+		this.setState({
+			selectedTerritories,
+			worldwide: !selectedTerritories.length && !selectedRegions.length,
 		});
 	};
 
@@ -68,6 +73,15 @@ class TerritorySelector extends React.Component {
 		});
 	};
 
+	onSelectWorldwide = () => {
+		const worldwide = !this.state.worldwide;
+		this.setState({
+			worldwide,
+			selectedTerritories: (worldwide) ? [] : this.state.selectedTerritories,
+			selectedRegions: (worldwide) ? [] : this.state.selectedRegions,
+		});
+	};
+
 	onClear = () => {
 		this.setState({ selectedCountries: [] }, () => {
 			this.props.onSelect(this.state.selectedCountries);
@@ -89,6 +103,7 @@ class TerritorySelector extends React.Component {
 		const {
 			territories,
 			regions,
+			countries,
 			availableCountries,
 			style,
 		} = this.props;
@@ -99,12 +114,13 @@ class TerritorySelector extends React.Component {
 			selectedTerritories,
 			selectedCountries,
 			countryData,
+			worldwide,
 		} = this.state;
 
 		const availableCountryData = getCountryData(availableCountries);
 		const availableCountriesFromSelectedRegions = this.getCountriesFromSelectedRegions();
 		const selectorCountries = (selectedRegions.length > 0 || selectedTerritories.length > 0)
-			? availableCountriesFromSelectedRegions : availableCountries;
+			? availableCountriesFromSelectedRegions : worldwide ? availableCountries : [];
 
 		return (
 			<div className="territory-selector" style={style}>
@@ -115,7 +131,11 @@ class TerritorySelector extends React.Component {
 						countryData={countryData.territories}
 						availableCountryData={availableCountryData.territories}
 						regions={territories}
+						countries={countries}
+						availableCountries={availableCountries}
 						worldwide
+						worldwideValue={worldwide}
+						onSelectWorldwide={this.onSelectWorldwide}
 						selectedRegions={selectedTerritories}
 						onSelect={this.onSelectTerritory}
 						title={<Translate i18nKey="TERRITORY_SELECTOR_TITLE_CONTINENTS" />}

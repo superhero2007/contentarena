@@ -5,15 +5,16 @@ import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
 import ListingLink from "@components/Links/ListingLink";
-import { getListingBidsUrl } from "@utils/routing";
 import Translate from "@components/Translator/Translate";
-import { LISTING_STATUS } from "@constants";
 import TableSeasonList from "@components/Table/TableSeasonList";
 import TableTerritoryList from "@components/Table/TableTerritoryList";
-import { DATE_FORMAT } from "../../common/constants";
+import { UserName } from "@utils/listing";
+import TableTooltip from "@components/Tooltips/TableTooltip";
+import { DATE_FORMAT, TIME_FORMAT } from "../../common/constants";
 import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
+import PropertyActionListing from "../../manage/components/PropertyActionListing";
 
 class CommercialBidsTable extends React.Component {
 	constructor(props) {
@@ -205,9 +206,27 @@ class CommercialBidsTable extends React.Component {
 				id: props => `action-${props.customId}-${props.index}`,
 				className: "rt-td-center rt-td-full",
 				width: 50,
-				Cell: () => (
+				Cell: props => (
 					<div className="action-box action-box-accepted">
-						<Translate i18nKey="COMMERCIAL_OVERVIEW_STATUS_ACCEPTED" />
+						<TableTooltip
+							text={<Translate i18nKey="COMMERCIAL_OVERVIEW_STATUS_ACCEPTED" />}
+							zIndex={9999 - props.index}
+						>
+							<>
+								<div className="tools-action">
+									<span>
+										<Translate
+											i18nKey="COMMERCIAL_OVERVIEW_STATUS_ACCEPTED_BY"
+											params={{
+												name: <UserName {...props.original.owner} />,
+											}}
+										/>
+									</span>
+								</div>
+
+							</>
+
+						</TableTooltip>
 					</div>
 				),
 			}, {
@@ -216,11 +235,19 @@ class CommercialBidsTable extends React.Component {
 				className: "table-header justify-content-center",
 				width: 50,
 				Cell: props => (
-					<div
-						className="action-box"
-						onClick={() => this.declineBid(props)}
-					>
-						<i className="icon-settings" />
+					<div className="tools">
+						<PropertyActionListing
+							className="listing pointer"
+							style={{
+								position: "absolute",
+								zIndex: 1000 - props.index,
+							}}
+							defaultAction="EDIT"
+							showLicense
+							showMessage
+							showView={false}
+							{...props.original}
+						/>
 					</div>
 				),
 			}];
