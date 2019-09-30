@@ -45,9 +45,10 @@
         width: auto;
 
         &::placeholder {
-          color: $v1-color-grey-1;
-          font-style: normal;
-          font-weight: normal;
+          color: #acacac;
+          font-size: 14px;
+          font-weight: 600;
+          font-style: inherit;
         }
       }
 
@@ -269,6 +270,13 @@
       font-size: 12px;
       line-height: 18px;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &::placeholder {
+        color: #acacac;
+        font-size: 14px;
+        font-weight: 600;
+        font-style: inherit;
+      }
 
       &:hover,
       &:active {
