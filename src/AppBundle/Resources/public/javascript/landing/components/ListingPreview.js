@@ -173,7 +173,9 @@ class ListingPreview extends PureComponent {
 										</div>
 										{fixturesBySeason && fixturesBySeason.length > 0 && (
 											<div className="fixtures-wrapper">
-												<div className="title"><Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" /></div>
+												<div className="title" style={{ marginBottom: 5 }}>
+													<Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" />
+												</div>
 												<div>
 													{fixturesBySeason.slice(0, 5).map((fixture, i) => (
 														<div className="row-container" key={i}>
@@ -201,9 +203,9 @@ class ListingPreview extends PureComponent {
 																	}}
 																>
 																	<i className="fa fa-clock-o icon" />
-																	{!fixture.date && "Time N/A"}
-																	{fixture.date && moment(fixture.date)
-																		.format(`${TIME_FORMAT} [UTC]`)}
+																	{!fixture.time && !fixture.date && "Time N/A"}
+																	{!fixture.time && fixture.date && moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
+																	{fixture.time && `${fixture.time} UTC`}
 																</div>
 															</div>
 														</div>
