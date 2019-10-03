@@ -255,30 +255,42 @@ class CmsListingOverviewTable extends React.Component {
 							/>
 						)
 					}
-					{
-						(status.name === LISTING_STATUS.SOLD_OUT || status.name === LISTING_STATUS.EXPIRED || status.name === LISTING_STATUS.SOLD_COPY)
-						&& (
-							<PropertyActionListing
-								className="listing pointer"
-								style={{
-									position: "absolute",
-									zIndex: 1000 - props.index,
-								}}
-								showCommercialOverview
-								propertyId={propertyId}
-								showDuplicate
-								showArchive
-								showView
-								onArchive={() => {
-									listings.splice(props.index, 1);
-									this.setState({ listings });
-									ContentArena.ContentApi.archiveListing(customId);
-								}}
-								onDuplicate={this.duplicate}
-								{...props.original}
-							/>
-						)
+					{(status.name === LISTING_STATUS.SOLD_OUT
+						|| status.name === LISTING_STATUS.EXPIRED
+						|| status.name === LISTING_STATUS.SOLD_COPY) && (
+						<PropertyActionListing
+							className="listing pointer"
+							style={{
+								position: "absolute",
+								zIndex: 1000 - props.index,
+							}}
+							showCommercialOverview
+							propertyId={propertyId}
+							showDuplicate
+							showArchive
+							showView
+							onArchive={() => {
+								listings.splice(props.index, 1);
+								this.setState({ listings });
+								ContentArena.ContentApi.archiveListing(customId);
+							}}
+							onDuplicate={this.duplicate}
+							{...props.original}
+						/>
+					)
 					}
+					{status.name === LISTING_STATUS.ARCHIVED && (
+						<PropertyActionListing
+							className="listing pointer"
+							style={{
+								position: "absolute",
+								zIndex: 1000 - props.index,
+							}}
+							showDuplicate
+							onDuplicate={this.duplicate}
+							{...props.original}
+						/>
+					)}
 				</div>
 			);
 		},

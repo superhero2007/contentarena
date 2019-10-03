@@ -40,7 +40,7 @@ const CmsFileUpload = ({
 						attachments.map((item, index) => (
 							<div className="file-upload-content-item" key={index}>
 								<div>
-									{item.name}...
+									{item.name}
 									<span>({(item.size / 1000).toFixed()}K)</span>
 								</div>
 								<i

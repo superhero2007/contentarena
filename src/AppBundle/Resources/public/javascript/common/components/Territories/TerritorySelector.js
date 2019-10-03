@@ -15,11 +15,13 @@ class TerritorySelector extends React.Component {
 			countryData: getCountryData(props.countries),
 			selectedRegions: [],
 			selectedTerritories: [],
-			selectedCountries: [],
+			selectedCountries: props.selectedCountries || [],
+			worldwide: true,
 		};
 	}
 
 	onSelectRegion = (region) => {
+		const { selectedTerritories } = this.state;
 		let { selectedRegions } = this.state;
 
 		if (listHas(selectedRegions, region)) {
@@ -28,12 +30,14 @@ class TerritorySelector extends React.Component {
 			selectedRegions.push(region);
 		}
 
-		this.setState({ selectedRegions }, () => {
-			// this.props.onSelect(this.getCountriesFromSelectedRegions());
+		this.setState({
+			selectedRegions,
+			worldwide: !selectedTerritories.length && !selectedRegions.length,
 		});
 	};
 
 	onSelectTerritory = (territory) => {
+		const { selectedRegions } = this.state;
 		let { selectedTerritories } = this.state;
 
 		if (listHas(selectedTerritories, territory)) {
@@ -42,8 +46,9 @@ class TerritorySelector extends React.Component {
 			selectedTerritories.push(territory);
 		}
 
-		this.setState({ selectedTerritories }, () => {
-			// this.props.onSelect(this.getCountriesFromSelectedRegions());
+		this.setState({
+			selectedTerritories,
+			worldwide: !selectedTerritories.length && !selectedRegions.length,
 		});
 	};
 
@@ -58,7 +63,28 @@ class TerritorySelector extends React.Component {
 		}
 
 		this.setState({ selectedCountries }, () => {
-			// this.props.onSelect(this.getCountriesFromSelectedRegions());
+			 this.props.onSelect(this.state.selectedCountries);
+		});
+	};
+
+	onSelectCountries = (countries) => {
+		this.setState({ selectedCountries: countries }, () => {
+			this.props.onSelect(this.state.selectedCountries);
+		});
+	};
+
+	onSelectWorldwide = () => {
+		const worldwide = !this.state.worldwide;
+		this.setState({
+			worldwide,
+			selectedTerritories: (worldwide) ? [] : this.state.selectedTerritories,
+			selectedRegions: (worldwide) ? [] : this.state.selectedRegions,
+		});
+	};
+
+	onClear = () => {
+		this.setState({ selectedCountries: [] }, () => {
+			this.props.onSelect(this.state.selectedCountries);
 		});
 	};
 
@@ -77,6 +103,7 @@ class TerritorySelector extends React.Component {
 		const {
 			territories,
 			regions,
+			countries,
 			availableCountries,
 			style,
 		} = this.props;
@@ -87,12 +114,13 @@ class TerritorySelector extends React.Component {
 			selectedTerritories,
 			selectedCountries,
 			countryData,
+			worldwide,
 		} = this.state;
 
 		const availableCountryData = getCountryData(availableCountries);
 		const availableCountriesFromSelectedRegions = this.getCountriesFromSelectedRegions();
 		const selectorCountries = (selectedRegions.length > 0 || selectedTerritories.length > 0)
-			? availableCountriesFromSelectedRegions : availableCountries;
+			? availableCountriesFromSelectedRegions : worldwide ? availableCountries : [];
 
 		return (
 			<div className="territory-selector" style={style}>
@@ -103,7 +131,11 @@ class TerritorySelector extends React.Component {
 						countryData={countryData.territories}
 						availableCountryData={availableCountryData.territories}
 						regions={territories}
+						countries={countries}
+						availableCountries={availableCountries}
 						worldwide
+						worldwideValue={worldwide}
+						onSelectWorldwide={this.onSelectWorldwide}
 						selectedRegions={selectedTerritories}
 						onSelect={this.onSelectTerritory}
 						title={<Translate i18nKey="TERRITORY_SELECTOR_TITLE_CONTINENTS" />}
@@ -122,7 +154,7 @@ class TerritorySelector extends React.Component {
 						availableCountries={selectorCountries}
 						selectedCountries={selectedCountries}
 						onSelect={this.onSelectCountry}
-						onSelectAll={countries => this.setState({ selectedCountries: countries })}
+						onSelectAll={this.onSelectCountries}
 						title={<Translate i18nKey="TERRITORY_SELECTOR_TITLE_COUNTRIES" />}
 					/>
 
@@ -134,14 +166,14 @@ class TerritorySelector extends React.Component {
 						<h5>
 							<Translate i18nKey="TERRITORY_SELECTOR_SELECTED_TITLE" />
 						</h5>
-						<a className="" onClick={() => this.setState({ selectedCountries: [] })}>
+						<a className="" onClick={this.onClear}>
 							<Translate i18nKey="TERRITORY_SELECTOR_CLEAR" />
 						</a>
 					</div>
 
 					<div className="territory-selector-selected">
 						{selectedCountries.map(country => (
-							<span onClick={() => this.onSelectCountry(country)}>
+							<span onClick={() => this.onSelectCountry(country)} key={`country-${country.id}`}>
 								{country.name}<i className="icon-remove" />
 							</span>
 						))}

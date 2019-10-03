@@ -56,36 +56,6 @@
             }
           }
         }
-
-        //input {
-        //  border: 1px solid $v1-color-grey-1;
-        //  border-radius: 2px;
-        //  font-family: $v1-font-family;
-        //  font-size: 16px;
-        //  font-weight: 600;
-        //  letter-spacing: 0.06px;
-        //  color: $v1-color-grey-2;
-        //  padding: 19px 38px;
-        //  margin: 0;
-
-        //  &::placeholder {
-        //    font-style: normal;
-        //    color: $v1-color-grey-6;
-        //  }
-
-        //  &:focus {
-        //    outline: 0;
-        //  }
-        //}
-
-        //i {
-        //  position: absolute;
-        //  right: 38px;
-        //  top: 25px;
-        //  color: $v1-color-grey-3;
-        //  width: 9px;
-        //  height: 12px;
-        //}
       }
 
       &-content {
@@ -129,6 +99,10 @@
         justify-content: flex-end;
         margin-top: 10px;
       }
+    }
+
+    .edited-program-filter {
+      width: 288px;
     }
   }
 }

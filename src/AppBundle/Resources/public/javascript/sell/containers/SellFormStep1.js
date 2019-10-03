@@ -756,6 +756,7 @@ class SellFormStep1 extends React.Component {
 							selected={this.props.attachments}
 							onSelect={this.addFile}
 							onRemove={this.removeFile}
+							testPdf={false}
 							accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
 							acceptType={[
 								"image/jpeg",

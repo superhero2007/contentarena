@@ -42,8 +42,9 @@
             &-search {
               padding: 0 !important;
               position: relative;
+              background-color: white;
 
-              i {
+              .icon-search {
                 position: absolute;
                 top: 23px;
                 left: 16px;
@@ -66,6 +67,36 @@
                 }
               }
             }
+
+            &-season {
+              border-right: 1px solid $v1-color-grey-6 !important;
+              border-left: 1px solid $v1-color-grey-6 !important;
+              font-size: 10px;
+              font-weight: bold;
+              color: $v1-color-blue-4;
+            }
+
+            &-program {
+              font-size: 10px;
+              font-weight: bold;
+              color: $v1-color-blue-4;
+            }
+
+            &-right {
+              border-right: 1px solid $v1-color-grey-6 !important;
+            }
+
+            &-left {
+              border-left: 1px solid $v1-color-grey-6 !important;
+            }
+          }
+
+          .rt-tr > .rt-th-season ~ .rt-th-season {
+            border-left: none !important;
+          }
+
+          .rt-tr > .rt-th-left ~ .rt-th-left {
+            border-left: none !important;
           }
 
           &.-headerGroups {
@@ -73,6 +104,23 @@
               background-color: $v1-background-white;
             }
           }
+
+          .season-arrow {
+            color: $v1-color-grey-3;
+            font-size: 20px;
+            cursor: pointer;
+
+            &.icon-arrow-left {
+              position: absolute;
+              top: 20px;
+              right: 1px;
+            }
+
+            &.icon-arrow-right {
+
+            }
+          }
+
         }
 
         .rt-tbody {
@@ -111,6 +159,18 @@
               padding: 20px !important;
               overflow: hidden;
               text-overflow: ellipsis;
+            }
+
+            &-rights {
+              height: 75px;
+            }
+
+            &-right {
+              border-right: 1px solid $v1-color-grey-6 !important;
+            }
+
+            &-left {
+              border-left: 1px solid $v1-color-grey-6 !important;
             }
 
             .table-right {
@@ -299,9 +359,17 @@
                   i {
                     margin-right: 5px;
                   }
+
+                  a {
+                    color: $v1-color-grey-3;
+                  }
                 }
               }
             }
+          }
+
+          .rt-tr > .rt-td-left ~ .rt-td-left {
+            border-left: none !important;
           }
 
           .action-box {
@@ -354,6 +422,55 @@
 
             &[class$="-message"] {
               color: $v1-color-grey-2;
+            }
+          }
+        }
+
+        .rt-body::-webkit-scrollbar {
+          width: 1em;
+        }
+        .rt-body::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+        .rt-body::-webkit-scrollbar-thumb {
+          background-color: blue;
+          outline: 1px solid slategrey;
+        }
+      }
+
+      &.rights-table{
+        .rt-tbody {
+
+          .rights-table-active{
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.06px;
+            text-align: center;
+            color: #3399ff;
+            text-decoration: underline;
+          }
+
+          .rights-table-inactive {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.06px;
+            text-align: center;
+            color: #cccccc;
+          }
+
+          .rt-tr {
+            &-group {
+              border-color: $v1-color-grey-1;
+            }
+
+          }
+
+          .rt-td {
+            height: 57px;
+
+            &-name {
+              font-size: 16px;
+              color: $v1-color-grey-3;
             }
           }
         }

@@ -24,7 +24,7 @@ class CmsProgramTypeFilter extends React.Component {
 				name={<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_TYPE" />}
 				options={options}
 				value={valueObj}
-				className="dropdown-container form-group"
+				className="dropdown-container"
 				placeholder={<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_TYPE_PLACEHOLDER" />}
 				multi={false}
 				onChange={onChange}

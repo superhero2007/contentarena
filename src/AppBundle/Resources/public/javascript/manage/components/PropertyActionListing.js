@@ -1,11 +1,8 @@
 import React, {} from "react";
-import Moment from "moment/moment";
-import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
+import { Link } from "react-router-dom";
 import { goTo } from "../../main/actions/utils";
-import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import ShareListing from "../../common/components/ShareListing";
-import { UserName } from "../../common/utils/listing";
 
 class PropertyActionListing extends React.Component {
 	constructor(props) {
@@ -62,6 +59,7 @@ class PropertyActionListing extends React.Component {
 
 	render() {
 		const {
+			id,
 			customId,
 			className,
 			showEdit,
@@ -71,6 +69,8 @@ class PropertyActionListing extends React.Component {
 			showSubmit,
 			showDuplicate,
 			showDeactivate,
+			showLicense,
+			showMessage,
 			showView,
 			onRemove,
 			onArchive,
@@ -88,6 +88,32 @@ class PropertyActionListing extends React.Component {
 			<div className={className} style={style}>
 				{showOptions && (
 					<div className="tools-menu">
+						{showLicense && (
+							<div className="tools-option">
+								<i className="icon-agreement" />
+								<a
+									className="action-box"
+									href={`/license/bid/${customId}`}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Translate i18nKey="License Agreement" />
+								</a>
+							</div>
+						)}
+						{showMessage && (
+							<div className="tools-option">
+								<i className="icon-message" />
+								<Link
+									className="action-box"
+									to={`/redirect-integration/messages-by-bid-seller/${id}`}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Translate i18nKey="Message" />
+								</Link>
+							</div>
+						)}
 						{showSubmit && (
 							<div className="tools-option" onClick={this.submit}>
 								<i className="icon-activate" />

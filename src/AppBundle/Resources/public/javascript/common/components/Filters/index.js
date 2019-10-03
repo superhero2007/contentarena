@@ -2,12 +2,14 @@ import React from "react";
 import cn from "classnames";
 import { isMobileOnly } from "react-device-detect";
 import Select, { components } from "react-select-last";
+import CmsProgramYearsFilter from "@components/Filters/CmsProgramYearsFilter";
 import CmsSeasonsFilter from "./CmsSeasonsFilter";
 import CmsRightsFilter from "./CmsRightsFilter";
 import CmsRightStatusFilter from "./CmsRightStatusFilter";
 import CmsRegionFilter from "./CmsRegionFilter";
 import CmsListingFilter from "./CmsListingFilter";
 import CmsTerritoryFilter from "./CmsTerritoryFilter";
+import CmsProgramFilter from "./CmsProgramFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
@@ -34,9 +36,9 @@ const MultiValue = ({
 ) : null);
 
 export const BaseFilter = ({
-	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent, className, isClearable,
+	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent, className, containerClassName, isClearable,
 }) => (
-	<div className={cn("default-filter", { mobile: isMobileOnly })}>
+	<div className={cn("default-filter", { mobile: isMobileOnly }, containerClassName)}>
 		{name && <label>{name}</label>}
 		<Select
 			components={{
@@ -84,3 +86,7 @@ export const RightFilter = CmsRightsFilter;
 export const ListingFilter = CmsListingFilter;
 
 export const TerritoryFilter = CmsTerritoryFilter;
+
+export const ProgramFilter = CmsProgramFilter;
+
+export const ProgramYearsFilter = CmsProgramYearsFilter;

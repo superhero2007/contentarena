@@ -290,9 +290,9 @@ export const deleteProgramRequest = () => ({
 	type: propertyDetailsTypes.DELETE_PROGRAM,
 });
 
-export const deleteProgramSuccess = customId => ({
+export const deleteProgramSuccess = id => ({
 	type: propertyDetailsTypes.DELETE_PROGRAM_SUCCESS,
-	customId,
+	id,
 });
 
 export const deleteProgramFail = error => ({
@@ -303,8 +303,6 @@ export const deleteProgramFail = error => ({
 export const createProgram = program => async (dispatch, getState) => {
 	dispatch(createProgramRequest());
 	try {
-		// const { data: { program } } = await api.properties.createProgram({ program });
-
 		dispatch(createProgramSuccess(program));
 		const property = getState().propertyDetails.property;
 		dispatch(updateProperty(property));
@@ -316,7 +314,6 @@ export const createProgram = program => async (dispatch, getState) => {
 export const updateProgram = program => async (dispatch, getState) => {
 	dispatch(updateProgramRequest());
 	try {
-		// const { data: { program } } = await api.properties.updateProgram({ program });
 		dispatch(updateProgramSuccess(program));
 		const property = getState().propertyDetails.property;
 		dispatch(updateProperty(property));
@@ -328,7 +325,6 @@ export const updateProgram = program => async (dispatch, getState) => {
 export const getPrograms = () => async (dispatch) => {
 	dispatch(getProgramsRequest());
 	try {
-		// const { data: { programs } } = await api.properties.getPrograms();
 		const programs = [];
 		dispatch(getProgramsSuccess(programs));
 	} catch (error) {
@@ -336,11 +332,10 @@ export const getPrograms = () => async (dispatch) => {
 	}
 };
 
-export const deleteProgram = customId => async (dispatch, getState) => {
+export const deleteProgram = id => async (dispatch, getState) => {
 	dispatch(deleteProgramRequest());
 	try {
-		// const { data: { program } } = await api.properties.deleteProgram({ customId });
-		dispatch(deleteProgramSuccess(customId));
+		dispatch(deleteProgramSuccess(id));
 		const property = getState().propertyDetails.property;
 		dispatch(updateProperty(property));
 	} catch (error) {

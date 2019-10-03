@@ -10,6 +10,16 @@ class RegionSelector extends React.Component {
 
 	getCounterLabel = (counter, total) => `(${counter}/${total})`;
 
+	setWorldwide = () => {
+		const worldwide = !this.state.worldwide;
+		const {
+			onSelectWorldwide,
+		} = this.props;
+
+		this.setState({ worldwide });
+		if (onSelectWorldwide) onSelectWorldwide(worldwide);
+	};
+
 	render() {
 		const {
 			regions,
@@ -17,7 +27,12 @@ class RegionSelector extends React.Component {
 			availableCountryData,
 			selectedRegions,
 			onSelect,
+			onSelectWorldwide,
 			title,
+			worldwide,
+			worldwideValue,
+			countries,
+			availableCountries,
 		} = this.props;
 
 		return (
@@ -26,6 +41,24 @@ class RegionSelector extends React.Component {
 					{title}
 				</h5>
 				<div className="region-selector">
+					{worldwide && (
+						<label
+							key="worldwide"
+							   className={cn("input-checkbox", { "input-checkbox--is-selected": worldwideValue })}
+						>
+							<input
+								type="checkbox"
+								value={worldwideValue}
+								checked={worldwideValue}
+								onChange={onSelectWorldwide}
+							/>
+							<span className="input-checkbox-selector" />
+							<span className="input-checkbox-text">
+								<span>Worldwide</span>
+								<span>{this.getCounterLabel(availableCountries.length, countries.length)}</span>
+							</span>
+						</label>
+					)}
 					{regions.map((region) => {
 						const selectedRegion = selectedRegions.find(e => e.id === region.id);
 						const availableRegion = availableCountryData.has(region.id);
