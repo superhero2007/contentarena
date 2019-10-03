@@ -23,7 +23,7 @@
       font-size: 22px;
       font-weight: 500;
       letter-spacing: normal;
-      color: #acacac;
+      color: $v1-color-grey-6;
       display: flex;
       align-items: center;
       margin-right: auto;
@@ -265,7 +265,7 @@
         background-color: white;
 
         &-content {
-          border-top: 1px solid #ecedef;
+          border-top: 1px solid $v1-color-grey-4;
           margin: 0 38px;
           padding: 33px 0;
         }
@@ -335,7 +335,7 @@
         }
       }
 
-      .program-list{
+      .program-list {
         margin-top: 20px;
 
         .program-list-item {
@@ -367,7 +367,6 @@
           margin-left: 20px;
         }
       }
-
     }
 
     .property-license-tab {
@@ -470,7 +469,7 @@
         display: flex;
         height: 67px;
         flex-direction: row;
-        border-bottom: 1px solid #f6f7f9;
+        border-bottom: 1px solid $v1-background-grey-1;
 
         &-item {
           display: flex;
@@ -484,9 +483,9 @@
           line-height: normal;
           letter-spacing: 0.06px;
           text-align: center;
-          color: #03547C;
+          color: $v1-color-blue-4;
           cursor: pointer;
-          background-color: #ECEDEF;
+          background-color: $v1-color-grey-4;
 
           &.active {
             background-color: white;
