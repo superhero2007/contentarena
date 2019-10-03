@@ -15,36 +15,34 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 // };
 
-const CmsRightToSublicense = ({ type, rights, onUpdate }) => {
-	const columns = [{
-		value: "SUBLICENSE_YES",
-		type: "radio",
-		text: "",
-	}, {
-		value: "SUBLICENSE_YES_APPROVAL",
-		type: "radio",
-		text: "",
-	}, {
-		value: "SUBLICENSE_NO",
-		type: "radio",
-		text: "",
-	}];
+const columns = [{
+	value: "SUBLICENSE_YES",
+	type: "radio",
+	text: "",
+}, {
+	value: "SUBLICENSE_YES_APPROVAL",
+	type: "radio",
+	text: "",
+}, {
+	value: "SUBLICENSE_NO",
+	type: "radio",
+	text: "",
+}];
 
-	return (
-		<div className="right-to-sublicense">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="SUBLICENSE_DESCRIPTION" />
-			</div>
-			<div className="right-to-sublicense-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-				/>
-			</div>
+const CmsRightToSublicense = ({ type, rights, onUpdate }) => (
+	<div className="right-to-sublicense">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="SUBLICENSE_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="right-to-sublicense-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+			/>
+		</div>
+	</div>
+);
 
 export default CmsRightToSublicense;

@@ -160,6 +160,11 @@
       }
     }
 
+    .property-details-select {
+      width: 100px;
+      height: 50px;
+    }
+
     .property-tab-description {
       color: $v1-color-grey-3;
       margin-top: 32px;
@@ -182,22 +187,35 @@
       &-note {
         margin-bottom: 38px;
 
+        &-label {
+          margin-bottom: 10px;
+        }
+
         textarea {
           height: 170px;
           padding: 18px;
+          font-size: 14px;
+          color: $v1-color-grey-2;
 
           &::placeholder {
-            font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.06px;
           }
         }
       }
 
       &-action {
         display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        align-items: flex-start;
+
+        &-textarea {
+          width: 180px;
+          height: 32px;
+        }
+
+        &-space {
+          display: flex;
+          flex: auto;
+        }
 
         &-button {
           width: 142px;
@@ -376,7 +394,7 @@
           margin-top: 33px;
 
           &-description {
-            margin-bottom: 18px;
+            margin-bottom: 28px;
           }
 
           &-item {

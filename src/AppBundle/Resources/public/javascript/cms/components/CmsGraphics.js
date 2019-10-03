@@ -1,7 +1,7 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
+import CmsLanguageFilter from "@components/Filters/CmsLanguageFilter";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
-import CmsLanguageFilter from "./CmsLanguageFilter";
 
 // export const GRAPHICS = {
 // 	name: "Graphics",
@@ -15,7 +15,7 @@ import CmsLanguageFilter from "./CmsLanguageFilter";
 // 	],
 // 	multiple: false,
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
-// 	validations: [  - ?
+// 	validations: [
 // 		{
 // 			key: "GRAPHICS",
 // 			value: "GRAPHICS_YES",
@@ -25,19 +25,27 @@ import CmsLanguageFilter from "./CmsLanguageFilter";
 // 	],
 // };
 
+const columns = [
+	{
+		type: "radio",
+		text: "GRAPHICS_YES",
+		value: "GRAPHICS_YES",
+	}, {
+		type: "radio",
+		text: "GRAPHICS_NO",
+		value: "GRAPHICS_NO",
+	},
+];
+
 const CmsGraphics = ({ type, rights, onUpdate }) => {
-	// <Translate i18nKey="GRAPHICS_LIVE_FEED" />
-	const columns = [
-		{
-			type: "radio",
-			text: "GRAPHICS_YES",
-			value: "GRAPHICS_YES",
-		}, {
-			type: "radio",
-			text: "GRAPHICS_NO",
-			value: "GRAPHICS_NO",
-		},
-	];
+	const listKey = `${type}_LANGUAGES`;
+	const handleLanguage = (value) => {
+		for (const right of rights) {
+			right.details[listKey] = value;
+		}
+		onUpdate(rights);
+	};
+
 	return (
 		<div className="production-graphics">
 			<div className="tab-description subtitle2">
@@ -52,23 +60,12 @@ const CmsGraphics = ({ type, rights, onUpdate }) => {
 					header={false}
 					checkDelivery
 				/>
-				<CmsLanguageFilter
-					languages={[{
-						id: 1,
-						value: "Arabic",
-					}, {
-						id: 2,
-						value: "Spanish",
-					}]}
-					items={[{
-						id: 1,
-						value: "Arabic",
-					}, {
-						id: 2,
-						value: "Spanish",
-					}]}
-					onUpdate={() => {}}
-				/>
+				{rights[0].details[type] === `${type}_YES` && (
+					<CmsLanguageFilter
+						value={rights[0].details[listKey] || ""}
+						onChange={handleLanguage}
+					/>
+				)}
 			</div>
 		</div>
 	);

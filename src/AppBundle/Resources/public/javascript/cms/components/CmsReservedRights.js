@@ -23,34 +23,33 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	],
 // };
 
-const CmsReservedRights = ({ type, rights, onUpdate }) => {
-	const columns = [
-		{
-			type: "radio",
-			text: "RESERVED_RIGHTS_YES",
-			value: "RESERVED_RIGHTS_YES",
-		}, {
-			type: "radio",
-			text: "RESERVED_RIGHTS_NO",
-			value: "RESERVED_RIGHTS_NO",
-		},
-	];
+const columns = [
+	{
+		type: "radio",
+		text: "RESERVED_RIGHTS_YES",
+		value: "RESERVED_RIGHTS_YES",
+	}, {
+		type: "radio",
+		text: "RESERVED_RIGHTS_NO",
+		value: "RESERVED_RIGHTS_NO",
+	},
+];
 
-	return (
-		<div className="reserved-rights">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="RESERVED_RIGHTS_DESCRIPTION" />
-			</div>
-			<div className="reserved-rights-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-				/>
-			</div>
+const CmsReservedRights = ({ type, rights, onUpdate }) => (
+	<div className="reserved-rights">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="RESERVED_RIGHTS_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="reserved-rights-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+				header={false}
+			/>
+		</div>
+	</div>
+);
 
 export default CmsReservedRights;

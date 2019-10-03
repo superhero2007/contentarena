@@ -8,12 +8,13 @@ import CmsRightStatusFilter from "./CmsRightStatusFilter";
 import CmsRegionFilter from "./CmsRegionFilter";
 import CmsListingFilter from "./CmsListingFilter";
 import CmsTerritoryFilter from "./CmsTerritoryFilter";
+import CmsLanguageFilter from "./CmsLanguageFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
 		<components.Option {...props}>
 			<div className="checkbox-container">
-				<input type="checkbox" checked={props.isSelected} />
+				<input type="checkbox" checked={props.isSelected} onChange={() => {}} />
 				<span className="checkbox-label">
 					{props.children}
 				</span>
@@ -34,12 +35,10 @@ const MultiValue = ({
 ) : null);
 
 export const BaseFilter = ({
-	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent, className,
+	name, options, value, multi, onChange, placeholder, multiText, getOptionLabel, getOptionValue, MultiValueComponent, className, isClearable,
 }) => (
 	<div className={cn("default-filter", { mobile: isMobileOnly })}>
-		<label>
-			{name}
-		</label>
+		{name && <label>{name}</label>}
 		<Select
 			components={{
 				MultiValue: MultiValueComponent,
@@ -48,7 +47,7 @@ export const BaseFilter = ({
 				IndicatorSeparator: () => null,
 			}}
 			placeholder={placeholder}
-			clearable
+			isClearable={isClearable}
 			onChange={onChange}
 			multiText={multiText}
 			isMulti={multi}
@@ -72,6 +71,7 @@ BaseFilter.defaultProps = {
 	multi: true,
 	className: "dropdown-container",
 	MultiValueComponent: MultiValue,
+	isClearable: true,
 };
 
 export const SeasonFilter = CmsSeasonsFilter;
@@ -85,3 +85,5 @@ export const RightFilter = CmsRightsFilter;
 export const ListingFilter = CmsListingFilter;
 
 export const TerritoryFilter = CmsTerritoryFilter;
+
+export const LanguageFilter = CmsLanguageFilter;

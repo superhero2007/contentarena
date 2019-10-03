@@ -1,7 +1,9 @@
 import React from "react";
+import Select from "react-select-last";
 import Translate from "@components/Translator/Translate";
 import CmsRadioBox from "./CmsRadioBox";
 import CmsCheckBox from "./CmsCheckBox";
+import CmsInputBox from "./CmsInputBox";
 import { getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
 import { SuperRightProductionDetailsLabels } from "../../sell/components/SuperRightDefinitions";
 
@@ -21,17 +23,19 @@ const CmsPropertyDetailTable = ({
 
 	const isInputDisabled = (right, value) => disabled && disabled[value] && disabled[value].includes(right.code);
 
-	const handleRadioChange = (value, index) => {
+	const handleRadioChange = (value, index, key = type) => {
+		const right = rights.find(element => element.id === index);
 		if (selectAllCheckbox) {
-			rights[index].details[type] = [value];
+			right.details[key] = [value];
 		} else {
-			rights[index].details[type] = value;
+			right.details[key] = value;
 		}
 		onUpdate(rights);
 	};
 
 	const handleCheckBoxChange = (value, index) => {
-		let arr = rights[index].details[type];
+		const right = rights.find(element => element.id === index);
+		let arr = right.details[type];
 		if (selectAllCheckbox && value === `${type}_ALL`) {
 			arr = [value];
 		} else {
@@ -47,7 +51,7 @@ const CmsPropertyDetailTable = ({
 			}
 		}
 
-		rights[index].details[type] = arr;
+		right.details[type] = arr;
 		onUpdate(rights);
 	};
 
@@ -72,11 +76,48 @@ const CmsPropertyDetailTable = ({
 		return dedicatedRights;
 	};
 
+	const getRadioText = (right, row, item) => {
+		if (item.value === "ASPECT_RATIO_OTHER") {
+			return (
+				<CmsInputBox
+					className="property-details-input"
+					value={right.details[item.key] || ""}
+					onChange={e => handleRadioChange(e.target.value, row, item.key)}
+				/>
+			);
+		}
+
+		if (item.value === "CONTENT_DELIVERY_DEDICATED" && right.code === "NA") {
+			const options = [
+				{
+					value: "CONTENT_DELIVERY_NA_DEDICATED",
+					label: "Dedicated delivery",
+				}, {
+					value: "CONTENT_DELIVERY_NA_HIGHLIGHT",
+					label: "Delivered via highlight & clip footage",
+				},
+			];
+			const value = options.find(item => item.value === right.details[item.key]);
+			return (
+				<div className="property-details-select">
+					<Select
+						value={value}
+						onChange={value => handleRadioChange(value, row, item.key)}
+						placeholder="Select"
+						options={options}
+					/>
+				</div>
+			);
+		}
+
+		return item.text ? <Translate i18nKey={item.text} /> : "";
+	};
+
 	const renderComponent = (item, right, row, column) => {
 		if (item.type === "radio") {
 			return (
 				<CmsRadioBox
-					text={typeof item.text === "string" ? <Translate i18nKey={item.text} /> : item.text}
+					text={getRadioText(right, row, item)}
 					disabled={isInputDisabled(right, columns[column].value)}
 					value={isInputBtnChecked(right.details, columns[column].value)}
 					onChange={() => handleRadioChange(columns[column].value, row)}
@@ -90,6 +131,16 @@ const CmsPropertyDetailTable = ({
 					text={<Translate i18nKey={item.text} />}
 					value={isInputBtnChecked(right.details, columns[column].value)}
 					onChange={() => handleCheckBoxChange(columns[column].value, row)}
+				/>
+			);
+		}
+
+		if (item.type === "inputBox") {
+			return (
+				<CmsInputBox
+					className="property-details-input"
+					value={right.details[item.key] || ""}
+					onChange={e => handleRadioChange(e.target.value, row, item.key)}
 				/>
 			);
 		}
@@ -119,7 +170,7 @@ const CmsPropertyDetailTable = ({
 						</div>
 						{columns.map((value, column) => (
 							<div className="property-details-table-td" key={`column-${row}-${column}`}>
-								{ renderComponent(value, right, row, column) }
+								{ renderComponent(value, right, right.id, column) }
 							</div>
 						))}
 					</div>

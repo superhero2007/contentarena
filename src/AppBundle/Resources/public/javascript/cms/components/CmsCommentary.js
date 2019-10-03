@@ -1,7 +1,7 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
+import CmsLanguageFilter from "@components/Filters/CmsLanguageFilter";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
-import CmsLanguageFilter from "./CmsLanguageFilter";
 
 // export const COMMENTARY = {
 // 	name: "Commentary",
@@ -15,7 +15,7 @@ import CmsLanguageFilter from "./CmsLanguageFilter";
 // 	],
 // 	multiple: false,
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
-// 	validations: [ - ?
+// 	validations: [
 // 		{
 // 			key: "COMMENTARY",
 // 			value: "COMMENTARY_YES",
@@ -25,19 +25,26 @@ import CmsLanguageFilter from "./CmsLanguageFilter";
 // 	],
 // };
 
+const columns = [
+	{
+		type: "radio",
+		text: "COMMENTARY_YES",
+		value: "COMMENTARY_YES",
+	}, {
+		type: "radio",
+		text: "COMMENTARY_NO",
+		value: "COMMENTARY_NO",
+	},
+];
+
 const CmsCommentary = ({ type, rights, onUpdate }) => {
-	// <Translate i18nKey="COMMENTARY_LIVE_FEED" />
-	const columns = [
-		{
-			type: "radio",
-			text: "COMMENTARY_YES",
-			value: "COMMENTARY_YES",
-		}, {
-			type: "radio",
-			text: "COMMENTARY_NO",
-			value: "COMMENTARY_NO",
-		},
-	];
+	const listKey = `${type}_LANGUAGES`;
+	const handleLanguage = (value) => {
+		for (const right of rights) {
+			right.details[listKey] = value;
+		}
+		onUpdate(rights);
+	};
 
 	return (
 		<div className="production-commentary">
@@ -53,23 +60,12 @@ const CmsCommentary = ({ type, rights, onUpdate }) => {
 					header={false}
 					checkDelivery
 				/>
-				<CmsLanguageFilter
-					languages={[{
-						id: 1,
-						value: "Arabic",
-					}, {
-						id: 2,
-						value: "Spanish",
-					}]}
-					items={[{
-						id: 1,
-						value: "Arabic",
-					}, {
-						id: 2,
-						value: "Spanish",
-					}]}
-					onUpdate={() => {}}
-				/>
+				{rights[0].details[type] === `${type}_YES` && (
+					<CmsLanguageFilter
+						value={rights[0].details[listKey] || ""}
+						onChange={handleLanguage}
+					/>
+				)}
 			</div>
 		</div>
 	);

@@ -19,49 +19,47 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 // };
 
-const CmsTransmissionMeans = ({ type, rights, onUpdate }) => {
-	const columns = [{
-		value: "TRANSMISSION_MEANS_ALL",
-		type: "radio",
-		text: "",
-	}, {
-		value: "TRANSMISSION_MEANS_CABLE",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TRANSMISSION_MEANS_SATELLITE",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TRANSMISSION_MEANS_DIGITAL",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TRANSMISSION_MEANS_INTERNET",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TRANSMISSION_MEANS_MOBILE",
-		type: "checkbox",
-		text: "",
-	}];
+const columns = [{
+	value: "TRANSMISSION_MEANS_ALL",
+	type: "radio",
+	text: "",
+}, {
+	value: "TRANSMISSION_MEANS_CABLE",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TRANSMISSION_MEANS_SATELLITE",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TRANSMISSION_MEANS_DIGITAL",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TRANSMISSION_MEANS_INTERNET",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TRANSMISSION_MEANS_MOBILE",
+	type: "checkbox",
+	text: "",
+}];
 
-	return (
-		<div className="transmission-means">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="TRANSMISSION_MEANS_DESCRIPTION" />
-			</div>
-			<div className="transmission-means-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-					selectAllCheckbox
-				/>
-			</div>
+const CmsTransmissionMeans = ({ type, rights, onUpdate }) => (
+	<div className="transmission-means">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="TRANSMISSION_MEANS_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="transmission-means-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+				selectAllCheckbox
+			/>
+		</div>
+	</div>
+);
 
 export default CmsTransmissionMeans;

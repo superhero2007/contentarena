@@ -17,41 +17,39 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 // };
 
-const CmsTransmissionForm = ({ type, rights, onUpdate }) => {
-	const columns = [{
-		type: "radio",
-		text: "",
-		value: "EXPLOITATION_FORM_ALL",
-	}, {
-		type: "checkbox",
-		text: "",
-		value: "EXPLOITATION_FORM_FREE",
-	}, {
-		type: "checkbox",
-		text: "",
-		value: "EXPLOITATION_FORM_PAY",
-	}, {
-		type: "checkbox",
-		text: "",
-		value: "EXPLOITATION_FORM_CLOSED",
-	}];
+const columns = [{
+	type: "radio",
+	text: "",
+	value: "EXPLOITATION_FORM_ALL",
+}, {
+	type: "checkbox",
+	text: "",
+	value: "EXPLOITATION_FORM_FREE",
+}, {
+	type: "checkbox",
+	text: "",
+	value: "EXPLOITATION_FORM_PAY",
+}, {
+	type: "checkbox",
+	text: "",
+	value: "EXPLOITATION_FORM_CLOSED",
+}];
 
-	return (
-		<div className="transmission-form">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="EXPLOITATION_FORM_DESCRIPTION" />
-			</div>
-			<div className="transmission-form-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-					selectAllCheckbox
-				/>
-			</div>
+const CmsTransmissionForm = ({ type, rights, onUpdate }) => (
+	<div className="transmission-form">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="EXPLOITATION_FORM_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="transmission-form-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+				selectAllCheckbox
+			/>
+		</div>
+	</div>
+);
 
 export default CmsTransmissionForm;

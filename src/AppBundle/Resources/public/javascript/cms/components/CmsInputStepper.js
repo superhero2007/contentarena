@@ -1,7 +1,9 @@
 import React from "react";
 
-const CmsInputStepper = ({ value, onAdd, onMinus }) => (
-	<div className="input-stepper">
+const CmsInputStepper = ({
+	value, onAdd, onMinus, ...props
+}) => (
+	<div className="input-stepper" {...props}>
 		<div className="input-stepper-content">
 			{value}
 		</div>

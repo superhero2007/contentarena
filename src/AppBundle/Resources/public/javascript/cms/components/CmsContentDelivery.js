@@ -18,45 +18,44 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	},
 // };
 
-const CmsContentDelivery = ({ type, rights, onUpdate }) => {
-	const disabled = {
-		CONTENT_DELIVERY_DEDICATED: ["LT", "PR"],
-		CONTENT_DELIVERY_LIVE: ["LT", "PR"],
-	};
-
-	const columns = [{
-		value: "CONTENT_DELIVERY_LIVE",
-		type: "radio",
-		text: "",
-	}, {
-		value: "CONTENT_DELIVERY_DEDICATED",
-		type: "radio",
-		text: "",
-	}, {
-		value: "CONTENT_DELIVERY_FOOTAGE",
-		type: "radio",
-		text: "",
-	}];
-
-	return (
-		<div className="content-delivery">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="CONTENT_DELIVERY_DESCRIPTION" />
-			</div>
-			<div className="content-delivery-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					disabled={disabled}
-					onUpdate={onUpdate}
-				/>
-			</div>
-			<div className="content-delivery-footer body2">
-				<Translate i18nKey="CONTENT_DELIVERY_FOOTER" />
-			</div>
-		</div>
-	);
+const disabled = {
+	CONTENT_DELIVERY_DEDICATED: ["LT", "PR"],
+	CONTENT_DELIVERY_LIVE: ["LT", "PR"],
 };
+
+const columns = [{
+	value: "CONTENT_DELIVERY_LIVE",
+	type: "radio",
+	text: "",
+}, {
+	value: "CONTENT_DELIVERY_DEDICATED",
+	type: "radio",
+	text: "",
+	key: "CONTENT_DELIVERY_NA",
+}, {
+	value: "CONTENT_DELIVERY_FOOTAGE",
+	type: "radio",
+	text: "",
+}];
+
+const CmsContentDelivery = ({ type, rights, onUpdate }) => (
+	<div className="content-delivery">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="CONTENT_DELIVERY_DESCRIPTION" />
+		</div>
+		<div className="content-delivery-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				disabled={disabled}
+				onUpdate={onUpdate}
+			/>
+		</div>
+		<div className="content-delivery-footer body2">
+			<Translate i18nKey="CONTENT_DELIVERY_FOOTER" />
+		</div>
+	</div>
+);
 
 export default CmsContentDelivery;

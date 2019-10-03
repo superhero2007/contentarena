@@ -149,7 +149,7 @@ export const getRightsValue = (key, defaultRights, context) => {
 
 	switch (key) {
 	case PRODUCTION_TAB.CAMERA:
-		const cameras = getUniqueSelectedOptions(rights, PRODUCTION_TAB.CAMERA);
+		const cameras = getUniqueSelectedOptions(rights, "CAMERAS");
 		if (cameras.length === 1) {
 			return `Minimum cameras: ${first(cameras)}`;
 		}
@@ -184,7 +184,7 @@ export const getRightsValue = (key, defaultRights, context) => {
 
 	const options = getUniqueSelectedOptions(rights, key);
 
-	return options.length > 1 ? multipleVabel : context.t(`RIGHTS_${options[0]}`);
+	return options.length > 1 ? multipleVabel : context.t(`${options[0]}`);
 };
 
 export const hasRightComment = (right, key) => {

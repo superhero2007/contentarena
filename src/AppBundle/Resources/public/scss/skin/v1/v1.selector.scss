@@ -136,6 +136,21 @@
       }
     }
 
+    .country-selector {
+      @extend .region-selector;
+
+      width: 340px !important;
+      height: 291px;
+
+      .input-checkbox {
+        cursor: default;
+      }
+
+      button {
+        min-width: 70px;
+      }
+    }
+
     .region-selector {
       width: 265px;
       border-radius: 2px;
@@ -164,21 +179,6 @@
           justify-content: space-between;
           width: 100%;
         }
-      }
-    }
-
-    .country-selector {
-      @extend .region-selector;
-
-      width: 340px !important;
-      height: 291px;
-
-      .input-checkbox {
-        cursor: default;
-      }
-
-      button {
-        min-width: 70px;
       }
     }
   }

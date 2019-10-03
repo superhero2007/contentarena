@@ -15,107 +15,50 @@ import CmsTransmissionMeans from "./CmsTransmissionMeans";
 import CmsLicensedLanguages from "./CmsLicensedLanguages";
 import CmsReservedRights from "./CmsReservedRights";
 
-const CmsTabContent = ({ type, rights, onUpdate }) => {
+const CmsTabContent = ({ type, ...props }) => {
+	let Component = null;
 	switch (type) {
 	case PRODUCTION_TAB.CONTENT_DELIVERY:
-		return (
-			<CmsContentDelivery
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsContentDelivery;
+		break;
 	case PRODUCTION_TAB.TECHNICAL_DELIVERY:
-		return (
-			<CmsDeliveryMethod
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsDeliveryMethod;
+		break;
 	case PRODUCTION_TAB.GRAPHICS:
-		return (
-			<CmsGraphics
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsGraphics;
+		break;
 	case PRODUCTION_TAB.ASPECT_RATIO:
-		return (
-			<CmsAspectRatio
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsAspectRatio;
+		break;
 	case PRODUCTION_TAB.COMMENTARY:
-		return (
-			<CmsCommentary
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsCommentary;
+		break;
 	case PRODUCTION_TAB.CAMERA:
-		return (
-			<CmsCameraStandards
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsCameraStandards;
+		break;
 	case RIGHTS_TAB.SUBLICENSE:
-		return (
-			<CmsRightToSublicense
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsRightToSublicense;
+		break;
 	case RIGHTS_TAB.BROADCASTING:
-		return (
-			<CmsTransmissionObligation
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsTransmissionObligation;
+		break;
 	case RIGHTS_TAB.EXPLOITATION_FORM:
-		return (
-			<CmsTransmissionForm
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsTransmissionForm;
+		break;
 	case RIGHTS_TAB.TRANSMISSION_MEANS:
-		return (
-			<CmsTransmissionMeans
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsTransmissionMeans;
+		break;
 	case RIGHTS_TAB.LICENSED_LANGUAGES:
-		return (
-			<CmsLicensedLanguages
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsLicensedLanguages;
+		break;
 	case RIGHTS_TAB.RESERVED_RIGHTS:
-		return (
-			<CmsReservedRights
-				onUpdate={onUpdate}
-				rights={rights}
-				type={type}
-			/>
-		);
+		Component = CmsReservedRights;
+		break;
 	default:
 		return <div />;
 	}
+
+	return <Component type={type} {...props} />;
 };
 
 export default CmsTabContent;

@@ -23,35 +23,33 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 // 	],
 // };
 
-const CmsTransmissionObligation = ({ type, rights, onUpdate }) => {
-	const columns = [
-		{
-			type: "radio",
-			text: "BROADCASTING_YES",
-			value: "BROADCASTING_YES",
-		}, {
-			type: "radio",
-			text: "BROADCASTING_NO",
-			value: "BROADCASTING_NO",
-		},
-	];
+const columns = [
+	{
+		type: "radio",
+		text: "BROADCASTING_YES",
+		value: "BROADCASTING_YES",
+	}, {
+		type: "radio",
+		text: "BROADCASTING_NO",
+		value: "BROADCASTING_NO",
+	},
+];
 
-	return (
-		<div className="transmission-obligation">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="BROADCASTING_DESCRIPTION" />
-			</div>
-			<div className="transmission-obligation-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-					header={false}
-				/>
-			</div>
+const CmsTransmissionObligation = ({ type, rights, onUpdate }) => (
+	<div className="transmission-obligation">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="BROADCASTING_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="transmission-obligation-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+				header={false}
+			/>
+		</div>
+	</div>
+);
 
 export default CmsTransmissionObligation;

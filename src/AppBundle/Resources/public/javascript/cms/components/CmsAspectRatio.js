@@ -1,7 +1,6 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
-import CmsInputBox from "./CmsInputBox";
 
 // export const ASPECT_RATIO = {
 // 	name: "Aspect ratio",
@@ -16,7 +15,7 @@ import CmsInputBox from "./CmsInputBox";
 // 	],
 // 	multiple: false,
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
-// 	validations: [ - ?
+// 	validations: [
 // 		{
 // 			key: "ASPECT_RATIO",
 // 			value: "ASPECT_RATIO_CUSTOM",
@@ -26,43 +25,36 @@ import CmsInputBox from "./CmsInputBox";
 // 	],
 // };
 
-const CmsAspectRatio = ({ type, rights, onUpdate }) => {
-	// <Translate i18nKey="ASPECT_RATIO_LIVE_FEED" />
-	const columns = [{
-		type: "radio",
-		text: "",
-		value: "ASPECT_RATIO_16_9",
-	}, {
-		type: "radio",
-		text: "",
-		value: "ASPECT_RATIO_4_3",
-	}, {
-		type: "radio",
-		text: (
-			<CmsInputBox
-				className="property-details-input"
-				value=""
-				onChange={() => {}}
-			/>
-		),
-		value: "ASPECT_RATIO_OTHER",
-	}];
-	return (
-		<div className="aspect-ratio">
-			<div className="tab-description subtitle2">
-				<Translate i18nKey="ASPECT_RATIO_DESCRIPTION" />
-			</div>
-			<div className="aspect-ratio-content">
-				<CmsPropertyDetailTable
-					rights={rights}
-					type={type}
-					columns={columns}
-					onUpdate={onUpdate}
-					checkDelivery
-				/>
-			</div>
+const columns = [{
+	type: "radio",
+	text: "",
+	value: "ASPECT_RATIO_16_9",
+}, {
+	type: "radio",
+	text: "",
+	value: "ASPECT_RATIO_4_3",
+}, {
+	type: "radio",
+	text: "",
+	key: "ASPECT_RATIO_TEXT",
+	value: "ASPECT_RATIO_OTHER",
+}];
+
+const CmsAspectRatio = ({ type, rights, onUpdate }) => (
+	<div className="aspect-ratio">
+		<div className="tab-description subtitle2">
+			<Translate i18nKey="ASPECT_RATIO_DESCRIPTION" />
 		</div>
-	);
-};
+		<div className="aspect-ratio-content">
+			<CmsPropertyDetailTable
+				rights={rights}
+				type={type}
+				columns={columns}
+				onUpdate={onUpdate}
+				checkDelivery
+			/>
+		</div>
+	</div>
+);
 
 export default CmsAspectRatio;

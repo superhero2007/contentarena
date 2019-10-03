@@ -181,6 +181,7 @@
       &-selector {
         height: 24px;
         width: 24px;
+        min-width: 24px;
         background-color: $v1-background-white;
         border: 1px solid $v1-color-grey-3;
         border-radius: 50%;
@@ -260,6 +261,10 @@
       font-family: $v1-font-family;
       font-size: 12px;
       line-height: 18px;
+
+      &.required {
+        border: 1px solid $v1-color-red-1;
+      }
 
       &:hover,
       &:active {

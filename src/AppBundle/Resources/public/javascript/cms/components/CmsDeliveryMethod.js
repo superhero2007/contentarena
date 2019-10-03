@@ -17,29 +17,48 @@ import CmsInputStepper from "./CmsInputStepper";
 // 		"TECHNICAL_DELIVERY_FIBER",
 // 	],
 // 	multiple: true,
-// 	technicalFee: "TECHNICAL_DELIVERY_SATELLITE", - ?
+// 	technicalFee: "TECHNICAL_DELIVERY_SATELLITE",
 // 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 // };
 
+const columns = [{
+	value: "TECHNICAL_DELIVERY_SATELLITE",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TECHNICAL_DELIVERY_IP",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TECHNICAL_DELIVERY_FTP",
+	type: "checkbox",
+	text: "",
+}, {
+	value: "TECHNICAL_DELIVERY_FIBER",
+	type: "checkbox",
+	text: "",
+}];
+
 const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
-	// <Translate i18nKey="TECHNICAL_DELIVERY_LIVE_FEED" />,
-	const columns = [{
-		value: "TECHNICAL_DELIVERY_SATELLITE",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TECHNICAL_DELIVERY_IP",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TECHNICAL_DELIVERY_FTP",
-		type: "checkbox",
-		text: "",
-	}, {
-		value: "TECHNICAL_DELIVERY_FIBER",
-		type: "checkbox",
-		text: "",
-	}];
+	const firstRight = rights[0];
+	const feePercentage = firstRight.details.TECHNICAL_FEE_PERCENTAGE || 0;
+
+	const handleChangeTechnicalFeePercentage = (value) => {
+		if (value > 100 || value < 0) {
+			return;
+		}
+		for (const right of rights) {
+			right.details.TECHNICAL_FEE_PERCENTAGE = value;
+		}
+		onUpdate(rights);
+	};
+
+	const handleChangeTechnicalFee = (value) => {
+		for (const right of rights) {
+			right.details.TECHNICAL_FEE = value;
+		}
+		onUpdate(rights);
+	};
 
 	return (
 		<div className="delivery-method">
@@ -61,21 +80,22 @@ const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
 				</label>
 				<div className="delivery-method-fee-item">
 					<CmsRadioBox
-						value=""
+						value={firstRight.details.TECHNICAL_FEE === "INCLUDED"}
 						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_INCLUDED" />}
-						onChange={() => {}}
+						onChange={() => handleChangeTechnicalFee("INCLUDED")}
 					/>
 				</div>
 				<div className="delivery-method-fee-item">
 					<CmsRadioBox
-						value=""
+						value={firstRight.details.TECHNICAL_FEE === "ON_TOP"}
 						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_PERCENTAGE" />}
-						onChange={() => {}}
+						onChange={() => handleChangeTechnicalFee("ON_TOP")}
 					/>
 					<CmsInputStepper
-						value="00%"
-						onAdd={() => {}}
-						onMinus={() => {}}
+						value={`${feePercentage < 10 ? "0" : ""}${feePercentage}%`}
+						onAdd={() => handleChangeTechnicalFeePercentage(feePercentage + 1)}
+						onMinus={() => handleChangeTechnicalFeePercentage(feePercentage - 1)}
+						onClick={() => handleChangeTechnicalFee("ON_TOP")}
 					/>
 				</div>
 			</div>

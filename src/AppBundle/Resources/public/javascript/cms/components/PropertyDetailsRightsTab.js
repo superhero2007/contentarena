@@ -14,7 +14,7 @@ class PropertyDetailsRightsTab extends Component {
 		super(props);
 		this.state = {
 			rights: cloneDeep(props.property.rights),
-			currentStep: 1,
+			currentStep: 0,
 		};
 		this.tabRefs = {};
 		Object.values(RIGHTS_TAB).forEach(item => this.tabRefs[item] = React.createRef());
@@ -40,17 +40,15 @@ class PropertyDetailsRightsTab extends Component {
 		}];
 	}
 
-	handleSave = (rights) => {
-		const { currentStep } = this.state;
-		if (currentStep === this.tabs.length) {
-			return;
+	handleSave = (rights, index) => {
+		if (index < this.tabs.length - 1) {
+			this.tabRefs[this.tabs[index + 1].type].current.open();
 		}
-		this.tabRefs[this.tabs[currentStep - 1].type].current.close();
-		this.tabRefs[this.tabs[currentStep].type].current.open();
+		this.tabRefs[this.tabs[index].type].current.close();
 
 		this.setState({
-			rights,
-			currentStep: currentStep + 1,
+			rights: cloneDeep(rights),
+			currentStep: index + 1,
 		});
 		// this.props.updateRights("rights", rights);
 	};
@@ -69,17 +67,17 @@ class PropertyDetailsRightsTab extends Component {
 				{this.tabs.map((item, index) => (
 					<AccordionContainer
 						title={<Translate i18nKey={item.title} />}
-						disabled={currentStep < index + 1}
+						disabled={currentStep < index}
 						enableNextStep
 						value={getRightsValue(item.type, rights, this.context)}
-						opened={currentStep === index + 1}
+						opened={currentStep === index}
 						ref={this.tabRefs[item.type]}
 						key={item.type}
 					>
 						<CmsTabLayout
 							type={item.type}
 							rights={rights}
-							onSave={this.handleSave}
+							onSave={value => this.handleSave(value, index)}
 						/>
 					</AccordionContainer>
 				))}
