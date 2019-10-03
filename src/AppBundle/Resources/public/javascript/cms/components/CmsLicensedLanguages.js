@@ -1,5 +1,5 @@
 import React from "react";
-import CmsLanguageFilter from "@components/Filters/CmsLanguageFilter";
+import CmsPropertyLanguageFilter from "@components/Filters/CmsPropertyLanguageFilter";
 import Translate from "@components/Translator/Translate";
 
 // export const LICENSED_LANGUAGES = {
@@ -34,7 +34,7 @@ const CmsLicensedLanguages = ({ rights, onUpdate }) => {
 				<Translate i18nKey="LICENSED_LANGUAGES_DESCRIPTION" />
 			</div>
 			<div className="licensed-languages-content">
-				<CmsLanguageFilter
+				<CmsPropertyLanguageFilter
 					value={rights[0].details[listKey] || ""}
 					onChange={handleLanguage}
 				/>

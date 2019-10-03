@@ -20,7 +20,7 @@ const MultiValueComponent = ({
 	</components.MultiValueContainer>
 ) : null);
 
-const CmsLanguageFilter = ({ value, onChange }) => {
+const CmsPropertyLanguageFilter = ({ value, onChange }) => {
 	const handleRemove = (selected) => {
 		const updatedValue = value.filter(element => element.value !== selected.value);
 		onChange(updatedValue);
@@ -75,4 +75,4 @@ const CmsLanguageFilter = ({ value, onChange }) => {
 	);
 };
 
-export default CmsLanguageFilter;
+export default CmsPropertyLanguageFilter;

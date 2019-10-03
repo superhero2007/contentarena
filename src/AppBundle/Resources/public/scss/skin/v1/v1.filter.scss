@@ -32,6 +32,8 @@
 
         .default-filter {
           width: 100%;
+          position: relative;
+          z-index: 2;
 
           .dropdown__control {
             height: 61px;

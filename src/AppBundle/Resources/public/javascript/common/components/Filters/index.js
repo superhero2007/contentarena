@@ -8,7 +8,6 @@ import CmsRightStatusFilter from "./CmsRightStatusFilter";
 import CmsRegionFilter from "./CmsRegionFilter";
 import CmsListingFilter from "./CmsListingFilter";
 import CmsTerritoryFilter from "./CmsTerritoryFilter";
-import CmsLanguageFilter from "./CmsLanguageFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
@@ -85,5 +84,3 @@ export const RightFilter = CmsRightsFilter;
 export const ListingFilter = CmsListingFilter;
 
 export const TerritoryFilter = CmsTerritoryFilter;
-
-export const LanguageFilter = CmsLanguageFilter;

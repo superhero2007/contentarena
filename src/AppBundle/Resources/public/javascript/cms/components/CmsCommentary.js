@@ -1,6 +1,6 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
-import CmsLanguageFilter from "@components/Filters/CmsLanguageFilter";
+import CmsPropertyLanguageFilter from "@components/Filters/CmsPropertyLanguageFilter";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
 // export const COMMENTARY = {
@@ -61,7 +61,7 @@ const CmsCommentary = ({ type, rights, onUpdate }) => {
 					checkDelivery
 				/>
 				{rights[0].details[type] === `${type}_YES` && (
-					<CmsLanguageFilter
+					<CmsPropertyLanguageFilter
 						value={rights[0].details[listKey] || ""}
 						onChange={handleLanguage}
 					/>
