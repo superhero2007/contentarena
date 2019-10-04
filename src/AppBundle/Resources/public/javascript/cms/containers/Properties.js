@@ -6,7 +6,6 @@ import api from "../../api";
 import { DefaultBox, SkinContainer } from "../../common/components/Containers";
 import PropertyList from "./PropertyList";
 import { ROUTE_PATHS } from "../../common/constants";
-import { cmsFile } from "../../main/components/Icons";
 
 const CreatePropertyButton = ({ history }) => (
 	<button
@@ -104,7 +103,6 @@ class Properties extends React.Component {
 
 					{propertiesLoaded && properties.length === 0 && (
 						<div className="property-empty-list">
-							<img src={cmsFile} alt="" />
 							<span className="title">
 								<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_1" />
 							</span>

@@ -6,9 +6,21 @@
     .season-selector {
       display: flex;
       padding: 40px;
+      flex-wrap: wrap;
 
       .input-checkbox {
         min-width: 150px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .season-fixture-selector {
+      display: flex;
+      flex-direction: column;
+      padding: 0 40px;
+
+      h5 {
+        margin-bottom: 20px;
       }
     }
 
@@ -188,6 +200,143 @@
           display: flex;
           justify-content: space-between;
           width: 100%;
+        }
+      }
+    }
+
+    .country-selector {
+      @extend .region-selector;
+
+      width: 340px !important;
+      height: 291px;
+
+      .input-checkbox {
+        cursor: default;
+      }
+
+      button {
+        min-width: 70px;
+      }
+    }
+
+    .fixture {
+
+      &-season {
+        display: flex;
+        justify-content: space-between;
+        height: 60px;
+        align-items: center;
+        border-top: 1px solid lightgrey;
+
+        &-name {
+          width: 70%;
+          text-align: left;
+          padding-left: 40px;
+        }
+
+        &-icon {
+          position: absolute;
+        }
+
+        &-amount {
+          font-size: 16px;
+          font-weight: normal;
+          color: #03547c;
+        }
+
+        &:last-child {
+          border-bottom: 1px solid lightgrey;
+        }
+      }
+
+      &-container {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #eee;
+        padding: 20px 0 20px 20px;
+        transition: all 0.2s ease;
+      }
+
+      &-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &-item {
+        &-wrapper {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          height: 40px;
+          align-items: center;
+          position: relative;
+
+          input {
+            width: 95% !important;
+            font-size: 12px;
+          }
+        }
+
+        &-round {
+          width: 30%;
+        }
+
+        &-name {
+          width: 30%;
+        }
+
+        &-date {
+          width: 10%;
+          text-align: right;
+
+          .date-picker {
+            text-align: right;
+            padding-right: 0;
+          }
+        }
+
+        &-time {
+          width: 8%;
+          text-align: right;
+          padding-right: 10px;
+
+          .date-picker {
+            text-align: right;
+            padding: 10px 0;
+          }
+        }
+
+        &-timezone {
+          width: 17%;
+
+          ul {
+            background-color: white;
+          }
+        }
+
+        &-actions {
+          width: 5%;
+          display: flex;
+          justify-content: flex-end;
+
+          .icon-remove {
+            margin-left: 5px;
+          }
+
+          .remove-icon {
+            cursor: pointer;
+            color: $v1-color-red-3;
+            &.disabled{
+              color: lightgray !important;
+              cursor: auto !important;
+            }
+          }
+          .confirm-icon {
+            @extend .remove-icon;
+
+            margin-left: 8px;
+            color: $v1-color-green-1;
+          }
         }
       }
     }

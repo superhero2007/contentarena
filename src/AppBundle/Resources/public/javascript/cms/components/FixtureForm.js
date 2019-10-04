@@ -167,29 +167,33 @@ class FixtureForm extends React.Component {
 						/>
 					</div>
 
-					{this.removeIsDisabled() && (
-						<span className="remove-icon-button disabled">
-							<i className="fa fa-times-circle" />
-						</span>
-					)}
+					<div className="fixture-item-actions">
+						{this.removeIsDisabled() && (
+							<span className="remove-icon disabled">
+								<i className="fa fa-times-circle" />
+							</span>
+						)}
 
-					{!this.removeIsDisabled() && (
-						<span className="remove-icon-button" onClick={this.reset}>
-							<i className="fa fa-times-circle" />
-						</span>
-					)}
+						{!this.removeIsDisabled() && (
+							<span className="remove-icon" onClick={this.reset}>
+								<i className="fa fa-times-circle" />
+							</span>
+						)}
 
-					{this.applyIsDisabled() && (
-						<span className="remove-icon-button disabled">
-							<i className="fa fa-check-circle" />
-						</span>
-					)}
+						{this.applyIsDisabled() && (
+							<span className="confirm-icon disabled">
+								<i className="fa fa-check-circle" />
+							</span>
+						)}
 
-					{!this.applyIsDisabled() && (
-						<span className="remove-icon-button" onClick={this.create}>
-							<i className="fa fa-check-circle" />
-						</span>
-					)}
+						{!this.applyIsDisabled() && (
+							<span className="confirm-icon" onClick={this.create}>
+								<i className="fa fa-check-circle" />
+							</span>
+						)}
+					</div>
+
+
 				</section>
 
 			</>

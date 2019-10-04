@@ -17,7 +17,7 @@ import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
 import PropertyHeader from "../components/PropertyHeader";
-import PropertyCreateListing from "./PropertyCreateListing";
+import PropertyCreateListing from "../CreateListing/PropertyCreateListing";
 
 class Property extends React.Component {
 	constructor(props) {

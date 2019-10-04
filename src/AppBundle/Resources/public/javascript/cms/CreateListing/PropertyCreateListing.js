@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import queryString from "query-string";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
-import { DefaultBox, SkinContainer } from "../../common/components/Containers";
+import { DefaultBox, SkinContainer } from "@components/Containers";
 import { SERVER_ERROR_CODES } from "@constants";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
