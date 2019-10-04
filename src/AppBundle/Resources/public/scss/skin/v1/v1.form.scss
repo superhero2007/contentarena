@@ -17,10 +17,11 @@
       flex-wrap: wrap;
       align-items: stretch;
       width: 100%;
+      height: 60px;
       border: solid 1px $v1-color-grey-1;
       background-color: $v1-background-white;
       // box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
-      padding: 15px 18px;
+      padding: 0 18px;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
       &-prepend {
@@ -42,7 +43,8 @@
         outline: 0;
         color: $v1-color-info-1;
         flex: 1 1 auto;
-        width: auto;
+        // width: auto;
+        width: 100%;
 
         &::placeholder {
           color: #acacac;
@@ -180,6 +182,7 @@
       &-selector {
         height: 20px;
         width: 20px;
+        min-width: 20px;
         background-color: $v1-background-white;
         border: 1px solid $v1-color-grey-3;
         border-radius: 50%;
@@ -206,7 +209,7 @@
         width: 0;
       }
 
-      .input-radio-text {
+      &-text {
         margin-left: 12px;
         font-family: $v1-font-family;
         font-size: 16px;
@@ -257,6 +260,7 @@
       flex-direction: row;
       align-items: center;
       height: 54px;
+
       label {
         margin: 0 20px 0 0;
       }
@@ -276,6 +280,10 @@
         font-size: 14px;
         font-weight: 600;
         font-style: inherit;
+      }
+
+      &.required {
+        border: 1px solid $v1-color-red-1;
       }
 
       &:hover,

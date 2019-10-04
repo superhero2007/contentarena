@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
@@ -10,13 +10,23 @@ class AccordionContainer extends React.Component {
 
 		this.state = {
 			toggle: opened || false,
-
 		};
 	}
 
 	close = () => this.setState({ toggle: false });
 
 	open = () => this.setState({ toggle: true });
+
+	onToggle = () => {
+		const { disabled } = this.props;
+		if (disabled) {
+			return;
+		}
+
+		this.setState(state => ({
+			toggle: !state.toggle,
+		}));
+	};
 
 	render() {
 		const {
@@ -29,7 +39,7 @@ class AccordionContainer extends React.Component {
 			<div className="accordion-container" style={style}>
 				<div
 					className={cn("accordion-container-header", { "accordion-container-disabled": disabled })}
-					onClick={() => !disabled && this.setState({ toggle: !toggle })}
+					onClick={this.onToggle}
 				>
 					<span className="accordion-container-title">
 						{title}
@@ -39,8 +49,7 @@ class AccordionContainer extends React.Component {
 						<span className="accordion-container-value">
 							{value}
 						</span>
-					)
-					}
+					)}
 
 					<i className={cn("accordion-container-icon fa", { "fa-minus": toggle, "fa-plus": !toggle })} />
 				</div>
