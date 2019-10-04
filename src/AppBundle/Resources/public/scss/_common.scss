@@ -526,8 +526,12 @@ i.fa.ca-tooltip {
 .uppercase {
   text-transform: uppercase;
 }
-.pointer {
+.pointer, .clickable {
   cursor: pointer;
+}
+
+.clickable:hover {
+  color: lightgray !important;
 }
 
 .disabled-link {

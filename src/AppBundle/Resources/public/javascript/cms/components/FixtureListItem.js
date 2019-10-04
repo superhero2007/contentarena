@@ -62,12 +62,10 @@ class FixtureListItem extends React.Component {
 					{name}
 				</div>
 				<div className="fixture-item-date">
-					<i className="fa fa-calendar" />
 					{date && Moment(date).format(DATE_FORMAT)}
 					{!date && "N/A"}
 				</div>
 				<div className="fixture-item-time">
-					<i className="fa fa-clock-o" />
 					{time}
 					{!time && "N/A"}
 				</div>
@@ -78,13 +76,13 @@ class FixtureListItem extends React.Component {
 				<div className="fixture-item-actions">
 					{!showLoading && (
 						<i
-							className="fa fa-edit"
+							className="icon-edit clickable"
 							onClick={this.onUpdateFixture}
 						/>
 					)}
 					{!showLoading && (
 						<i
-							className="fa fa-trash"
+							className="icon-remove clickable"
 							onClick={() => {
 								this.setState({ showConfirmationTooltip: true });
 							}}

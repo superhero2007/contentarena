@@ -59,7 +59,7 @@ class PropertyDetailsRightsTab extends Component {
 		const { currentStep } = this.state;
 
 		return (
-			<section className="property-rights-tab">
+			<section className="property-production-tab">
 				<div className="property-tab-description body2">
 					<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
 				</div>

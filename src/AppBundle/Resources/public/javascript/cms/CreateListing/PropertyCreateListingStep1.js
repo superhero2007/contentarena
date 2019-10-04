@@ -7,7 +7,6 @@ import ReactTooltip from "react-tooltip";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
 import { getTerritoriesFromRights } from "@utils/property";
-import SeasonSelector from "@components/Season/SeasonSelector";
 import RightSelector from "@components/Right/RightSelector";
 import AccordionContainer from "@components/Containers/AccordionContainer";
 import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
@@ -21,6 +20,7 @@ import {
 import PropertyListingButtons from "../components/PropertyListingButtons";
 import { updateListing } from "../../sell/actions/contentActions";
 import { getListingName } from "../helpers/PropertyListingHelper";
+import SeasonSelection from "./SeasonSelection";
 
 class PropertyCreateListingStep1 extends React.Component {
 	constructor(props) {
@@ -75,19 +75,8 @@ class PropertyCreateListingStep1 extends React.Component {
 		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
 	};
 
-	onChangeSeason = (value) => {
-		let { seasons } = this.state;
-		const selectedSeason = seasons.find(season => season.id === value.id);
-		if (selectedSeason) {
-			seasons = seasons.filter(season => season.id !== value.id);
-		} else {
-			seasons.push(value);
-		}
-		this.setState({
-			seasons,
-			currentStep: 1,
-			rights: [],
-		});
+	onSelectSeason = (seasons) => {
+		this.setState({ seasons, currentStep: 1, rights: [] });
 	};
 
 	onExclusive = (right, exclusive) => {
@@ -147,19 +136,21 @@ class PropertyCreateListingStep1 extends React.Component {
 			territoriesMode,
 			currentStep,
 		} = this.state;
+
 		const {
 			property: { seasons: availableSeasons, rights: availableRights },
 			history,
 		} = this.props;
+
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
 		const availableCountries = getTerritoriesFromRights(rights);
-
 		const selectedSeasonsValue = getSeasonsYearString(seasons.sort(sortSeasonsOldToNew));
 		const selectedRightsValue = getRightsString(rights);
 
 		availableSeasons.sort(sortSeasons);
+		seasons.sort(sortSeasons);
 
 		return (
 			<div className="property-create-tab">
@@ -177,11 +168,12 @@ class PropertyCreateListingStep1 extends React.Component {
 					opened={currentStep === 1}
 					ref={this.seasonStep}
 				>
-					<SeasonSelector
+					<SeasonSelection
 						availableSeasons={availableSeasons}
 						selectedSeasons={seasons}
-						onSelectSeason={this.onChangeSeason}
+						onSelectSeason={this.onSelectSeason}
 					/>
+
 				</AccordionContainer>
 
 				<AccordionContainer

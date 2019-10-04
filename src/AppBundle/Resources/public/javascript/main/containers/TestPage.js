@@ -10,7 +10,7 @@ import PopupCountrySelector from "../components/PopupCountrySelector";
 import PropertyHeader from "../../cms/components/PropertyHeader";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "../../common/constants";
 import RightsOverview from "../../cms/RightsOverview/CmsRightsOverview";
-import CmsFixtures from "../../cms/containers/CmsFixtures";
+import CmsFixtures from "../../cms/CreateListing/SeasonFixtures";
 import CmsCommercialOverview from "../../cms/CommercialOverview/CommercialOverviewContainer";
 import CmsListingOverview from "../../cms/containers/CmsListingOverview";
 import PropertyDetails from "../../cms/containers/PropertyDetails";
