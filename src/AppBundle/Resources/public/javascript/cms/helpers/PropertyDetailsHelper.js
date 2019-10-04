@@ -1,5 +1,5 @@
 import first from "lodash/first";
-import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
+import { PRODUCTION_TAB, RIGHTS_TAB } from "@constants";
 
 const multipleVabel = "Multiple values selected";
 
@@ -133,41 +133,49 @@ const getLanguages = (rights, key) => {
 		.join(", ");
 };
 
-export const getRightsValue = (config, rights, context) => {
-	const { key } = config;
+export const getRightsValue = (key, defaultRights, context) => {
+	let rights = defaultRights;
+	if (
+		key === PRODUCTION_TAB.TECHNICAL_DELIVERY
+		|| key === PRODUCTION_TAB.GRAPHICS
+		|| key === PRODUCTION_TAB.ASPECT_RATIO
+		|| key === PRODUCTION_TAB.COMMENTARY
+		|| key === PRODUCTION_TAB.CAMERA
+	) {
+		rights = getDedicatedRigths(rights);
+	}
 
 	if (rights.length === 0) return;
 
 	switch (key) {
-	case "CAMERA":
+	case PRODUCTION_TAB.CAMERA:
 		const cameras = getUniqueSelectedOptions(rights, "CAMERAS");
 		if (cameras.length === 1) {
 			return `Minimum cameras: ${first(cameras)}`;
 		}
 		return multipleVabel;
 
-
-	case "LICENSED_LANGUAGES":
+	case RIGHTS_TAB.LICENSED_LANGUAGES:
 		return getLanguages(rights, "LICENSED_LANGUAGE_LIST");
 
-	case "COMMENTARY":
-		const commentaries = getUniqueSelectedOptions(rights, "COMMENTARY");
-		if (commentaries.length === 1 && first(commentaries) === "COMMENTARY_YES") {
-			return getLanguages(rights, "COMMENTARY_LANGUAGES");
+	case PRODUCTION_TAB.COMMENTARY:
+		const commentaries = getUniqueSelectedOptions(rights, PRODUCTION_TAB.COMMENTARY);
+		if (commentaries.length === 1 && first(commentaries) === `${PRODUCTION_TAB.COMMENTARY}_YES`) {
+			return getLanguages(rights, `${PRODUCTION_TAB.COMMENTARY}_LANGUAGES`);
 		}
 		break;
 
-	case "GRAPHICS":
-		const graphics = getUniqueSelectedOptions(rights, "GRAPHICS");
-		if (graphics.length === 1 && first(graphics) === "GRAPHICS_YES") {
-			return getLanguages(rights, "GRAPHICS_LANGUAGES");
+	case PRODUCTION_TAB.GRAPHICS:
+		const graphics = getUniqueSelectedOptions(rights, PRODUCTION_TAB.GRAPHICS);
+		if (graphics.length === 1 && first(graphics) === `${PRODUCTION_TAB.GRAPHICS}_YES`) {
+			return getLanguages(rights, `${PRODUCTION_TAB.GRAPHICS}_LANGUAGES`);
 		}
 		break;
 
-	case "ASPECT_RATIO":
-		const aspRatios = getUniqueSelectedOptions(rights, "ASPECT_RATIO");
-		if (aspRatios.length === 1 && first(aspRatios) === "ASPECT_RATIO_CUSTOM") {
-			return first(rights).details.ASPECT_RATIO_TEXT;
+	case PRODUCTION_TAB.ASPECT_RATIO:
+		const aspRatios = getUniqueSelectedOptions(rights, PRODUCTION_TAB.ASPECT_RATIO);
+		if (aspRatios.length === 1 && first(aspRatios) === `${PRODUCTION_TAB.ASPECT_RATIO}_CUSTOM`) {
+			return first(rights).details[`${PRODUCTION_TAB.ASPECT_RATIO}_TEXT`];
 		}
 		break;
 
@@ -176,7 +184,7 @@ export const getRightsValue = (config, rights, context) => {
 
 	const options = getUniqueSelectedOptions(rights, key);
 
-	return options.length > 1 ? multipleVabel : context.t(`RIGHTS_${options[0]}`);
+	return options.length > 1 ? multipleVabel : context.t(`${options[0]}`);
 };
 
 export const hasRightComment = (right, key) => {

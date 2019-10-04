@@ -23,10 +23,86 @@
         display: flex;
       }
     }
+
+    .language-filter {
+      &-input {
+        width: 100%;
+        height: 60px;
+        position: relative;
+
+        .default-filter {
+          width: 100%;
+          position: relative;
+          z-index: 2;
+
+          .dropdown__control {
+            height: 61px;
+          }
+
+          .dropdown__value-container,
+          .dropdown__placeholder {
+            font-family: $v1-font-family;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.06px;
+            color: $v1-color-grey-6;
+          }
+
+          .dropdown__value-container {
+            padding-left: 37px;
+
+            > div:first-child {
+              margin-left: 2px;
+            }
+          }
+        }
+      }
+
+      &-content {
+        padding: 13px 32px;
+        height: 70px;
+        border: 1px solid $v1-color-grey-1;
+        border-radius: 2px;
+      }
+
+      &-item {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+        background-color: $v1-color-grey-4;
+        color: $v1-color-grey-2;
+        font-weight: 600;
+        padding: 7px 18px;
+        margin: 5px;
+
+        &-text {
+          font-size: 12px;
+          margin-right: 10px;
+        }
+
+        i {
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          border: 1px solid $v1-color-grey-2;
+          font-size: 10px;
+        }
+      }
+
+      &-clear {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+      }
+    }
+
     .edited-program-filter {
       width: 288px;
     }
-
-
   }
 }
