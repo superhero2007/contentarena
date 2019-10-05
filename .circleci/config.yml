@@ -82,7 +82,7 @@ jobs:
 
   build_fe:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10.16
 
     steps:
       - checkout
@@ -130,7 +130,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10.16
     steps:
       # Restore cache from the build job which contains the
       # dist folder that needs to be deployed
@@ -159,7 +159,7 @@ jobs:
 
   deploy_test:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10.16
     steps:
       # Restore cache from the build job which contains the
       # dist folder that needs to be deployed
