@@ -14,6 +14,52 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
+
+  .sportel-header {
+    display: flex;
+    background-color: #FFC94B;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 400;
+    color: #333;
+    padding: 20px 80px;
+
+    a {
+      margin: 0 40px;
+      background-color: #333;
+      color: white;
+      font-weight: bold;
+
+      &:hover {
+        background-color: #999;
+      }
+    }
+
+    img {
+      max-width: 200px;
+      margin: -50px 0;
+      opacity: 0.8;
+    }
+
+    @media only screen and (max-width: 1230px) {
+      flex-direction: column;
+      text-align: center;
+      font-size: 18px;
+      padding: 20px;
+
+      img {
+        margin-top: -30px !important;
+        margin-bottom: -15px !important;
+        max-height: 70px;
+      }
+
+      a {
+        margin: 10px 10px 0;
+      }
+    }
+  }
 
   .inner {
     display: flex;
@@ -122,6 +168,7 @@
 
     @media only screen and (max-width: 1230px) {
       height: 550px;
+      padding-top: 280px;
     }
 
     .banner-content {
@@ -671,7 +718,9 @@
     width: 100%;
     background: #F7F7F7;
     padding: 15px 40px 45px 40px;
-    margin: 100px auto 0;
+    //margin: 100px auto 0;
+    // TODO: remove after sportel
+    margin: 145px auto 0;
 
 	&.preview {
 		margin-top: 40px;
@@ -684,7 +733,9 @@
     }
 
     @media only screen and (max-width: 1230px) {
-      margin: 80px auto 0;
+      // margin: 80px auto 0;
+      // TODO: remove after sportel
+      margin: 250px auto 0;
     }
 
 	.listing-preview-wrapper{

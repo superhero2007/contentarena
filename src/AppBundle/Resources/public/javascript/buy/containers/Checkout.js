@@ -14,7 +14,7 @@ import DigitalSignature from "../../main/components/DigitalSignature";
 import {
 	getCurrencySymbol, getCustomLicenseUrl,
 } from "../../main/actions/utils";
-import { customStyles } from "../../main/styles/custom";
+import { customStyles, GenericModalStyle } from "../../main/styles/custom";
 import companyIsValid from "../../sell/actions/validationActions";
 import CountrySelector from "../../main/components/CountrySelector";
 import { DATE_FORMAT } from "@constants";
@@ -70,6 +70,7 @@ class Checkout extends React.Component {
 			signaturePosition: props.user.title,
 			showSuccessScreen: false,
 			showConfirmScreen: false,
+			message: "",
 		};
 	}
 
@@ -764,6 +765,30 @@ class Checkout extends React.Component {
 			: [...tableStart, ...yourBid, ...tableEnd];
 	}
 
+	onChangeMessage = e => this.setState({ message: e.target.value });
+
+	onCloseModal = () => this.setState({ isSuccess: false });
+
+	onMessage = () => {
+		const { message, content } = this.state;
+		this.setState({ isLoading: true });
+
+		const payload = {
+			listing: content.id,
+			recipient: content.company.id,
+			content: message,
+			role: "BUYER",
+		};
+		ContentArena.ContentApi.sendMessage(payload)
+			.then(
+				() => this.setState({ isSuccess: true }),
+				() => this.setState({ isFail: true }),
+			)
+			.always(
+				() => this.setState({ isLoading: false, message: "" }),
+			);
+	};
+
 	render() {
 		ReactTooltip.rebuild();
 		const { listing, validation, common } = this.props;
@@ -774,6 +799,10 @@ class Checkout extends React.Component {
 			spinner,
 			terms,
 			bundles,
+			company,
+			isLoading,
+			isSuccess,
+			message,
 		} = this.state;
 
 		const { ghostMode } = common;
@@ -790,6 +819,17 @@ class Checkout extends React.Component {
 				{this.editCompany()}
 				{this.successScreen()}
 				{this.confirmScreen()}
+
+				<Modal isOpen={isSuccess} className="modal-wrapper message-modal" style={GenericModalStyle} onRequestClose={this.onCloseModal}>
+					<div className="modal-body">
+						<Translate i18nKey="MESSAGE_CONFIRM" />
+					</div>
+					<footer className="modal-footer">
+						<button className="standard-button" onClick={this.onCloseModal}>
+							<Translate i18nKey="MESSAGE_POPUP_BUTTON_CLOSE" />
+						</button>
+					</footer>
+				</Modal>
 
 				<div className="bid-header">
 					<div className="name">
@@ -875,6 +915,29 @@ class Checkout extends React.Component {
 						<span>
 							{this.getCompanyAddress()}
 						</span>
+					</div>
+				</div>
+
+				<div className="bid-signature">
+					<div className="checkout-title">
+						<Translate i18nKey="MESSAGE_TITLE" />
+					</div>
+					<div className="checkout-subtitle">
+						{company.legalName}
+					</div>
+					<div style={{
+						marginBottom: 25,
+						textAlign: "right",
+					}}
+					>
+						<textarea
+							placeholder={this.context.t("MESSAGE_PLACEHOLDER")}
+							value={message}
+							onChange={this.onChangeMessage}
+						/>
+						<button className="ca-btn primary" onClick={this.onMessage} disabled={!message || isLoading}>
+							{isLoading ? <Loader loading xSmall /> : <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
+						</button>
 					</div>
 				</div>
 
