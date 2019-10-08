@@ -475,8 +475,9 @@
       }
 
       &.bundles-table {
-        padding: 0px;
+        padding: 0;
         border: 1px solid #acacac;
+
         .rt-thead {
           .rt-th {
             background-color: #ecedef;
@@ -488,15 +489,18 @@
             }
           }
         }
+
         .rt-tbody {
           .rt-tr {
             &.-odd {
               background-color: #f6f7f9;
             }
+
             &-group {
               border-color: #acacac;
             }
           }
+
           .rt-td {
             height: 57px;
             border-right: 1px solid #acacac;
