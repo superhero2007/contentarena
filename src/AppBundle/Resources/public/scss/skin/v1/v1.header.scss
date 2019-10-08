@@ -63,19 +63,19 @@
           white-space: pre;
         }
 
-        &.active {
-          border-color: $v1-color-blue-1;
+        //&.active {
+        //  border-color: $v1-color-blue-1;
 
-          a {
-            color: $v1-color-blue-1;
-          }
-        }
+        //  a {
+        //    color: $v1-color-blue-1;
+        //  }
+        //}
 
-        &:hover {
-          a {
-            color: $v1-color-blue-1;
-          }
-        }
+        //&:hover {
+        //  a {
+        //    color: $v1-color-blue-1;
+        //  }
+        //}
       }
 
       &-spacer {

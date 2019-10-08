@@ -24,7 +24,7 @@ const HeaderBarSellerCms = ({ match }) => (
 		match={match.url === ROUTE_PATHS.PROPERTIES}
 		route={ROUTE_PATHS.PROPERTIES}
 	>
-		<Translate i18nKey="HEADER_LINK_PROPERTIES" />
+		<Translate i18nKey="HEADER_LINK_DASHBOARD" />
 	</HeaderBarTab>
 );
 
