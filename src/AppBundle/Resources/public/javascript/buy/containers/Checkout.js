@@ -504,6 +504,8 @@ class Checkout extends React.Component {
 					spinner: false,
 				});
 			});
+
+		this.onMessage();
 	};
 
 	getTechnicalFee = () => {
@@ -767,11 +769,10 @@ class Checkout extends React.Component {
 
 	onChangeMessage = e => this.setState({ message: e.target.value });
 
-	onCloseModal = () => this.setState({ isSuccess: false });
-
 	onMessage = () => {
 		const { message, content } = this.state;
-		this.setState({ isLoading: true });
+
+		if (message === "") return;
 
 		const payload = {
 			listing: content.id,
@@ -779,13 +780,11 @@ class Checkout extends React.Component {
 			content: message,
 			role: "BUYER",
 		};
+
 		ContentArena.ContentApi.sendMessage(payload)
-			.then(
-				() => this.setState({ isSuccess: true }),
-				() => this.setState({ isFail: true }),
-			)
+			.then()
 			.always(
-				() => this.setState({ isLoading: false, message: "" }),
+				() => this.setState({ message: "" }),
 			);
 	};
 
@@ -799,9 +798,6 @@ class Checkout extends React.Component {
 			spinner,
 			terms,
 			bundles,
-			company,
-			isLoading,
-			isSuccess,
 			message,
 		} = this.state;
 
@@ -819,17 +815,6 @@ class Checkout extends React.Component {
 				{this.editCompany()}
 				{this.successScreen()}
 				{this.confirmScreen()}
-
-				<Modal isOpen={isSuccess} className="modal-wrapper message-modal" style={GenericModalStyle} onRequestClose={this.onCloseModal}>
-					<div className="modal-body">
-						<Translate i18nKey="MESSAGE_CONFIRM" />
-					</div>
-					<footer className="modal-footer">
-						<button className="standard-button" onClick={this.onCloseModal}>
-							<Translate i18nKey="MESSAGE_POPUP_BUTTON_CLOSE" />
-						</button>
-					</footer>
-				</Modal>
 
 				<div className="bid-header">
 					<div className="name">
@@ -903,41 +888,57 @@ class Checkout extends React.Component {
 				</div>
 
 				{/* COMPANY INFORMATION */}
-				<div className="bid-address-license">
+				<div className="bid-info-wrapper">
 					<div className="checkout-title">
 						<Translate i18nKey="SALES_PACKAGE_COMPANY_ADDRESS" />
 					</div>
 					<div className="checkout-subtitle">
-						<div>
-							<Translate i18nKey="SALES_PACKAGE_COMPANY_SUB_TITLE" />
-							<i className="fa fa-pencil-square-o" onClick={this.openEditCompany} />
-						</div>
-						<span>
+						<Translate i18nKey="SALES_PACKAGE_COMPANY_SUB_TITLE" />
+					</div>
+
+					<div
+						className="total-fee"
+						 style={{
+						 	 justifyContent: "space-between",
+							 cursor: "pointer",
+							 margin: 0,
+						 }}
+						 onClick={this.openEditCompany}
+					>
+						<span style={{ fontSize: 14 }}>
 							{this.getCompanyAddress()}
 						</span>
+						<i className="fa fa-pencil-square-o" />
 					</div>
+
 				</div>
 
-				<div className="bid-signature">
+				<div
+					className="bid-signature"
+					style={{
+						marginTop: 0,
+					}}
+				>
 					<div className="checkout-title">
-						<Translate i18nKey="MESSAGE_TITLE" />
+						<Translate i18nKey="CHECKOUT_MESSAGE_BOX_TITLE" />
 					</div>
 					<div className="checkout-subtitle">
-						{company.legalName}
+						<Translate i18nKey="CHECKOUT_MESSAGE_BOX_SUBTITLE" />
 					</div>
 					<div style={{
-						marginBottom: 25,
-						textAlign: "right",
+						marginBottom: 15,
 					}}
 					>
 						<textarea
+							style={{
+								borderRadius: 5,
+								border: "1px solid #999999",
+								padding: 20,
+							}}
 							placeholder={this.context.t("MESSAGE_PLACEHOLDER")}
 							value={message}
 							onChange={this.onChangeMessage}
 						/>
-						<button className="ca-btn primary" onClick={this.onMessage} disabled={!message || isLoading}>
-							{isLoading ? <Loader loading xSmall /> : <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
-						</button>
 					</div>
 				</div>
 
