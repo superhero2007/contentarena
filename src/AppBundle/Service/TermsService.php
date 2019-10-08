@@ -59,7 +59,7 @@ class TermsService
     {
         $terms = $this->em
             ->getRepository('AppBundle:SourceLicenseTerm')
-            ->findAll();
+            ->getSortedTerms();
 
         $companyTermItemsRepo = $this->em->getRepository('AppBundle:CompanyLicenseTermItem');
         $companyTermItems = $companyTermItemsRepo->findBy(array('company' => $company));

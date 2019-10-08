@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class SourceLicenseTermRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSortedTerms(  ){
+
+        $query = $this->createQueryBuilder('term');
+
+        $query
+            ->addOrderBy('term.position', 'ASC');
+
+        $result = $query->getQuery()->getResult();
+
+        return $result;
+
+    }
 }
