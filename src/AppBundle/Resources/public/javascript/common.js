@@ -44,3 +44,4 @@ require("../scss/skin/v1/v1.accordion.scss");
 require("../scss/skin/v1/v1.tables.scss");
 require("../scss/skin/v1/v1.image.scss");
 require("../scss/skin/v1/v1.property.scss");
+require("../scss/skin/v1/v1.header.scss");
