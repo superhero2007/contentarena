@@ -173,11 +173,13 @@ class HeaderNotifications extends React.Component {
 		} = this.state;
 		return (
 			<div className="notifications">
-				<div className="icon-bell-wrapper" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
-					<i className="fa fa-bell" title="Notifications" />
-					{!!unseenNotificationsCount
-						&& <div className="counter">{unseenNotificationsCount}</div>
-					}
+				<div className="header-bar-common" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
+					<i className="icon-notification" />
+					{!!unseenNotificationsCount && (
+						<div className="counter notification-counter">
+							{unseenNotificationsCount}
+						</div>
+					)}
 				</div>
 
 				{showList && (
@@ -199,7 +201,7 @@ class HeaderNotifications extends React.Component {
 						}
 						{!dataLoading && !notifications.length && (
 							<div className="no-notifications">
-								<i className="fa fa-bell-o" />
+								<i className="icon-notification" />
 								<span><Translate i18nKey="NOTIFICATIONS_EMPTY" /></span>
 							</div>
 						)}

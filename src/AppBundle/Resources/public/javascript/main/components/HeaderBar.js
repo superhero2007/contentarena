@@ -1,9 +1,7 @@
-import React from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
-import { goTo } from "../actions/utils";
 import HeaderNotifications from "./HeaderNotifications";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
 import { inviteIcon } from "./Icons";
@@ -12,110 +10,66 @@ import { userIsAdmin } from "../reducers/user";
 import api from "../../api";
 
 const HeaderBarTab = ({
-	match, children, route, className = "", linkClass = "", onClick,
+	match, children, route,
 }) => (
-	<div className={(match) ? "tab active-tab" : `tab ${className}`} onClick={onClick}>
-		<Link to={route} className={linkClass}>
+	<div className={`header-bar-tab ${match ? "active" : ""}`}>
+		<Link to={route}>
 			{children}
 		</Link>
 	</div>
 );
 
-const CustomLink = ({ match, children, route }) => (
-	<div className={(match) ? "tab active-tab" : "tab"}>
-		<a href={route}>
-			{children}
-		</a>
-	</div>
-);
-
-const HeaderBarSeller = ({ match }, context) => (
-	<React.Fragment>
-		<HeaderBarTab
-			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
-			route={ROUTE_PATHS.MANAGE_LISTINGS}
-		>
-			<Translate i18nKey="HEADER_LINK_MANAGE_LISTINGS" />
-		</HeaderBarTab>
-		<HeaderBarTab
-			match={
-				match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
-			}
-			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
-		>
-			<Translate i18nKey="HEADER_LINK_COMMERCIAL_ACTIVITY" />
-		</HeaderBarTab>
-		<CustomLink
-			match={match.path === "/contentlisting/:customId?/:step?"}
-			route="/contentlisting/new"
-		>
-			<Translate i18nKey="HEADER_LINK_CREATE_LISTING" />
-		</CustomLink>
-	</React.Fragment>
-);
-
-HeaderBarSeller.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
-
 const HeaderBarSellerCms = ({ match }) => (
-	<React.Fragment>
+	<HeaderBarTab
+		match={match.url === ROUTE_PATHS.PROPERTIES}
+		route={ROUTE_PATHS.PROPERTIES}
+	>
+		<Translate i18nKey="HEADER_LINK_PROPERTIES" />
+	</HeaderBarTab>
+);
+
+const HeaderBarBuyer = ({ match }) => (
+	<Fragment>
 		<HeaderBarTab
-			match={match.url === ROUTE_PATHS.PROPERTIES}
-			route={ROUTE_PATHS.PROPERTIES}
+			match={match.url === "/marketplace" || match.url === "/marketplace/filter/multi"}
+			route="/marketplace"
 		>
-			<Translate i18nKey="HEADER_LINK_PROPERTIES" />
+			<Translate i18nKey="HEADER_LINK_MARKETPLACE" />
 		</HeaderBarTab>
 
-		<HeaderBarTab
-			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
-			route={ROUTE_PATHS.MANAGE_LISTINGS}
-		>
-			<Translate i18nKey="HEADER_LINK_MANAGE_LISTINGS" />
+		<HeaderBarTab match={match.url === "/watchlist"} route="/watchlist">
+			<Translate i18nKey="HEADER_LINK_WATCHLIST" />
 		</HeaderBarTab>
 
 		<HeaderBarTab
 			match={
-				match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
-				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
+				match.url === "/bids/activebids"
+				|| match.url === "/bids/declinedbids"
 			}
-			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
+			route="/bids/activebids"
 		>
-			<Translate i18nKey="HEADER_LINK_COMMERCIAL_ACTIVITY" />
+			<Translate i18nKey="HEADER_LINK_BIDS" />
 		</HeaderBarTab>
 
-	</React.Fragment>
+		<HeaderBarTab
+			match={match.url === "/closeddeals"}
+			route="/closeddeals"
+		>
+			<Translate i18nKey="HEADER_LINK_CLOSED_DEALS" />
+		</HeaderBarTab>
+	</Fragment>
 );
 
-HeaderBarSellerCms.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
+const HeaderBar = ({
+	profile, common: { testStageMode, ghostMode }, user, userIsAdmin, match,
+}) => {
+	const [inviteModalOpen, setInviteModalOpen] = useState(false);
+	const [dataLoading, setDataLoading] = useState(true);
+	const [notifications, setNotifications] = useState([]);
+	const [unseenNotificationsCount, setUnseenNotificationsCount] = useState(0);
+	const [unseenMessagesCount, setUnseenMessagesCount] = useState(0);
 
-
-class HeaderBar extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			inviteModalOpen: false,
-			dataLoading: true,
-			notifications: [],
-			unseenNotificationsCount: 0,
-			unseenMessagesCount: 0,
-			isDownArrowShown: true,
-		};
-	}
-
-	componentDidMount() {
-		this.loadNotifications();
-	}
-
-	loadNotifications() {
+	useEffect(() => {
 		api.notifications.getNotifications()
 			.then(({ data }) => {
 				if (!data) {
@@ -127,237 +81,135 @@ class HeaderBar extends React.Component {
 				const unseenNotificationsCount = notifications.filter(item => !item.seen).length;
 				const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
 
-				this.setState({
-					dataLoading: false,
-					unseenNotificationsCount,
-					unseenMessagesCount,
-					notifications,
-				});
+				setDataLoading(false);
+				setUnseenMessagesCount(unseenMessagesCount);
+				setUnseenNotificationsCount(unseenNotificationsCount);
+				setNotifications(notifications);
 			});
-	}
+	}, []);
 
-	isMarketplaceMatch = url => url === "/marketplace" || url === "/marketplace/filter/multi";
+	const toggleInviteModalOpen = () => setInviteModalOpen(!inviteModalOpen);
 
-	setDownArrow = isDownSet => this.setState({ isDownArrowShown: isDownSet });
-
-	render() {
-		const {
-			tab, profile, match, common, user, userIsAdmin,
-		} = this.props;
-		const {
-			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
-		} = this.state;
-		const logoUrl = this.getLogoUrl(tab);
-		const { testStageMode, cmsEnabled, ghostMode } = common;
-
-		return (
-			<React.Fragment>
-				{testStageMode && (
-					<div className="manager-header-test-mode">
-						<Translate i18nKey="HEADER_TEST_STAGE_MODE" />
-					</div>
-				)}
-
-				{ghostMode && (
-					<div className="manager-header-ghost-mode">
-						<div className="d-flex">
-							You are logged in as superuser into the account of: <b>{user.email}</b>
-						</div>
-						<div className="d-flex">
-							Do you want to leave superuser mode?
-							<a href={`${ROUTE_PATHS.MARKETPLACE}?_ghost_mode=_exit`}>
-								Return to MarketPlace
-							</a>
-							<a href={`${ROUTE_PATHS.ADMIN}?_ghost_mode=_exit`}>
-								Return to BackOffice
-							</a>
-						</div>
-					</div>
-				)}
-
-				<div className="manager-header">
-					<div className="header-wrapper">
-						<div className="logo" onClick={() => goTo(logoUrl)}>
-							<img src={`${assetsBaseDir}app/images/logo.svg`} alt="" />
-						</div>
-
-						{profile === "BUYER" && (
-							<HeaderBarTab
-								match={this.isMarketplaceMatch(match.url)}
-								route="/marketplace"
-							>
-								<Translate i18nKey="HEADER_LINK_MARKETPLACE" />
-							</HeaderBarTab>
-						)}
-
-						{profile === "BUYER" && (
-							<HeaderBarTab match={match.url === "/watchlist"} route="/watchlist">
-								<Translate i18nKey="HEADER_LINK_WATCHLIST" />
-							</HeaderBarTab>
-						)}
-
-						{profile === "BUYER" && (
-							<HeaderBarTab
-								match={
-									match.url === "/bids/activebids"
-									|| match.url === "/bids/declinedbids"
-								}
-								route="/bids/activebids"
-							>
-								<Translate i18nKey="HEADER_LINK_BIDS" />
-							</HeaderBarTab>
-						)}
-
-						{profile === "BUYER" && (
-							<HeaderBarTab
-								match={match.url === "/closeddeals"}
-								route="/closeddeals"
-							>
-								<Translate i18nKey="HEADER_LINK_CLOSED_DEALS" />
-							</HeaderBarTab>
-						)}
-
-						{profile === "SELLER" && !cmsEnabled && <HeaderBarSeller {...this.props} />}
-
-						{profile === "SELLER" && cmsEnabled && <HeaderBarSellerCms {...this.props} />}
-
-						<div className="spacer" />
-
-						<div className="tab">
-							<a onClick={(e) => {
-								this.setState({ inviteModalOpen: true });
-								e.preventDefault();
-							}}
-							>
-								<img src={inviteIcon} alt="Invite users" style={{ height: 24, marginRight: 5 }} />
-								<Translate i18nKey="HEADER_INVITE_USERS" />
-							</a>
-						</div>
-
-						{profile === "BUYER" && (
-							<HeaderBarTab
-								className="tab baseline switch-mode"
-								linkClass="ca-btn primary"
-								route={cmsEnabled ? ROUTE_PATHS.PROPERTIES : ROUTE_PATHS.MANAGE_LISTINGS}
-							>
-								<Translate i18nKey="HEADER_LINK_SELLING_MODE" />
-							</HeaderBarTab>
-						)}
-
-						{profile === "SELLER" && (
-							<HeaderBarTab
-								className="tab baseline switch-mode"
-								linkClass="ca-btn primary"
-								route="/marketplace"
-							>
-								<Translate i18nKey="HEADER_LINK_BUYING_MODE" />
-							</HeaderBarTab>
-						)}
-
-						<HeaderNotifications
-							dataLoading={dataLoading}
-							notifications={notifications}
-							unseenNotificationsCount={unseenNotificationsCount}
-						/>
-
-						<HeaderBarTab className="tab baseline messages" route="/messages" onClick={this.markMessagesAsSeen}>
-							<i className="fa fa-envelope" />
-							{!!unseenMessagesCount && (
-								<div className="counter">
-									{unseenMessagesCount}
-								</div>
-							)}
-						</HeaderBarTab>
-
-						<div
-							className="settings"
-							 onMouseEnter={() => this.setDownArrow(false)}
-							 onMouseLeave={() => this.setDownArrow(true)}
-						>
-
-							<Translate i18nKey="HEADER_LINK_MY_CONTENT_ARENA" /><i className={`fa ${isDownArrowShown ? "fa-angle-down" : "fa-angle-up"}`} />
-
-							<div className="popup">
-								<div className="wrap">
-									{/* <HeaderBarTab
-										route="/terms"
-										className="popup-item"
-									>
-										<i className="fa fa-file-pdf-o" />
-										<Translate i18nKey="HEADER_LINK_TERMS" />
-									</HeaderBarTab> */}
-									<HeaderBarTab
-										route="/preferences"
-										className="popup-item"
-									>
-										<i className="fa fa-sliders" />
-										<Translate i18nKey="HEADER_LINK_PREFERENCES" />
-									</HeaderBarTab>
-									<HeaderBarTab
-										route="/settings"
-										className="popup-item"
-									>
-										<i className="fa fa-cog" />
-										<Translate i18nKey="HEADER_LINK_SETTINGS" />
-									</HeaderBarTab>
-									<a href="https://landing.contentarena.com/web/faq/" className="tab popup-item">
-										<i className="fa fa-question-circle-o" />
-										<Translate i18nKey="HEADER_LINK_FAQ" />
-									</a>
-									<a href="/logout" className="tab popup-item">
-										<i className="fa fa-sign-out" />
-										<Translate i18nKey="HEADER_LINK_LOGOUT" />
-									</a>
-									{userIsAdmin && (
-										<a href="/admin" className="tab popup-item">
-											<i className="fa fa-cog" />
-											Admin
-										</a>
-									)}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<InviteUsersModal
-					common={common}
-					isOpen={inviteModalOpen}
-					onCloseModal={() => {
-						this.setState({ inviteModalOpen: false });
-					}}
-				/>
-			</React.Fragment>
-		);
-	}
-
-	getLogoUrl = () => {
-		const { profile } = this.props;
-
-		if (profile === "SELLER") {
-			return "marketplace";
-		}
-		return "marketplace";
-	};
-
-	markMessagesAsSeen = () => {
-		const { unseenMessagesCount } = this.state;
-		const { common } = this.props;
-		const { ghostMode } = common;
-
-		this.setState({
-			unseenMessagesCount: 0,
-		});
-
+	const markMessagesAsSeen = () => {
+		setUnseenMessagesCount(0);
 		if (unseenMessagesCount && !ghostMode) {
 			api.notifications.markMessagesAsSeen();
 		}
 	};
-}
 
-HeaderBar.contextTypes = {
-	t: PropTypes.func.isRequired,
+	return (
+		<div className="v1 skin">
+			{testStageMode && (
+				<div className="header-bar-test-mode">
+					<Translate i18nKey="HEADER_TEST_STAGE_MODE" />
+				</div>
+			)}
+
+			{ghostMode && (
+				<div className="header-bar-ghost-mode">
+					<div className="d-flex">
+						You are logged in as superuser into the account of: <b>{user.email}</b>
+					</div>
+					<div className="d-flex">
+						Do you want to leave superuser mode?
+						<a href={`${ROUTE_PATHS.MARKETPLACE}?_ghost_mode=_exit`}>
+							Return to MarketPlace
+						</a>
+						<a href={`${ROUTE_PATHS.ADMIN}?_ghost_mode=_exit`}>
+							Return to BackOffice
+						</a>
+					</div>
+				</div>
+			)}
+
+			<div className="header-bar">
+				<a href="/marketplace" className="header-bar-logo">
+					<img src={`${assetsBaseDir}app/images/logo.svg`} alt="" />
+				</a>
+
+				{profile === "BUYER" && <HeaderBarBuyer match={match} />}
+
+				{profile === "SELLER" && <HeaderBarSellerCms match={match} />}
+
+				<div className="header-bar-spacer" />
+
+				<div className="header-bar-invite" onClick={toggleInviteModalOpen}>
+					<div className="header-bar-invite-icon">+</div>
+					<div className="header-bar-invite-text">
+						<Translate i18nKey="HEADER_INVITE_USERS" />
+					</div>
+				</div>
+
+				<div className="header-bar-toggle">
+					<Link
+						className={`header-bar-toggle-button ${profile === "SELLER" ? "active" : ""}`}
+						to={ROUTE_PATHS.PROPERTIES}
+					>
+						<Translate i18nKey="HEADER_LINK_BUYING_MODE" />
+					</Link>
+					<Link
+						className={`header-bar-toggle-button ${profile === "BUYER" ? "active" : ""}`}
+						to="/marketplace"
+					>
+						<Translate i18nKey="HEADER_LINK_SELLING_MODE" />
+					</Link>
+				</div>
+
+				<HeaderNotifications
+					dataLoading={dataLoading}
+					notifications={notifications}
+					unseenNotificationsCount={unseenNotificationsCount}
+				/>
+
+				<Link
+					className="header-bar-common"
+					to="/messages"
+					onClick={markMessagesAsSeen}
+				>
+					<i className="icon-inbox" />
+					{!!unseenMessagesCount && (
+						<div className="counter message-counter">
+							{unseenMessagesCount}
+						</div>
+					)}
+				</Link>
+
+				<div className="header-bar-common">
+					<i className="fa fa-user" />
+
+					<div className="popup">
+						<Link to="/preferences" className="popup-item">
+							<i className="fa fa-sliders" />
+							<Translate i18nKey="HEADER_LINK_PREFERENCES" />
+						</Link>
+						<Link to="/settings" className="popup-item">
+							<i className="fa fa-cog" />
+							<Translate i18nKey="HEADER_LINK_SETTINGS" />
+						</Link>
+						<a href="https://landing.contentarena.com/web/faq/" className="popup-item">
+							<i className="fa fa-question-circle-o" />
+							<Translate i18nKey="HEADER_LINK_FAQ" />
+						</a>
+						<a href="/logout" className="popup-item">
+							<i className="fa fa-sign-out" />
+							<Translate i18nKey="HEADER_LINK_LOGOUT" />
+						</a>
+						{userIsAdmin && (
+							<a href="/admin" className="popup-item">
+								<i className="fa fa-cog" />
+								Admin
+							</a>
+						)}
+					</div>
+				</div>
+			</div>
+			<InviteUsersModal
+				isOpen={inviteModalOpen}
+				onCloseModal={toggleInviteModalOpen}
+			/>
+		</div>
+	);
 };
-
 
 const mapStateToProps = state => ({
 	common: state.common,
