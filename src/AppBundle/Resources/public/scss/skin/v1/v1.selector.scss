@@ -204,23 +204,7 @@
       }
     }
 
-    .country-selector {
-      @extend .region-selector;
-
-      width: 340px !important;
-      height: 291px;
-
-      .input-checkbox {
-        cursor: default;
-      }
-
-      button {
-        min-width: 70px;
-      }
-    }
-
     .fixture {
-
       &-season {
         display: flex;
         justify-content: space-between;
@@ -252,7 +236,7 @@
       &-container {
         display: flex;
         flex-direction: column;
-        border-top: 1px solid #eee;
+        border-top: 1px solid $v1-color-grey-5;
         padding: 20px 0 20px 20px;
         transition: all 0.2s ease;
       }
@@ -326,11 +310,13 @@
           .remove-icon {
             cursor: pointer;
             color: $v1-color-red-3;
-            &.disabled{
+
+            &.disabled {
               color: lightgray !important;
               cursor: auto !important;
             }
           }
+
           .confirm-icon {
             @extend .remove-icon;
 

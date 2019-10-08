@@ -9,6 +9,7 @@ import Messages from "../manage/containers/Messages";
 import Settings from "../manage/containers/Settings";
 import ManageListings from "../manage/containers/ManageListings";
 import HeaderBar from "./components/HeaderBar";
+import NewHeaderBar from "./components/NewHeaderBar";
 import Marketplace from "../buy/containers/Marketplace";
 import SellForm from "../sell/components/SellForm";
 import TestPage from "./containers/TestPage";
@@ -107,7 +108,7 @@ const routes = [
 	},
 	{
 		path: `${ROUTE_PATHS.CONTENT_LISTING}/:customId?/:step?`,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: SellForm,
 		updateByPath: true,
 		profile: "SELLER",
@@ -115,7 +116,7 @@ const routes = [
 	},
 	{
 		path: ROUTE_PATHS.COMMERCIAL_OVERVIEW,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		exact: true,
 		main: CommercialActivity,
 		profile: "SELLER",
@@ -123,7 +124,7 @@ const routes = [
 	},
 	{
 		path: `${ROUTE_PATHS.COMMERCIAL_OVERVIEW}/filter/:filterName/:filterValue?`,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: CommercialActivity,
 		updateByPath: true,
 		profile: "SELLER",
@@ -131,7 +132,7 @@ const routes = [
 	},
 	{
 		path: `${ROUTE_PATHS.PROPERTIES}`,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: Properties,
 		exact: true,
 		updateByPath: true,
@@ -141,7 +142,7 @@ const routes = [
 	},
 	{
 		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?/:listingId?`,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: Property,
 		updateByPath: true,
 		profile: "SELLER",
@@ -198,14 +199,14 @@ const routes = [
 	},
 	{
 		path: ROUTE_PATHS.MANAGE_LISTINGS,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: ManageListings,
 		profile: "SELLER",
 		title: "Manage Listings",
 	},
 	{
 		path: `${ROUTE_PATHS.CREATE_PROPERTY}/:action?/:key?`,
-		header: HeaderBar,
+		header: NewHeaderBar,
 		main: CreateProperty,
 		profile: "SELLER",
 		title: "Create Property",

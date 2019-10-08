@@ -171,16 +171,26 @@ class HeaderNotifications extends React.Component {
 		const {
 			notifications, dataLoading, unseenNotificationsCount, showList,
 		} = this.state;
+		const { newHeader } = this.props;
 		return (
 			<div className="notifications">
-				<div className="header-bar-common" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
-					<i className="icon-notification" />
-					{!!unseenNotificationsCount && (
-						<div className="counter notification-counter">
-							{unseenNotificationsCount}
-						</div>
-					)}
-				</div>
+				{newHeader ? (
+					<div className="header-bar-common" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
+						<i className="icon-notification" />
+						{!!unseenNotificationsCount && (
+							<div className="counter notification-counter">
+								{unseenNotificationsCount}
+							</div>
+						)}
+					</div>
+				) : (
+					<div className="icon-bell-wrapper" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
+						<i className="fa fa-bell" title="Notifications" />
+						{!!unseenNotificationsCount
+						&& <div className="counter">{unseenNotificationsCount}</div>
+						}
+					</div>
+				)}
 
 				{showList && (
 					<section className="expanded-list" ref={list => this.expandedList = list}>
@@ -201,7 +211,7 @@ class HeaderNotifications extends React.Component {
 						}
 						{!dataLoading && !notifications.length && (
 							<div className="no-notifications">
-								<i className="icon-notification" />
+								<i className={newHeader ? "icon-notification" : "fa fa-bell-o"} />
 								<span><Translate i18nKey="NOTIFICATIONS_EMPTY" /></span>
 							</div>
 						)}
