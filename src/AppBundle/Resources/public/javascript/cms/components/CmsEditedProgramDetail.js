@@ -133,8 +133,6 @@ class CmsEditedProgramDetail extends Component {
 			territories,
 		} = this.state;
 
-		console.log(this.territorySelector.current);
-
 		const { onCancel, availableCountries } = this.props;
 		return (
 			<>

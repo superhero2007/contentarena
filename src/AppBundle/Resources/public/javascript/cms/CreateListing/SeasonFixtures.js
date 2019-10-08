@@ -12,18 +12,14 @@ class SeasonFixtures extends React.Component {
 
 		this.state = {
 			saving: false,
-			fixtures: [],
+			season: props.season || {
+				fixtures: [],
+			},
 		};
 	}
 
-	getSeasonSelected() {
-		const { propertyFilters: { seasons }, property } = this.props;
-		return (seasons.length) ? seasons[0] : property.seasons.length ? property.seasons[0] : null;
-	}
-
 	onCreateFixture = (fixture) => {
-		const season = this.getSeasonSelected();
-		const { property } = this.props;
+		const { property, season } = this.props;
 
 		this.setState({ saving: true });
 
@@ -49,10 +45,8 @@ class SeasonFixtures extends React.Component {
 			});
 	};
 
-	onEditFixture = (fixture) => {
-		this.setState({
-			selectedFixture: fixture,
-		});
+	onEditFixture = (selectedFixture) => {
+		this.setState({ selectedFixture });
 	};
 
 	onUpdateFixture = (fixture) => {
@@ -98,8 +92,7 @@ class SeasonFixtures extends React.Component {
 			selectedFixture,
 		} = this.state;
 
-		const { season, style } = this.props;
-		const fixtures = season.fixtures.sort((a, b) => new Date(a.date) - new Date(b.date));
+		const { style, season } = this.props;
 
 		return (
 			<section className="fixture-container" style={style}>
@@ -107,7 +100,7 @@ class SeasonFixtures extends React.Component {
 					<>
 						{season.fixtures.length > 0 && (
 							<FixtureList
-								fixtures={fixtures}
+								season={season}
 								onRemoveFixture={this.onRemoveFixture}
 								onEditFixture={this.onEditFixture}
 							/>

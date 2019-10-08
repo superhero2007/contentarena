@@ -45,14 +45,14 @@ class AccordionContainer extends React.Component {
 						{title}
 					</span>
 
-					{enableNextStep && (
-						<span className="accordion-container-value">
-							{value}
-						</span>
-					)}
-
 					<i className={cn("accordion-container-icon fa", { "fa-minus": toggle, "fa-plus": !toggle })} />
 				</div>
+
+				{!toggle && enableNextStep && (
+					<div className="accordion-container-value">
+						{value}
+					</div>
+				)}
 
 				{toggle && !disabled && (
 					<div className="accordion-container-content">

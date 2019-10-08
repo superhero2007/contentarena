@@ -10,6 +10,7 @@ import CmsRegionFilter from "./CmsRegionFilter";
 import CmsListingFilter from "./CmsListingFilter";
 import CmsTerritoryFilter from "./CmsTerritoryFilter";
 import CmsProgramFilter from "./CmsProgramFilter";
+import CmsCurrencyFilter from "./CmsCurrencyFilter";
 
 const CustomOption = props => (
 	!props.isDisabled ? (
@@ -90,3 +91,5 @@ export const TerritoryFilter = CmsTerritoryFilter;
 export const ProgramFilter = CmsProgramFilter;
 
 export const ProgramYearsFilter = CmsProgramYearsFilter;
+
+export const CurrencyFilter = CmsCurrencyFilter;

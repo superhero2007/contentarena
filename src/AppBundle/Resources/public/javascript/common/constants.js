@@ -10,6 +10,8 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const CURRENCIES = ["USD", "EUR"];
+
 export const LISTING_STATUS = {
 	DRAFT: "DRAFT",
 	INACTIVE: "INACTIVE",
@@ -144,6 +146,11 @@ export const BUNDLE_SALES_METHOD = {
 	BIDDING: "BIDDING",
 	FIXED: "FIXED",
 	MULTIPLE: "MULTIPLE",
+};
+
+export const BUNDLE_OFFER_TERRITORIES = {
+	BUNDLE: "BUNDLE",
+	INDIVIDUALLY: "INDIVIDUALLY",
 };
 
 export const LISTING_SORT_OPTIONS = {

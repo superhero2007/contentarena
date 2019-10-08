@@ -36,3 +36,5 @@ export const getListingStepRoute = (propertyId, ListingId, step) => {
 	const route = `${ROUTE_PATHS.PROPERTIES}/${propertyId}/${PROPERTY_MAIN_TABS.CREATE_LISTING}/${ListingId}`;
 	return `${route}?step=${step}`;
 };
+
+export const getBundleName = territories => territories.slice(0, 3).map(territory => territory.name).join(", ");

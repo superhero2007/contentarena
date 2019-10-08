@@ -1,41 +1,9 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
 import SeasonSelector from "@components/Season";
+import { connect } from "react-redux";
 import SeasonFixtures from "./SeasonFixtures";
-
-const SeasonItem = ({
-	season, toggleFixtures, onSelectSeason, index,
-}) => (
-	<>
-		<div className="fixture-season" style={{ zIndex: 1000 - index }}>
-			<i className={`fixture-season-icon icon-arrow-${season.fixturesOpen ? "bottom" : "right"}`} />
-			<span className="subtitle1 fixture-season-name clickable" onClick={() => toggleFixtures(season)}>
-				{season.name}
-			</span>
-
-			{!!season.fixtures.length && (
-				<span className="fixture-season-amount clickable" onClick={() => toggleFixtures(season)}>
-					{`(${season.fixtures.length} ${season.fixtures.length === 1 ? "Fixture" : "Fixtures"})`}
-				</span>
-			)}
-
-			{!season.fixtures.length && (
-				<button
-					className="button primary-outline-button"
-					onClick={() => toggleFixtures(season)}
-				>
-					<Translate i18nKey="CMS_FIXTURES_BUTTON_CREATE" />
-				</button>
-			)}
-
-			<i className="icon-trash clickable" onClick={() => onSelectSeason(season)} />
-		</div>
-
-		{season.fixturesOpen && (
-			<SeasonFixtures season={season} style={{ zIndex: 1000 - index }} />
-		)}
-	</>
-);
+import { fetchPropertySuccess, startFetchingPropertyDetails } from "../actions/propertyActions";
 
 class SeasonSelection extends React.Component {
 	constructor(props) {
@@ -46,8 +14,6 @@ class SeasonSelection extends React.Component {
 			selectedSeasons: props.selectedSeasons,
 		};
 	}
-
-	componentDidMount() {}
 
 	onSelectSeason = (value) => {
 		let { selectedSeasons } = this.state;
@@ -75,7 +41,7 @@ class SeasonSelection extends React.Component {
 			selectedSeasons,
 		} = this.state;
 
-		const { availableSeasons } = this.props;
+		const { availableSeasons, seasons } = this.props;
 
 		return (
 			<>
@@ -90,15 +56,54 @@ class SeasonSelection extends React.Component {
 							<Translate i18nKey="SEASONS_FIXTURES_TITLE" />
 						</h5>
 
-						{selectedSeasons.map((season, index) => (
-							<SeasonItem
-								key={index}
-								index={index}
-								season={season}
-								onSelectSeason={this.onSelectSeason}
-								toggleFixtures={this.toggleFixtures}
-							/>
-						))}
+						{selectedSeasons.map((season, index) => {
+							const selectedSeason = seasons.find(s => s.id === season.id);
+							return (
+								<>
+									<div
+										className="fixture-season"
+										style={{ zIndex: 1000 - index }}
+										key={`fixture-season-${index}`}
+									>
+										<i className={`fixture-season-icon icon-arrow-${season.fixturesOpen ? "bottom" : "right"}`} />
+										<span
+											className="subtitle1 fixture-season-name clickable"
+											  onClick={() => this.toggleFixtures(season)}
+										>
+											{season.name}
+										</span>
+
+										{!!selectedSeason.fixtures.length && (
+											<span
+												className="fixture-season-amount clickable"
+												  onClick={() => this.toggleFixtures(season)}
+											>
+												{`(${selectedSeason.fixtures.length} ${selectedSeason.fixtures.length === 1 ? "Fixture" : "Fixtures"})`}
+											</span>
+										)}
+
+										{!selectedSeason.fixtures.length && (
+											<button
+												className="button primary-outline-button"
+												onClick={() => this.toggleFixtures(season)}
+											>
+												<Translate i18nKey="CMS_FIXTURES_BUTTON_CREATE" />
+											</button>
+										)}
+
+										<i className="icon-trash clickable" onClick={() => this.onSelectSeason(season)} />
+									</div>
+
+									{season.fixturesOpen && (
+										<SeasonFixtures
+											key={`fixtures-${index}`}
+											season={season}
+											style={{ zIndex: 1000 - index }}
+										/>
+									)}
+								</>
+							);
+						})}
 					</div>
 				)}
 			</>
@@ -106,4 +111,21 @@ class SeasonSelection extends React.Component {
 	}
 }
 
-export default SeasonSelection;
+
+const mapStateToProps = state => ({
+	common: state.common,
+	propertyFilters: state.propertyFilters,
+	property: state.propertyDetails.property,
+	seasons: state.propertyDetails.property.seasons,
+});
+
+const mapDispatchToProps = dispatch => ({
+	fetchPropertySuccess: property => dispatch(fetchPropertySuccess(property)),
+	startFetchingPropertyDetails: () => dispatch(startFetchingPropertyDetails()),
+});
+
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(SeasonSelection);
