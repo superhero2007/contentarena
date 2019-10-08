@@ -8,10 +8,8 @@ import { SERVER_ERROR_CODES } from "@constants";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
-import PropertyHeader from "../components/PropertyHeader";
 import PropertyCreateListingStep1 from "./PropertyCreateListingStep1";
 import { getListingDetails, updateListing } from "../../sell/actions/contentActions";
-import { getListingStepRoute } from "../helpers/PropertyListingHelper";
 import CmsProgress from "../components/CmsProgress";
 
 class PropertyCreateListing extends React.Component {
@@ -105,7 +103,6 @@ class PropertyCreateListing extends React.Component {
 
 		return (
 			<SkinContainer skin={skin}>
-
 				<CmsProgress
 					title={<Translate i18nKey="CMS_CREATE_LISTING_TITLE" />}
 					currentStep={step}

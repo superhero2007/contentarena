@@ -15,6 +15,7 @@ import { cms } from "../cms/reducers/cms";
 import { propertyDetails } from "../cms/reducers/propertyDetails";
 import { property } from "../cms/reducers/property";
 import { propertyFilters } from "../cms/reducers/propertyFilters";
+import { propertyListing } from "../cms/reducers/propertyListing";
 
 const reducers = combineReducers({
 	content,
@@ -31,6 +32,7 @@ const reducers = combineReducers({
 	propertyDetails,
 	property,
 	propertyFilters,
+	propertyListing,
 });
 
 export default createStore(reducers, composeWithDevTools(

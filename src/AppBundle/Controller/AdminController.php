@@ -42,6 +42,7 @@ class AdminController extends BaseAdminController
         "Selling Preferred Sports", //9
         "Buying Preferred Sports", //10
         "Buying Preferred Territories", //11
+        "Position" //12
     );
 
     static $EXPORT_DATA = array(
@@ -215,6 +216,10 @@ class AdminController extends BaseAdminController
                             }
                             $user->setPreferredBuyerCountries($sportsObj);
                         }
+
+                        // Position
+                        if ($row[12] != null ) $user->setTitle(trim($row[12]));
+
                         if ( $row[3] ){
                             $company = $companyRepo->findOneBy( array( "legalName" => $row[3] ) );
                             if ($company != null){
@@ -418,7 +423,7 @@ class AdminController extends BaseAdminController
      */
     public function exportAllUsers( ){
 
-        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAllExceptArchived();
         $content = $this->usersToCsvExport($users);
         return $this->csvResponse($content, "export-users.csv");
     }

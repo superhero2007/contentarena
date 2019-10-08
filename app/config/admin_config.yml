@@ -33,6 +33,7 @@ easy_admin:
                 - Terms
                 - TermItems
                 - Definitions
+                - CompanyTermItems
             - AdminConfig
             - label: 'Marketplace'
               url: '/marketplace'
@@ -355,6 +356,11 @@ easy_admin:
                 label: 'Term Items'
                 list:
                     fields: ['term', 'position', 'editable', 'content']
+            CompanyTermItems:
+                class: AppBundle\Entity\CompanyLicenseTermItem
+                label: 'Company Term Items'
+                list:
+                    fields: ['company', 'term', 'position', 'editable', 'content']
 
 knp_paginator:
     page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)

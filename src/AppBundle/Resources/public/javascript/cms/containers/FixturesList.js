@@ -9,17 +9,21 @@ import { cmsFile } from "../../main/components/Icons";
 class FixturesList extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		};
+		this.state = {};
 	}
 
 	render() {
 		const {
-			fixtures,
+			season,
+			seasons,
 			history,
 			onRemoveFixture,
 			onEditFixture,
 		} = this.props;
+
+		const selectedSeason = seasons.find(s => s.id === season.id);
+
+		const fixtures = selectedSeason.fixtures.sort((a, b) => new Date(a.date) - new Date(b.date));
 
 		return (
 			<div className="fixture-list">
@@ -39,11 +43,9 @@ class FixturesList extends React.Component {
 	}
 }
 
-FixturesList.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+	seasons: state.propertyDetails.property.seasons,
+});
 
 export default connect(
 	mapStateToProps,

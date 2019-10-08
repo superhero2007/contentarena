@@ -5,6 +5,7 @@ class CmsNumberInput extends React.Component {
 		super(props);
 		this.state = {
 			value: props.value || 0,
+			min: props.min || 0,
 		};
 	}
 
@@ -16,8 +17,8 @@ class CmsNumberInput extends React.Component {
 	};
 
 	decreaseValue = () => {
-		const { value } = this.state;
-		this.setState({ value: (value <= 1) ? 0 : Number(value) - 1 }, () => {
+		const { value, min } = this.state;
+		this.setState({ value: (value <= min) ? min : Number(value) - 1 }, () => {
 			this.props.onChange(this.state.value);
 		});
 	};
@@ -37,7 +38,7 @@ class CmsNumberInput extends React.Component {
 					value={this.state.value}
 					onFocus={e => e.target.select()}
 					onChange={e => this.setValue(e.target.value)}
-					min={0}
+					min={this.state.min}
 				/>
 				<div className="input-stepper-control">
 					<div

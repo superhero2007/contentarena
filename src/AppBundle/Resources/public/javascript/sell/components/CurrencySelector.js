@@ -2,8 +2,7 @@ import React from "react";
 import cn from "classnames";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
-
-const CURRENCIES = ["USD", "EUR"];
+import { CURRENCIES } from "../../common/constants";
 
 class CurrencySelector extends React.Component {
 	constructor(props) {
