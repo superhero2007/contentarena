@@ -75,6 +75,18 @@ class LandingHeader extends React.Component {
 		const navLinks = currentView === LOGIN_VIEW_TYPE.LANDING ? [...landingLinks] : [...loginLinks];
 		return (
 			<header className="landing-header">
+				<div className="sportel-header">
+					<img src={`${assetsBaseDir}app/images/landing/sportel-logo.png`} alt="sportel-logo" />
+					<div className="d-flex">
+						<Translate i18nKey="SPORTEL_MESSAGE" />
+					</div>
+					<a
+						href="mailto:info@contentarena.com"
+						className="ca-btn primary"
+					>
+						<Translate i18nKey="SPORTEL_BUTTON" />
+					</a>
+				</div>
 				<div className="landing-column">
 					<div className="inner">
 						<a className="logo" href={LANDING_LINKS.HOME} target="_self">

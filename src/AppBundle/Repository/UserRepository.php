@@ -61,13 +61,26 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function findAllExceptArchived()
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin("u.status", "status")
+            ->where('status.name != :archived')
+            ->setParameter('archived',"Archived")
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByRangeAndLastLogin($rangeStart, $rangeEnd, $lastLogin)
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('u')
             ->from($this->_entityName, 'u')
+            ->innerJoin("u.status", "status")
             ->where( 'u.registeredAt >= :rangeStart')
+            ->andWhere('status.name != :archived')
             ->andWhere( 'u.registeredAt <= :rangeEnd')
+            ->setParameter('archived',"Archived")
             ->setParameter('rangeStart', $rangeStart)
             ->setParameter('rangeEnd', $rangeEnd);
 
