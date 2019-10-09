@@ -4,10 +4,11 @@
 
     <div class="license-sub-title">General Terms and Conditions</div>
 
+    {% set termCounter = 1 %}
     {% for term in terms %}
         {% if term.position != 1 and term.items | length > 0 %}
             <div class="license-item-title">
-                {{ term.position }}. {{ term.name }}:
+                {{ termCounter }}. {{ term.name }}:
             </div>
         {% endif %}
         {% if term.position == 1 and definitions is defined %}
@@ -23,18 +24,19 @@
                     </tr>
                 {% endfor %}
             </table>
-
+            {% set termCounter = termCounter + 1 %}
         {% endif %}
         {% if term.items | length > 0 %}
             {% set counter = 1 %}
             {% for item in term.items %}
                 {% if item.content != "" %}
                     <div class="license-item">
-                        <strong> {{ term.position }}.{{ counter }} </strong> {{ item.content|nl2br }}
+                        <strong> {{ termCounter }}.{{ counter }} </strong> {{ item.content|nl2br }}
                     </div>
                     {% set counter = counter + 1 %}
                 {% endif %}
             {% endfor %}
+            {% set termCounter = termCounter + 1 %}
         {% endif %}
     {% endfor %}
 
