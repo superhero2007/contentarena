@@ -79,7 +79,7 @@ class TermItem extends React.Component {
 
 	render() {
 		const {
-			position, termPosition, editable, onRemove, edited,
+			position, termPosition, editable, onRemove, edited, name,
 		} = this.props;
 		const {
 			editing, showRemoveConfirm, updating, content,
@@ -96,6 +96,12 @@ class TermItem extends React.Component {
 						<Translate i18nKey="TERMS_EDIT_NON_EDITABLE" />
 					</div>
 				)}
+				{name && (
+					<div className="terms-name">
+						{name}
+					</div>
+				)}
+
 				<div className="terms-edit-item">
 					<div className={cn("terms-edit-item-content", {
 						"terms-edit-item-disabled": !editable,
