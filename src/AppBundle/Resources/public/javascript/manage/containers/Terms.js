@@ -184,6 +184,7 @@ class Terms extends React.Component {
 										<TermItem
 											onRemove={() => this.onRemoveTerm(i, k)}
 											{...item}
+											name={k === 0 ? term.name : null}
 											termPosition={term.position}
 										/>
 									);
