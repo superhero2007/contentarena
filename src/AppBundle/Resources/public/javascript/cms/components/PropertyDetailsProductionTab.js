@@ -13,7 +13,7 @@ class PropertyDetailsProductionTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rights: cloneDeep(props.property.rights),
+			rights: props.listing ? cloneDeep(props.listing.rights) : cloneDeep(props.property.rights),
 			currentStep: 0,
 		};
 		this.tabRefs = {};
@@ -46,11 +46,14 @@ class PropertyDetailsProductionTab extends Component {
 		}
 		this.tabRefs[this.tabs[index].type].current.close();
 
+		const updateRights = cloneDeep(rights);
+
 		this.setState({
-			rights: cloneDeep(rights),
+			rights: updateRights,
 			currentStep: index + 1,
 		});
-		// this.props.updateRights("rights", rights);
+
+		if (rights.length && this.props.onChange) this.props.onChange(updateRights);
 	};
 
 	render() {

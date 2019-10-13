@@ -175,7 +175,7 @@
       margin-bottom: 72px;
 
       .tab-description {
-        margin: 38px 0;
+        margin: 38px;
         letter-spacing: 0.06px;
         color: $v1-color-grey-2;
       }
@@ -458,10 +458,48 @@
       }
     }
 
-    .property-create-tab {
-      .territory-selector {
-        margin: 20px 40px;
+    .property-create {
+      &-tab {
+        .territory-selector {
+          margin: 20px 40px;
+        }
+
+        .horizontal-button-box {
+          padding: 40px 0;
+          display: flex;
+
+          .button {
+            min-width: 142px;
+            height: 54px;
+            border-radius: 2px;
+            font-size: 14px;
+            margin-left: 10px;
+          }
+        }
       }
+
+      &-box {
+        background-color: #fff;
+        padding: 40px;
+      }
+
+      &-header {
+        text-align: center;
+        margin: 25px 0 50px;
+        display: flex;
+        flex-direction: column;
+        height: 60px;
+        justify-content: space-between;
+      }
+
+      &-additional {
+        h5 {
+          font-size: 14px;
+          color: $v1-color-blue-4;
+          margin-bottom: 20px;
+        }
+      }
+
     }
 
     .property-rights {

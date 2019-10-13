@@ -21,7 +21,7 @@ class Tournament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "board", "home", "property"})
+     * @Groups({"listing", "board", "home", "property", "createListing"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Tournament
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial", "home", "property"})
+     * @Groups({"listing", "board", "commercial", "home", "property", "createListing"})
      */
     private $name;
 
@@ -37,7 +37,7 @@ class Tournament
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"home", "property"})
+     * @Groups({"home", "property", "createListing"})
      */
     private $externalId;
 

@@ -11,6 +11,7 @@ use AppBundle\Error\ListingErrors;
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\FileUploader;
 use AppBundle\Service\ListingService;
 use AppBundle\Service\WatchlistService;
 use Exception;
@@ -31,6 +32,47 @@ class ApiListingController extends Controller
 {
 
     use ControllerHelper;
+
+    /**
+     * @Route("/api/listing/property/details", name="propertyListingDetails")
+     * @param Request $request
+     * @param ListingService $listingService
+     * @return JsonResponse|Response
+     */
+    public function propertyListingDetails(Request $request, ListingService $listingService){
+
+        $customId = $request->get('customId');
+        $user = $this->getUser();
+
+        $listing = $listingService->getListing($customId, $user);
+        return $this->getSerializedResponse($listing, array("listing", "details"));
+
+    }
+
+    /**
+     * @Route("/api/listing/create/details", name="createListingDetails")
+     * @param Request $request
+     * @param ListingService $listingService
+     * @return JsonResponse|Response
+     */
+    public function createListingDetails(Request $request, ListingService $listingService){
+
+        $customId = $request->get('customId');
+        $user = $this->getUser();
+
+        $listing = $listingService->getListing($customId, $user);
+
+        if ($listing == null) {
+            return $this->getErrorResponse(ListingErrors::class, ListingErrors::LISTING_NOT_EXISTS );
+        }
+
+        if (!$listing->userCanEdit($user)) {
+            return $this->getErrorResponse(ListingErrors::class, ListingErrors::LISTING_NOT_OWNER );
+        }
+
+        return $this->getSerializedResponse($listing, array("createListing"));
+
+    }
 
     /**
      * @Route("/api/listing/details", name="listingDetails")
@@ -141,17 +183,39 @@ class ApiListingController extends Controller
      * @param Request $request
      * @param ListingService $listingService
      * @param EmailService $emailService
+     * @param FileUploader $fileUploader
      * @return JsonResponse
-     * @throws Exception
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
-    public function saveListing(Request $request, ListingService $listingService , EmailService $emailService )
+    public function saveListing(Request $request, ListingService $listingService , EmailService $emailService, FileUploader $fileUploader )
     {
         /* @var Property $property */
         $user = $this->getUser();
         $id = $request->get("id");
         $data = $request->request->all();
-        $listing = $this->deserialize( $data, "AppBundle\Entity\Content");
-        $listingService->createListing($listing);
+
+        $listing = $this->deserialize( $data, "CustomIdItem<AppBundle\Entity\Listing>");
+        $bundles= $this->deserialize($data["bundles"], "array<AppBundle\Entity\TerritorialBundle>");
+        $seasons = $this->deserialize($data["seasons"], "array<PropertyEventItem<AppBundle\Entity\Season>>");
+        $rights = $this->deserialize($data["rights"], "array<AppBundle\Entity\ListingRight>");
+
+        $listing->setBundles($bundles);
+        $listing->setSeasons($seasons);
+        $listing->setRights($rights);
+
+        if (isset($data['imageBase64'])) {
+            if (empty($data['imageBase64'])) {
+                $listing->setImage('');
+            } else {
+                $fileName = "property_image_" . md5(uniqid()) . '.jpg';
+                $savedImage = $fileUploader->saveImage($data['imageBase64'], $fileName);
+                $listing->setImage('/'.$savedImage);
+            }
+        }
+
+        $listing = $listingService->saveListing($listing, $user);
         if ( $id == null ) $emailService->internalUserListingDraft($user, $listing);
         return $this->getSerializedResponse($listing, array('draft'));
     }

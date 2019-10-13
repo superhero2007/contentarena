@@ -15,7 +15,9 @@ const CmsProgressComponent = ({ title, status }) => (
 	</div>
 );
 
-const CmsProgress = ({ title, currentStep, progressList }) => (
+const CmsProgress = ({
+	title, currentStep, maxStep, progressList,
+}) => (
 	<div className="progress-wrapper">
 		<h3 className="progress-title">
 			{title}
@@ -23,9 +25,11 @@ const CmsProgress = ({ title, currentStep, progressList }) => (
 		<div className="progress-steps">
 			{progressList.map((item, index) => {
 				let status = PROGRESS_STATUS.COMPLETED;
+
 				if (currentStep === index + 1) {
 					status = PROGRESS_STATUS.ACTIVE;
 				}
+
 				if (currentStep <= index) {
 					status = PROGRESS_STATUS.DISABLED;
 				}

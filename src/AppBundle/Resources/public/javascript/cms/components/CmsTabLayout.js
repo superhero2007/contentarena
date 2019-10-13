@@ -5,7 +5,9 @@ import Translate from "@components/Translator/Translate";
 import { PRODUCTION_TAB, RIGHTS_TAB } from "@constants";
 import CmsTabContent from "./CmsTabContent";
 
-const CmsTabLayout = ({ type, onSave, rights = "" }, context) => {
+const CmsTabLayout = ({
+	type, onSave, rights = "", rightDetails,
+}, context) => {
 	const [value, setValue] = useState(cloneDeep(rights));
 	const [showTextArea, setShowTextArea] = useState(!!rights[0].details[`${type}_TEXTAREA`]);
 
@@ -107,7 +109,6 @@ const CmsTabLayout = ({ type, onSave, rights = "" }, context) => {
 		</div>
 	);
 };
-
 
 CmsTabLayout.contextTypes = {
 	t: PropTypes.func.isRequired,

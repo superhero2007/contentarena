@@ -12,6 +12,7 @@ use AppBundle\Entity\AdminConfig;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\Listing;
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -631,12 +632,12 @@ class EmailService
      * User creates a draft (this is done by entering content listing process and proceeding to CL2)
      *
      * @param User $user
-     * @param Content $listing
+     * @param Listing $listing
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function internalUserListingDraft( User $user, Content $listing ){
+    public function internalUserListingDraft( User $user, Listing $listing ){
 
         $subject = $this->translator->trans("email.internal.user.listing.draft.subject");
         $content = $this->translator->trans("email.internal.user.listing.draft.content");

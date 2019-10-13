@@ -11,18 +11,22 @@ class CmsTerritoryFilter extends React.Component {
 
 	render() {
 		const {
-			options,
+			options = [],
 			value,
 			onChange,
+			multi = true,
+			label,
 		} = this.props;
 
 		options.sort(sortByName);
 
 		return (
 			<BaseFilter
-				name={<Translate i18nKey="TERRITORY_FILTER_NAME" />}
+				name={label || <Translate i18nKey="TERRITORY_FILTER_NAME" />}
 				options={options}
 				value={value}
+				containerClassName="edited-program-filter"
+				multi
 				placeholder={<Translate i18nKey="TERRITORY_FILTER_PLACEHOLDER" />}
 				multiText={<Translate i18nKey="TERRITORY_FILTER_MULTIPLE" />}
 				onChange={onChange}

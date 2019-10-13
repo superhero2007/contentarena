@@ -29,7 +29,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="legal_name", type="string", length=255, unique=true)
-     * @Groups({"details", "closed", "commercial", "settings", "listing","messages", "thread", "home", "property"})
+     * @Groups({"details", "closed", "commercial", "settings", "listing","messages", "thread", "home", "property", "createListing"})
      */
     private $legalName;
 
@@ -37,7 +37,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="vat", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $vat;
 
@@ -45,7 +45,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="registration_number", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $registrationNumber;
 
@@ -53,7 +53,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $city;
 
@@ -77,7 +77,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $address;
 
@@ -85,7 +85,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address2", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $address2;
 
@@ -93,7 +93,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $zip;
 
@@ -155,7 +155,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     * @Groups({"details", "settings", "home"})
+     * @Groups({"details", "settings", "home", "createListing"})
      */
     private $country;
 

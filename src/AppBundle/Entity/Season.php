@@ -20,7 +20,7 @@ class Season
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "home", "preview", "property"})
+     * @Groups({"listing", "home", "preview", "property", "createListing"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class Season
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial", "home", "property"})
+     * @Groups({"listing", "board", "commercial", "home", "property", "createListing"})
      */
     private $name;
 
@@ -36,21 +36,21 @@ class Season
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"listing", "home", "property"})
+     * @Groups({"listing", "home", "property", "createListing"})
      */
     private $externalId;
 
     /**
      * @Serializer\Type("DateTime<'Y-m-d'>")
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
-     * @Groups({"listing", "home", "preview", "property"})
+     * @Groups({"listing", "home", "preview", "property", "createListing"})
      */
     private $startDate;
 
     /**
      * @Serializer\Type("DateTime<'Y-m-d'>")
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
-     * @Groups({"listing", "home", "preview", "property"})
+     * @Groups({"listing", "home", "preview", "property", "createListing"})
      */
     private $endDate;
 
@@ -58,7 +58,7 @@ class Season
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="year", type="string", length=255, nullable=true)
-     * @Groups({"listing", "board", "commercial", "home", "preview", "property"})
+     * @Groups({"listing", "board", "commercial", "home", "preview", "property", "createListing"})
      */
     private $year;
 
@@ -78,7 +78,8 @@ class Season
     private $userSeason = false;
 
     /**
-     * @Groups({"property"})
+     * @Serializer\Type("array")
+     * @Groups({"property", "createListing"})
      */
     private $fixtures = array();
 

@@ -6,6 +6,7 @@ use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\Listing;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\RightsPackage;
 use AppBundle\Entity\SalesPackage;
@@ -27,6 +28,8 @@ class PropertyService
 
     private $contentService;
 
+    private $listingService;
+
     private $bidService;
 
     private $serializer;
@@ -36,6 +39,7 @@ class PropertyService
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
         ContentService $contentService,
+        ListingService $listingService,
         BidService $bidService,
         Serializer $serializer
 
@@ -45,6 +49,7 @@ class PropertyService
         $this->fileUploader = $fileUploader;
         $this->repo = $this->em->getRepository("AppBundle:Property");
         $this->contentService = $contentService;
+        $this->listingService = $listingService;
         $this->bidService = $bidService;
         $this->serializer = $serializer;
     }
@@ -58,22 +63,15 @@ class PropertyService
         $properties = $this->repo->findBy(array("company"=>$company), array("createdAt" => "DESC"));
 
         foreach ($properties as $property){
-            $listings = $this->contentService->getPropertyListings($property);
+            $listings = $this->listingService->getPropertyListings($property);
             $totalOpenBids = 0;
             $totalClosedBids = 0;
 
             foreach ( $listings as $key => $listing ){
-                /* @var $listing Content */
+                /* @var $listing Listing */
 
-                $totalTerritories = 0;
                 $bids = $this->bidService->getAllBidsByContent($listing);
 
-                foreach ($listing->getSalesPackages() as $bundle){
-                    /* @var SalesPackage $bundle  */
-                    $totalTerritories += count($bundle->getTerritories());
-                }
-
-                $listing->setTerritories($totalTerritories);
                 if ( $bids != null ) $listing->setHasActivity(true);
 
                 foreach ($bids as $bid){
@@ -84,7 +82,6 @@ class PropertyService
                         $totalClosedBids++;
                     }
                 }
-
             }
 
             $property->setListings($listings);
@@ -118,7 +115,7 @@ class PropertyService
      * @return Property|null|object
      */
     public function getPropertyDetails($property){
-        $listings = $this->contentService->getPropertyListings($property);
+        $listings = $this->listingService->getPropertyListings($property);
         $fixturesRepo = $this->em->getRepository("AppBundle:Fixture");
         $totalOpenBids = 0;
         $totalClosedBids = 0;
@@ -126,29 +123,14 @@ class PropertyService
         $seasons = $property->getSeasons();
 
         foreach ( $listings as $key => $listing ){
-            /* @var $listing Content */
+            /* @var $listing Listing */
 
             $totalTerritories = 0;
-            $rights = $listing->getRightsPackage();
-            $selectedRights = $listing->getSelectedRightsBySuperRight();
             $bids = $this->bidService->getAllBidsByContent($listing);
-            // TODO: Remove
             $bids = $this->bidService->getAllBidsByCompany($property->getCompany());
             $bids = array_slice($bids, 0, 15);
 
-            /* @var RightsPackage $right*/
-            foreach ($rights as $right){
-                if ( $selectedRights[$right->getId()]['exclusive'] ) $right->setExclusive(true);
-            }
-
-            foreach ($listing->getSalesPackages() as $bundle){
-                /* @var SalesPackage $bundle  */
-                $totalTerritories += count($bundle->getTerritories());
-            }
-
-            $listing->setTerritories($totalTerritories);
             $listing->setBids($bids);
-            $listing->setRightsPackage($rights);
             if ( $bids != null ) $listing->setHasActivity(true);
 
             foreach ($bids as $bid){
