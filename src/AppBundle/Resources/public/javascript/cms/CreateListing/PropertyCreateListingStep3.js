@@ -56,6 +56,7 @@ class PropertyCreateListingStep3 extends React.Component {
 
 				<div className="property-create-box">
 					<PropertyDetailsRightsTab
+						showHeadline={false}
 						listing={listing}
 						onChange={this.updateListing}
 					/>

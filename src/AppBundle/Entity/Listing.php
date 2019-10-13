@@ -125,7 +125,7 @@ class Listing implements NotifiableInterface
 
     /**
      * @var array
-     * @Serializer\Type("array")
+     * @Serializer\Type("string")
      * @ORM\Column(name="website", type="object", nullable=true)
      * @Groups({"listing", "home", "createListing"})
      */
@@ -544,7 +544,7 @@ class Listing implements NotifiableInterface
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getWebsite()
     {
@@ -552,7 +552,7 @@ class Listing implements NotifiableInterface
     }
 
     /**
-     * @param array $website
+     * @param string $website
      */
     public function setWebsite($website)
     {

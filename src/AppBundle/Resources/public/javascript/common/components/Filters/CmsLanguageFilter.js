@@ -8,7 +8,6 @@ export const allValue = {
 	name: "All local languages",
 };
 
-
 class CmsLanguageFilter extends React.Component {
 	constructor(props) {
 		super(props);

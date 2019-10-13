@@ -40,7 +40,8 @@ class PropertyListingAdditionalInfo extends Component {
 	};
 
 	handleChangeCompany = (value, target) => {
-		const { listing: { company } } = this.props;
+		let { listing: { company } } = this.props;
+		if (company === null) company = {};
 		company[target] = value;
 		this.props.updateListing({ company });
 	};
