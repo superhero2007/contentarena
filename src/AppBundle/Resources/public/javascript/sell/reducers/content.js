@@ -20,7 +20,6 @@ export const contentType = {
 	ADD_SALES_PACKAGES: "ADD_SALES_PACKAGES",
 	RESET: "RESET",
 
-	UPDATE_LISTING: "UPDATE_LISTING",
 	LISTING_EDITED: "LISTING_EDITED",
 	LISTING_SAVED: "LISTING_SAVED",
 	SAVE_LISTING: "SAVE_LISTING",
@@ -78,8 +77,6 @@ export const content = (state = EmptyListing, action) => {
 		return Object.assign({}, state, { loading: true });
 	case contentType.LISTING_REQUEST_SUCCESS:
 		return Object.assign({}, state, { loading: false, saving: false, ...action.data });
-	case contentType.UPDATE_LISTING:
-		return Object.assign({}, state, { ...action.data });
 	case contentType.LISTING_REQUEST_FAIL:
 		return Object.assign({}, state, { error: action.error }, { loading: false, saving: false });
 	case contentType.RESET:

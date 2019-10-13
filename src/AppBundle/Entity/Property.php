@@ -139,8 +139,8 @@ class Property implements NotifiableInterface
     private $rights;
 
     /**
-     * @Serializer\Type("array<AppBundle\Entity\Content>")
-     * @var array<AppBundle\Entity\Content>
+     * @Serializer\Type("array<AppBundle\Entity\Listing>")
+     * @var array<AppBundle\Entity\Listing>
      * @Groups({"property", "propertyList"})
      */
     private $listings;
@@ -386,7 +386,7 @@ class Property implements NotifiableInterface
     }
 
     /**
-     * @return Season
+     * @return array Season
      */
     public function getSeasons()
     {

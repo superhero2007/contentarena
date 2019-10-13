@@ -1,6 +1,7 @@
 import React from "react";
 import Translate from "@components/Translator/Translate";
 import ReactTable from "react-table";
+import CmsBundleMinimumBid from "../components/CmsBundleMinimumBid";
 
 class BundleList extends React.Component {
 	constructor(props) {
@@ -9,7 +10,7 @@ class BundleList extends React.Component {
 	}
 
 	render() {
-		const { bundles } = this.props;
+		const { bundles, showActions } = this.props;
 		const columns = [{
 			Header: "Territories",
 			accessor: "name",
@@ -28,16 +29,20 @@ class BundleList extends React.Component {
 			className: "rt-td-center",
 		}, {
 			Header: "Minimum Bid",
-			accessor: "minimumBid",
 			headerClassName: "rt-th-center",
 			className: "rt-td-center",
+			Cell: props => <CmsBundleMinimumBid {...props.original} />,
 
 		}, {
 			className: "rt-td-actions",
 			Cell: props => (
 				<>
-					<i className="icon-edit clickable" onClick={() => this.props.onRemove(props.index)} />
-					<i className="icon-remove clickable" onClick={() => this.props.onRemove(props.index)} />
+					{showActions && (
+						<>
+							<i className="icon-edit clickable" onClick={() => this.props.onEdit(props.index)} />
+							<i className="icon-remove clickable" onClick={() => this.props.onRemove(props.index)} />
+						</>
+					)}
 				</>
 			),
 			width: 100,
@@ -68,5 +73,9 @@ class BundleList extends React.Component {
 		);
 	}
 }
+
+BundleList.defaultProps = {
+	showActions: true,
+};
 
 export default BundleList;

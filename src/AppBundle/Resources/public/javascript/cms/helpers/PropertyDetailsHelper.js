@@ -90,7 +90,7 @@ export const groupListingsByStatus = (listings) => {
 	};
 };
 
-export const getTerritoriesFromListing = listing => getUnique([].concat(...listing.salesPackages.map(bundle => bundle.territories)), "id");
+export const getTerritoriesFromListing = listing => getUnique([].concat(...listing.bundles.map(bundle => bundle.territories)), "id");
 
 export const getCountryData = (countries) => {
 	const regions = new Map();

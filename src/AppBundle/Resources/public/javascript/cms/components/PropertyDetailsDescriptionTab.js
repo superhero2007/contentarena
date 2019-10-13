@@ -10,30 +10,23 @@ class PropertyDetailsDescriptionTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			image: props.image || "",
-			imageBase64: "",
-			description: props.description || "",
-			website: props.website || "",
-			attachments: props.attachments ? props.attachments.slice(0) : [],
+			image: props.listing ? props.listing.image : props.image || "",
+			imageBase64: props.listing ? props.listing.imageBase64 : "",
+			description: props.listing ? props.listing.description : props.description || "",
+			website: props.listing ? props.listing.website : props.website || "",
+			attachments: props.listing ? props.listing.attachments : props.attachments ? props.attachments.slice(0) : [],
 			uploading: false,
 		};
 	}
 
 	getImage = () => {
 		const { image, imageBase64 } = this.state;
-
 		return imageBase64 || image;
 	};
 
-	handleDescriptionChange = (e) => {
-		const { value } = e.target;
-		this.setState({ description: value });
-	};
+	handleDescriptionChange = e => this.setState({ description: e.target.value }, this.onChange);
 
-	handleChangeWebsite = (e) => {
-		const { value } = e.target;
-		this.setState({ website: value });
-	};
+	handleChangeWebsite = e => this.setState({ website: e.target.value }, this.onChange);
 
 	handleReset = () => {
 		const {
@@ -80,7 +73,7 @@ class PropertyDetailsDescriptionTab extends Component {
 						name: response.name,
 						size: response.size,
 					});
-					this.setState({ attachments });
+					this.setState({ attachments }, this.onChange);
 				}
 				this.isUploading(false);
 			});
@@ -89,19 +82,24 @@ class PropertyDetailsDescriptionTab extends Component {
 	removeFile = (index) => {
 		const { attachments } = this.state;
 		attachments.splice(index, 1);
-		this.setState({ attachments });
+		this.setState({ attachments }, this.onChange);
 	};
 
-	isUploading = (uploading) => {
-		this.setState({ uploading });
-	};
+	isUploading = uploading => this.setState({ uploading });
 
-	onUpload = (imageBase64) => {
-		this.setState({ imageBase64 });
-	};
+	onUpload = imageBase64 => this.setState({ imageBase64 }, this.onChange);
 
-	onRemove = () => {
-		this.setState({ image: "", imageBase64: "" });
+	onRemove = () => this.setState({ image: "", imageBase64: "" }, this.onChange);
+
+	onChange = () => {
+		const {
+			image, imageBase64, description, website, attachments,
+		} = this.state;
+		if (this.props.onChange) {
+			this.props.onChange({
+				image, imageBase64, description, website, attachments,
+			});
+		}
 	};
 
 	render() {
@@ -111,7 +109,7 @@ class PropertyDetailsDescriptionTab extends Component {
 			attachments,
 			uploading,
 		} = this.state;
-		const { loading } = this.props;
+		const { loading, showSaveButtons } = this.props;
 
 		return (
 			<section className="property-description-tab">
@@ -158,26 +156,28 @@ class PropertyDetailsDescriptionTab extends Component {
 							/>
 						</div>
 					</div>
-					<div className="description-action">
-						<button
-							className="secondary-outline-button"
-							disabled={loading || uploading}
-							onClick={this.handleReset}
-						>
-							<div className="button-content">
-								<Translate i18nKey="PROPERTY_DETAILS_EVENT_RESET" />
-							</div>
-						</button>
-						<button
-							className="secondary-button"
-							onAnimationEnd={this.handleSave}
-							disabled={loading || uploading}
-						>
-							<div className="button-content">
-								<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
-							</div>
-						</button>
-					</div>
+					{showSaveButtons && (
+						<div className="description-action">
+							<button
+								className="secondary-outline-button"
+								disabled={loading || uploading}
+								onClick={this.handleReset}
+							>
+								<div className="button-content">
+									<Translate i18nKey="PROPERTY_DETAILS_EVENT_RESET" />
+								</div>
+							</button>
+							<button
+								className="secondary-button"
+								onAnimationEnd={this.handleSave}
+								disabled={loading || uploading}
+							>
+								<div className="button-content">
+									<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
+								</div>
+							</button>
+						</div>
+					)}
 				</div>
 			</section>
 		);
@@ -186,6 +186,10 @@ class PropertyDetailsDescriptionTab extends Component {
 
 PropertyDetailsDescriptionTab.contextTypes = {
 	t: PropTypes.func.isRequired,
+};
+
+PropertyDetailsDescriptionTab.defaultProps = {
+	showSaveButtons: true,
 };
 
 const mapStateToProps = state => ({

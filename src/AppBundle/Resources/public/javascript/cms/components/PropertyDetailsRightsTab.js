@@ -13,7 +13,7 @@ class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rights: cloneDeep(props.property.rights),
+			rights: (props.listing) ? cloneDeep(props.listing.rights) : cloneDeep(props.property.rights),
 			currentStep: 0,
 		};
 		this.tabRefs = {};
@@ -46,23 +46,30 @@ class PropertyDetailsRightsTab extends Component {
 		}
 		this.tabRefs[this.tabs[index].type].current.close();
 
+		const updateRights = cloneDeep(rights);
+
 		this.setState({
-			rights: cloneDeep(rights),
+			rights: updateRights,
 			currentStep: index + 1,
 		});
-		// this.props.updateRights("rights", rights);
+
+		if (rights.length && this.props.onChange) this.props.onChange(updateRights);
 	};
 
 	render() {
 		const { rights } = this.state;
+		const { showHeadline, listing } = this.props;
 		if (rights.length === 0) return null;
 		const { currentStep } = this.state;
 
 		return (
 			<section className="property-production-tab">
-				<div className="property-tab-description body2">
-					<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
-				</div>
+
+				{showHeadline && (
+					<div className="property-tab-description body2">
+						<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
+					</div>
+				)}
 
 				{this.tabs.map((item, index) => (
 					<AccordionContainer
@@ -89,6 +96,10 @@ class PropertyDetailsRightsTab extends Component {
 
 PropertyDetailsRightsTab.contextTypes = {
 	t: PropTypes.func.isRequired,
+};
+
+PropertyDetailsRightsTab.defaultProps = {
+	showHeadline: true,
 };
 
 const mapStateToProps = state => ({

@@ -45,28 +45,6 @@ class Content implements NotifiableInterface
     protected $customId;
 
     /**
-     * @Serializer\Type("array<AppBundle\Entity\PropertyRight>")
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PropertyRight",cascade={"persist"})
-     * @ORM\JoinTable(name="listing_rights",
-     *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="listing_right_id", referencedColumnName="id")}
-     *      )
-     * @Groups({"listing", "property"})
-     */
-    private $rights;
-
-    /**
-     * @Serializer\Type("array<PropertyEventItem<AppBundle\Entity\Tournament>>")
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tournament",cascade={"persist"})
-     * @ORM\JoinTable(name="listing_tournaments",
-     *      joinColumns={@ORM\JoinColumn(name="listing_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="listing_tournament_id", referencedColumnName="id")}
-     *      )
-     * @Groups({"listing", "property"})
-     */
-    private $tournaments;
-
-    /**
      * @var mixed
      *
      * @ORM\Column(name="signature", type="string", nullable=true)

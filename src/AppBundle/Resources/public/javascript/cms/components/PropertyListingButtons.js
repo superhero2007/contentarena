@@ -3,8 +3,8 @@ import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
 import { HorizontalButtonBox } from "@components/Containers";
 import { connect } from "react-redux";
-import { saveListing } from "../../sell/actions/contentActions";
 import { getListingStepRoute } from "../helpers/PropertyListingHelper";
+import { saveListing } from "../actions/propertyListingActions";
 
 class PropertyListingButtons extends React.Component {
 	constructor(props) {
@@ -26,41 +26,66 @@ class PropertyListingButtons extends React.Component {
 			.finally();
 	};
 
+	onPrevious= () => {
+		const { property: { customId }, history, listing } = this.props;
+		const stepRoute = getListingStepRoute(customId, listing.customId, listing.step - 1);
+		history.push(stepRoute);
+	};
+
 	onNext = () => {
 		const { property: { customId }, history, listing } = this.props;
 		this.props.saveListing(listing)
-			.then(() => {
-				const stepRoute = getListingStepRoute(customId, listing.customId, listing.step + 1);
+			.then((data) => {
+				const stepRoute = getListingStepRoute(customId, data.customId, listing.step + 1);
 				history.push(stepRoute);
 			})
 			.catch()
 			.finally();
 	};
 
+	cancel = () => {};
 
 	render() {
 		const { listing } = this.props;
 		return (
-			<HorizontalButtonBox style={{ marginTop: 20 }}>
+			<HorizontalButtonBox>
+				{listing.step !== 1 && (
+					<button
+						className="button secondary-button"
+						disabled={listing.saving}
+						onClick={this.onPrevious}
+						style={{ marginRight: "auto" }}
+					>
+						<Translate i18nKey="CMS_CREATE_LISTING_PREV_BUTTON" />
+					</button>
+				)}
+
+				{listing.step === 1 && (
+					<button
+						className="button secondary-button"
+						disabled={listing.saving}
+						onClick={this.cancel}
+						style={{ marginRight: "auto" }}
+					>
+						<Translate i18nKey="CANCEL" />
+					</button>
+				)}
+
+				{listing.step !== 1 && (
+					<button
+						className="button secondary-outline-button"
+						disabled={listing.saving}
+						onClick={this.onSave}
+					>
+						{listing.saving
+							? <Loader xSmall loading />
+							: <Translate i18nKey="CMS_CREATE_LISTING_SAVE_BUTTON" />
+						}
+					</button>
+				)}
+
 				<button
-					className="yellow-button"
-					disabled={listing.saving || listing.step === 1}
-					onClick={this.prev}
-				>
-					<Translate i18nKey="CMS_CREATE_LISTING_PREV_BUTTON" />
-				</button>
-				<button
-					disabled={listing.saving}
-					className="yellow-button"
-					onClick={this.onSave}
-				>
-					{listing.saving
-						? <Loader xSmall loading />
-						: <Translate i18nKey="CMS_CREATE_LISTING_SAVE_BUTTON" />
-					}
-				</button>
-				<button
-					className="yellow-button"
+					className="button primary-button"
 					disabled={listing.saving}
 					onClick={this.onNext}
 				>
@@ -76,7 +101,7 @@ class PropertyListingButtons extends React.Component {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
-	listing: state.content,
+	listing: state.propertyListing,
 });
 
 const mapDispatchToProps = dispatch => ({

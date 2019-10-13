@@ -9,8 +9,13 @@ import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
 import PropertyCreateListingStep1 from "./PropertyCreateListingStep1";
-import { getListingDetails, updateListing } from "../../sell/actions/contentActions";
 import CmsProgress from "../components/CmsProgress";
+import { getCreateListingDetails, getListingDetails, updateListing } from "../actions/propertyListingActions";
+import PropertyCreateListingStep2 from "./PropertyCreateListingStep2";
+import PropertyCreateListingStep4 from "./PropertyCreateListingStep4";
+import PropertyCreateListingStep3 from "./PropertyCreateListingStep3";
+import PropertyCreateListingStep5 from "./PropertyCreateListingStep5";
+import PropertyCreateListingStep6 from "./PropertyCreateListingStep6";
 
 class PropertyCreateListing extends React.Component {
 	constructor(props) {
@@ -53,6 +58,7 @@ class PropertyCreateListing extends React.Component {
 			sports: property.sports,
 			tournaments: property.tournament,
 			sportCategory: property.sportCategory,
+			image: property.image,
 		});
 	};
 
@@ -106,11 +112,17 @@ class PropertyCreateListing extends React.Component {
 				<CmsProgress
 					title={<Translate i18nKey="CMS_CREATE_LISTING_TITLE" />}
 					currentStep={step}
+					maxStep={listing.maxStep}
 					progressList={progressList}
 				/>
 
 				<DefaultBox>
 					{step === 1 && !listing.loading && <PropertyCreateListingStep1 history={history} />}
+					{step === 2 && !listing.loading && <PropertyCreateListingStep2 history={history} />}
+					{step === 3 && !listing.loading && <PropertyCreateListingStep3 history={history} />}
+					{step === 4 && !listing.loading && <PropertyCreateListingStep4 history={history} />}
+					{step === 5 && !listing.loading && <PropertyCreateListingStep5 history={history} />}
+					{step === 6 && !listing.loading && <PropertyCreateListingStep6 history={history} />}
 					{listing.loading && <Loader xSmall loading />}
 				</DefaultBox>
 			</SkinContainer>
@@ -121,12 +133,12 @@ class PropertyCreateListing extends React.Component {
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
 	error: state.propertyDetails.error,
-	listing: state.content,
+	listing: state.propertyListing,
 });
 
 const mapDispatchToProps = dispatch => ({
 	updateListing: data => dispatch(updateListing(data)),
-	getListingDetails: listing => dispatch(getListingDetails(listing)),
+	getListingDetails: listing => dispatch(getCreateListingDetails(listing)),
 	getCountries: () => dispatch(fetchCountries()),
 	getTerritories: () => dispatch(fetchTerritories()),
 	getRegions: () => dispatch(fetchRegions()),
