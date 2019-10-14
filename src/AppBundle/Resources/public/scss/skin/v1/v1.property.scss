@@ -399,6 +399,11 @@
         }
       }
 
+      &-container {
+        height: 500px;
+        overflow: auto;
+      }
+
       &-action {
         display: flex;
         align-items: center;
