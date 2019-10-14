@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import cn from "classnames";
-import ReactTooltip from "react-tooltip";
 import Translate from "@components/Translator/Translate";
-import Loader from "@components/Loader";
 import { getTerritoriesFromRights } from "@utils/property";
 import RightSelector from "@components/Right/RightSelector";
 import AccordionContainer from "@components/Containers/AccordionContainer";
@@ -15,11 +12,12 @@ import {
 	sortSeasonsOldToNew,
 } from "../helpers/PropertyDetailsHelper";
 import PropertyListingButtons from "../components/PropertyListingButtons";
-import { updateListing } from "../../sell/actions/contentActions";
 import { getListingName } from "../helpers/PropertyListingHelper";
 import SeasonSelection from "./SeasonSelection";
 import BundleCreator from "./BundleCreator";
 import BundleList from "./BundleList";
+import { updateListing } from "../actions/propertyListingActions";
+import RightDetailsDefault from "../../common/RightDetailsDefault";
 
 class PropertyCreateListingStep1 extends React.Component {
 	constructor(props) {
@@ -31,14 +29,12 @@ class PropertyCreateListingStep1 extends React.Component {
 			currentStep = 4;
 		}
 
-		// currentStep = props.property.seasons && props.property.seasons.length === 0 ? 2 : 1;
-
 		this.state = {
 			seasons: props.listing.seasons,
-			rights: [],
-			bundles: [],
+			rights: props.listing.rights,
+			bundles: props.listing.bundles,
 			currentStep,
-			showBundleCreator: true,
+			showBundleCreator: !props.listing.bundles.length,
 		};
 
 		this.seasonStep = React.createRef();
@@ -62,12 +58,24 @@ class PropertyCreateListingStep1 extends React.Component {
 	onCreateBundles = bundles => this.setState({
 		bundles: [...this.state.bundles, ...bundles],
 		showBundleCreator: false,
-	});
+	}, this.updateListing);
+
+	onUpdateBundle = (bundle) => {
+		const bundles = this.state.bundles;
+		bundles[bundle.index] = bundle;
+		this.setState({ bundles, showBundleCreator: false }, this.updateListing);
+	};
 
 	onRemoveBundle = (index) => {
 		const bundles = this.state.bundles;
 		bundles.splice(index, 1);
-		this.setState({ bundles });
+		this.setState({ bundles }, this.updateListing);
+	};
+
+	onEditBundle = (index) => {
+		const selectedBundle = this.state.bundles[index];
+		selectedBundle.index = index;
+		this.setState({ selectedBundle, showBundleCreator: true });
 	};
 
 	bundlesAreValid = () => !!this.state.bundles.length;
@@ -81,38 +89,42 @@ class PropertyCreateListingStep1 extends React.Component {
 
 	onExclusive = (right, exclusive) => {
 		let { rights } = this.state;
-		rights = rights.filter(element => element.id !== right.id);
+		rights = rights.filter(element => element.code !== right.code);
 		const newValue = Object.assign({}, right, { exclusive });
 		rights.push(newValue);
 		this.setState({
 			rights,
 			currentStep: 2,
-		});
+		}, this.updateListing);
 	};
 
 	onSelectRight = (value) => {
 		let { rights } = this.state;
-		const selectedRight = rights.find(element => element.id === value.id);
+		const selectedRight = rights.find(element => element.code === value.code);
 		if (selectedRight) {
-			rights = rights.filter(element => element.id !== value.id);
+			rights = rights.filter(element => element.code !== value.code);
 		} else {
-			const newValue = Object.assign({}, value, { exclusive: null });
+			const newValue = Object.assign({}, value, {
+				exclusive: null,
+				details: RightDetailsDefault,
+			});
 			rights.push(newValue);
 		}
 		this.setState({
 			rights,
 			currentStep: 2,
-		});
+		}, this.updateListing);
 	};
 
 	onNext = currentStep => this.setState({ currentStep });
 
 	updateListing = () => {
-		const { seasons, rights } = this.state;
+		const { seasons, rights, bundles } = this.state;
 		const { property } = this.props;
 		this.props.updateListing({
 			seasons,
 			rights,
+			bundles,
 			name: getListingName(property, seasons),
 		});
 		this.onNext(4);
@@ -125,6 +137,7 @@ class PropertyCreateListingStep1 extends React.Component {
 			currentStep,
 			bundles,
 			showBundleCreator,
+			selectedBundle,
 		} = this.state;
 
 		const {
@@ -135,7 +148,7 @@ class PropertyCreateListingStep1 extends React.Component {
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const bundlesAreValid = this.bundlesAreValid();
-		const availableCountries = getTerritoriesFromRights(rights);
+		const availableCountries = getTerritoriesFromRights(availableRights);
 		const selectedSeasonsValue = getSeasonsYearString(seasons.sort(sortSeasonsOldToNew));
 		const selectedRightsValue = getRightsString(rights);
 
@@ -194,29 +207,34 @@ class PropertyCreateListingStep1 extends React.Component {
 					enableNextStep={bundlesAreValid}
 					onNext={() => this.updateListing()}
 					ref={this.territoriesStep}
+					opened={currentStep === 4}
 				>
 					{!!bundles.length && (
 						<div className="accordion-container-content-item">
 							<BundleList
 								bundles={bundles}
 								onRemove={this.onRemoveBundle}
+								onEdit={this.onEditBundle}
 							/>
-
-							<button
-								className="link-button"
-								style={{ marginTop: 20 }}
-								onClick={() => this.setState({ showBundleCreator: true })}
-							>
-								<Translate i18nKey="CREATE_ANOTHER_BUNDLE_BUTTON" />
-							</button>
+							{!showBundleCreator && (
+								<button
+									className="link-button"
+									style={{ marginTop: 20 }}
+									onClick={() => this.setState({ showBundleCreator: true })}
+								>
+									<Translate i18nKey="CREATE_ANOTHER_BUNDLE_BUTTON" />
+								</button>
+							)}
 						</div>
 					)}
 
 					{showBundleCreator && (
 						<BundleCreator
+							selectedBundle={selectedBundle}
 							availableCountries={availableCountries.territories}
 							onCreateBundles={this.onCreateBundles}
-							onCancel={() => {}}
+							onUpdateBundle={this.onUpdateBundle}
+							onCancel={() => this.setState({ showBundleCreator: false })}
 						/>
 					)}
 
@@ -230,7 +248,7 @@ class PropertyCreateListingStep1 extends React.Component {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
-	listing: state.content,
+	listing: state.propertyListing,
 });
 
 const mapDispatchToProps = dispatch => ({

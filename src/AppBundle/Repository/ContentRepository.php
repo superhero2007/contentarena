@@ -416,26 +416,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult();
     }
 
-    /**
-     * @param Property $property
-     * @return array
-     */
-    public function getPropertyListings(Property $property){
-
-        $now = date('Y-m-d H:i:s');
-
-        //TODO: Enable property criteria
-
-        return $this->createQueryBuilder('c')
-            ->innerJoin("c.status", "status")
-            ->andWhere('c.property = :property')
-            ->andWhere('status.name != :sold_copy')
-             ->setParameter('property',$property)
-            ->setParameter('sold_copy',"SOLD_COPY")
-            ->orderBy('c.createdAt','DESC')
-            ->getQuery()->getResult();
-    }
-
     public function getPropertyListingsTest(Property $property){
 
         return $this->createQueryBuilder('c')

@@ -12,9 +12,10 @@ class BundleCreator extends React.Component {
 
 		this.state = {
 			saving: false,
-			territoriesMode: BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY,
-			currency: "EUR",
-			minimumBid: 1,
+			territoriesMode: props.selectedBundle ? BUNDLE_OFFER_TERRITORIES.BUNDLE : BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY,
+			currency: props.selectedBundle ? props.selectedBundle.currency : "EUR",
+			minimumBid: props.selectedBundle ? props.selectedBundle.minimumBid : 1,
+			territories: props.selectedBundle ? props.selectedBundle.territories : [],
 		};
 	}
 
@@ -46,54 +47,73 @@ class BundleCreator extends React.Component {
 		this.props.onCreateBundles(bundles);
 	};
 
+	updateBundle = () => {
+		const {
+			territories, minimumBid, currency,
+		} = this.state;
+
+		this.props.onUpdateBundle({
+			territories,
+			minimumBid,
+			currency,
+			name: this.props.selectedBundle.name,
+			index: this.props.selectedBundle.index,
+		});
+	};
+
 	render() {
 		const {
 			territories, territoriesMode, minimumBid, currency,
 		} = this.state;
 
-		const { availableCountries } = this.props;
+		const { availableCountries, selectedBundle } = this.props;
 
 		return (
 			<>
-				<TerritorySelector
-					availableCountries={availableCountries}
-					selectedCountries={territories}
-					onSelect={this.onSelectTerritories}
-				/>
-				<div className="d-flex form-group accordion-container-content-item">
-					<div className="w-50">
-						<label>
-							<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_TITLE" />
-						</label>
+				{!selectedBundle && (
+					<TerritorySelector
+						availableCountries={availableCountries}
+						selectedCountries={territories}
+						onSelect={this.onSelectTerritories}
+					/>
+				)}
 
-						<div className="input-radio-group">
-							<label className="input-radio">
-								<input
-									type="radio"
-									checked={territoriesMode === BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY}
-									onChange={() => this.setState({ territoriesMode: BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY })}
-									id="non-exclusive"
-								/>
-								<span className="input-radio-selector" />
-								<span className="input-radio-text">
-									<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_BUNDLE_INDIVIDUALLY" />
-								</span>
+				{!selectedBundle && (
+					<div className="d-flex form-group accordion-container-content-item">
+						<div className="w-50">
+							<label>
+								<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_TITLE" />
 							</label>
-							<label className="input-radio">
-								<input
-									type="radio"
-									checked={territoriesMode === BUNDLE_OFFER_TERRITORIES.BUNDLE}
-									onChange={() => this.setState({ territoriesMode: BUNDLE_OFFER_TERRITORIES.BUNDLE })}
-									id="exclusive"
-								/>
-								<span className="input-radio-selector" />
-								<span className="input-radio-text">
-									<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_BUNDLE" />
-								</span>
-							</label>
+
+							<div className="input-radio-group">
+								<label className="input-radio">
+									<input
+										type="radio"
+										checked={territoriesMode === BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY}
+										onChange={() => this.setState({ territoriesMode: BUNDLE_OFFER_TERRITORIES.INDIVIDUALLY })}
+										id="non-exclusive"
+									/>
+									<span className="input-radio-selector" />
+									<span className="input-radio-text">
+										<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_BUNDLE_INDIVIDUALLY" />
+									</span>
+								</label>
+								<label className="input-radio">
+									<input
+										type="radio"
+										checked={territoriesMode === BUNDLE_OFFER_TERRITORIES.BUNDLE}
+										onChange={() => this.setState({ territoriesMode: BUNDLE_OFFER_TERRITORIES.BUNDLE })}
+										id="exclusive"
+									/>
+									<span className="input-radio-selector" />
+									<span className="input-radio-text">
+										<Translate i18nKey="BUNDLE_OFFER_TERRITORIES_AS_BUNDLE" />
+									</span>
+								</label>
+							</div>
 						</div>
 					</div>
-				</div>
+				)}
 
 				<div className="d-flex justify-content-between form-group accordion-container-content-item">
 					<div className="w-25">
@@ -119,9 +139,18 @@ class BundleCreator extends React.Component {
 					<button className="button secondary-outline-button" onClick={this.props.onCancel}>
 						CANCEL
 					</button>
-					<button className="button secondary-button" onClick={this.createBundle}>
-						CREATE BUNDLE
-					</button>
+					{!selectedBundle && (
+						<button className="button secondary-button" onClick={this.createBundle}>
+							CREATE BUNDLE
+						</button>
+					)}
+
+					{selectedBundle && (
+						<button className="button secondary-button" onClick={this.updateBundle}>
+							UPDATE BUNDLE
+						</button>
+					)}
+
 				</div>
 			</>
 		);

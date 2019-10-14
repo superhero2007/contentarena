@@ -12,6 +12,7 @@ use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Country;
 use AppBundle\Entity\Fixture;
+use AppBundle\Entity\Listing;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Season;
@@ -41,31 +42,45 @@ class ListingService
     {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
-        $this->repository = $this->em->getRepository("AppBundle:Content");
+        $this->repository = $this->em->getRepository("AppBundle:Listing");
+    }
+
+    public function getListing($customId, User $user) {
+        return $this->repository->findOneBy(array("customId" => $customId));
+    }
+
+    public function getPropertyListings(Property $property) {
+        return $this->repository->getPropertyListings($property);
     }
 
     /**
-     * @param Content $listing
+     * @param Listing $listing
+     * @param User $user
      * @return mixed
      * @throws \Exception
      */
-    public function createListing(Content $listing)
+    public function saveListing(Listing $listing, User $user)
     {
 
-        $customId = $this->idGenerator->generate($listing);
-        $createdAt = new \DateTime();
+        if ($listing->getCustomId() == null) {
+            $customId = $this->idGenerator->generate($listing);
+            $listing->setCustomId($customId);
+        }
 
-        //$listing->setCustomId($customId);
-        $listing->setCreatedAt($createdAt);
-        //$listing->setCompany($company);
-        //$listing->setName($this->createPropertyName($property));
+        if ($listing->getCreatedAt() == null) {
+            $createdAt = new \DateTime();
+            $listing->setCreatedAt($createdAt);
+        }
+
+        if ($listing->getCompany() == null) $listing->setCompany($user->getCompany());
+        if ($listing->getOwner() == null) $listing->setOwner($user);
+        if ($listing->getRelevance() == null) $listing->setRelevance(1);
+
+        $listing->incrementStep();
+
         $this->em->persist($listing);
         $this->em->flush();
         return $listing;
-
-
     }
-
-
 
 }

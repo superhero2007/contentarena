@@ -157,7 +157,14 @@ services:
 
     custom_serializer_handle:
         class: AppBundle\Serializer\Handler\EntityHandler
-        arguments: ['@doctrine']
+        arguments: ['@doctrine', '@service_container']
         public: true
         tags:
             - {name: jms_serializer.subscribing_handler}
+
+    AppBundle\Normalizer\EntityNormalizer:
+        public: false
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: serializer.normalizer }

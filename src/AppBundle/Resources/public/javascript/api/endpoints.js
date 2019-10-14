@@ -28,6 +28,8 @@ const API_ENDPOINTS = {
 
 	LISTING_SAVE: "api/listing/save",
 	LISTING_DETAILS: "api/listing/details",
+	PROPERTY_LISTING_DETAILS: "api/listing/property/details",
+	CREATE_LISTING_DETAILS: "api/listing/create/details",
 
 
 };

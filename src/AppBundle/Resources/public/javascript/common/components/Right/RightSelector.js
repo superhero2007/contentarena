@@ -34,12 +34,12 @@ class RightSelector extends React.Component {
 					const idAttr = `checkbox-${code}`;
 					const exclusiveIdAttr = `exc-id-${code}`;
 					const nonExclusiveIdAttr = `non-exc-id-${code}`;
-					const selectedRight = selectedRights.find(element => element.id === right.id);
+					const selectedRight = selectedRights.find(element => element.code === right.code);
 					const exclusive = selectedRight && selectedRight.exclusive !== null ? selectedRight.exclusive : null;
 					const offerValue = exclusive === null ? null : (exclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE);
 					const isEven = (index % 2 === 0);
 					return (
-						<div className={cn("right-selector-item", { "right-selector-even": isEven })} key={right.id}>
+						<div className={cn("right-selector-item", { "right-selector-even": isEven })} key={right.code}>
 							<label className="input-checkbox">
 								<input
 									type="checkbox"
