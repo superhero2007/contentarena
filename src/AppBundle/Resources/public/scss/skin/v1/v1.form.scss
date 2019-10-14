@@ -103,6 +103,10 @@
         position: relative;
         flex-shrink: 0;
 
+        &.invalid {
+          border: 1px solid $v1-color-red-1;
+        }
+
         &::after {
           content: "";
           position: absolute;
@@ -271,7 +275,7 @@
       padding: 20px;
       color: $v1-color-grey-2;
       font-family: $v1-font-family;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 18px;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
