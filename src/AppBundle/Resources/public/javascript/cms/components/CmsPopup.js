@@ -1,7 +1,7 @@
 import React from "react";
 
 const CmsPopup = ({
-	title, children, onClose, close, apply, onApply = null,
+	title, children, onClose, close, apply, onApply = null, disabled = false,
 }) => (
 	<div className="popup-modal">
 		<div className="popup-modal-container">
@@ -31,6 +31,7 @@ const CmsPopup = ({
 					<button
 						className="primary-button"
 						onClick={onApply}
+						disabled={disabled}
 					>
 						<div className="button-content">
 							{apply}
