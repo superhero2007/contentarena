@@ -20,7 +20,8 @@ import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 
 const disabled = {
 	CONTENT_DELIVERY_DEDICATED: ["LT", "PR"],
-	CONTENT_DELIVERY_LIVE: ["LT", "PR"],
+	CONTENT_DELIVERY_LIVE: ["PR"],
+	CONTENT_DELIVERY_FOOTAGE: ["LT"],
 };
 
 const columns = [{

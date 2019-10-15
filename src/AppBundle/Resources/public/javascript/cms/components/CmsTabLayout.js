@@ -9,11 +9,6 @@ const CmsTabLayout = ({
 	type, onSave, rights = "", rightDetails,
 }, context) => {
 	const [value, setValue] = useState(cloneDeep(rights));
-	const [showTextArea, setShowTextArea] = useState(!!rights[0].details[`${type}_TEXTAREA`]);
-
-	const handleReset = () => {
-		setValue(cloneDeep(rights));
-	};
 
 	const handleSave = () => {
 		onSave(value);
@@ -53,6 +48,7 @@ const CmsTabLayout = ({
 
 	const isApplyDisabled = getApplyDisable();
 	const textareaRequired = isApplyDisabled && (type === RIGHTS_TAB.BROADCASTING || type === RIGHTS_TAB.RESERVED_RIGHTS);
+	const [showTextArea, setShowTextArea] = useState(textareaRequired || !!rights[0].details[`${type}_TEXTAREA`]);
 
 	return (
 		<div className="tab-layout">
@@ -88,14 +84,6 @@ const CmsTabLayout = ({
 					</button>
 				)}
 				<div className="tab-layout-action-space" />
-				<button
-					className="secondary-outline-button tab-layout-action-button"
-					onClick={handleReset}
-				>
-					<div className="button-content">
-						<Translate i18nKey="TAB_LAYOUT_CLEAR_BUTTON" />
-					</div>
-				</button>
 				<button
 					className="secondary-button tab-layout-action-button"
 					onClick={handleSave}
