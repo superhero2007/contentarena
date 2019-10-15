@@ -1,7 +1,7 @@
 import React from "react";
 
 const CmsCheckBox = ({
-	text, value, onChange, disabled,
+	text, value, onChange, disabled, isInvalid = false,
 }) => (
 	<div className="input-checkbox" onClick={!disabled ? onChange : undefined}>
 		<input
@@ -10,7 +10,7 @@ const CmsCheckBox = ({
 			disabled={disabled}
 			onChange={onChange}
 		/>
-		<span className="input-checkbox-selector" />
+		<span className={`input-checkbox-selector ${isInvalid ? "invalid" : ""}`} />
 		<span className="input-checkbox-text">
 			{text}
 		</span>

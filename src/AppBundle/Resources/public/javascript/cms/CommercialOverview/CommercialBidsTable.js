@@ -10,9 +10,9 @@ import TableSeasonList from "@components/Table/TableSeasonList";
 import TableTerritoryList from "@components/Table/TableTerritoryList";
 import { UserName } from "@utils/listing";
 import TableTooltip from "@components/Tooltips/TableTooltip";
-import { DATE_FORMAT, TIME_FORMAT } from "../../common/constants";
-import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
-import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
+import { DATE_FORMAT } from "../../common/constants";
+import CmsDeclineBidModal from "../../common/modals/CmsDeclineBidModal";
+import CmsAcceptBidModal from "../../common/modals/CmsAcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
 
@@ -289,20 +289,18 @@ class CommercialBidsTable extends React.Component {
 		return (
 			<section className="property-listing-wrapper">
 				{approveModalIsOpen && (
-					<AcceptBidModal
+					<CmsAcceptBidModal
 						selectedBid={selectedBid}
 						postAction={postAction}
 						contentId={contentId}
 						listingCustomId={listingCustomId}
-						isOpen={approveModalIsOpen}
 						onCloseModal={this.closeModal}
 					/>
 				)}
 				{rejectModalIsOpen && (
-					<DeclineBidModal
+					<CmsDeclineBidModal
 						selectedBid={selectedBid}
 						postAction={postAction}
-						isOpen={rejectModalIsOpen}
 						onCloseModal={this.closeModal}
 					/>
 				)}

@@ -230,6 +230,24 @@ class ContentService
         return $content;
     }
 
+    public function getPropertyListings(Property $property) {
+        $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListings($property);
+        // $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListingsTest($property);
+
+        foreach ($listings as $listing){
+            /* @var Content $listing  */
+            $total = 0;
+            foreach ($listing->getSalesPackages() as $bundle){
+                /* @var SalesPackage $bundle  */
+                $total += count($bundle->getTerritories());
+            }
+
+            $listing->setTerritories($total);
+        }
+
+        return $listings;
+    }
+
     public function getExpired($user) {
         $listings = $this->em->getRepository('AppBundle:Content')->getExpired($user);
         $expiredStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'EXPIRED'));

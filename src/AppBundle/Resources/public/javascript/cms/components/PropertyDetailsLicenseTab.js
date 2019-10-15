@@ -200,7 +200,7 @@ class PropertyDetailsLicenseTab extends Component {
 					</div>
 				</div>
 				{activeTab === LICENSE_TAB.DEFINITIONS && (
-					<div>
+					<div className="property-license-tab-container">
 						{!restoring && definitions.map((definition, i) => (
 							!definition.removed && (
 								<CmsLicenseDefinitionItem
@@ -216,7 +216,7 @@ class PropertyDetailsLicenseTab extends Component {
 					</div>
 				)}
 				{activeTab === LICENSE_TAB.TERMS && (
-					<div>
+					<div className="property-license-tab-container">
 						{!restoring && terms.map((term, i) => (
 							term.items.map((item, k) => (
 								!item.removed && (
