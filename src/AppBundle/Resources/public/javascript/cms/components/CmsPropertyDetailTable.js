@@ -129,6 +129,7 @@ const CmsPropertyDetailTable = ({
 			return (
 				<CmsCheckBox
 					text={<Translate i18nKey={item.text} />}
+					disabled={isInputDisabled(right, columns[column].value)}
 					value={isInputBtnChecked(right.details, columns[column].value)}
 					onChange={() => handleCheckBoxChange(columns[column].value, row)}
 				/>

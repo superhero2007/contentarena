@@ -20,7 +20,7 @@ class PropertyRight
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "propertyList", "createListing"})
+     * @Groups({"listing", "propertyList", "createListing", "property"})
      */
     private $id;
 

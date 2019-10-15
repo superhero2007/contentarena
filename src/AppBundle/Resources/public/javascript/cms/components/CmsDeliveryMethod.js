@@ -2,7 +2,6 @@ import React from "react";
 import Translate from "@components/Translator/Translate";
 import CmsPropertyDetailTable from "./CmsPropertyDetailTable";
 import CmsRadioBox from "./CmsRadioBox";
-import CmsInputStepper from "./CmsInputStepper";
 
 // export const TECHNICAL_DELIVERY = {
 // 	name: "Delivery Method",
@@ -39,19 +38,12 @@ const columns = [{
 	text: "",
 }];
 
+const disabled = {
+	TECHNICAL_DELIVERY_FTP: ["LB", "LT"],
+};
+
 const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
 	const firstRight = rights[0];
-	const feePercentage = firstRight.details.TECHNICAL_FEE_PERCENTAGE || 0;
-
-	const handleChangeTechnicalFeePercentage = (value) => {
-		if (value > 100 || value < 0) {
-			return;
-		}
-		for (const right of rights) {
-			right.details.TECHNICAL_FEE_PERCENTAGE = value;
-		}
-		onUpdate(rights);
-	};
 
 	const handleChangeTechnicalFee = (value) => {
 		for (const right of rights) {
@@ -71,6 +63,7 @@ const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
 					type={type}
 					columns={columns}
 					onUpdate={onUpdate}
+					disabled={disabled}
 					checkDelivery
 				/>
 			</div>
@@ -84,18 +77,10 @@ const CmsDeliveryMethod = ({ type, rights, onUpdate }) => {
 						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_INCLUDED" />}
 						onChange={() => handleChangeTechnicalFee("INCLUDED")}
 					/>
-				</div>
-				<div className="delivery-method-fee-item">
 					<CmsRadioBox
 						value={firstRight.details.TECHNICAL_FEE === "ON_TOP"}
 						text={<Translate i18nKey="TECHNICAL_DELIVERY_FEE_PERCENTAGE" />}
 						onChange={() => handleChangeTechnicalFee("ON_TOP")}
-					/>
-					<CmsInputStepper
-						value={`${feePercentage < 10 ? "0" : ""}${feePercentage}%`}
-						onAdd={() => handleChangeTechnicalFeePercentage(feePercentage + 1)}
-						onMinus={() => handleChangeTechnicalFeePercentage(feePercentage - 1)}
-						onClick={() => handleChangeTechnicalFee("ON_TOP")}
 					/>
 				</div>
 			</div>
