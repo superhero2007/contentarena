@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
 import Translate from "@components/Translator/Translate";
@@ -48,7 +48,11 @@ const CmsTabLayout = ({
 
 	const isApplyDisabled = getApplyDisable();
 	const textareaRequired = isApplyDisabled && (type === RIGHTS_TAB.BROADCASTING || type === RIGHTS_TAB.RESERVED_RIGHTS);
-	const [showTextArea, setShowTextArea] = useState(textareaRequired || !!rights[0].details[`${type}_TEXTAREA`]);
+	const [showTextArea, setShowTextArea] = useState(false);
+
+	useEffect(() => {
+		setShowTextArea(showTextArea || textareaRequired || !!value[0].details[`${type}_TEXTAREA`]);
+	});
 
 	return (
 		<div className="tab-layout">
@@ -64,12 +68,20 @@ const CmsTabLayout = ({
 					<label className="tab-layout-note-label">
 						<Translate i18nKey="TAB_LAYOUT_DESCRIPTION_LABEL" />
 					</label>
-					<textarea
-						placeholder={context.t("TAB_LAYOUT_DESCRIPTION_PLACEHOLDER")}
-						onChange={handleTextarea}
-						value={value[0].details[`${type}_TEXTAREA`] || ""}
-						className={`input-textarea ${textareaRequired && "required"}`}
-					/>
+					<div className="tab-layout-note-textarea">
+						<textarea
+							placeholder={context.t("TAB_LAYOUT_DESCRIPTION_PLACEHOLDER")}
+							onChange={handleTextarea}
+							value={value[0].details[`${type}_TEXTAREA`] || ""}
+							className={`input-textarea ${textareaRequired && "required"}`}
+						/>
+						{!textareaRequired && (
+							<i
+								className="icon-remove"
+								onClick={() => setShowTextArea(false)}
+							/>
+						)}
+					</div>
 				</div>
 			)}
 			<div className="tab-layout-action">

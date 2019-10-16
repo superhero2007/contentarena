@@ -191,14 +191,28 @@
           margin-bottom: 10px;
         }
 
-        textarea {
-          height: 170px;
-          padding: 18px;
-          font-size: 14px;
-          color: $v1-color-grey-2;
+        &-textarea {
+          position: relative;
 
-          &::placeholder {
-            font-weight: 600;
+          textarea {
+            height: 170px;
+            padding: 18px;
+            font-size: 14px;
+            color: $v1-color-grey-2;
+
+            &::placeholder {
+              font-weight: 600;
+            }
+          }
+
+          i {
+            position: absolute;
+            right: -20px;
+            top: 0;
+
+            &:hover {
+              font-weight: bold;
+            }
           }
         }
       }
