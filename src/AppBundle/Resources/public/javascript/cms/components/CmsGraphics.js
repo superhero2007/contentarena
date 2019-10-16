@@ -59,11 +59,13 @@ const CmsGraphics = ({ type, rights, onUpdate }) => {
 					onUpdate={onUpdate}
 					header={false}
 					checkDelivery
+					showType
 				/>
 				{rights[0].details[type] === `${type}_YES` && (
 					<CmsPropertyLanguageFilter
 						value={rights[0].details[listKey] || ""}
 						onChange={handleLanguage}
+						selectAll={false}
 					/>
 				)}
 			</div>

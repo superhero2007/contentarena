@@ -8,9 +8,9 @@ import { getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
 import { SuperRightProductionDetailsLabels } from "../../sell/components/SuperRightDefinitions";
 
 const CmsPropertyDetailTable = ({
-	columns, type, rights, disabled, onUpdate, header = true, selectAllCheckbox, checkDelivery,
+	columns, type, rights, disabled, onUpdate, header = true, selectAllCheckbox, checkDelivery, showType = false,
 }) => {
-	const isInputBtnChecked = (details, value) => {
+	const isInputBtnChecked = (details = {}, value) => {
 		const property = details[type];
 		const isArray = Array.isArray(property);
 
@@ -24,38 +24,48 @@ const CmsPropertyDetailTable = ({
 	const isInputDisabled = (right, value) => disabled && disabled[value] && disabled[value].includes(right.code);
 
 	const handleRadioChange = (value, index, key = type) => {
-		const right = rights.find(element => element.id === index);
-		if (selectAllCheckbox) {
-			right.details[key] = [value];
+		if (index) {
+			const right = rights.find(element => element.id === index);
+			if (selectAllCheckbox) {
+				right.details[key] = [value];
+			} else {
+				right.details[key] = value;
+			}
 		} else {
-			right.details[key] = value;
+			for (const right of rights) {
+				right.details[key] = value;
+			}
 		}
 		onUpdate(rights);
 	};
 
 	const handleCheckBoxChange = (value, index) => {
 		const right = rights.find(element => element.id === index);
-		let arr = right.details[type];
-		if (selectAllCheckbox && value === `${type}_ALL`) {
-			arr = [value];
-		} else {
-			if (selectAllCheckbox) {
-				arr = arr.filter(item => item !== `${type}_ALL`);
-			}
-			if (arr.includes(value)) {
-				if (arr.length > 1) {
-					arr = arr.filter(item => item !== value);
-				}
+		const selectedRights = index ? [right] : rights;
+		for (const right of selectedRights) {
+			let arr = right.details[type];
+			if (selectAllCheckbox && value === `${type}_ALL`) {
+				arr = [value];
 			} else {
-				arr = [...arr, value];
+				if (selectAllCheckbox) {
+					arr = arr.filter(item => item !== `${type}_ALL`);
+				}
+				if (arr.includes(value)) {
+					if (arr.length > 1) {
+						arr = arr.filter(item => item !== value);
+					}
+				} else {
+					arr = [...arr, value];
+				}
 			}
-		}
 
-		right.details[type] = arr;
+			right.details[type] = arr;
+		}
 		onUpdate(rights);
 	};
 
 	const getLeftLabel = (right) => {
+		if (showType) return <Translate i18nKey={right.name} />;
 		if (!checkDelivery) return right.name;
 
 		const dedicatedRights = rights
@@ -68,6 +78,12 @@ const CmsPropertyDetailTable = ({
 		if (!checkDelivery) return rights;
 
 		const dedicatedRights = getDedicatedRigths(rights);
+		if (showType) {
+			return [{
+				name: `${type}_TITLE`,
+				details: rights[0].details,
+			}];
+		}
 		if (type === "TECHNICAL_DELIVERY") {
 			const hasEditedProgram = rights.find(right => right.id === 18); // PR
 			if (hasEditedProgram && rights.length === 1) return rights;
