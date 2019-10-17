@@ -42,6 +42,13 @@ trait ControllerHelper
         return $object;
     }
 
+    public function deserializeNormal($data, $type){
+        /* @var Serializer $serializer */
+        $serializer = $this->container->get('jms_serializer');
+        $object = $serializer->deserialize(json_encode($data), $type, 'json');
+        return $object;
+    }
+
     /**
      * @param $data
      * @param $groups

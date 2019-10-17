@@ -59,6 +59,8 @@ class PropertyCreateListing extends React.Component {
 			tournaments: property.tournament,
 			sportCategory: property.sportCategory,
 			image: property.image,
+			company: property.company,
+			description: property.description,
 		});
 	};
 

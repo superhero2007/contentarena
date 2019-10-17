@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\Listing;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\User;
@@ -201,6 +202,7 @@ class ApiListingController extends Controller
     )
     {
         /* @var Property $property */
+        /* @var Listing $listing */
         $user = $this->getUser();
         $id = $request->get("id");
         $data = $request->request->all();
@@ -209,7 +211,7 @@ class ApiListingController extends Controller
         $bundles= $this->deserialize($data["bundles"], "array<AppBundle\Entity\TerritorialBundle>");
         $seasons = $this->deserialize($data["seasons"], "array<PropertyEventItem<AppBundle\Entity\Season>>");
         $rights = $this->deserialize($data["rights"], "array<AppBundle\Entity\ListingRight>");
-
+        $company = $user->getCompany();
         $fixtureService->cleanListingFixtures($listing);
         foreach ($seasons as $key => $season){
             foreach ($data["seasons"][$key]["fixtures"] as $fixture){
@@ -218,6 +220,7 @@ class ApiListingController extends Controller
             }
         }
 
+        $listing->setCompany($company);
         $listing->setStep($data["step"]);
         $listing->setBundles($bundles);
         $listing->setSeasons($seasons);
