@@ -4,6 +4,7 @@ import Moment from "moment/moment";
 import DatePicker from "@components/DatePicker";
 import TimezonePicker from "react-timezone";
 import Translate from "@components/Translator/Translate";
+import Loader from "@components/Loader";
 import { DATE_FORMAT, TIME_FORMAT, TIME_ZONE } from "../../common/constants";
 
 class FixtureForm extends React.Component {
@@ -15,15 +16,21 @@ class FixtureForm extends React.Component {
 		} = props;
 
 		this.state = {
+			id: fixture.id || null,
 			name: fixture.name || "",
 			round: fixture.round || "",
 			date: fixture.date || null,
 			time: fixture.time || null,
 			timezone: fixture.timezone || null,
+			saving: props.saving,
 		};
 	}
 
 	componentWillReceiveProps(props) {
+		this.setState({
+			saving: props.saving,
+		});
+
 		if (!props.fixture) return;
 
 		const {
@@ -48,41 +55,25 @@ class FixtureForm extends React.Component {
 			this.props.onUpdate({
 				name, round, date, time, timezone, id,
 			});
+			this.setState({ saving: true });
 		} else {
 			this.props.onCreate({
 				name, round, date, time, timezone,
 			});
 		}
 
-		this.reset();
+		if (!this.props.editMode) this.reset();
 	};
 
-	reset = () => {
-		this.setState({
-			name: "",
-			round: "",
-			date: null,
-			time: null,
-			timezone: null,
-			id: null,
-		});
-	};
+	reset = () => this.setState({
+		name: "", round: "", date: null, time: null, timezone: null, id: null,
+	});
 
-	handleStartDate = (value) => {
-		this.setState({ date: value });
-	};
+	handleStartDate = value => this.setState({ date: value });
 
-	handleStartTime = (value) => {
-		this.setState({ time: value.format(TIME_FORMAT) });
-	};
+	handleStartTime = value => this.setState({ time: value.format(TIME_FORMAT) });
 
-	applyIsDisabled = () => {
-		const {
-			name,
-		} = this.state;
-
-		return name === "";
-	};
+	applyIsDisabled = () => this.state.name === "";
 
 	removeIsDisabled = () => {
 		const {
@@ -107,14 +98,18 @@ class FixtureForm extends React.Component {
 			date,
 			time,
 			timezone,
+			saving,
 		} = this.state;
 
+		const { editMode } = this.props;
+
+		const dateObj = (date) ? Moment(date) : null;
 		const timeObj = (time) ? Moment(time, TIME_FORMAT) : null;
 
 		return (
 			<>
 				<section className="fixture-item-wrapper no-border">
-					<div className="fixture-item-round">
+					<div className="fixture-item-round" style={{ width: "calc(30% + 40px)" }}>
 						<input
 							value={round}
 							placeholder={this.context.t("CMS_FIXTURE_PLACEHOLDER_ROUND")}
@@ -135,7 +130,7 @@ class FixtureForm extends React.Component {
 					<div className="fixture-item-date">
 						<DatePicker
 							className="date-picker"
-							selected={date}
+							selected={dateObj}
 							onChange={this.handleStartDate}
 							minDate={Moment()}
 							dateFormat={DATE_FORMAT}
@@ -168,32 +163,39 @@ class FixtureForm extends React.Component {
 					</div>
 
 					<div className="fixture-item-actions">
-						{this.removeIsDisabled() && (
+
+						{saving && <Loader xSmall loading />}
+
+						{this.removeIsDisabled() && !saving && !editMode && (
 							<span className="remove-icon disabled">
-								<i className="fa fa-times-circle" />
+								<i className="icon-remove" />
 							</span>
 						)}
 
-						{!this.removeIsDisabled() && (
+						{!this.removeIsDisabled() && !saving && !editMode && (
 							<span className="remove-icon" onClick={this.reset}>
-								<i className="fa fa-times-circle" />
+								<i className="icon-remove" />
 							</span>
 						)}
 
-						{this.applyIsDisabled() && (
+						{!saving && editMode && (
+							<span className="remove-icon" onClick={this.props.onCancel}>
+								<i className="icon-remove" />
+							</span>
+						)}
+
+						{this.applyIsDisabled() && !saving && (
 							<span className="confirm-icon disabled">
-								<i className="fa fa-check-circle" />
+								<i className="icon-check" />
 							</span>
 						)}
 
-						{!this.applyIsDisabled() && (
+						{!this.applyIsDisabled() && !saving && (
 							<span className="confirm-icon" onClick={this.create}>
-								<i className="fa fa-check-circle" />
+								<i className="icon-check" />
 							</span>
 						)}
 					</div>
-
-
 				</section>
 
 			</>

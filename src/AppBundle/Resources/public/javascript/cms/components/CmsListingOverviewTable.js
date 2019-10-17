@@ -129,7 +129,7 @@ class CmsListingOverviewTable extends React.Component {
 					<div className="tools-action">
 						{props.original.lastAction && (
 							<span className="tools-action-title">
-								{`${props.original.lastAction.description} by `}
+								{`${props.original.lastAction} by `}
 							</span>
 						)}
 						{props.original.lastActionUser && (
@@ -165,7 +165,7 @@ class CmsListingOverviewTable extends React.Component {
 			return (
 				<div className="tools">
 					{
-						status.name === LISTING_STATUS.DRAFT
+						status === LISTING_STATUS.DRAFT
 						&& (
 							<PropertyActionListing
 								className="listing pointer"
@@ -191,7 +191,7 @@ class CmsListingOverviewTable extends React.Component {
 						)
 					}
 					{
-						(status.name === LISTING_STATUS.INACTIVE || status.name === LISTING_STATUS.AUTO_INACTIVE || status.name === LISTING_STATUS.REJECTED)
+						(status === LISTING_STATUS.INACTIVE || status === LISTING_STATUS.AUTO_INACTIVE || status === LISTING_STATUS.REJECTED)
 						&& (
 							<PropertyActionListing
 								className="listing pointer"
@@ -223,7 +223,7 @@ class CmsListingOverviewTable extends React.Component {
 						)
 					}
 					{
-						(status.name === LISTING_STATUS.PENDING || status.name === LISTING_STATUS.APPROVED || status.name === LISTING_STATUS.EDITED)
+						(status === LISTING_STATUS.PENDING || status === LISTING_STATUS.APPROVED || status === LISTING_STATUS.EDITED)
 						&& (
 							<PropertyActionListing
 								className="listing pointer"
@@ -255,9 +255,9 @@ class CmsListingOverviewTable extends React.Component {
 							/>
 						)
 					}
-					{(status.name === LISTING_STATUS.SOLD_OUT
-						|| status.name === LISTING_STATUS.EXPIRED
-						|| status.name === LISTING_STATUS.SOLD_COPY) && (
+					{(status === LISTING_STATUS.SOLD_OUT
+						|| status === LISTING_STATUS.EXPIRED
+						|| status === LISTING_STATUS.SOLD_COPY) && (
 						<PropertyActionListing
 							className="listing pointer"
 							style={{
@@ -279,7 +279,7 @@ class CmsListingOverviewTable extends React.Component {
 						/>
 					)
 					}
-					{status.name === LISTING_STATUS.ARCHIVED && (
+					{status === LISTING_STATUS.ARCHIVED && (
 						<PropertyActionListing
 							className="listing pointer"
 							style={{
@@ -343,7 +343,7 @@ class CmsListingOverviewTable extends React.Component {
 
 	render() {
 		const { listings } = this.state;
-		const columns = [...this.getInfoColumns(), ...getRightTableColumns(), ...this.getActionColumns()];
+		const columns = [...this.getInfoColumns(), ...getRightTableColumns("rights"), ...this.getActionColumns()];
 		return (
 			<section className="property-listing-overview-wrapper">
 				<ReactTable

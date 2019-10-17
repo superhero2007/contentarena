@@ -5,6 +5,8 @@ import { HorizontalButtonBox } from "@components/Containers";
 import { connect } from "react-redux";
 import { getListingStepRoute } from "../helpers/PropertyListingHelper";
 import { saveListing } from "../actions/propertyListingActions";
+import { goTo } from "../../main/actions/utils";
+import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "../../common/constants";
 
 class PropertyListingButtons extends React.Component {
 	constructor(props) {
@@ -36,6 +38,11 @@ class PropertyListingButtons extends React.Component {
 		const { property: { customId }, history, listing } = this.props;
 		this.props.saveListing(listing)
 			.then((data) => {
+				if (listing.step === 6) {
+					history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
+					window.location.reload();
+					return;
+				}
 				const stepRoute = getListingStepRoute(customId, data.customId, listing.step + 1);
 				history.push(stepRoute);
 			})
@@ -71,7 +78,7 @@ class PropertyListingButtons extends React.Component {
 					</button>
 				)}
 
-				{listing.step !== 1 && (
+				{listing.customId && listing.step < 6 && (
 					<button
 						className="button secondary-outline-button"
 						disabled={listing.saving}
@@ -84,15 +91,27 @@ class PropertyListingButtons extends React.Component {
 					</button>
 				)}
 
+				{!listing.customId && (
+					<button
+						className="button secondary-outline-button"
+						disabled={listing.saving}
+						onClick={this.onSave}
+					>
+						{listing.saving
+							? <Loader xSmall loading />
+							: <Translate i18nKey="CMS_CREATE_LISTING_SAVE_AS_DRAFT" />
+						}
+					</button>
+				)}
+
 				<button
 					className="button primary-button"
 					disabled={listing.saving}
 					onClick={this.onNext}
 				>
-					{listing.saving
-						? <Loader xSmall loading />
-						: <Translate i18nKey="CMS_CREATE_LISTING_NEXT_BUTTON" />
-					}
+					{listing.saving && <Loader xSmall loading />}
+					{!listing.saving && listing.step < 6 && <Translate i18nKey="CMS_CREATE_LISTING_NEXT_BUTTON" /> }
+					{!listing.saving && listing.step === 6 && <Translate i18nKey="CMS_CREATE_LISTING_PUBLISH_BUTTON" />}
 				</button>
 			</HorizontalButtonBox>
 		);

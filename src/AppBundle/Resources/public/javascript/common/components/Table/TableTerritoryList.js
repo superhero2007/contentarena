@@ -28,8 +28,8 @@ class TableTerritoryList extends Component {
 							<Translate i18nKey="TABLE_TERRITORY_LIST_TITLE" />
 						</div>
 						<div className="tools-list-content">
-							{territories.map(territory => (
-								<div className="tools-list-item">
+							{territories.map((territory, i) => (
+								<div className="tools-list-item" key={`territory-tooltip-${i}`}>
 									{territory.name}
 								</div>
 							))}

@@ -61,7 +61,7 @@ export const propertyDetails = (state = DEFAULT_STATE, action) => {
 	case propertyDetailsTypes.UPDATE_PROPERTY:
 		return Object.assign({}, state, { loading: true });
 	case propertyDetailsTypes.UPDATE_PROPERTY_SUCCESS:
-		return Object.assign({}, state, { property: { ...action.propertyDetail } }, { loading: false });
+		return Object.assign({}, state, { loading: false });
 	case propertyDetailsTypes.UPDATE_PROPERTY_FAIL:
 		return Object.assign({}, state, { error: action.error }, { loading: false });
 

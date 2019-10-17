@@ -1,19 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import cn from "classnames";
 import { DefaultBox, HorizontalButtonBox, SkinContainer } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import Loader from "@components/Loader";
 import { getTerritoriesFromRights } from "@utils/property";
 import SeasonSelector from "@components/Season";
 import RightSelector from "@components/Right";
-import CmsStepSelector from "../components/CmsStepSelector";
-import CmsTerritorySelector from "../components/CmsTerritorySelector";
-import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
+import {
+	BUNDLE_TERRITORIES_METHOD,
+	CMS_PROPERTY_TABS,
+	PROPERTY_MAIN_TABS,
+	ROUTE_PATHS,
+} from "@constants";
+import TerritorySelector from "@components/Territories/TerritorySelector";
 import CmsDealTable from "../components/CmsDealTable";
-import { sortSeasons } from "../helpers/PropertyDetailsHelper";
+import { getSeasonsYearString, sortSeasons } from "../helpers/PropertyDetailsHelper";
 import { addDealsProperty } from "../actions/propertyActions";
-import PropertyHeader from "../components/PropertyHeader";
 import CmsProgress from "../components/CmsProgress";
+import { goTo } from "../../main/actions/utils";
 
 
 class PropertyDeal extends React.Component {
@@ -28,15 +33,11 @@ class PropertyDeal extends React.Component {
 				NON_EXCLUSIVE: "non-exclusive",
 			},
 			territories: [],
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 			currentStep: props.property.seasons && props.property.seasons.length === 0 ? 2 : 1,
 		};
 	}
 
-	seasonsAreValid = () => {
-		const { seasons } = this.state;
-		return !!seasons.length;
-	};
+	seasonsAreValid = () => !!this.state.seasons.length;
 
 	rightsAreValid = () => {
 		const { rights } = this.state;
@@ -47,6 +48,8 @@ class PropertyDeal extends React.Component {
 		const { territories } = this.state;
 		return !!territories.length;
 	};
+
+	dealsAreValid = () => !this.state.deals.filter(d => (d.buyerCompanyName === "" || d.currency === "" || d.fee === 0)).length;
 
 	cancel = () => {
 		const { history, property: { customId } } = this.props;
@@ -65,39 +68,6 @@ class PropertyDeal extends React.Component {
 			seasons,
 			currentStep: 1,
 			rights: [],
-		});
-	};
-
-	onSelectAllSeasons = () => {
-		const { property: { seasons } } = this.props;
-		this.setState({
-			seasons,
-			currentStep: 1,
-			rights: [],
-		});
-	};
-
-	onUnSelectAllSeasons = () => {
-		this.setState({
-			seasons: [],
-			currentStep: 1,
-			rights: [],
-		});
-	};
-
-	onSelectAllRights = () => {
-		const { property: { rights } } = this.props;
-		const newRights = rights.map(element => Object.assign({}, element, { exclusive: null }));
-		this.setState({
-			rights: newRights,
-			currentStep: 2,
-		});
-	};
-
-	onUnSelectAllRights = () => {
-		this.setState({
-			rights: [],
-			currentStep: 2,
 		});
 	};
 
@@ -127,25 +97,24 @@ class PropertyDeal extends React.Component {
 		});
 	};
 
-	onSelectTerritories = (territories, territoriesMode) => {
-		this.setState({
-			territories,
-			territoriesMode,
-		});
-	};
+	onSelectTerritories = territories => this.setState({ territories });
 
-	onNext = (step) => {
-		this.setState({
-			currentStep: step,
-		});
+	onNext = () => {
+		const { property: { customId } } = this.props;
+		const currentStep = this.state.currentStep + 1;
+		this.setState({ currentStep });
 
-		if (step === 4) {
-			const { territories, seasons, deals } = this.state;
+		if (currentStep === 4) {
+			const {
+				territories, seasons, deals, rights,
+			} = this.state;
 
 			deals.push({
-				territory: territories,
-				company: "",
+				territories,
+				buyerCompanyName: "",
+				property: { customId },
 				seasons,
+				rights,
 				currency: "",
 				fee: 0,
 				attachments: [],
@@ -159,34 +128,49 @@ class PropertyDeal extends React.Component {
 		}
 	};
 
-	onSave = (deals) => {
-		this.setState({
-			deals,
-		});
+	onPrevious = () => this.setState({ currentStep: this.state.currentStep - 1 });
+
+	onFinish = () => {
+		const { property: { customId }, history } = this.props;
+		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.COMMERCIAL}`);
+		window.location.reload();
 	};
+
+	onAddMore = () => {
+		window.location.reload();
+	};
+
+	onSave = deals => this.setState({ deals });
 
 	saveDeals = () => {
 		const { deals } = this.state;
-		const { property: { customId }, history } = this.props;
-		this.props.addDealsProperty(deals)
-			.then()
+		const { property: { customId } } = this.props;
+		this.props.addDealsProperty({
+			deals,
+			property: {
+				customId,
+			},
+		})
+			.then(() => {
+				this.setState({ currentStep: 5 });
+			})
 			.catch()
 			.finally(() => {
-				history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.COMMERCIAL}`);
+
 			});
 	};
 
-	finishButtonDisabled = () => {
-		const { currentStep, deals } = this.state;
-		let invalidDeal = false;
+	nextButtonIsDisabled = () => {
+		const {
+			currentStep,
+		} = this.state;
+		const seasonsValid = this.seasonsAreValid();
+		const rightsValid = this.rightsAreValid();
+		const territoriesValid = this.territoriesAreValid();
+		const dealsAreValid = this.dealsAreValid();
 
-		deals.forEach((deal) => {
-			if (deal.company === "" || deal.currency === "" || deal.fee === 0) {
-				invalidDeal = true;
-			}
-		});
-
-		return currentStep < 4 || invalidDeal;
+		return (currentStep === 1 && !seasonsValid) || (currentStep === 2 && !rightsValid)
+			|| (currentStep === 3 && !territoriesValid) || (currentStep === 4 && !dealsAreValid);
 	};
 
 	render() {
@@ -194,22 +178,23 @@ class PropertyDeal extends React.Component {
 			seasons,
 			rights,
 			territories,
-			territoriesMode,
 			currentStep,
 			deals,
+			saving,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights, countries }, loading, skin } = this.props;
-		const seasonsValid = this.seasonsAreValid();
-		const rightsValid = this.rightsAreValid();
-		const territoriesValid = this.territoriesAreValid();
-		const territory = getTerritoriesFromRights(rights, countries);
+		const { property: { seasons: allSeasons, rights: allRights, countries }, skin } = this.props;
+		const rightTerritories = getTerritoriesFromRights(rights, countries);
+		const isNextButtonDisabled = this.nextButtonIsDisabled();
+
 		allSeasons.sort(sortSeasons);
+		seasons.sort(sortSeasons);
+
 		const progressList = [
 			"Choose Season",
 			"Define media rights",
 			"Add Territories",
 			"Additional Info",
-			"Review & Confirm",
+			"Done",
 		];
 
 		return (
@@ -220,89 +205,123 @@ class PropertyDeal extends React.Component {
 					progressList={progressList}
 				/>
 				<DefaultBox>
-					<CmsStepSelector
-						style={{ marginTop: 20 }}
-						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
-						button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
-						disabled={!allSeasons.length}
-						enableNextStep={seasonsValid || !allSeasons.length}
-						onNext={() => this.onNext(2)}
-					>
-						<SeasonSelector
-							availableSeasons={allSeasons}
-							selectedSeasons={seasons}
-							onSelectSeason={this.onChangeSeason}
-							onSelectAll={this.onSelectAllSeasons}
-							onUnselectAll={this.onUnSelectAllSeasons}
-						/>
-					</CmsStepSelector>
 
-					{(currentStep > 1) && (
-						<CmsStepSelector
-							title={<Translate i18nKey="CMS_DEALS_STEP2_TITLE" />}
-							button={<Translate i18nKey="CMS_DEALS_STEP2_BUTTON" />}
-							enableNextStep={rightsValid}
-							onNext={() => this.onNext(3)}
-						>
+					<div className="property-deals">
+
+						<div className="property-deals-header">
+							<div className="property-deals-header-seasons">
+								<h5>
+									<Translate i18nKey="CMS_ADD_DEALS_HEADLINE" />
+								</h5>
+								{currentStep > 1 && (
+									<h5 className="property-deals-header-season">
+										{getSeasonsYearString(seasons)}
+									</h5>
+								)}
+							</div>
+
+							{currentStep > 2 && (
+								<div className="property-deals-header-rights">
+									{rights.map(right => (
+										<div className={cn("right-value", { "right-value-exclusive": right.exclusive })}>
+											{right.code}
+										</div>
+									))}
+								</div>
+							)}
+						</div>
+
+						{currentStep === 1 && (
+							<SeasonSelector
+								availableSeasons={allSeasons}
+								selectedSeasons={seasons}
+								onSelectSeason={this.onChangeSeason}
+								onSelectAll={this.onSelectAllSeasons}
+								onUnselectAll={this.onUnSelectAllSeasons}
+							/>
+						)}
+
+
+						{currentStep === 2 && (
 							<RightSelector
 								availableRights={allRights}
 								selectedRights={rights}
-								onSelectAll={this.onSelectAllRights}
-								onUnselectAll={this.onUnSelectAllRights}
 								onSelectRight={this.onSelectRight}
 								onExclusive={this.onExclusive}
 							/>
-						</CmsStepSelector>
-					)}
+						)}
 
-					{(currentStep > 2) && (
-						<CmsStepSelector
-							title={<Translate i18nKey="CMS_DEALS_STEP3_TITLE" />}
-							button={<Translate key={`add_deal${deals.length}`} i18nKey={deals.length === 0 ? "CMS_DEALS_STEP3_BUTTON" : "CMS_DEALS_STEP3_ANOTHER_BUTTON"} />}
-							enableNextStep={territoriesValid}
-							onNext={() => this.onNext(4)}
-						>
-							<CmsTerritorySelector
-								className="small-select"
-								onChange={this.onSelectTerritories}
-								selectedCountries={territory.territories}
-								value={territories}
-								territoriesMode={territoriesMode}
-								multiple
+						{currentStep === 3 && (
+							<TerritorySelector
+								availableCountries={rightTerritories.territories}
+								selectedCountries={territories}
+								onSelect={this.onSelectTerritories}
 							/>
-						</CmsStepSelector>
-					)}
+						)}
 
-					{(deals.length > 0 && currentStep > 2) && (
-						<div className="details-tab-element">
-							<div className="details-tab-element__content">
-								<CmsDealTable
-									seasons={seasons}
-									rights={rights}
-									territories={territories}
-									deals={deals}
-									onSave={this.onSave}
-								/>
+						{currentStep === 4 && (
+							<div className="details-tab-element">
+								<div className="details-tab-element__content">
+									<CmsDealTable
+										seasons={seasons}
+										rights={rights}
+										territories={territories}
+										deals={deals}
+										onSave={this.onSave}
+									/>
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					<HorizontalButtonBox style={{ marginTop: 20 }}>
-						<button
-							className="yellow-button"
-							onClick={this.cancel}
-						>
-							<Translate i18nKey="CMS_DEALS_CREATE_CANCEL_BUTTON" />
-						</button>
-						<button
-							className="yellow-button"
-							disabled={this.finishButtonDisabled() || loading}
-							onClick={this.saveDeals}
-						>
-							{!loading && <Translate i18nKey="CMS_DEALS_CREATE_BUTTON" />}
-							{loading && <Loader xSmall loading />}
-						</button>
-					</HorizontalButtonBox>
+						{currentStep === 5 && (
+							<div className="property-deals-success">
+								<h2 style={{ marginBottom: 20 }}>
+									<Translate i18nKey="CMS_ADD_DEAL_SUCCESS" />
+								</h2>
+								<h4 style={{ marginBottom: 20 }}>
+									<Translate i18nKey="CMS_ADD_DEAL_SUCCESS_SUBTITLE" />
+								</h4>
+								<div>
+									<button
+										className="button primary-outline-button"
+										onClick={this.onFinish}
+									>
+										No Thanks
+									</button>
+									<button
+										className="button primary-button"
+										onClick={this.onAddMore}
+									>
+										Yes Please
+									</button>
+								</div>
+							</div>
+						)}
+
+						{currentStep < 5 && (
+							<HorizontalButtonBox style={{ marginTop: 20 }}>
+								<button
+									className="button secondary-button"
+									disabled={saving}
+									onClick={currentStep === 1 ? this.cancel : this.onPrevious}
+									style={{ marginRight: "auto" }}
+								>
+									{ currentStep === 1 && <Translate i18nKey="CANCEL" /> }
+									{ currentStep !== 1 && <Translate i18nKey="BACK" /> }
+								</button>
+								<button
+									className="button primary-button"
+									disabled={saving || isNextButtonDisabled}
+									onClick={currentStep === 4 ? this.saveDeals : this.onNext}
+								>
+									{ !saving && currentStep < 4 && <Translate i18nKey="CMS_CREATE_LISTING_NEXT_BUTTON" /> }
+									{ !saving && currentStep === 4 && <Translate i18nKey="CMS_CREATE_DEAL_SAVE_BUTTON" /> }
+									{ saving && <Loader xSmall loading /> }
+								</button>
+							</HorizontalButtonBox>
+						)}
+
+					</div>
 				</DefaultBox>
 			</SkinContainer>
 		);

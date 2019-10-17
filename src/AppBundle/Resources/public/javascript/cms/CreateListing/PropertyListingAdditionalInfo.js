@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Moment from "moment/moment";
+import DatePicker from "@components/DatePicker";
 import Translate from "@components/Translator/Translate";
 import CmsTerritoryFilter from "@components/Filters/CmsTerritoryFilter";
-import { updateRightDetails } from "../actions/propertyActions";
 import CmsFileUpload from "../components/CmsFileUpload";
-import CmsNumberInput from "../components/CmsNumberInput";
 import { updateListing } from "../actions/propertyListingActions";
+import { DATE_FORMAT } from "../../common/constants";
 
 class PropertyListingAdditionalInfo extends Component {
 	constructor(props) {
@@ -48,6 +49,7 @@ class PropertyListingAdditionalInfo extends Component {
 
 	render() {
 		const { listing, countries } = this.props;
+		const dateObj = (listing.expiresAt) ? Moment(listing.expiresAt) : null;
 
 		return (
 			<section className="property-create-additional">
@@ -76,18 +78,19 @@ class PropertyListingAdditionalInfo extends Component {
 							<Translate i18nKey="CREATE_LISTING_EXPIRY_LABEL" />
 						</label>
 						<div className="input-group">
-							<input
-								type="text"
-								className="input-group-text"
-								placeholder={this.context.t("CREATE_LISTING_COMPANY_ZIP_PLACEHOLDER")}
-								value={listing.company.zip}
-								onChange={e => this.handleChangeCompany(e.target.value, "zip")}
+							<DatePicker
+								className="date-picker input-group-text"
+								selected={dateObj}
+								onChange={expiresAt => this.props.updateListing({ expiresAt })}
+								minDate={Moment()}
+								dateFormat={DATE_FORMAT}
+								placeholderText={DATE_FORMAT.toLowerCase()}
 							/>
 						</div>
 					</div>
 				</div>
 
-				<h5>
+				{/* <h5>
 					<Translate i18nKey="CREATE_LISTING_ANNEX_TITLE" />
 				</h5>
 				<div className="d-flex justify-content-between">
@@ -117,7 +120,7 @@ class PropertyListingAdditionalInfo extends Component {
 							/>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				<h5>
 					<Translate i18nKey="CREATE_LISTING_ANNEX_TITLE" />

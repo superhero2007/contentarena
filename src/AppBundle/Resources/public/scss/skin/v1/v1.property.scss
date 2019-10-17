@@ -503,6 +503,20 @@
           color: $v1-color-blue-4;
           margin-bottom: 20px;
         }
+
+        .default-filter {
+          width: 270px;
+          padding-top: 4px;
+        }
+
+        .dropdown__control {
+          height: 60px;
+        }
+
+        .date-picker {
+          height: 58px;
+        }
+
       }
     }
 
@@ -532,6 +546,74 @@
           background-color: white;
           font-weight: 600;
         }
+      }
+    }
+
+    .property-deals {
+      &-header {
+        margin: 30px 0px;
+        display: flex;
+        justify-content: space-between;
+
+        h5 {
+          font-weight: 800;
+        }
+
+        &-seasons {
+          display: flex;
+        }
+
+        &-season {
+          margin-left: 5px;
+          color: $v1-color-blue-4;
+        }
+
+        &-rights {
+          display: flex;
+
+          .right-value {
+            width: 20px;
+            height: 20px;
+            font-size: 11px;
+            background: $v1-color-grey-4;
+            margin-right: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &-exclusive {
+              background-color: $v1-color-yellow-1;
+            }
+          }
+        }
+      }
+
+      &-success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .default-filter {
+        height: 60px;
+      }
+
+      .dropdown__control {
+        width: 115px;
+        height: 60px;
+      }
+
+      .horizontal-button-box {
+        padding: 40px 0;
+        display: flex;
+      }
+
+      .button {
+        min-width: 142px;
+        height: 54px;
+        border-radius: 2px;
+        font-size: 14px;
+        margin-left: 10px;
       }
     }
   }

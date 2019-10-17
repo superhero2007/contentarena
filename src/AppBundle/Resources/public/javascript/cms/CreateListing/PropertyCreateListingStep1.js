@@ -63,19 +63,27 @@ class PropertyCreateListingStep1 extends React.Component {
 	onUpdateBundle = (bundle) => {
 		const bundles = this.state.bundles;
 		bundles[bundle.index] = bundle;
-		this.setState({ bundles, showBundleCreator: false }, this.updateListing);
+		this.setState({
+			bundles,
+			showBundleCreator: false,
+			editMode: false,
+			selectedBundle: null,
+		}, this.updateListing);
 	};
 
 	onRemoveBundle = (index) => {
 		const bundles = this.state.bundles;
 		bundles.splice(index, 1);
-		this.setState({ bundles }, this.updateListing);
+		this.setState({
+			bundles,
+			showBundleCreator: !bundles.length ? true : this.state.showBundleCreator,
+		}, this.updateListing);
 	};
 
 	onEditBundle = (index) => {
 		const selectedBundle = this.state.bundles[index];
 		selectedBundle.index = index;
-		this.setState({ selectedBundle, showBundleCreator: true });
+		this.setState({ selectedBundle, showBundleCreator: true, editMode: true });
 	};
 
 	bundlesAreValid = () => !!this.state.bundles.length;
@@ -138,6 +146,7 @@ class PropertyCreateListingStep1 extends React.Component {
 			bundles,
 			showBundleCreator,
 			selectedBundle,
+			editMode,
 		} = this.state;
 
 		const {
@@ -145,15 +154,15 @@ class PropertyCreateListingStep1 extends React.Component {
 			history,
 		} = this.props;
 
+		seasons.sort(sortSeasons);
+
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const bundlesAreValid = this.bundlesAreValid();
 		const availableCountries = getTerritoriesFromRights(availableRights);
-		const selectedSeasonsValue = getSeasonsYearString(seasons.sort(sortSeasonsOldToNew));
-		const selectedRightsValue = getRightsString(rights);
+		const selectedSeasonsValue = getSeasonsYearString(seasons);
 
 		availableSeasons.sort(sortSeasons);
-		seasons.sort(sortSeasons);
 
 		return (
 			<div className="property-create-tab">
@@ -185,7 +194,12 @@ class PropertyCreateListingStep1 extends React.Component {
 					button={<Translate i18nKey="CMS_CREATE_LISTING_STEP2_BUTTON" />}
 					disabled={currentStep < 2}
 					enableNextStep={rightsValid}
-					value={`${selectedRightsValue}`}
+					value={rights.map(right => (
+						<div className="accordion-container-value-list">
+							<span style={{ minWidth: 120 }}>{right.name}</span>
+							<span style={{ minWidth: 120 }}>{right.exclusive ? "Exclusive" : "Non-exclusive"}</span>
+						</div>
+					))}
 					onNext={() => {
 						this.onNext(3);
 						this.rightsStep.current.close();
@@ -211,20 +225,23 @@ class PropertyCreateListingStep1 extends React.Component {
 				>
 					{!!bundles.length && (
 						<div className="accordion-container-content-item">
-							<BundleList
-								bundles={bundles}
-								onRemove={this.onRemoveBundle}
-								onEdit={this.onEditBundle}
-							/>
 							{!showBundleCreator && (
 								<button
 									className="link-button"
-									style={{ marginTop: 20 }}
+									style={{
+										marginTop: 20, fontSize: 16, marginBottom: 5, marginLeft: "auto",
+									}}
 									onClick={() => this.setState({ showBundleCreator: true })}
 								>
 									<Translate i18nKey="CREATE_ANOTHER_BUNDLE_BUTTON" />
 								</button>
 							)}
+							<BundleList
+								editMode={editMode}
+								bundles={bundles}
+								onRemove={this.onRemoveBundle}
+								onEditBundle={this.onEditBundle}
+							/>
 						</div>
 					)}
 

@@ -84,7 +84,7 @@ class PropertyCreateListing extends React.Component {
 			"Right Details",
 			"Production Details",
 			"Additional Info",
-			"Review & Sign",
+			"Review",
 		];
 
 		const params = this.getQueryString();

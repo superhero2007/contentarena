@@ -21,14 +21,29 @@ class CmsRightsOverviewTable extends React.Component {
 		</div>
 	);
 
-	renderRightCell = right => (
-		<div className="table-right-icon green-background">
-			<div className="purple-triangle" />
-			<div className="icon">
-				<div className={cn({ "yellow-circle": right.exclusive, "blue-circle": !right.exclusive })} />
+	renderRightCell = (right, territory, season) => {
+		const listingHasRight = territory.listings.rights.indexOf(right.code) !== -1;
+		const dealHasRight = territory.deals.rights.indexOf(right.code) !== -1;
+		const listingHasSeason = territory.listings.seasons.indexOf(season.id) !== -1;
+		const dealHasSeasons = territory.deals.seasons.indexOf(season.id) !== -1;
+
+		// if (!listingHasSeason && dealHasSeasons && !listingHasRight && !dealHasRight) return <div />;
+
+		return (
+			<div
+				className={cn("table-right-icon", {
+					"green-background": true,
+					"green-light-background": dealHasSeasons && !right.exclusive && territory.deals.closedDeals > 0,
+					"red-light-background": dealHasSeasons && right.exclusive && dealHasRight && territory.deals.closedDeals > 0,
+				})}
+			>
+				{listingHasSeason && listingHasRight && territory.listings.activeListings > 0 && <div className="purple-triangle" />}
+				<div className="icon">
+					<div className={cn({ "yellow-circle": right.exclusive, "blue-circle": !right.exclusive })} />
+				</div>
 			</div>
-		</div>
-	);
+		);
+	};
 
 	getTerritoryColumns = () => [{
 		Header: (
@@ -58,32 +73,32 @@ class CmsRightsOverviewTable extends React.Component {
 		const { rights } = this.props;
 		const seasons = this.getLimitedSeasons();
 		const columns = [];
-		const rightColumns = [];
-
-		rights.forEach((right, index, list) => {
-			let headerClassName = "";
-			let cellClassName = "";
-
-			if (index === 0) {
-				headerClassName = `${headerClassName} rt-th-left`;
-				cellClassName = `${cellClassName} rt-td-left`;
-			}
-			if (index + 1 === list.length) {
-				headerClassName = `${headerClassName} rt-th-right`;
-				cellClassName = `${cellClassName} rt-td-right`;
-			}
-
-			rightColumns.push({
-				Header: () => this.renderRightHeader(right),
-				Cell: () => this.renderRightCell(right),
-				headerClassName: `rt-th-center ${headerClassName}`,
-				className: `rt-td-center rt-td-full ${cellClassName}`,
-				maxWidth: 36,
-			});
-		});
-
 		if (seasons.length > 0) {
 			seasons.forEach((season) => {
+				const rightColumns = [];
+
+				rights.forEach((right, index, list) => {
+					let headerClassName = "";
+					let cellClassName = "";
+
+					if (index === 0) {
+						headerClassName = `${headerClassName} rt-th-left`;
+						cellClassName = `${cellClassName} rt-td-left`;
+					}
+					if (index + 1 === list.length) {
+						headerClassName = `${headerClassName} rt-th-right`;
+						cellClassName = `${cellClassName} rt-td-right`;
+					}
+
+					rightColumns.push({
+						Header: () => this.renderRightHeader(right),
+						Cell: props => this.renderRightCell(right, props.original, season),
+						headerClassName: `rt-th-center ${headerClassName}`,
+						className: `rt-td-center rt-td-full ${cellClassName}`,
+						maxWidth: 36,
+					});
+				});
+
 				columns.push({
 					headerClassName: "rt-th-center rt-th-season",
 					Header: () => (
@@ -139,9 +154,10 @@ class CmsRightsOverviewTable extends React.Component {
 			headerClassName: "rt-th-center",
 			className: "rt-td-center",
 			width: 70,
-			Cell: () => (
-				<span className="rights-table-active">
-					1
+			accessor: "listings",
+			Cell: props => (
+				<span className={props.value.activeListings === 0 ? "rights-table-inactive" : "rights-table-active"}>
+					{props.value.activeListings}
 				</span>
 			),
 		}, {
@@ -149,9 +165,10 @@ class CmsRightsOverviewTable extends React.Component {
 			headerClassName: "rt-th-center",
 			className: "rt-td-center",
 			width: 70,
-			Cell: () => (
-				<span className="rights-table-inactive">
-					0
+			accessor: "deals",
+			Cell: props => (
+				<span className={props.value.closedDeals === 0 ? "rights-table-inactive" : "rights-table-active"}>
+					{props.value.closedDeals}
 				</span>
 			),
 		}],
