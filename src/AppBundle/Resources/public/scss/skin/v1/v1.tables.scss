@@ -440,6 +440,7 @@
 
       &.rights-table {
         .rt-tbody {
+          overflow: overlay;
           .rights-table-active {
             font-size: 16px;
             font-weight: 600;
