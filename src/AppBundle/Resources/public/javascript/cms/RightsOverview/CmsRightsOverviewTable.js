@@ -59,13 +59,15 @@ class CmsRightsOverviewTable extends React.Component {
 			</>
 		),
 		headerClassName: "rt-th-search",
-		width: 230,
+		minWidth: 230,
+		maxWidth: 250,
 		columns: [{
 			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY" />,
 			headerClassName: "rt-th-name",
 			className: "rt-td-name rt-td-rights",
 			accessor: "name",
-			width: 230,
+			minWidth: 230,
+			maxWidth: 250,
 		}],
 	}];
 
@@ -95,7 +97,7 @@ class CmsRightsOverviewTable extends React.Component {
 						Cell: props => this.renderRightCell(right, props.original, season),
 						headerClassName: `rt-th-center ${headerClassName}`,
 						className: `rt-td-center rt-td-full ${cellClassName}`,
-						maxWidth: 36,
+						maxWidth: 33,
 					});
 				});
 
@@ -116,15 +118,22 @@ class CmsRightsOverviewTable extends React.Component {
 	seasonColumnsAllowed = () => {
 		const { rights } = this.props;
 		const availableSpace = 600;
-		const columnSize = rights.length * 36;
+		const columnSize = rights.length * 33;
 		return Math.floor(availableSpace / columnSize);
 	};
 
 	seasonsFit = () => {
 		const { seasons, rights } = this.props;
-		const availableSpace = 600;
-		const size = rights.length * seasons.length * 36;
+		const availableSpace = 594;
+		const size = rights.length * seasons.length * 33;
 		return size < availableSpace;
+	};
+
+	seasonsFitExactly = () => {
+		const { seasons, rights } = this.props;
+		const availableSpace = 594;
+		const size = rights.length * seasons.length * 33;
+		return size === availableSpace;
 	};
 
 	seasonLeft = () => {
@@ -148,7 +157,9 @@ class CmsRightsOverviewTable extends React.Component {
 			</>
 		),
 		columns: [{
-			minWidth: 10,
+			minWidth: this.seasonsFitExactly() ? 0 : 1,
+			headerClassName: "no-padding",
+			className: "no-padding",
 		}, {
 			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING" />,
 			headerClassName: "rt-th-center",
