@@ -220,6 +220,14 @@ class ApiListingController extends Controller
             }
         }
 
+        $fixtureService->cleanListingFixtures($listing);
+        foreach ($seasons as $key => $season){
+            foreach ($data["seasons"][$key]["fixtures"] as $fixture){
+                $serializedFixture = $this->deserialize($fixture, "AppBundle\Entity\Fixture");
+                $fixtureService->createListingFixture($serializedFixture, $season, $listing );
+            }
+        }
+
         $listing->setCompany($company);
         $listing->setStep($data["step"]);
         $listing->setBundles($bundles);
