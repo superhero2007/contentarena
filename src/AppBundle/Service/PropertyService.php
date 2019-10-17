@@ -6,6 +6,7 @@ use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\Deal;
 use AppBundle\Entity\Listing;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\RightsPackage;
@@ -13,6 +14,7 @@ use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Season;
 use AppBundle\Entity\User;
 use AppBundle\Enum\BidStatusEnum;
+use AppBundle\Enum\DealStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\Serializer;
 
@@ -32,6 +34,8 @@ class PropertyService
 
     private $bidService;
 
+    private $dealService;
+
     private $serializer;
 
     public function __construct(
@@ -41,6 +45,7 @@ class PropertyService
         ContentService $contentService,
         ListingService $listingService,
         BidService $bidService,
+        DealService $dealService,
         Serializer $serializer
 
     ) {
@@ -50,6 +55,7 @@ class PropertyService
         $this->repo = $this->em->getRepository("AppBundle:Property");
         $this->contentService = $contentService;
         $this->listingService = $listingService;
+        $this->dealService = $dealService;
         $this->bidService = $bidService;
         $this->serializer = $serializer;
     }
@@ -64,24 +70,13 @@ class PropertyService
 
         foreach ($properties as $property){
             $listings = $this->listingService->getPropertyListings($property);
+            $deals = $this->dealService->getDealsByProperty($property);
             $totalOpenBids = 0;
             $totalClosedBids = 0;
 
-            foreach ( $listings as $key => $listing ){
-                /* @var $listing Listing */
-
-                $bids = $this->bidService->getAllBidsByContent($listing);
-
-                if ( $bids != null ) $listing->setHasActivity(true);
-
-                foreach ($bids as $bid){
-                    /* @var Bid $bid */
-                    if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
-                        $totalOpenBids++;
-                    } else {
-                        $totalClosedBids++;
-                    }
-                }
+            foreach ($deals as $deal) {
+                /* @var $deal Deal */
+                if ($deal->getStatus() == DealStatusEnum::CLOSED) $totalClosedBids++;
             }
 
             $property->setListings($listings);
@@ -121,6 +116,7 @@ class PropertyService
         $totalClosedBids = 0;
         $totalDeclinedBids = 0;
         $seasons = $property->getSeasons();
+        $deals = $this->dealService->getDealsByProperty($property);
 
         foreach ( $listings as $key => $listing ){
             /* @var $listing Listing */
@@ -128,22 +124,15 @@ class PropertyService
             $totalTerritories = 0;
             $bids = $this->bidService->getAllBidsByContent($listing);
             $bids = $this->bidService->getAllBidsByCompany($property->getCompany());
-            $bids = array_slice($bids, 0, 15);
+            $bids = array_slice($bids, 0, 1);
 
             $listing->setBids($bids);
             if ( $bids != null ) $listing->setHasActivity(true);
+        }
 
-            foreach ($bids as $bid){
-                /* @var Bid $bid */
-                if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
-                    $totalOpenBids++;
-                } else if ($bid->getStatus()->getName() === BidStatusEnum::APPROVED ){
-                    $totalClosedBids++;
-                } else {
-                    $totalDeclinedBids++;
-                }
-            }
-
+        foreach ($deals as $deal) {
+            /* @var $deal Deal */
+            if ($deal->getStatus() == DealStatusEnum::CLOSED) $totalClosedBids++;
         }
 
         foreach ($seasons as $season){
@@ -158,6 +147,7 @@ class PropertyService
             if ( $fixtures != null ) $season->setFixtures($fixtures);
         }
 
+        $property->setDeals($deals);
         $property->setSeasons($seasons);
         $property->setListings($listings);
         $property->setClosedBids($totalClosedBids);

@@ -22,6 +22,7 @@ import {
 	getFilteredTerritories,
 } from "../reducers/property";
 import { getUnifiedRegions } from "../helpers/PropertyHelper";
+import CommercialDealsTable from "./CommercialDealsTable";
 
 class CommercialOverviewContainer extends React.Component {
 	constructor(props) {
@@ -157,8 +158,6 @@ class CommercialOverviewContainer extends React.Component {
 		} = this.props;
 		const {
 			selectedListings,
-			countries,
-			includeAllCountries,
 			seasons,
 		} = this.state;
 
@@ -188,14 +187,6 @@ class CommercialOverviewContainer extends React.Component {
 					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
-		const closedBidsList = [].concat.apply(
-			[],
-			allListings.map(list => [].concat.apply(
-				[],
-				list.bids.filter(b => b.status.name === "APPROVED")
-					.map(b => Object.assign({}, { list }, b)),
-			)),
-		);
 		const declinedBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
@@ -205,20 +196,8 @@ class CommercialOverviewContainer extends React.Component {
 			)),
 		);
 
-		/* if (countries.length) {
-			openBidsList = openBidsList.filter((b) => {
-				const territories = b.salesPackage.territories.filter(territory => countries.indexOf(territory.name) !== -1);
-				return includeAllCountries && b.salesPackage.territories.length === territories.length || !includeAllCountries && territories.length;
-			});
-			closedBidsList = closedBidsList.filter((b) => {
-				const territories = b.salesPackage.territories.filter(territory => countries.indexOf(territory.name) !== -1);
-				return includeAllCountries && b.salesPackage.territories.length === territories.length || !includeAllCountries && territories.length;
-			});
-			declinedBidsList = declinedBidsList.filter((b) => {
-				const territories = b.salesPackage.territories.filter(territory => countries.indexOf(territory.name) !== -1);
-				return includeAllCountries && b.salesPackage.territories.length === territories.length || !includeAllCountries && territories.length;
-			});
-		} */
+
+		const closedDeals = property.deals.filter(deal => deal.status === "CLOSED");
 
 		return (
 			<section className="commercial-overview-tab">
@@ -268,11 +247,11 @@ class CommercialOverviewContainer extends React.Component {
 					</FilterAccordionContainer>
 
 					<FilterAccordionContainer
-						title={<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" params={{ n: closedBidsList.length }} />}
-						disabled={closedBidsList.length === 0}
+						title={<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" params={{ n: closedDeals.length }} />}
+						disabled={closedDeals.length === 0}
 					>
-						<CommercialBidsTable
-							listings={closedBidsList}
+						<CommercialDealsTable
+							deals={closedDeals}
 							type="closedBids"
 						/>
 					</FilterAccordionContainer>

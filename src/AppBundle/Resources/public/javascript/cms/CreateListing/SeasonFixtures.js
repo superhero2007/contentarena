@@ -5,6 +5,7 @@ import FixtureList from "../containers/FixturesList";
 import FixtureForm from "../components/FixtureForm";
 import api from "../../api";
 import { fetchPropertySuccess, startFetchingPropertyDetails } from "../actions/propertyActions";
+import { updateListing } from "../actions/propertyListingActions";
 
 class SeasonFixtures extends React.Component {
 	constructor(props) {
@@ -15,7 +16,12 @@ class SeasonFixtures extends React.Component {
 			season: props.season || {
 				fixtures: [],
 			},
+			listingSeason: props.listingSeason,
 		};
+	}
+
+	componentWillReceiveProps(nextProps, nextContext) {
+		this.setState({ listingSeason: nextProps.listingSeason });
 	}
 
 	onCreateFixture = (fixture) => {
@@ -27,69 +33,70 @@ class SeasonFixtures extends React.Component {
 			seasonId: season.id,
 			propertyId: property.id,
 			fixture,
-
 		})
 			.then((response) => {
-				this.props.startFetchingPropertyDetails();
 				this.props.fetchPropertySuccess(response.data);
 				this.setState({
 					isSuccess: true,
 					isFail: false,
 				});
 			})
-			.catch(() => {
-				this.setState({ isFail: true });
-			})
-			.finally(() => {
-				this.setState({ saving: false });
-			});
-	};
-
-	onEditFixture = (selectedFixture) => {
-		this.setState({ selectedFixture });
+			.catch(() => this.setState({ isFail: true }))
+			.finally(() => this.setState({ saving: false }));
 	};
 
 	onUpdateFixture = (fixture) => {
-		this.setState({ saving: true, selectedFixture: null });
+		this.setState({ saving: true, selectedFixture: null, editMode: true });
 
 		api.fixtures.updateFixture({ fixture }).then((response) => {
-			this.props.startFetchingPropertyDetails();
-			this.props.fetchPropertySuccess(response.data);
 			this.setState({
 				isSuccess: true,
 				isFail: false,
+				editMode: false,
+			}, () => {
+				this.props.fetchPropertySuccess(response.data);
 			});
 		})
-			.catch(() => {
-				this.setState({ isFail: true });
-			})
-			.finally(() => {
-				this.setState({ saving: false });
-			});
+			.catch(() => this.setState({ isFail: true }))
+			.finally(() => this.setState({ saving: false }));
 	};
 
 	onRemoveFixture = (fixture) => {
 		api.fixtures.removeFixture({ fixture }).then((response) => {
-			this.props.startFetchingPropertyDetails();
 			this.props.fetchPropertySuccess(response.data);
-			this.forceUpdate();
 			this.setState({
 				isSuccess: true,
 				isFail: false,
 			});
 		})
-			.catch(() => {
-				this.setState({ isFail: true });
-			})
-			.finally(() => {
-				this.setState({ saving: false });
-			});
+			.catch(() => this.setState({ isFail: true }))
+			.finally(() => this.setState({ saving: false }));
+	};
+
+	onSelectFixture = (fixture) => {
+		const { listingSeason } = this.state;
+
+		const selectedFixture = listingSeason.fixtures.find(f => f.externalId === fixture.externalId);
+		if (!selectedFixture) {
+			listingSeason.fixtures.push(fixture);
+		}
+
+		this.setState({ listingSeason });
+		this.props.onUpdateSeason(listingSeason);
+	};
+
+	onUnselectFixture = (fixture) => {
+		const { listingSeason } = this.state;
+		listingSeason.fixtures = listingSeason.fixtures.filter(f => f.externalId !== fixture.externalId);
+		this.setState({ listingSeason });
+		this.props.onUpdateSeason(listingSeason);
 	};
 
 	render() {
 		const {
 			saving,
 			selectedFixture,
+			listingSeason,
 		} = this.state;
 
 		const { style, season } = this.props;
@@ -101,16 +108,17 @@ class SeasonFixtures extends React.Component {
 						{season.fixtures.length > 0 && (
 							<FixtureList
 								season={season}
+								listingSeason={listingSeason}
 								onRemoveFixture={this.onRemoveFixture}
-								onEditFixture={this.onEditFixture}
+								onSelectFixture={this.onSelectFixture}
+								onUnselectFixture={this.onUnselectFixture}
+								onUpdateFixture={this.onUpdateFixture}
 							/>
 						)}
 
-						{saving && <Loader xSmall loading />}
-
 						<FixtureForm
+							saving={saving}
 							onCreate={this.onCreateFixture}
-							onUpdate={this.onUpdateFixture}
 							fixture={selectedFixture}
 						/>
 					</>
@@ -125,13 +133,14 @@ const mapStateToProps = state => ({
 	common: state.common,
 	propertyFilters: state.propertyFilters,
 	property: state.propertyDetails.property,
+	listing: state.propertyListing,
 });
 
 const mapDispatchToProps = dispatch => ({
 	fetchPropertySuccess: property => dispatch(fetchPropertySuccess(property)),
 	startFetchingPropertyDetails: () => dispatch(startFetchingPropertyDetails()),
+	updateListing: listing => dispatch(updateListing(listing)),
 });
-
 
 export default connect(
 	mapStateToProps,

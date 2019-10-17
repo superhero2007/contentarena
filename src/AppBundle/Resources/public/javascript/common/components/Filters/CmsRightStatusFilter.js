@@ -34,7 +34,8 @@ class CmsRightStatusFilter extends React.Component {
 				placeholder={<Translate i18nKey="RIGHTS_STATUS_FILTER_PLACEHOLDER" />}
 				multiText={<Translate i18nKey="RIGHTS_STATUS_FILTER_MULTIPLE" />}
 				onChange={onChange}
-				getOptionLabel={option => option.key}
+				getOptionLabel={option => <Translate i18nKey={option.key} />}
+				getOptionValue={option => option.id}
 				MultiValueComponent={MultiValueComponent}
 			/>
 		);

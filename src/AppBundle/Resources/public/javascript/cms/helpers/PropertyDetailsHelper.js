@@ -43,7 +43,7 @@ export const groupListingsByStatus = (listings) => {
 		archived = [];
 
 	listings.forEach((listing) => {
-		switch (listing.status.name) {
+		switch (listing.status) {
 		case "REJECTED":
 			rejected.push(listing);
 			break;

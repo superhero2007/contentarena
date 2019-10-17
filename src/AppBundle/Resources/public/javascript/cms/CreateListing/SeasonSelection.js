@@ -2,6 +2,7 @@ import React from "react";
 import Translate from "@components/Translator/Translate";
 import SeasonSelector from "@components/Season";
 import { connect } from "react-redux";
+import cloneDeep from "lodash/cloneDeep";
 import SeasonFixtures from "./SeasonFixtures";
 import { fetchPropertySuccess, startFetchingPropertyDetails } from "../actions/propertyActions";
 
@@ -17,12 +18,27 @@ class SeasonSelection extends React.Component {
 
 	onSelectSeason = (value) => {
 		let { selectedSeasons } = this.state;
+		const newSeason = cloneDeep(value);
 		const selectedSeason = selectedSeasons.find(season => season.id === value.id);
 		if (selectedSeason) {
 			selectedSeasons = selectedSeasons.filter(season => season.id !== value.id);
 		} else {
-			selectedSeasons.push(value);
+			newSeason.fixtures = [];
+			selectedSeasons.push(newSeason);
 		}
+		this.setState({ selectedSeasons });
+		this.props.onSelectSeason(selectedSeasons);
+	};
+
+	onUpdateSeason = (value) => {
+		let { selectedSeasons } = this.state;
+		const newSeason = cloneDeep(value);
+		selectedSeasons = selectedSeasons.map((season) => {
+			if (season.id === newSeason.id) {
+				return newSeason;
+			}
+			return season;
+		});
 		this.setState({ selectedSeasons });
 		this.props.onSelectSeason(selectedSeasons);
 	};
@@ -56,27 +72,30 @@ class SeasonSelection extends React.Component {
 							<Translate i18nKey="SEASONS_FIXTURES_TITLE" />
 						</h5>
 
-						{selectedSeasons.map((season, index) => {
-							const selectedSeason = seasons.find(s => s.id === season.id);
+						{selectedSeasons.map((listingSeason, index) => {
+							const selectedSeason = seasons.find(s => s.id === listingSeason.id);
+							const selectedSeasonInfo = availableSeasons.find(s => s.id === listingSeason.id);
 							return (
-								<>
+								<section key={`fixture-season-${index}`}>
 									<div
 										className="fixture-season"
 										style={{ zIndex: 1000 - index }}
-										key={`fixture-season-${index}`}
 									>
-										<i className={`fixture-season-icon icon-arrow-${season.fixturesOpen ? "bottom" : "right"}`} />
+										<i
+											onClick={() => this.toggleFixtures(listingSeason)}
+											className={`fixture-season-icon clickable icon-arrow-${listingSeason.fixturesOpen ? "bottom" : "right"}`}
+										/>
 										<span
 											className="subtitle1 fixture-season-name clickable"
-											  onClick={() => this.toggleFixtures(season)}
+											  onClick={() => this.toggleFixtures(listingSeason)}
 										>
-											{season.name}
+											{listingSeason.name}
 										</span>
 
 										{!!selectedSeason.fixtures.length && (
 											<span
 												className="fixture-season-amount clickable"
-												  onClick={() => this.toggleFixtures(season)}
+												  onClick={() => this.toggleFixtures(listingSeason)}
 											>
 												{`(${selectedSeason.fixtures.length} ${selectedSeason.fixtures.length === 1 ? "Fixture" : "Fixtures"})`}
 											</span>
@@ -85,23 +104,25 @@ class SeasonSelection extends React.Component {
 										{!selectedSeason.fixtures.length && (
 											<button
 												className="button primary-outline-button"
-												onClick={() => this.toggleFixtures(season)}
+												onClick={() => this.toggleFixtures(listingSeason)}
 											>
 												<Translate i18nKey="CMS_FIXTURES_BUTTON_CREATE" />
 											</button>
 										)}
 
-										<i className="icon-trash clickable" onClick={() => this.onSelectSeason(season)} />
+										<i className="icon-trash clickable" onClick={() => this.onSelectSeason(listingSeason)} />
 									</div>
 
-									{season.fixturesOpen && (
+									{listingSeason.fixturesOpen && (
 										<SeasonFixtures
 											key={`fixtures-${index}`}
-											season={season}
+											season={selectedSeasonInfo}
+											onUpdateSeason={this.onUpdateSeason}
+											listingSeason={listingSeason}
 											style={{ zIndex: 1000 - index }}
 										/>
 									)}
-								</>
+								</section>
 							);
 						})}
 					</div>

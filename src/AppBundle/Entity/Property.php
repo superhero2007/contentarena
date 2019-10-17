@@ -175,6 +175,11 @@ class Property implements NotifiableInterface
     private $programs;
 
     /**
+     * @Groups({"propertyList", "property"})
+     */
+    private $deals;
+
+    /**
      * @return mixed
      */
     public function getRights()
@@ -480,6 +485,24 @@ class Property implements NotifiableInterface
     {
         $this->programs = $programs;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDeals()
+    {
+        return $this->deals;
+    }
+
+    /**
+     * @param mixed $deals
+     */
+    public function setDeals($deals)
+    {
+        $this->deals = $deals;
+    }
+
+
 
 }
 

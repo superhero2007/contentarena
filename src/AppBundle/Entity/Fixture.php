@@ -19,7 +19,7 @@ class Fixture
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"property"})
+     * @Groups({"property", "createListing"})
      */
     private $id;
 
@@ -41,8 +41,8 @@ class Fixture
 
     /**
      * @var string
-     * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"property"})
+     * @ORM\Column(name="externalId", type="string", length=255, nullable=true)
+     * @Groups({"property", "createListing"})
      */
     private $externalId;
 
@@ -77,6 +77,12 @@ class Fixture
      * @ORM\JoinColumn(nullable=true)
      */
     private $property;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listing" )
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $listing;
 
     /**
      * @var boolean
@@ -256,8 +262,20 @@ class Fixture
         $this->property = $property;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getListing()
+    {
+        return $this->listing;
+    }
 
-
+    /**
+     * @param mixed $listing
+     */
+    public function setListing($listing)
+    {
+        $this->listing = $listing;
+    }
 
 }
-

@@ -2,9 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import Translate from "@components/Translator/Translate";
+import CmsCurrencyFilter from "@components/Filters/CmsCurrencyFilter";
+import TableSeasonList from "@components/Table/TableSeasonList";
+import TableTerritoryList from "@components/Table/TableTerritoryList";
 import CurrencySelector from "../../sell/components/CurrencySelector";
 import FileSelector from "../../main/components/FileSelector";
 import { trashIconRed } from "../../main/components/Icons";
+import CmsNumberInput from "./CmsNumberInput";
+import { getTerritoriesFromListing } from "../helpers/PropertyDetailsHelper";
 
 class CmsDealTable extends React.Component {
 	constructor(props) {
@@ -75,6 +80,12 @@ class CmsDealTable extends React.Component {
 		onSave(deals);
 	};
 
+	handleChange = (index, deal) => {
+		const { deals } = this.state;
+		deals[index] = { ...deals[index], ...deal };
+		this.props.onSave(deals);
+	};
+
 	updateValue = (index, key, value) => {
 		const { deals } = this.state;
 		const { onSave } = this.props;
@@ -93,28 +104,30 @@ class CmsDealTable extends React.Component {
 		id: props => `territory-name-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		accessor: "territory",
-		width: "200",
-		Cell: (props) => {
-			if (props.value.length > 10) {
-				return <div>{`${props.value.length} territories`}</div>;
-			}
-			return props.value.map(element => <div>{element.name}</div>);
-		},
+		accessor: "territories",
+		width: 200,
+		Cell: props => <TableTerritoryList index={props.index} territories={props.value} />,
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_COMPANY" />,
 		id: props => `company-name-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header",
-		accessor: "company",
-		width: 200,
+		accessor: "buyerCompanyName",
+		width: 250,
 		Cell: props => (
-			<input
-				type="text"
-				defaultValue={props.value}
-				onKeyDown={e => this.handleKeyDown(props.index, "company", e)}
-				onBlur={e => this.updateValue(props.index, "company", e.target.value)}
-			/>
+			<div className="form-group" style={{ marginBottom: 0 }}>
+				<div className="input-group">
+					<input
+						key={`company-${props.index}`}
+						type="text"
+						className="input-group-text"
+						placeholder="Enter company name"
+						defaultValue={props.value}
+						onKeyDown={e => this.handleKeyDown(props.index, "buyerCompanyName", e)}
+						onBlur={e => this.updateValue(props.index, "buyerCompanyName", e.target.value)}
+					/>
+				</div>
+			</div>
 		),
 	}];
 
@@ -122,37 +135,50 @@ class CmsDealTable extends React.Component {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_SEASON" />,
 		id: props => `season-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 250,
+		className: "table-header justify-content-center flex-direction-column",
+		width: 180,
 		accessor: "seasons",
-		Cell: props => props.value.map(season => <div>{season.name}</div>),
+		Cell: props => <TableSeasonList index={props.index} seasons={props.value} limit={3} />,
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_FEE" />,
 		id: props => `fee-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 100,
+		width: 220,
 		accessor: "fee",
 		Cell: props => (
-			<input
-				type="number"
-				defaultValue={props.value}
-				onFocus={e => e.target.select()}
-				onKeyDown={e => this.handleKeyDown(props.index, "fee", e)}
-				onBlur={e => this.updateValue(props.index, "fee", e.target.value)}
-			/>
+			<div className="form-group" style={{ marginBottom: 0 }}>
+				<div className="input-group">
+					<input
+						key={`fee-${props.index}`}
+						type="number"
+						className="input-group-text"
+						placeholder="Enter fee"
+						onFocus={e => e.target.select()}
+						defaultValue={props.value}
+						onKeyDown={e => this.handleKeyDown(props.index, "fee", e)}
+						onBlur={e => this.updateValue(props.index, "fee", e.target.value)}
+					/>
+				</div>
+			</div>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_CURRENCY" />,
 		id: props => `currency-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center overflow-initial",
-		width: 120,
+		width: 130,
 		accessor: "currency",
 		Cell: props => (
-			<CurrencySelector onClick={value => this.selectCurrency(props.index, value)} selected={props.value} key={props.index} />
+			<CmsCurrencyFilter
+				onChange={currency => this.handleChange(props.index, { currency })}
+				value={props.value}
+				key={`currency-${props.index}`}
+				label={false}
+			/>
 		),
-	}, {
+	},
+		/* {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_ATTACHMENTS" />,
 		id: props => `attachments-${props.index}`,
 		headerClassName: "table-header",
@@ -172,7 +198,8 @@ class CmsDealTable extends React.Component {
 				tmp
 			/>
 		),
-	}, {
+	},
+		{
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_ACTION" />,
 		id: props => `split-${props.index}`,
 		headerClassName: "table-header",
@@ -196,7 +223,9 @@ class CmsDealTable extends React.Component {
 				/>
 			</div>
 		),
-	}];
+	} */
+
+	];
 
 	render() {
 		let { deals } = this.state;
@@ -221,9 +250,5 @@ class CmsDealTable extends React.Component {
 		);
 	}
 }
-
-CmsDealTable.contextTypes = {
-	t: PropTypes.func.isRequired,
-};
 
 export default CmsDealTable;

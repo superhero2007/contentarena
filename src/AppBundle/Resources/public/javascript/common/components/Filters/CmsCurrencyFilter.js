@@ -14,11 +14,13 @@ class CmsCurrencyFilter extends React.Component {
 		const {
 			value,
 			onChange,
+			label,
 		} = this.props;
 
 		return (
 			<BaseFilter
-				name={<Translate i18nKey="Currency" />}
+				isClearable={false}
+				name={label ? <Translate i18nKey="Currency" /> : null}
 				options={CURRENCIES.map(currency => ({ label: currency, value: currency }))}
 				value={value ? { value, label: value } : null}
 				className="dropdown-container"
@@ -31,5 +33,9 @@ class CmsCurrencyFilter extends React.Component {
 		);
 	}
 }
+
+CmsCurrencyFilter.defaultProps = {
+	label: true,
+};
 
 export default CmsCurrencyFilter;

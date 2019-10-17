@@ -10,23 +10,18 @@ class BundleList extends React.Component {
 	}
 
 	render() {
-		const { bundles, showActions } = this.props;
+		const { bundles, showActions, editMode } = this.props;
 		const columns = [{
 			Header: "Territories",
 			accessor: "name",
 			headerClassName: "rt-th-name",
 			className: "rt-td-name rt-td-rights",
-			width: 330,
+			width: 480,
 			Cell: props => (
 				<div>
 					{props.value}
 				</div>
 			),
-		}, {
-			Header: "Sales Method",
-			Cell: () => <Translate i18nKey="CHECKOUT_METHOD_BIDDING" />,
-			headerClassName: "rt-th-center",
-			className: "rt-td-center",
 		}, {
 			Header: "Minimum Bid",
 			headerClassName: "rt-th-center",
@@ -37,9 +32,9 @@ class BundleList extends React.Component {
 			className: "rt-td-actions",
 			Cell: props => (
 				<>
-					{showActions && (
+					{showActions && !editMode && (
 						<>
-							<i className="icon-edit clickable" onClick={() => this.props.onEdit(props.index)} />
+							<i className="icon-edit clickable" onClick={() => this.props.onEditBundle(props.index)} />
 							<i className="icon-remove clickable" onClick={() => this.props.onRemove(props.index)} />
 						</>
 					)}

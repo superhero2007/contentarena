@@ -12,6 +12,7 @@ use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\FileUploader;
+use AppBundle\Service\FixtureService;
 use AppBundle\Service\ListingService;
 use AppBundle\Service\WatchlistService;
 use Exception;
@@ -184,12 +185,20 @@ class ApiListingController extends Controller
      * @param ListingService $listingService
      * @param EmailService $emailService
      * @param FileUploader $fileUploader
+     * @param FixtureService $fixtureService
      * @return JsonResponse
      * @throws Twig_Error_Loader
      * @throws Twig_Error_Runtime
      * @throws Twig_Error_Syntax
+     * @throws Exception
      */
-    public function saveListing(Request $request, ListingService $listingService , EmailService $emailService, FileUploader $fileUploader )
+    public function saveListing(
+        Request $request,
+        ListingService $listingService,
+        EmailService $emailService,
+        FileUploader $fileUploader,
+        FixtureService $fixtureService
+    )
     {
         /* @var Property $property */
         $user = $this->getUser();
@@ -201,6 +210,15 @@ class ApiListingController extends Controller
         $seasons = $this->deserialize($data["seasons"], "array<PropertyEventItem<AppBundle\Entity\Season>>");
         $rights = $this->deserialize($data["rights"], "array<AppBundle\Entity\ListingRight>");
 
+        $fixtureService->cleanListingFixtures($listing);
+        foreach ($seasons as $key => $season){
+            foreach ($data["seasons"][$key]["fixtures"] as $fixture){
+                $serializedFixture = $this->deserialize($fixture, "AppBundle\Entity\Fixture");
+                $fixtureService->createListingFixture($serializedFixture, $season, $listing );
+            }
+        }
+
+        $listing->setStep($data["step"]);
         $listing->setBundles($bundles);
         $listing->setSeasons($seasons);
         $listing->setRights($rights);
@@ -218,6 +236,18 @@ class ApiListingController extends Controller
         $listing = $listingService->saveListing($listing, $user);
         if ( $id == null ) $emailService->internalUserListingDraft($user, $listing);
         return $this->getSerializedResponse($listing, array('draft'));
+    }
+
+    /**
+     * @Route("/api/listings/remove", name="apiListingsRemove")
+     * @param Request $request
+     * @param ListingService $listingService
+     * @return JsonResponse
+     */
+    public function apiListingsRemove(Request $request, ListingService $listingService){
+
+        $response = $listingService->removeListing($request->get('customId'));
+        return new JsonResponse(array("success"=>$response));
     }
 
     /**
@@ -319,15 +349,6 @@ class ApiListingController extends Controller
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),50);
         return $this->getSerializedResponse($contents->getItems(), array('listing') );
-    }
-
-    /**
-     * @Route("/api/listings/remove", name="apiListingsRemove")
-     */
-    public function apiListingsRemove(Request $request, ContentService $contentService){
-
-        $response = $contentService->removeListing($request->get('customId'));
-        return new JsonResponse(array("success"=>$response));
     }
 
     /**

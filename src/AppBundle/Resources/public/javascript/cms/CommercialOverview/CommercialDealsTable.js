@@ -16,7 +16,7 @@ import CmsAcceptBidModal from "../../common/modals/CmsAcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
 
-class CommercialBidsTable extends React.Component {
+class CommercialDealsTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -81,14 +81,22 @@ class CommercialBidsTable extends React.Component {
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "rt-th-name",
 		className: "rt-td-name",
-		accessor: "list.name",
-		Cell: props => this.getCell(props),
+		Cell: (props) => {
+			let name;
+			if (props.original.custom) {
+				name = <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_MANUALLY_ADDED_DEAL" />;
+			} else {
+				name = `${props.original.listing.name}`;
+			}
+
+			return (<span>{name}</span>);
+		},
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_SEASONS" />,
 		id: props => `seasons-${props.customId}-${props.index}`,
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
-		accessor: "list.seasons",
+		accessor: "seasons",
 		width: 70,
 		Cell: props => <TableSeasonList index={props.index} seasons={props.value} limit={3} />,
 	}];
@@ -100,30 +108,34 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
 		width: 82,
-		accessor: "salesPackage.territories",
-		Cell: props => <TableTerritoryList territories={props.value} index={props.index} />,
+		accessor: "bundles",
+		Cell: props => <TableTerritoryList territories={props.value[0].territories} index={props.index} />,
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LICENSE" />,
 		id: props => `lic-${props.customId}-${props.index}`,
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
 		width: 112,
-		accessor: "list.company",
-		Cell: props => (
-			<span>
-				{props.value.legalName}
-			</span>
-		),
+		accessor: "company",
+		Cell: (props) => {
+			let name;
+			if (props.original.custom) {
+				name = props.original.buyerCompanyName;
+			} else {
+				name = `${props.company.legalName}`;
+			}
+
+			return (<span>{name}</span>);
+		},
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_FEE" />,
 		id: props => `fee-${props.customId}-${props.index}`,
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
 		width: 80,
-		accessor: "salesPackage",
 		Cell: props => (
 			<span>
-				{`${props.value.currency.code === "EUR" ? "€" : "$"} ${parseFloat(props.value.fee).toFixed(3)}`}
+				{`${props.original.currency === "EUR" ? "€" : "$"} ${parseFloat(props.original.fee).toFixed(2)}`}
 			</span>
 		),
 	}, {
@@ -144,12 +156,16 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
 		width: 48,
-		accessor: "buyerUser",
-		Cell: props => (
-			<span>
-				{`${props.value.firstName} ${props.value.lastName}`}
-			</span>
-		),
+		Cell: (props) => {
+			let name;
+			if (props.original.custom) {
+				name = "-";
+			} else {
+				name = `${props.original.buyerUser.firstName} ${props.original.buyerUser.lastName}`;
+			}
+
+			return (<span>{name}</span>);
+		},
 	}];
 
 	getActionColumns = (type) => {
@@ -218,7 +234,7 @@ class CommercialBidsTable extends React.Component {
 										<Translate
 											i18nKey="COMMERCIAL_OVERVIEW_STATUS_ACCEPTED_BY"
 											params={{
-												name: <UserName {...props.original.owner} />,
+												name: props.original.custom ? <UserName {...props.original.closedBy} /> : <UserName {...props.original.owner} />,
 											}}
 										/>
 									</span>
@@ -274,14 +290,14 @@ class CommercialBidsTable extends React.Component {
 
 
 	render() {
-		const { listings, type, postAction } = this.props;
+		const { deals, type, postAction } = this.props;
 		const {
 			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
 		} = this.state;
 
 		const columns = [
 			...this.getTitleColumns(),
-			...getRightTableColumns("list.rights"),
+			...getRightTableColumns("rights"),
 			...this.getDetailColumns(type),
 			...this.getActionColumns(type),
 		];
@@ -313,7 +329,7 @@ class CommercialBidsTable extends React.Component {
 					minRows={0}
 					multiSort={false}
 					resizable={false}
-					data={listings}
+					data={deals}
 					columns={columns}
 				/>
 				<ReactTooltip place="top" type="dark" effect="solid" />
@@ -322,8 +338,8 @@ class CommercialBidsTable extends React.Component {
 	}
 }
 
-CommercialBidsTable.contextTypes = {
+CommercialDealsTable.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default CommercialBidsTable;
+export default CommercialDealsTable;
