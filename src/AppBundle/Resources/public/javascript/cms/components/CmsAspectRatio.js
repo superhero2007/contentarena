@@ -52,6 +52,7 @@ const CmsAspectRatio = ({ type, rights, onUpdate }) => (
 				columns={columns}
 				onUpdate={onUpdate}
 				checkDelivery
+				showType
 			/>
 		</div>
 	</div>
