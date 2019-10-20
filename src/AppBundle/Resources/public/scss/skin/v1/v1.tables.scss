@@ -198,6 +198,24 @@
                   background-color: $v1-color-red-2;
                 }
 
+                &.unsold-exclusively {
+                  background-color: $v1-color-green-3;
+                }
+
+                &.unsold-non-exclusively {
+                  background:linear-gradient(to bottom right,$v1-color-green-3 50%,white 50%);
+                }
+
+                &.sold-exclusively {
+                  background-color: #fbff8b;
+                  background-image:none;
+                }
+
+                &.sold-non-exclusively {
+                  background-color: #b5cbe5;
+                  background-image:none;
+                }
+
                 .purple-triangle {
                   width: 0;
                   height: 0;
@@ -238,6 +256,11 @@
 
                   .blue-circle {
                     background-color: $v1-color-blue-1;
+                    border-radius: 50%;
+                  }
+
+                  .grey-circle {
+                    background-color: $v1-color-grey-3;
                     border-radius: 50%;
                   }
                 }
@@ -465,7 +488,7 @@
           }
 
           .rt-td {
-            height: 57px;
+            height: 44px;
 
             &-name {
               font-size: 16px;

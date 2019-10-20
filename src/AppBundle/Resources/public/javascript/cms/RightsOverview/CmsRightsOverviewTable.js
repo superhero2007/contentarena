@@ -27,20 +27,22 @@ class CmsRightsOverviewTable extends React.Component {
 		const listingHasSeason = territory.listings.seasons.indexOf(season.id) !== -1;
 		const dealHasSeasons = territory.deals.seasons.indexOf(season.id) !== -1;
 
-		// if (!listingHasSeason && dealHasSeasons && !listingHasRight && !dealHasRight) return <div />;
-
 		return (
 			<div
 				className={cn("table-right-icon", {
-					"green-background": true,
-					"green-light-background": dealHasSeasons && !right.exclusive && territory.deals.closedDeals > 0,
-					"red-light-background": dealHasSeasons && right.exclusive && dealHasRight && territory.deals.closedDeals > 0,
+					"green-light-background": true,
+					"unsold-non-exclusively": !right.exclusive,
+					"unsold-exclusively": right.exclusive,
+					"sold-non-exclusively": dealHasSeasons && !right.exclusive && territory.deals.closedDeals > 0,
+					"sold-exclusively": dealHasSeasons && right.exclusive && dealHasRight && territory.deals.closedDeals > 0,
 				})}
 			>
-				{listingHasSeason && listingHasRight && territory.listings.activeListings > 0 && <div className="purple-triangle" />}
-				<div className="icon">
-					<div className={cn({ "yellow-circle": right.exclusive, "blue-circle": !right.exclusive })} />
-				</div>
+				{listingHasSeason && listingHasRight && territory.listings.activeListings > 0 && (
+					<div className="icon">
+						<div className="grey-circle" />
+					</div>
+				)}
+
 			</div>
 		);
 	};

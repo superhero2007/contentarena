@@ -8,9 +8,7 @@ import { getTerritoriesFromRights } from "@utils/property";
 import SeasonSelector from "@components/Season";
 import RightSelector from "@components/Right";
 import {
-	BUNDLE_TERRITORIES_METHOD,
 	CMS_PROPERTY_TABS,
-	PROPERTY_MAIN_TABS,
 	ROUTE_PATHS,
 } from "@constants";
 import TerritorySelector from "@components/Territories/TerritorySelector";
@@ -18,8 +16,8 @@ import CmsDealTable from "../components/CmsDealTable";
 import { getSeasonsYearString, sortSeasons } from "../helpers/PropertyDetailsHelper";
 import { addDealsProperty } from "../actions/propertyActions";
 import CmsProgress from "../components/CmsProgress";
-import { goTo } from "../../main/actions/utils";
-
+import { getListingName } from "../helpers/PropertyListingHelper";
+import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
@@ -33,7 +31,9 @@ class PropertyDeal extends React.Component {
 				NON_EXCLUSIVE: "non-exclusive",
 			},
 			territories: [],
+			name: "",
 			currentStep: props.property.seasons && props.property.seasons.length === 0 ? 2 : 1,
+			showRightDetails: false,
 		};
 	}
 
@@ -49,12 +49,15 @@ class PropertyDeal extends React.Component {
 		return !!territories.length;
 	};
 
-	dealsAreValid = () => !this.state.deals.filter(d => (d.buyerCompanyName === "" || d.currency === "" || d.fee === 0)).length;
+	dealsAreValid = () => !this.state.deals.filter(d => (d.buyerCompanyName === ""
+		|| d.currency === "" || d.fee === 0) || !d.name || d.name === "").length;
 
 	cancel = () => {
 		const { history, property: { customId } } = this.props;
 		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
 	};
+
+	showRightDetails = () => this.setState({ showRightDetails: true });
 
 	onChangeSeason = (value) => {
 		let { seasons } = this.state;
@@ -100,22 +103,28 @@ class PropertyDeal extends React.Component {
 	onSelectTerritories = territories => this.setState({ territories });
 
 	onNext = () => {
-		const { property: { customId } } = this.props;
+		const { property } = this.props;
 		const currentStep = this.state.currentStep + 1;
+		const {
+			territories, seasons, deals, rights, name,
+		} = this.state;
+
 		this.setState({ currentStep });
 
-		if (currentStep === 4) {
-			const {
-				territories, seasons, deals, rights,
-			} = this.state;
+		if (currentStep === 2) {
+			const newName = getListingName(property, seasons);
+			this.setState({ name: newName });
+		}
 
+		if (currentStep === 4) {
 			deals.push({
 				territories,
 				buyerCompanyName: "",
-				property: { customId },
+				property: { customId: property.customId },
 				seasons,
 				rights,
 				currency: "",
+				name,
 				fee: 0,
 				attachments: [],
 				type: true,
@@ -180,7 +189,9 @@ class PropertyDeal extends React.Component {
 			territories,
 			currentStep,
 			deals,
+			name,
 			saving,
+			showRightDetails,
 		} = this.state;
 		const { property: { seasons: allSeasons, rights: allRights, countries }, skin } = this.props;
 		const rightTerritories = getTerritoriesFromRights(rights, countries);
@@ -241,7 +252,6 @@ class PropertyDeal extends React.Component {
 							/>
 						)}
 
-
 						{currentStep === 2 && (
 							<RightSelector
 								availableRights={allRights}
@@ -249,6 +259,27 @@ class PropertyDeal extends React.Component {
 								onSelectRight={this.onSelectRight}
 								onExclusive={this.onExclusive}
 							/>
+						)}
+
+						{currentStep === 2 && !showRightDetails && rights.length > 0 && (
+							<div className="property-deals-right-details">
+								<button
+									className="button primary-outline-button"
+									onClick={this.showRightDetails}
+								>
+									<Translate i18nKey="ADD_DEAL_RIGHT_DETAILS_BUTTON" />
+								</button>
+							</div>
+						)}
+
+						{currentStep === 2 && showRightDetails && rights.length > 0 && (
+							<div className="property-create-box">
+								<PropertyDetailsRightsTab
+									showHeadline={false}
+									rights={rights}
+									onChange={updatedRights => this.setState({ rights: updatedRights })}
+								/>
+							</div>
 						)}
 
 						{currentStep === 3 && (
@@ -271,6 +302,25 @@ class PropertyDeal extends React.Component {
 									/>
 								</div>
 							</div>
+
+						)}
+
+						{currentStep === 4 && (
+							<div className="d-flex flex-direction-column form-group w-75" style={{ marginTop: 30 }}>
+								<label>
+									<Translate i18nKey="ADD_DEAL_NAME_LABEL" />
+								</label>
+								<div className="input-group">
+									<input
+										type="text"
+										className="input-group-text"
+										placeholder="Enter deal name"
+										value={name}
+										onChange={e => this.setState({ name: e.target.value })}
+									/>
+								</div>
+							</div>
+
 						)}
 
 						{currentStep === 5 && (
@@ -329,7 +379,8 @@ class PropertyDeal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	...state.propertyDetails,
+	property: state.propertyDetails.property,
+	countries: state.property.countries,
 });
 
 const mapDispatchToProps = dispatch => ({

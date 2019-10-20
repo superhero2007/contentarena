@@ -162,7 +162,7 @@
       @extend .region-selector;
 
       width: 340px !important;
-      height: 291px;
+      height: 291px !important;
 
       .input-checkbox {
         cursor: default;

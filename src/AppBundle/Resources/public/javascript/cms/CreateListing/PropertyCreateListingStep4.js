@@ -1,27 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import cn from "classnames";
-import ReactTooltip from "react-tooltip";
 import Translate from "@components/Translator/Translate";
-import Loader from "@components/Loader";
-import { getTerritoriesFromRights } from "@utils/property";
-import RightSelector from "@components/Right/RightSelector";
-import AccordionContainer from "@components/Containers/AccordionContainer";
-import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
-import {
-	getRightsString,
-	getSeasonsYearString,
-	sortSeasons,
-	sortSeasonsOldToNew,
-} from "../helpers/PropertyDetailsHelper";
 import PropertyListingButtons from "../components/PropertyListingButtons";
-import { getListingName } from "../helpers/PropertyListingHelper";
-import SeasonSelection from "./SeasonSelection";
-import BundleCreator from "./BundleCreator";
-import BundleList from "./BundleList";
 import { updateListing } from "../actions/propertyListingActions";
 import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
-import PropertyDetailsProductionTab from "../components/PropertyDetailsProductionTab";
 
 class PropertyCreateListingStep4 extends React.Component {
 	constructor(props) {
@@ -38,17 +20,13 @@ class PropertyCreateListingStep4 extends React.Component {
 
 	render() {
 		const {
-			bundlesAreValid,
-			currentStep,
-		} = this.state;
-
-		const {
-			listing,
 			history,
+			listing,
 		} = this.props;
 
 		return (
 			<div className="property-create-tab">
+
 				<div className="property-create-header">
 					<h4>
 						<Translate i18nKey="CREATE_LISTING_RIGHTS_TITLE" />
@@ -59,8 +37,9 @@ class PropertyCreateListingStep4 extends React.Component {
 				</div>
 
 				<div className="property-create-box">
-					<PropertyDetailsProductionTab
-						listing={listing}
+					<PropertyDetailsRightsTab
+						showHeadline={false}
+						rights={listing.rights}
 						onChange={this.updateListing}
 					/>
 				</div>

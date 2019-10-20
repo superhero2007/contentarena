@@ -12,13 +12,13 @@ class PropertyHeader extends React.Component {
 
 	render() {
 		const {
-			history, name, customId, deals = true, edit = true, listing = true,
+			history, name, sportCategory, customId, deals = true, edit = true, listing = true,
 		} = this.props;
 		return (
 			<div className="default-box-header">
 				<div className="property-header">
 					<h4 className="property-header-title">
-						<Translate i18nKey="CMS_PROPERTY_HEADER_TITLE" />
+						{sportCategory[0].name}
 					</h4>
 					<h3 className="property-header-name">
 						{name}

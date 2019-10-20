@@ -38,7 +38,7 @@ class PropertyListingButtons extends React.Component {
 		const { property: { customId }, history, listing } = this.props;
 		this.props.saveListing(listing)
 			.then((data) => {
-				if (listing.step === 6) {
+				if (listing.step === 7) {
 					history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
 					window.location.reload();
 					return;
@@ -50,7 +50,10 @@ class PropertyListingButtons extends React.Component {
 			.finally();
 	};
 
-	cancel = () => {};
+	cancel = () => {
+		const { property: { customId }, history } = this.props;
+		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
+	};
 
 	render() {
 		const { listing } = this.props;
@@ -110,8 +113,8 @@ class PropertyListingButtons extends React.Component {
 					onClick={this.onNext}
 				>
 					{listing.saving && <Loader xSmall loading />}
-					{!listing.saving && listing.step < 6 && <Translate i18nKey="CMS_CREATE_LISTING_NEXT_BUTTON" /> }
-					{!listing.saving && listing.step === 6 && <Translate i18nKey="CMS_CREATE_LISTING_PUBLISH_BUTTON" />}
+					{!listing.saving && listing.step < 7 && <Translate i18nKey="CMS_CREATE_LISTING_NEXT_BUTTON" /> }
+					{!listing.saving && listing.step === 7 && <Translate i18nKey="CMS_CREATE_LISTING_PUBLISH_BUTTON" />}
 				</button>
 			</HorizontalButtonBox>
 		);

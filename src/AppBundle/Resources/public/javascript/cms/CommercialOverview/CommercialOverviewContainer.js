@@ -163,7 +163,7 @@ class CommercialOverviewContainer extends React.Component {
 
 		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
 
-		if (!property.listings.length) {
+		if (!property.listings.length && !property.deals.length) {
 			return <EmptyCommercialOverview history={history} propertyId={propertyId} />;
 		}
 
@@ -204,7 +204,7 @@ class CommercialOverviewContainer extends React.Component {
 				<div className="region-filter">
 
 					<CmsRightsLegend
-						type={RIGHT_TYPE.exclusive}
+						type={RIGHT_TYPE.rights}
 						open
 					/>
 

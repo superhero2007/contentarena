@@ -255,28 +255,34 @@ export const RIGHT_TYPE = {
 	all: "all",
 	sale: "sale",
 	exclusive: "exclusive",
+	rights: "rights",
 };
 
 export const SALE_TYPE = [
 	{
-		className: "green-background",
-		translationKey: "RIGHT_AVAILABLE_SALE_NAME",
+		className: "unsold-exclusively",
+		translationKey: "UNSOLD_EXCLUSIVELY",
 		type: RIGHT_TYPE.sale,
 	},
 	{
-		className: "green-light-background",
-		translationKey: "RIGHT_AVAILABLE_RESALE_NAME",
+		className: "unsold-non-exclusively",
+		translationKey: "UNSOLD_NON_EXCLUSIVELY",
 		type: RIGHT_TYPE.sale,
 	},
 	{
-		className: "red-light-background",
-		translationKey: "RIGHT_SOLD_NAME",
+		className: "sold-exclusively",
+		translationKey: "SOLD_EXCLUSIVELY",
 		type: RIGHT_TYPE.sale,
 	},
 	{
-		className: "yellow-circle",
-		translationKey: "RIGHT_EXCLUSIVE_NAME",
-		type: RIGHT_TYPE.exclusive,
+		className: "sold-non-exclusively",
+		translationKey: "SOLD_NON_EXCLUSIVELY",
+		type: RIGHT_TYPE.sale,
+	},
+	{
+		className: "grey-circle",
+		translationKey: "AVAILABLE_ON_MARKETPLACE",
+		type: RIGHT_TYPE.sale,
 	},
 	{
 		className: "blue-circle",
@@ -284,9 +290,9 @@ export const SALE_TYPE = [
 		type: RIGHT_TYPE.exclusive,
 	},
 	{
-		className: "purple-triangle",
-		translationKey: "RIGHT_ACTIVE_LISTING_NAME",
-		type: RIGHT_TYPE.sale,
+		className: "yellow-circle",
+		translationKey: "RIGHT_EXCLUSIVE_NAME",
+		type: RIGHT_TYPE.exclusive,
 	},
 ];
 

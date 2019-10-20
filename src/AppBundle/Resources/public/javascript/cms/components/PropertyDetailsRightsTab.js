@@ -13,8 +13,8 @@ class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rights: (props.listing) ? cloneDeep(props.listing.rights) : cloneDeep(props.property.rights),
-			currentStep: 0,
+			rights: props.rights ? cloneDeep(props.rights) : cloneDeep(props.property.rights),
+			currentStep: 10,
 		};
 		this.tabRefs = {};
 		Object.values(RIGHTS_TAB).forEach(item => this.tabRefs[item] = React.createRef());

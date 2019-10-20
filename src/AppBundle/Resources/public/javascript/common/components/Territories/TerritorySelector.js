@@ -155,6 +155,7 @@ class TerritorySelector extends React.Component {
 						selectedCountries={selectedCountries}
 						onSelect={this.onSelectCountry}
 						onSelectAll={this.onSelectCountries}
+						onUnselectAll={this.onSelectCountries}
 						title={<Translate i18nKey="TERRITORY_SELECTOR_TITLE_COUNTRIES" />}
 					/>
 

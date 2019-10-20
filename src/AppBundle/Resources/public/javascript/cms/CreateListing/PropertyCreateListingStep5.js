@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
 import PropertyListingButtons from "../components/PropertyListingButtons";
 import { updateListing } from "../actions/propertyListingActions";
-import PropertyListingAdditionalInfo from "./PropertyListingAdditionalInfo";
+import PropertyDetailsProductionTab from "../components/PropertyDetailsProductionTab";
 
 class PropertyCreateListingStep5 extends React.Component {
 	constructor(props) {
@@ -16,10 +16,7 @@ class PropertyCreateListingStep5 extends React.Component {
 		this.props.updateListing({ step: 5 });
 	}
 
-	updateListing = () => {
-		this.props.updateListing({
-		});
-	};
+	updateListing = rights => this.props.updateListing({ rights });
 
 	render() {
 		const {
@@ -28,13 +25,12 @@ class PropertyCreateListingStep5 extends React.Component {
 		} = this.state;
 
 		const {
-			property: { seasons: availableSeasons, rights: availableRights, id: propertyId },
+			listing,
 			history,
 		} = this.props;
 
 		return (
 			<div className="property-create-tab">
-
 				<div className="property-create-header">
 					<h4>
 						<Translate i18nKey="CREATE_LISTING_RIGHTS_TITLE" />
@@ -45,7 +41,10 @@ class PropertyCreateListingStep5 extends React.Component {
 				</div>
 
 				<div className="property-create-box">
-					<PropertyListingAdditionalInfo />
+					<PropertyDetailsProductionTab
+						listing={listing}
+						onChange={this.updateListing}
+					/>
 				</div>
 
 				<PropertyListingButtons history={history} />

@@ -47,6 +47,8 @@ class PropertyListingAdditionalInfo extends Component {
 		this.props.updateListing({ company });
 	};
 
+	handleChangeName = value => this.props.updateListing({ name: value });
+
 	render() {
 		const { listing, countries } = this.props;
 		const dateObj = (listing.expiresAt) ? Moment(listing.expiresAt) : null;
@@ -67,6 +69,24 @@ class PropertyListingAdditionalInfo extends Component {
 						onRemove={this.removeFile}
 					/>
 
+				</div>
+
+				<h5>
+					<Translate i18nKey="CREATE_LISTING_NAME_TITLE" />
+				</h5>
+				<div className="d-flex flex-direction-column form-group w-75">
+					<label>
+						<Translate i18nKey="CREATE_LISTING_NAME_LABEL" />
+					</label>
+					<div className="input-group">
+						<input
+							type="text"
+							className="input-group-text"
+							placeholder={this.context.t("CREATE_LISTING_NAME_PLACEHOLDER")}
+							value={listing.name}
+							onChange={e => this.handleChangeName(e.target.value)}
+						/>
+					</div>
 				</div>
 
 				<h5>
@@ -123,7 +143,7 @@ class PropertyListingAdditionalInfo extends Component {
 				</div> */}
 
 				<h5>
-					<Translate i18nKey="CREATE_LISTING_ANNEX_TITLE" />
+					<Translate i18nKey="CREATE_LISTING_COMPANY_TITLE" />
 				</h5>
 				<div className="d-flex justify-content-between">
 					<div className="form-group w-33">

@@ -230,6 +230,9 @@ class ApiListingController extends Controller
 
         $listing->setCompany($company);
         $listing->setStep($data["step"]);
+        $listing->setDescription($data["description"]);
+        $listing->setWebsite($data["website"]);
+        $listing->setAttachments($data["attachments"]);
         $listing->setBundles($bundles);
         $listing->setSeasons($seasons);
         $listing->setRights($rights);

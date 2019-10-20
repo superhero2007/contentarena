@@ -181,7 +181,7 @@ class Listing implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList", "property"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList", "property", "createListing"})
      */
     private $name;
 

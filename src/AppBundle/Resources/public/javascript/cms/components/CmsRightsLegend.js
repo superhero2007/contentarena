@@ -16,15 +16,20 @@ const CmsRightsLegend = ({ type, open = false }) => {
 	}));
 
 	let selectedItems;
+	const saleItems = items.filter(item => item.type === RIGHT_TYPE.sale);
+	const exclusiveItems = items.filter(item => item.type === RIGHT_TYPE.exclusive);
 	switch (type) {
 	case RIGHT_TYPE.all:
-		selectedItems = [...rights, ...items];
+		selectedItems = [...rights, ...saleItems];
+		break;
+	case RIGHT_TYPE.rights:
+		selectedItems = [...rights, ...exclusiveItems];
 		break;
 	case RIGHT_TYPE.sale:
 		selectedItems = items;
 		break;
 	case RIGHT_TYPE.exclusive:
-		selectedItems = items.filter(item => item.type === RIGHT_TYPE.exclusive);
+		selectedItems = exclusiveItems;
 		break;
 	default:
 		selectedItems = [...rights, ...items];

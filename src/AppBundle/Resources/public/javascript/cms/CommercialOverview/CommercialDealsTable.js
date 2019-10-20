@@ -15,6 +15,7 @@ import CmsDeclineBidModal from "../../common/modals/CmsDeclineBidModal";
 import CmsAcceptBidModal from "../../common/modals/CmsAcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
+import RightDetailsModal from "../../common/modals/RightDetailsModal";
 
 class CommercialDealsTable extends React.Component {
 	constructor(props) {
@@ -25,6 +26,7 @@ class CommercialDealsTable extends React.Component {
 			selectedBid: null,
 			contentId: null,
 			listingCustomId: null,
+			rightsModalIsOpen: false,
 		};
 	}
 
@@ -50,8 +52,11 @@ class CommercialDealsTable extends React.Component {
 		this.setState({
 			approveModalIsOpen: false,
 			rejectModalIsOpen: false,
+			rightsModalIsOpen: false,
 		});
 	};
+
+	openRightsModal = () => this.setState({ rightsModalIsOpen: true });
 
 	getCell = (props) => {
 		const { value, original } = props;
@@ -65,16 +70,14 @@ class CommercialDealsTable extends React.Component {
 	};
 
 	getTitleColumns = () => [{
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ID" />,
 		id: props => `custom-id-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		accessor: "customId",
-		width: 80,
+		width: 50,
 		Cell: props => (
-			<span>
-				{props.value}
-			</span>
+			<div onClick={this.openRightsModal}>
+				<i className="fa fa-info-circle clickable" />
+			</div>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
@@ -84,7 +87,8 @@ class CommercialDealsTable extends React.Component {
 		Cell: (props) => {
 			let name;
 			if (props.original.custom) {
-				name = <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_MANUALLY_ADDED_DEAL" />;
+				name = (props.original.name) ? props.original.name
+					: <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_MANUALLY_ADDED_DEAL" />;
 			} else {
 				name = `${props.original.listing.name}`;
 			}
@@ -292,7 +296,7 @@ class CommercialDealsTable extends React.Component {
 	render() {
 		const { deals, type, postAction } = this.props;
 		const {
-			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
+			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId, rightsModalIsOpen,
 		} = this.state;
 
 		const columns = [
@@ -320,6 +324,13 @@ class CommercialDealsTable extends React.Component {
 						onCloseModal={this.closeModal}
 					/>
 				)}
+
+				{rightsModalIsOpen && (
+					<RightDetailsModal
+						onCloseModal={this.closeModal}
+					/>
+				)}
+
 				<ReactTable
 					className="ca-table property-listings-table"
 					defaultPageSize={30}

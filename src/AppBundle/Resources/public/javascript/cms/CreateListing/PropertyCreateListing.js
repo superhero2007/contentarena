@@ -8,14 +8,15 @@ import { SERVER_ERROR_CODES } from "@constants";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
-import PropertyCreateListingStep1 from "./PropertyCreateListingStep1";
 import CmsProgress from "../components/CmsProgress";
-import { getCreateListingDetails, getListingDetails, updateListing } from "../actions/propertyListingActions";
+import { getCreateListingDetails, updateListing } from "../actions/propertyListingActions";
+import PropertyCreateListingStep1 from "./PropertyCreateListingStep1";
 import PropertyCreateListingStep2 from "./PropertyCreateListingStep2";
-import PropertyCreateListingStep4 from "./PropertyCreateListingStep4";
 import PropertyCreateListingStep3 from "./PropertyCreateListingStep3";
+import PropertyCreateListingStep4 from "./PropertyCreateListingStep4";
 import PropertyCreateListingStep5 from "./PropertyCreateListingStep5";
 import PropertyCreateListingStep6 from "./PropertyCreateListingStep6";
+import PropertyCreateListingStep7 from "./PropertyCreateListingStep7";
 
 class PropertyCreateListing extends React.Component {
 	constructor(props) {
@@ -81,6 +82,7 @@ class PropertyCreateListing extends React.Component {
 		} = match.params;
 
 		const progressList = [
+			"Season & Rights",
 			"Commercial Details",
 			"Event Details",
 			"Right Details",
@@ -125,6 +127,7 @@ class PropertyCreateListing extends React.Component {
 					{step === 4 && !listing.loading && <PropertyCreateListingStep4 history={history} />}
 					{step === 5 && !listing.loading && <PropertyCreateListingStep5 history={history} />}
 					{step === 6 && !listing.loading && <PropertyCreateListingStep6 history={history} />}
+					{step === 7 && !listing.loading && <PropertyCreateListingStep7 history={history} />}
 					{listing.loading && <Loader xSmall loading />}
 				</DefaultBox>
 			</SkinContainer>
