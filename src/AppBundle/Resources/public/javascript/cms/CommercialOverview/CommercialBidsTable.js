@@ -15,7 +15,6 @@ import CmsDeclineBidModal from "../../common/modals/CmsDeclineBidModal";
 import CmsAcceptBidModal from "../../common/modals/CmsAcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
-import RightDetailsModal from "../../common/modals/RightDetailsModal";
 
 class CommercialBidsTable extends React.Component {
 	constructor(props) {
@@ -23,7 +22,6 @@ class CommercialBidsTable extends React.Component {
 		this.state = {
 			approveModalIsOpen: false,
 			rejectModalIsOpen: false,
-			rightsModalIsOpen: false,
 			selectedBid: null,
 			contentId: null,
 			listingCustomId: null,
@@ -48,13 +46,10 @@ class CommercialBidsTable extends React.Component {
 		});
 	};
 
-	openRightsModal = () => this.setState({ rightsModalIsOpen: true });
-
 	closeModal = () => {
 		this.setState({
 			approveModalIsOpen: false,
 			rejectModalIsOpen: false,
-			rightsModalIsOpen: false,
 		});
 	};
 
@@ -70,14 +65,16 @@ class CommercialBidsTable extends React.Component {
 	};
 
 	getTitleColumns = () => [{
+		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ID" />,
 		id: props => `custom-id-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 50,
+		accessor: "customId",
+		width: 80,
 		Cell: props => (
-			<div onClick={this.openRightsModal}>
-				<i className="fa fa-info-circle clickable" />
-			</div>
+			<span>
+				{props.value}
+			</span>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
@@ -279,7 +276,7 @@ class CommercialBidsTable extends React.Component {
 	render() {
 		const { listings, type, postAction } = this.props;
 		const {
-			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId, rightsModalIsOpen,
+			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
 		} = this.state;
 
 		const columns = [
@@ -307,13 +304,6 @@ class CommercialBidsTable extends React.Component {
 						onCloseModal={this.closeModal}
 					/>
 				)}
-
-				{rightsModalIsOpen && (
-					<RightDetailsModal
-						onCloseModal={this.closeModal}
-					/>
-				)}
-
 				<ReactTable
 					className="ca-table property-listings-table"
 					defaultPageSize={30}

@@ -19,8 +19,9 @@
 
         &.rights {
           justify-content: space-between;
-          grid-auto-flow: row;
-          grid-template-columns: 30% 30% 40%;
+          grid-auto-flow: column dense;
+          grid-template-columns: 25% 25% 25% 25%;
+          grid-template-rows: 40% 40%;
         }
 
         &.sale {

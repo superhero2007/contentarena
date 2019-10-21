@@ -12,12 +12,14 @@ import {
 	ROUTE_PATHS,
 } from "@constants";
 import TerritorySelector from "@components/Territories/TerritorySelector";
+import NumberFormat from "react-number-format";
 import CmsDealTable from "../components/CmsDealTable";
 import { getSeasonsYearString, sortSeasons } from "../helpers/PropertyDetailsHelper";
 import { addDealsProperty } from "../actions/propertyActions";
 import CmsProgress from "../components/CmsProgress";
 import { getListingName } from "../helpers/PropertyListingHelper";
 import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
+import { getCurrencySymbol } from "../../main/actions/utils";
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
@@ -193,7 +195,7 @@ class PropertyDeal extends React.Component {
 			saving,
 			showRightDetails,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights, countries }, skin } = this.props;
+		const { property: { seasons: allSeasons, rights: allRights }, skin, countries } = this.props;
 		const rightTerritories = getTerritoriesFromRights(rights, countries);
 		const isNextButtonDisabled = this.nextButtonIsDisabled();
 
@@ -264,7 +266,10 @@ class PropertyDeal extends React.Component {
 						{currentStep === 2 && !showRightDetails && rights.length > 0 && (
 							<div className="property-deals-right-details">
 								<button
-									className="button primary-outline-button"
+									className="link-button"
+									style={{
+										marginTop: 20, fontSize: 16, marginBottom: 5, marginLeft: "auto",
+									}}
 									onClick={this.showRightDetails}
 								>
 									<Translate i18nKey="ADD_DEAL_RIGHT_DETAILS_BUTTON" />
@@ -307,7 +312,7 @@ class PropertyDeal extends React.Component {
 
 						{currentStep === 4 && (
 							<div className="d-flex flex-direction-column form-group w-75" style={{ marginTop: 30 }}>
-								<label>
+								<label style={{ marginBottom: 20 }}>
 									<Translate i18nKey="ADD_DEAL_NAME_LABEL" />
 								</label>
 								<div className="input-group">

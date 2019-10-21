@@ -66,6 +66,7 @@ class PropertyActionListing extends React.Component {
 			showDuplicate,
 			showDeactivate,
 			showLicense,
+			showLicenseFake,
 			showMessage,
 			showView,
 			onRemove,
@@ -84,6 +85,19 @@ class PropertyActionListing extends React.Component {
 			<div className={className} style={style}>
 				{showOptions && (
 					<div className="tools-menu">
+
+						{showLicenseFake && (
+							<div className="tools-option">
+								<i className="icon-agreement" />
+								<a
+									className="action-box"
+									href="/bundles/app/data/License_Agreement_Example.pdf"
+									download
+								>
+									<Translate i18nKey="License Agreement" />
+								</a>
+							</div>
+						)}
 						{showLicense && (
 							<div className="tools-option">
 								<i className="icon-agreement" />

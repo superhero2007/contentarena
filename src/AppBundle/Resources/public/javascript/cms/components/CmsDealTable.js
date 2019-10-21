@@ -10,6 +10,7 @@ import FileSelector from "../../main/components/FileSelector";
 import { trashIconRed } from "../../main/components/Icons";
 import CmsNumberInput from "./CmsNumberInput";
 import { getTerritoriesFromListing } from "../helpers/PropertyDetailsHelper";
+import InputFee from "./InputFee";
 
 class CmsDealTable extends React.Component {
 	constructor(props) {
@@ -149,16 +150,13 @@ class CmsDealTable extends React.Component {
 		Cell: props => (
 			<div className="form-group" style={{ marginBottom: 0 }}>
 				<div className="input-group">
-					<input
+					<InputFee
 						key={`fee-${props.index}`}
-						type="number"
-						className="input-group-text"
-						placeholder="Enter fee"
-						onFocus={e => e.target.select()}
-						defaultValue={props.value}
 						onKeyDown={e => this.handleKeyDown(props.index, "fee", e)}
-						onBlur={e => this.updateValue(props.index, "fee", e.target.value)}
+						onBlur={value => this.updateValue(props.index, "fee", value)}
+						value={props.value}
 					/>
+
 				</div>
 			</div>
 		),

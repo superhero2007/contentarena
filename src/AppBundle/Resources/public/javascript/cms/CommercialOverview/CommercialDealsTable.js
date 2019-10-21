@@ -10,12 +10,14 @@ import TableSeasonList from "@components/Table/TableSeasonList";
 import TableTerritoryList from "@components/Table/TableTerritoryList";
 import { UserName } from "@utils/listing";
 import TableTooltip from "@components/Tooltips/TableTooltip";
+import NumberFormat from "react-number-format";
 import { DATE_FORMAT } from "../../common/constants";
 import CmsDeclineBidModal from "../../common/modals/CmsDeclineBidModal";
 import CmsAcceptBidModal from "../../common/modals/CmsAcceptBidModal";
 import { getRightTableColumns } from "../helpers/PropertyHelper";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
 import RightDetailsModal from "../../common/modals/RightDetailsModal";
+import { getCurrencySymbol } from "../../main/actions/utils";
 
 class CommercialDealsTable extends React.Component {
 	constructor(props) {
@@ -56,7 +58,7 @@ class CommercialDealsTable extends React.Component {
 		});
 	};
 
-	openRightsModal = () => this.setState({ rightsModalIsOpen: true });
+	openRightsModal = props => this.setState({ rightsModalIsOpen: true, selectedDeal: props.original });
 
 	getCell = (props) => {
 		const { value, original } = props;
@@ -73,9 +75,9 @@ class CommercialDealsTable extends React.Component {
 		id: props => `custom-id-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 50,
+		width: 40,
 		Cell: props => (
-			<div onClick={this.openRightsModal}>
+			<div onClick={() => this.openRightsModal(props)}>
 				<i className="fa fa-info-circle clickable" />
 			</div>
 		),
@@ -136,11 +138,14 @@ class CommercialDealsTable extends React.Component {
 		id: props => `fee-${props.customId}-${props.index}`,
 		headerClassName: "rt-th-center",
 		className: "rt-td-center",
-		width: 80,
+		width: 100,
 		Cell: props => (
-			<span>
-				{`${props.original.currency === "EUR" ? "€" : "$"} ${parseFloat(props.original.fee).toFixed(2)}`}
-			</span>
+			<NumberFormat
+				thousandSeparator
+				value={props.original.fee}
+				displayType="text"
+				prefix={`${getCurrencySymbol(props.original.bundles[0].currency)} `}
+			/>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_DATE" />,
@@ -263,7 +268,7 @@ class CommercialDealsTable extends React.Component {
 								zIndex: 1000 - props.index,
 							}}
 							defaultAction="EDIT"
-							showLicense
+							showLicenseFake
 							showMessage
 							showView={false}
 							{...props.original}
@@ -297,6 +302,7 @@ class CommercialDealsTable extends React.Component {
 		const { deals, type, postAction } = this.props;
 		const {
 			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId, rightsModalIsOpen,
+			selectedDeal,
 		} = this.state;
 
 		const columns = [
@@ -328,6 +334,7 @@ class CommercialDealsTable extends React.Component {
 				{rightsModalIsOpen && (
 					<RightDetailsModal
 						onCloseModal={this.closeModal}
+						deal={selectedDeal}
 					/>
 				)}
 
