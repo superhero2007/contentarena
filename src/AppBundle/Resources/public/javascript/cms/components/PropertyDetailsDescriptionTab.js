@@ -118,6 +118,7 @@ class PropertyDetailsDescriptionTab extends Component {
 					onUpload={this.onUpload}
 					onRemove={this.onRemove}
 					isUploading={this.isUploading}
+					minSize={400}
 				/>
 
 				<div className="description">

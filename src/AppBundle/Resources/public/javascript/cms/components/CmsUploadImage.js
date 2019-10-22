@@ -5,7 +5,7 @@ import Translate from "@components/Translator/Translate";
 import CmsPopup from "./CmsPopup";
 
 const CmsUploadImage = ({
-	image, onUpload, onRemove, isUploading, minSize = 400, maxSize = 1024,
+	image, onUpload, onRemove, isUploading, minSize = 300, maxSize = 1024,
 }) => {
 	let fileRef;
 	const [open, setOpen] = useState(false);
