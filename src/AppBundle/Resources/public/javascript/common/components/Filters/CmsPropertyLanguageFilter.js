@@ -10,7 +10,6 @@ const allValue = {
 };
 
 const realLanguages = Object.values(languages).map(i => ({ value: i.name, label: i.name }));
-const options = [allValue, ...realLanguages];
 
 const MultiValueComponent = ({
 	children, data, selectProps: { value, placeholder }, ...innerProps
@@ -20,7 +19,8 @@ const MultiValueComponent = ({
 	</components.MultiValueContainer>
 ) : null);
 
-const CmsPropertyLanguageFilter = ({ value, onChange }) => {
+const CmsPropertyLanguageFilter = ({ value, onChange, selectAll = true }) => {
+	const options = selectAll ? [allValue, ...realLanguages] : realLanguages;
 	const handleRemove = (selected) => {
 		const updatedValue = value.filter(element => element.value !== selected.value);
 		onChange(updatedValue);

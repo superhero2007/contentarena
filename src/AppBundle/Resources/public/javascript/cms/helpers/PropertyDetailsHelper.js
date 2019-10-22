@@ -3,6 +3,11 @@ import { PRODUCTION_TAB, RIGHTS_TAB } from "@constants";
 
 const multipleVabel = "Multiple values selected";
 
+export const formatFee = (a, n, x) => {
+	const re = `\\d(?=(\\d{${x || 3}})+${n > 0 ? "\\." : "$"})`;
+	return a.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, "g"), "$&,");
+};
+
 const getUniqueSelectedOptions = (rights, key) => {
 	let values = [];
 	for (const value of rights) {
@@ -43,7 +48,7 @@ export const groupListingsByStatus = (listings) => {
 		archived = [];
 
 	listings.forEach((listing) => {
-		switch (listing.status.name) {
+		switch (listing.status) {
 		case "REJECTED":
 			rejected.push(listing);
 			break;

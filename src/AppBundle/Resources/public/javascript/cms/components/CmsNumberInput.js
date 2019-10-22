@@ -4,7 +4,8 @@ class CmsNumberInput extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: props.value || 0,
+			defaultValue: props.defaultValue || 0,
+			value: props.value || null,
 			min: props.min || 0,
 		};
 	}
@@ -24,6 +25,7 @@ class CmsNumberInput extends React.Component {
 	};
 
 	setValue = (value) => {
+		if (this.props.disableOnChange) return;
 		this.setState({ value: Number(value) }, () => {
 			this.props.onChange(this.state.value);
 		});
@@ -35,9 +37,12 @@ class CmsNumberInput extends React.Component {
 				<input
 					className="input-stepper-content"
 					type="number"
+					defaultValue={this.state.defaultValue}
 					value={this.state.value}
 					onFocus={e => e.target.select()}
 					onChange={e => this.setValue(e.target.value)}
+					onKeyDown={this.props.onKeyDown}
+					onBlur={this.props.onBlur}
 					min={this.state.min}
 				/>
 				<div className="input-stepper-control">
@@ -58,4 +63,9 @@ class CmsNumberInput extends React.Component {
 		);
 	}
 }
+
+CmsNumberInput.defaultProps = {
+	disableOnChange: false,
+};
+
 export default CmsNumberInput;

@@ -111,9 +111,9 @@ class Listing implements NotifiableInterface
      * @var integer
      * @Serializer\Type("integer")
      * @ORM\Column(name="step", type="integer")
-     * @Groups({"board", "home", "property", "createListing"})
+     *  @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList", "property"})
      */
-    protected $step = 1;
+    protected $step;
 
     /**
      * @var integer
@@ -121,7 +121,7 @@ class Listing implements NotifiableInterface
      * @ORM\Column(name="maxStep", type="smallint")
      * @Groups({"listing", "board", "home", "createListing"})
      */
-    protected $maxStep = 1;
+    protected $maxStep;
 
     /**
      * @var array
@@ -157,7 +157,7 @@ class Listing implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="listing_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="bundle_listing_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "createListing"})
+     * @Groups({"property", "listing", "createListing"})
      */
     private $bundles;
 
@@ -181,7 +181,7 @@ class Listing implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList", "property"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList", "property", "createListing"})
      */
     private $name;
 
@@ -277,9 +277,9 @@ class Listing implements NotifiableInterface
     private $lastActionDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction")
-     * @ORM\JoinColumn(nullable=true)
      * @Groups({"board", "home", "propertyList", "property"})
+     * @var string
+     * @ORM\Column(name="last_action", type="string", length=255, nullable=false)
      */
     private $lastAction;
 
@@ -361,6 +361,13 @@ class Listing implements NotifiableInterface
      * @Groups({"propertyList", "property"})
      */
     private $bids;
+
+    /**
+     * @var string
+     * @ORM\Column(name="status", type="string", length=255, nullable=false)
+     * @Groups({"listing", "closed", "thread", "home", "preview", "property"})
+     */
+    private $status;
 
     public function __construct()
     {
@@ -834,22 +841,6 @@ class Listing implements NotifiableInterface
     /**
      * @return mixed
      */
-    public function getLastAction()
-    {
-        return $this->lastAction;
-    }
-
-    /**
-     * @param mixed $lastAction
-     */
-    public function setLastAction($lastAction)
-    {
-        $this->lastAction = $lastAction;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLastActionUser()
     {
         return $this->lastActionUser;
@@ -1079,6 +1070,38 @@ class Listing implements NotifiableInterface
     public function setBundles($bundles)
     {
         $this->bundles = $bundles;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastAction()
+    {
+        return $this->lastAction;
+    }
+
+    /**
+     * @param string $lastAction
+     */
+    public function setLastAction($lastAction)
+    {
+        $this->lastAction = $lastAction;
     }
 
     public function incrementStep()

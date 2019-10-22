@@ -162,7 +162,7 @@
       @extend .region-selector;
 
       width: 340px !important;
-      height: 291px;
+      height: 291px !important;
 
       .input-checkbox {
         cursor: default;
@@ -323,6 +323,40 @@
             margin-left: 8px;
             color: $v1-color-green-1;
           }
+        }
+      }
+    }
+
+    .bundle-editor {
+      .dropdown {
+        &__control {
+          height: 54px;
+        }
+      }
+
+      &-name{
+        display: flex;
+        height: 54px;
+        align-items: center;
+        margin-top: 10px;
+        border: 1px solid lightgray;
+        padding: 10px;
+      }
+
+      &-buttons {
+        display: flex;
+        padding-top: 29px;
+      }
+
+      &-bid {
+        margin-right: 10px;
+      }
+
+      &-currency {
+        padding-top: 11px;
+        width: 160px !important;
+        .default-filter {
+          width: 160px;
         }
       }
     }

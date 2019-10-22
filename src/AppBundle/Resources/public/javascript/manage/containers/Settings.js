@@ -288,7 +288,6 @@ class Settings extends React.Component {
 								<Translate i18nKey="SETTINGS_LABEL_COMPANY_DESCRIPTION" />
 							</label>
 							<textarea
-								readOnly
 								ref={this.textArea}
 								value={user.company.description}
 								disabled={!editCompanyInfo}

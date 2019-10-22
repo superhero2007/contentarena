@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Moment from "moment/moment";
+import DatePicker from "@components/DatePicker";
 import Translate from "@components/Translator/Translate";
 import CmsTerritoryFilter from "@components/Filters/CmsTerritoryFilter";
-import { updateRightDetails } from "../actions/propertyActions";
 import CmsFileUpload from "../components/CmsFileUpload";
-import CmsNumberInput from "../components/CmsNumberInput";
 import { updateListing } from "../actions/propertyListingActions";
+import { DATE_FORMAT } from "../../common/constants";
 
 class PropertyListingAdditionalInfo extends Component {
 	constructor(props) {
@@ -46,8 +47,11 @@ class PropertyListingAdditionalInfo extends Component {
 		this.props.updateListing({ company });
 	};
 
+	handleChangeName = value => this.props.updateListing({ name: value });
+
 	render() {
 		const { listing, countries } = this.props;
+		const dateObj = (listing.expiresAt) ? Moment(listing.expiresAt) : null;
 
 		return (
 			<section className="property-create-additional">
@@ -68,6 +72,24 @@ class PropertyListingAdditionalInfo extends Component {
 				</div>
 
 				<h5>
+					<Translate i18nKey="CREATE_LISTING_NAME_TITLE" />
+				</h5>
+				<div className="d-flex flex-direction-column form-group w-75">
+					<label>
+						<Translate i18nKey="CREATE_LISTING_NAME_LABEL" />
+					</label>
+					<div className="input-group">
+						<input
+							type="text"
+							className="input-group-text"
+							placeholder={this.context.t("CREATE_LISTING_NAME_PLACEHOLDER")}
+							value={listing.name}
+							onChange={e => this.handleChangeName(e.target.value)}
+						/>
+					</div>
+				</div>
+
+				<h5>
 					<Translate i18nKey="CREATE_LISTING_EXPIRY_TITLE" />
 				</h5>
 				<div className="d-flex justify-content-between">
@@ -76,18 +98,19 @@ class PropertyListingAdditionalInfo extends Component {
 							<Translate i18nKey="CREATE_LISTING_EXPIRY_LABEL" />
 						</label>
 						<div className="input-group">
-							<input
-								type="text"
-								className="input-group-text"
-								placeholder={this.context.t("CREATE_LISTING_COMPANY_ZIP_PLACEHOLDER")}
-								value={listing.company.zip}
-								onChange={e => this.handleChangeCompany(e.target.value, "zip")}
+							<DatePicker
+								className="date-picker input-group-text"
+								selected={dateObj}
+								onChange={expiresAt => this.props.updateListing({ expiresAt })}
+								minDate={Moment()}
+								dateFormat={DATE_FORMAT}
+								placeholderText={DATE_FORMAT.toLowerCase()}
 							/>
 						</div>
 					</div>
 				</div>
 
-				<h5>
+				{/* <h5>
 					<Translate i18nKey="CREATE_LISTING_ANNEX_TITLE" />
 				</h5>
 				<div className="d-flex justify-content-between">
@@ -117,10 +140,10 @@ class PropertyListingAdditionalInfo extends Component {
 							/>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				<h5>
-					<Translate i18nKey="CREATE_LISTING_ANNEX_TITLE" />
+					<Translate i18nKey="CREATE_LISTING_COMPANY_TITLE" />
 				</h5>
 				<div className="d-flex justify-content-between">
 					<div className="form-group w-33">

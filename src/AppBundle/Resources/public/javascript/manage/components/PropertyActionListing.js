@@ -27,23 +27,19 @@ class PropertyActionListing extends React.Component {
 	};
 
 	edit = () => {
-		const { customId, step, status } = this.props;
-		let stepToShow = 1;
-
-		if (status && status.name === "DRAFT") {
-			stepToShow = step > 3 ? "sign" : (step + 1);
-		}
-
-		goTo(`contentlisting/${customId}/${stepToShow}`);
+		const { customId, step, propertyId } = this.props;
+		goTo(`properties/${propertyId}/listing/${customId}?step=${step}`);
 	};
 
 	submit = () => {
-		const { customId, status, onRepublish } = this.props;
+		const {
+			customId, status, onRepublish, propertyId,
+		} = this.props;
 
 		if (status && status.name === "INACTIVE" && onRepublish) {
 			onRepublish();
 		} else {
-			goTo(`contentlisting/${customId}/sign`);
+			goTo(`properties/${propertyId}/listing/${customId}?step=6`);
 		}
 	};
 
@@ -70,6 +66,7 @@ class PropertyActionListing extends React.Component {
 			showDuplicate,
 			showDeactivate,
 			showLicense,
+			showLicenseFake,
 			showMessage,
 			showView,
 			onRemove,
@@ -88,6 +85,19 @@ class PropertyActionListing extends React.Component {
 			<div className={className} style={style}>
 				{showOptions && (
 					<div className="tools-menu">
+
+						{showLicenseFake && (
+							<div className="tools-option">
+								<i className="icon-agreement" />
+								<a
+									className="action-box"
+									href="/bundles/app/data/License_Agreement_Example.pdf"
+									download
+								>
+									<Translate i18nKey="License Agreement" />
+								</a>
+							</div>
+						)}
 						{showLicense && (
 							<div className="tools-option">
 								<i className="icon-agreement" />

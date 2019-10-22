@@ -17,7 +17,7 @@ import {
 	getFilteredSeasons,
 	getFilteredTerritories,
 } from "../reducers/property";
-import { getUnifiedRegions } from "../helpers/PropertyHelper";
+import { getUnifiedRegions, processTerritoryInfo } from "../helpers/PropertyHelper";
 import CmsRightsOverviewTable from "./CmsRightsOverviewTable";
 import { RIGHT_TYPE } from "../../common/constants";
 import CmsProgramsOverviewTable from "./CmsProgramsOverviewTable";
@@ -53,6 +53,7 @@ class CmsRightsOverview extends React.Component {
 		} = this.state;
 
 		const unifiedTerritories = getUnifiedRegions(baseProperty.regions, baseProperty.territories);
+		const territoriesInfo = processTerritoryInfo(territories, property.deals, property.listings);
 
 		return (
 			<>
@@ -125,7 +126,7 @@ class CmsRightsOverview extends React.Component {
 
 				{tab === this.seasonTab && (
 					<CmsRightsOverviewTable
-						territories={territories}
+						territories={territoriesInfo}
 						seasons={seasons}
 						rights={rights}
 					/>

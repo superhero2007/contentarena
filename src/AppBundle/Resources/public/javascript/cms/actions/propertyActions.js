@@ -235,7 +235,7 @@ export const addDealsPropertyFail = error => ({
 export const addDealsProperty = newDeals => async (dispatch) => {
 	dispatch(addDealsPropertyRequest());
 	try {
-		const { data: { deals } } = await api.properties.addDeals({ deals: newDeals });
+		const { data: { deals } } = await api.properties.addDeals(newDeals);
 		dispatch(addDealsPropertySuccess(deals));
 		return deals;
 	} catch (error) {

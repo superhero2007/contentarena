@@ -19,9 +19,9 @@ const CmsProgress = ({
 	title, currentStep, maxStep, progressList,
 }) => (
 	<div className="progress-wrapper">
-		<h3 className="progress-title">
+		{/* <h3 className="progress-title">
 			{title}
-		</h3>
+		</h3> */}
 		<div className="progress-steps">
 			{progressList.map((item, index) => {
 				let status = PROGRESS_STATUS.COMPLETED;

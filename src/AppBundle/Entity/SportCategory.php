@@ -29,7 +29,7 @@ class SportCategory
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "commercial", "home", "property"})
+     * @Groups({"listing", "commercial", "home", "property", "propertyList"})
      */
     private $name;
 

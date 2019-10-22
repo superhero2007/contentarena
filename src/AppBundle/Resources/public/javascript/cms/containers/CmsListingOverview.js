@@ -134,7 +134,7 @@ class CmsListingOverview extends React.Component {
 
 		return (
 			<>
-				<CmsRightsLegend type={RIGHT_TYPE.exclusive} />
+				<CmsRightsLegend type={RIGHT_TYPE.rights} open />
 
 				<CmsFilterBox open>
 					<ListingFilter

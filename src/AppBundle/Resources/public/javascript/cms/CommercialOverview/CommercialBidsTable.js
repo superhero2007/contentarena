@@ -281,7 +281,7 @@ class CommercialBidsTable extends React.Component {
 
 		const columns = [
 			...this.getTitleColumns(),
-			...getRightTableColumns("list.rightsPackage"),
+			...getRightTableColumns("list.rights"),
 			...this.getDetailColumns(type),
 			...this.getActionColumns(type),
 		];

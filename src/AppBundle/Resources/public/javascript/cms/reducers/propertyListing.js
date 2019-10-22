@@ -27,6 +27,7 @@ const DEFAULT_STATE = {
 	annex: [],
 	image: "",
 	description: "",
+	company: {},
 };
 
 export const propertyListing = (state = DEFAULT_STATE, action) => {

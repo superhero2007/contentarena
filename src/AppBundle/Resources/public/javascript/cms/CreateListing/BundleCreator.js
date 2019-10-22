@@ -115,43 +115,85 @@ class BundleCreator extends React.Component {
 					</div>
 				)}
 
-				<div className="d-flex justify-content-between form-group accordion-container-content-item">
-					<div className="w-25">
-						<label>
-							<Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />
-						</label>
-						<CmsNumberInput
-							value={minimumBid}
-							min={1}
-							onChange={bid => this.setState({ minimumBid: bid })}
-						/>
+				{!selectedBundle && (
+					<div className="d-flex justify-content-between form-group accordion-container-content-item">
+						<div className="w-25">
+							<label>
+								<Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />
+							</label>
+							<CmsNumberInput
+								value={minimumBid}
+								min={1}
+								onChange={bid => this.setState({ minimumBid: bid })}
+							/>
+						</div>
+						<div className="w-25">
+							<CurrencyFilter
+								value={currency}
+								onChange={currency => this.setState({ currency })}
+							/>
+						</div>
+						<div className="w-50" />
 					</div>
-					<div className="w-25">
-						<CurrencyFilter
-							value={currency}
-							onChange={currency => this.setState({ currency })}
-						/>
-					</div>
-					<div className="w-50" />
-				</div>
+				)}
 
-				<div className="accordion-container-buttons">
-					<button className="button secondary-outline-button" onClick={this.props.onCancel}>
-						CANCEL
-					</button>
-					{!selectedBundle && (
+				{!selectedBundle && (
+					<div className="accordion-container-buttons">
+						<button className="button secondary-outline-button" onClick={this.props.onCancel}>
+							CANCEL
+						</button>
 						<button className="button secondary-button" onClick={this.createBundle}>
 							CREATE BUNDLE
 						</button>
-					)}
+					</div>
+				)}
 
-					{selectedBundle && (
-						<button className="button secondary-button" onClick={this.updateBundle}>
-							UPDATE BUNDLE
-						</button>
-					)}
+				{selectedBundle && (
+					<div className="accordion-container-buttons bundle-editor">
+						<div
+							className="w-25"
+							style={{
+								marginTop: 9,
+								marginRight: 10,
+							}}
+						>
+							<label>
+								<Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORIES" />
+							</label>
+							<div className="bundle-editor-name">
+								{selectedBundle.name}
+							</div>
+						</div>
 
-				</div>
+						<div className="w-75 d-flex align-items-center form-group">
+							<div className="w-33 bundle-editor-bid">
+								<label>
+									<Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />
+								</label>
+								<CmsNumberInput
+									value={minimumBid}
+									min={1}
+									onChange={bid => this.setState({ minimumBid: bid })}
+								/>
+							</div>
+							<div className="w-33 bundle-editor-currency">
+								<CurrencyFilter
+									value={currency}
+									onChange={currency => this.setState({ currency })}
+								/>
+							</div>
+							<div className="w-33 bundle-editor-buttons">
+								<button className="button secondary-outline-button" onClick={this.props.onCancel}>
+									CANCEL
+								</button>
+								<button className="button secondary-button" onClick={this.updateBundle}>
+									UPDATE BUNDLE
+								</button>
+							</div>
+						</div>
+					</div>
+				)}
+
 			</>
 		);
 	}

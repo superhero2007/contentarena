@@ -1,21 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
 import { scrollMainContainer } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-// import {
-// 	getSeasonNames, getSportCategoryName, getSportName,
-// 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
-// } from "../reducers/property";
-// import {
-// 	resetProperty,
-// } from "../actions/propertyActions";
 import { ROUTE_PATHS } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
 import { getPropertyName } from "../helpers/PropertyHelper";
 import CmsSeasonSelector from "../components/CmsSeasonSelector";
-// import CmsCustomSeason from "../components/CmsCustomSeason";
 
 class CreatePropertyEvent extends React.Component {
 	constructor(props) {

@@ -16,9 +16,12 @@ class FixturesList extends React.Component {
 		const {
 			season,
 			seasons,
+			listingSeason,
 			history,
 			onRemoveFixture,
-			onEditFixture,
+			onSelectFixture,
+			onUnselectFixture,
+			onUpdateFixture,
 		} = this.props;
 
 		const selectedSeason = seasons.find(s => s.id === season.id);
@@ -30,11 +33,15 @@ class FixturesList extends React.Component {
 				{
 					fixtures.map((fixture, i) => (
 						<FixtureListItem
-							{...fixture}
+							fixture={fixture}
 							key={`fixture-${i}`}
 							history={history}
+							showEdit={false}
+							selected={listingSeason.fixtures.find(f => f.externalId === fixture.externalId) !== undefined}
 							onRemoveFixture={() => onRemoveFixture(fixture)}
-							onEditFixture={() => onEditFixture(fixture)}
+							onSelectFixture={() => onSelectFixture(fixture)}
+							onUnselectFixture={() => onUnselectFixture(fixture)}
+							onUpdateFixture={fixture => onUpdateFixture(fixture)}
 						/>
 					))
 				}

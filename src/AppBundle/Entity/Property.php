@@ -43,7 +43,7 @@ class Property implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $website;
 
@@ -51,20 +51,20 @@ class Property implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $description;
 
     /**
      * @var object
      * @ORM\Column(name="attachments", type="object", nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $attachments;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $createdAt;
 
@@ -79,7 +79,7 @@ class Property implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $company;
 
@@ -90,7 +90,7 @@ class Property implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="property_sport_id", referencedColumnName="id")}
      *      )
-     * @Groups({"property", "propertyList"})
+     * @Groups({"property"})
      */
     private $sports;
 
@@ -101,7 +101,7 @@ class Property implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="property_sport_category_id", referencedColumnName="id")}
      *      )
-     * @Groups({"property"})
+     * @Groups({"property", "propertyList"})
      */
     private $sportCategory;
 
@@ -173,6 +173,11 @@ class Property implements NotifiableInterface
      * @Groups({"property"})
      */
     private $programs;
+
+    /**
+     * @Groups({"propertyList", "property"})
+     */
+    private $deals;
 
     /**
      * @return mixed
@@ -480,6 +485,24 @@ class Property implements NotifiableInterface
     {
         $this->programs = $programs;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDeals()
+    {
+        return $this->deals;
+    }
+
+    /**
+     * @param mixed $deals
+     */
+    public function setDeals($deals)
+    {
+        $this->deals = $deals;
+    }
+
+
 
 }
 

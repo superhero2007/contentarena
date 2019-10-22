@@ -12,6 +12,7 @@ use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Country;
 use AppBundle\Entity\Fixture;
+use AppBundle\Entity\Listing;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Season;
@@ -49,6 +50,7 @@ class FixtureService
      * @param Season $season
      * @param Property $property
      * @return Fixture
+     * @throws \Exception
      */
     public function createFixture($fixtureObj, Season $season, Property $property)
     {
@@ -72,6 +74,23 @@ class FixtureService
 
     }
 
+    /**
+     * @param Fixture $fixture
+     * @param Season $season
+     * @param Listing $listing
+     * @return Fixture
+     * @throws \Exception
+     */
+    public function createListingFixture(Fixture $fixture, Season $season, Listing $listing)
+    {
+        $fixture->setCustom(true);
+        $fixture->setSeason($season);
+        $fixture->setListing($listing);
+        $this->em->persist($fixture);
+        $this->em->flush();
+        return $fixture;
+    }
+
     public function removeFixture($fixtureObj, User $user)
     {
         if (!isset($fixtureObj['id'])) throw new \Exception("id is required");
@@ -88,6 +107,19 @@ class FixtureService
 
         return $fixture->getProperty();
 
+    }
+
+    public function cleanListingFixtures(Listing $listing)
+    {
+        $fixtures = $this->repository->findBy(array(
+            "listing" => $listing
+        ));
+
+        foreach ($fixtures as $fixture) {
+            $this->em->remove($fixture);
+        }
+
+        $this->em->flush();
     }
 
     public function updateFixture($fixtureObj, User $user)

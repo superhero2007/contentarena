@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Translate from "@components/Translator/Translate";
 import TableTooltip from "@components/Tooltips/TableTooltip";
+import { sortSeasons } from "../../../cms/helpers/PropertyDetailsHelper";
 
 class TableSeasonList extends Component {
 	constructor(props) {
@@ -16,6 +17,8 @@ class TableSeasonList extends Component {
 			index,
 			limit,
 		} = this.props;
+
+		seasons.sort(sortSeasons);
 
 		return (
 			<>
@@ -33,8 +36,8 @@ class TableSeasonList extends Component {
 									<Translate i18nKey="TABLE_SEASON_LIST_TITLE" />
 								</div>
 								<div className="tools-list-content">
-									{seasons.map(season => (
-										<div className="tools-list-item">
+									{seasons.map((season, i) => (
+										<div className="tools-list-item" key={`season-${i}`}>
 											{season.year}
 										</div>
 									))}

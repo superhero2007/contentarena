@@ -16,6 +16,7 @@ class CountrySelector extends React.Component {
 			selectedCountries,
 			onSelect,
 			onSelectAll,
+			onUnselectAll,
 			skipSelected,
 			title,
 		} = this.props;
@@ -41,12 +42,26 @@ class CountrySelector extends React.Component {
 						<div key="all" className="input-checkbox">
 							<span className="input-checkbox-text">
 								<span>
-									<Translate i18nKey="TERRITORY_SELECTOR_ADD_ALL" />
+									{selectedCountries.length === filtered.length && (
+										<Translate i18nKey="TERRITORY_SELECTOR_REMOVE_ALL" />
+									)}
+									{selectedCountries.length !== filtered.length && (
+										<Translate i18nKey="TERRITORY_SELECTOR_ADD_ALL" />
+									)}
 								</span>
 							</span>
-							<button className="info-outline-button" onClick={() => onSelectAll(filtered)}>
-								<Translate i18nKey="TERRITORY_SELECTOR_ADD" />
-							</button>
+
+							{selectedCountries.length !== filtered.length && (
+								<button className="info-outline-button" onClick={() => onSelectAll(filtered)}>
+									<Translate i18nKey="TERRITORY_SELECTOR_ADD" />
+								</button>
+							)}
+
+							{selectedCountries.length === filtered.length && (
+								<button className="info-outline-button" onClick={() => onUnselectAll([])}>
+									<Translate i18nKey="TERRITORY_SELECTOR_REMOVE" />
+								</button>
+							)}
 						</div>
 					)}
 

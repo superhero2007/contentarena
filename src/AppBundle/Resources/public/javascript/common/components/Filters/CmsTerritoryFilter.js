@@ -25,7 +25,6 @@ class CmsTerritoryFilter extends React.Component {
 				name={label || <Translate i18nKey="TERRITORY_FILTER_NAME" />}
 				options={options}
 				value={value}
-				containerClassName="edited-program-filter"
 				multi
 				placeholder={<Translate i18nKey="TERRITORY_FILTER_PLACEHOLDER" />}
 				multiText={<Translate i18nKey="TERRITORY_FILTER_MULTIPLE" />}

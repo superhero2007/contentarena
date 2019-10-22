@@ -1,6 +1,59 @@
 import React from "react";
 
 
+export const processTerritoryInfo = (territories, deals, listings) => {
+	const dealTerritories = {};
+	const listingTerritories = {};
+
+	deals.forEach((deal) => {
+		deal.bundles.forEach((bundle) => {
+			bundle.territories.forEach((territory) => {
+				if (!dealTerritories[territory.id]) {
+					dealTerritories[territory.id] = {
+						closedDeals: 0,
+						rights: deal.rights.map(right => right.code),
+						seasons: deal.seasons.map(season => season.id),
+					};
+				}
+				if (deal.status === "CLOSED") dealTerritories[territory.id].closedDeals++;
+			});
+		});
+	});
+
+	listings.forEach((listing) => {
+		listing.bundles.forEach((bundle) => {
+			bundle.territories.forEach((territory) => {
+				if (!listingTerritories[territory.id]) {
+					listingTerritories[territory.id] = {
+						activeListings: 0,
+						draftListing: 0,
+						rights: listing.rights.map(right => right.code),
+						seasons: listing.seasons.map(season => season.id),
+					};
+				}
+				if (listing.status === "APPROVED") listingTerritories[territory.id].activeListings++;
+				if (listing.status === "DRAFT") listingTerritories[territory.id].draftListing++;
+			});
+		});
+	});
+
+
+	territories.map((territory) => {
+		territory.deals = dealTerritories[territory.id] || { closedDeals: 0, rights: [], seasons: [] };
+		territory.listings = listingTerritories[territory.id] || {
+			activeListings: 0,
+			draftListing: 0,
+			rights: [],
+			seasons: [],
+		};
+
+		return territory;
+	});
+
+	return territories;
+};
+
+
 export const getUnifiedRegions = (regions, territories) => [
 	...regions.map((region) => {
 		region.type = "region";
@@ -30,9 +83,9 @@ export const getPropertyName = (property) => {
 	return name;
 };
 
-const getRightCell = (props, shortLabel) => {
+const getRightCell = (props, code) => {
 	const { value } = props;
-	const right = value.find(right => right.shortLabel === shortLabel);
+	const right = value.find(right => right.code === code);
 
 	if (right) {
 		const className = (right.exclusive) ? "yellow-circle" : "blue-circle";
