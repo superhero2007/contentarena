@@ -859,6 +859,10 @@ a.ca-link {
   cursor: pointer;
   z-index: 1;
 
+  &-container {
+    display: flex;
+  }
+
   .fa {
     color: $color-blue;
     font-size: 18px;

@@ -50,6 +50,7 @@
         color: $v1-color-grey-2;
         display: flex;
         flex-direction: column;
+
         span {
           font-size: 12px;
         }
@@ -62,7 +63,6 @@
         color: $v1-color-grey-1;
         display: flex;
         align-items: center;
-
       }
 
       &-link {
@@ -536,7 +536,6 @@
         .date-picker {
           height: 58px;
         }
-
       }
     }
 
@@ -571,7 +570,7 @@
 
     .property-deals {
       &-header {
-        margin: 20px 0px;
+        margin: 20px 0;
         display: flex;
         justify-content: space-between;
 

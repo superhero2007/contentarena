@@ -67,11 +67,13 @@ class ShareListing extends Component {
 		} = this.state;
 		return (
 			<div className="ca-share-listing">
-				<span onClick={(e) => {
-					this.setState({ modalOpen: true });
-					e.preventDefault();
-					e.stopPropagation();
-				}}
+				<span
+					onClick={(e) => {
+						this.setState({ modalOpen: true });
+						e.preventDefault();
+						e.stopPropagation();
+					}}
+					className="ca-share-listing-container"
 				>
 					<span className="fa fa-share-alt" />
 					<Translate i18nKey="SHARE" />

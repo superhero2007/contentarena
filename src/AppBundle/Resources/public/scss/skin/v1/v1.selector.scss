@@ -334,7 +334,7 @@
         }
       }
 
-      &-name{
+      &-name {
         display: flex;
         height: 54px;
         align-items: center;
@@ -355,6 +355,7 @@
       &-currency {
         padding-top: 11px;
         width: 160px !important;
+
         .default-filter {
           width: 160px;
         }

@@ -123,6 +123,7 @@
 
         .rt-tbody {
           overflow: overlay;
+
           .rt-tr {
             &-group {
               border-color: $v1-color-grey-4;
@@ -205,17 +206,17 @@
                 }
 
                 &.unsold-non-exclusively {
-                  background:linear-gradient(to bottom right,$v1-color-green-3 50%,white 50%);
+                  background: linear-gradient(to bottom right, $v1-color-green-3 50%, white 50%);
                 }
 
                 &.sold-exclusively {
                   background-color: #fbff8b;
-                  background-image:none;
+                  background-image: none;
                 }
 
                 &.sold-non-exclusively {
                   background-color: #b5cbe5;
-                  background-image:none;
+                  background-image: none;
                 }
 
                 .purple-triangle {
@@ -466,6 +467,7 @@
       &.rights-table {
         .rt-tbody {
           overflow: overlay;
+
           .rights-table-active {
             font-size: 16px;
             font-weight: 600;
@@ -518,6 +520,7 @@
 
         .rt-tbody {
           overflow: overlay;
+
           .rt-tr {
             &.-odd {
               background-color: #f6f7f9;
