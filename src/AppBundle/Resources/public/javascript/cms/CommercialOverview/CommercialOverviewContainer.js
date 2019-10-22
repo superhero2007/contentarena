@@ -183,7 +183,7 @@ class CommercialOverviewContainer extends React.Component {
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
-				list.bids.filter(b => b.status.name === "PENDING")
+				list.bids.filter(b => b.status.name === "APPROVED")
 					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);

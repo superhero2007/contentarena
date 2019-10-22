@@ -114,7 +114,6 @@ const CmsDigitalSignature = ({
 					</div>
 				</div>
 			</div>
-			{/*
 			<div className="signature-popup-container">
 				<label>
 					<Translate i18nKey="DIGITAL_SIGNATURE_MESSAGE" />
@@ -126,7 +125,6 @@ const CmsDigitalSignature = ({
 					onChange={onChangeSignatureMessage}
 				/>
 			</div>
-			*/}
 		</div>
 	);
 };
