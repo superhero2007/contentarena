@@ -70,3 +70,64 @@ Enjoy!
 [11]: https://symfony.com/doc/3.3/logging.html
 [13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
 [14]: https://symfony.com/doc/current/setup/built_in_web_server.html
+
+
+========================================================================
+
+
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load --append
+composer.phar install --no-dev --optimize-autoloader
+php bin/console arena:translations
+
+you should run those commands every time there's an update 
+
+first one will run db migrations
+
+second one will populate db
+
+3rd will run the rest
+
+start by composer install --no-dev --optimize-autoloader because you dont have the db yet
+
+then you can populate parameters.yml with you db access
+
+also set local_host property with your local value
+
+and cms_enabled: 1
+
+
+
+here is the content of a regular app.php
+
+<?php
+
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpFoundation\Request;
+
+require __DIR__.'/../vendor/autoload.php';
+
+//Debug::enable();
+$kernel = new AppKernel('dev', false);
+if (PHP_VERSION_ID < 70000) {
+    $kernel->loadClassCache();
+}
+//$kernel = new AppCache($kernel);
+
+// When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
+//Request::enableHttpMethodParameterOverride();
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);
+
+it has debug disabled and dev as environment
+
+also make sure you have write permissions on /var/log and /var/cache
+
+
+/admin to access the backoffice
+utils-> import translations 
+select import from dev
+wkhtmltopdf version0.12.5
+
